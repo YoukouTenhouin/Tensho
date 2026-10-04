@@ -1,6 +1,39 @@
 """XTest input for disposable X11 acceptance sessions; never opens a display implicitly."""
 import ctypes
+import os
+import re
+import subprocess
 import time
+
+
+def place_on_monitor(display, window, name='HDMI-A-1'):
+    """Contain only the disposable test window on the user's reserved monitor.
+
+    Xwayland coordinates differ from KDE logical coordinates under scaling;
+    query the same X server that receives XTest input and verify actual bounds.
+    """
+    env = {**os.environ, 'DISPLAY': display}
+    monitors = subprocess.check_output(['xrandr', '--listmonitors'], env=env, text=True)
+    row = next((line for line in monitors.splitlines() if line.split() and line.split()[-1] == name), None)
+    match = re.search(r'(\d+)/\d+x(\d+)/\d+([+-]\d+)([+-]\d+)', row or '')
+    if not match:
+        raise RuntimeError(f'Reserved test monitor {name} is unavailable; refusing native input')
+    width, height, x, y = map(int, match.groups())
+    monitor = {'name': name, 'x': x, 'y': y, 'width': width, 'height': height}
+    def contained(box):
+        return box['x'] >= x and box['y'] >= y and box['x'] + box['width'] <= x + width and box['y'] + box['height'] <= y + height
+    box = window_geometry(display, window)
+    if not contained(box):
+        subprocess.run(['wmctrl', '-ir', hex(window), '-b', 'remove,maximized_vert,maximized_horz'], env=env, check=True)
+        subprocess.run(['wmctrl', '-ir', hex(window), '-e', f'0,{x+80},{y+80},1300,900'], env=env, check=True)
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline:
+            box = window_geometry(display, window)
+            if contained(box): break
+            time.sleep(.05)
+    if not contained(box):
+        raise RuntimeError(f'Test window is outside {name}; refusing native input: {box}')
+    return {'monitor': monitor, 'window': box}
 
 
 def connection(display):

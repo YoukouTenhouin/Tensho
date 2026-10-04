@@ -23,7 +23,7 @@ import traceback
 import urllib.request
 
 from permission_scope import CDP, QuietHandler
-from native_input import key, click, window_geometry, focus_window
+from native_input import key, click, window_geometry, focus_window, place_on_monitor
 
 
 def wait_for(predicate, seconds=10):
@@ -110,6 +110,7 @@ def run(desktop, restart=False, idle=False, passage=False):
                         windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
                         matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
                         if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
+                        evidence['reserved_monitor_placement'] = place_on_monitor(display, int(matching[0], 16))
                         subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
                         focus_window(display, int(matching[0],16))
                         time.sleep(.1)
