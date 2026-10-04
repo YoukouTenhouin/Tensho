@@ -5,7 +5,19 @@ Language learners look up words encountered in texts they are reading.
 ## Language
 
 **Multiword selection**:
-A passage selected by the learner containing more than one word, from which individual words can be chosen for analysis and dictionary lookup.
+A passage selected by the learner containing more than one word, whose individual words can be studied through analysis and dictionary lookup.
+
+**Input notation**:
+The writing system or transliteration scheme in which selected text is represented, such as Devanāgarī or IAST; it is distinct from the lookup language.
+
+**IAST**:
+A Roman-letter transliteration scheme for Sanskrit using diacritics to distinguish sounds, which can accompany Devanāgarī forms to aid reading.
+
+**Sandhi segmentation**:
+The identification of possible constituent words in a Sanskrit passage whose word forms or boundaries have been affected by sound combinations.
+
+**Segmentation alternative**:
+One possible division of a selected Sanskrit passage into constituent words; several alternatives may remain plausible.
 
 **Lookup language**:
 The language in which a selected word is to be analyzed and looked up, regardless of whether the same spelling occurs in another language.
