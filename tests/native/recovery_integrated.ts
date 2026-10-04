@@ -38,7 +38,10 @@ export const createIntegratedProviders: typeof production = dependencies => {
         if (id === 'd-first' && (scenario === 'article-fallback' || (scenario === 'article-partial' && entryId === 'n2'))) {
           throw new RequestFailure('identity-mismatch', 'd-first controlled article identity mismatch');
         }
-        return { dictionary: id, entryId, paragraphs: [`Complete ${id} ${entryId} article. Latin mālum and Greek ἅμα remain intact.`],
+        const paragraph = `Complete ${id} ${entryId} article. Latin mālum and Greek ἅμα remain intact.`;
+        const paragraphs = scenario === 'session-overflow' ? ['x'.repeat(6 * 1024 * 1024)]
+          : scenario === 'session-long' ? Array.from({ length: 100 }, (_, index) => `${index + 1}. ${paragraph}`) : [paragraph];
+        return { dictionary: id, entryId, paragraphs,
           attribution: ['Controlled fixture credit'], sourceUrl: `https://fixture.invalid/${id}/${entryId}`, links: [] };
       }, { signal, deadline }),
     };
