@@ -45,3 +45,10 @@ A brief gloss accompanying an analysis, distinct from a full dictionary entry.
 
 **Dictionary entry**:
 The full article supplied by a dictionary for a lemma, including the senses and usage information that dictionary provides.
+
+**Dictionary alternative**:
+A dictionary entry that may correspond to a candidate lemma when the correspondence is uncertain; available alternatives need not be exhaustive.
+
+**Unresolved dictionary mapping**:
+A dictionary lookup for which correspondence between a candidate lemma and a dictionary entry has not been established. This does not establish that the dictionary has no entry.
+_Avoid_: No entry, no match
