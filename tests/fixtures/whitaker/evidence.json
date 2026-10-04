@@ -1,0 +1,1772 @@
+{
+  "observedAt": "2026-10-04T03:57Z–04:01Z",
+  "sourceCommit": "d0b26eb",
+  "records": [
+    {
+      "word": "important",
+      "file": "important.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "important",
+        "queryInput": "important",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936311755432",
+            "identityScope": "response-local",
+            "headword": "importo, importare, importavi, importatus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "importo, importare, importavi, importatus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "bring in, convey; import; bring about, cause;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "import"
+                  },
+                  "suff": {
+                    "$": "ant"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "present"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "3rd"
+                },
+                "num": {
+                  "$": "plural"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "puellae",
+      "file": "puellae.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "puellae",
+        "queryInput": "puellae",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253759175904",
+            "identityScope": "response-local",
+            "headword": "puella, puellae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "puella, puellae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 5,
+                "$": "frequent"
+              },
+              "src": {
+                "$": "Ox.Lat.Dict."
+              }
+            },
+            "shortMeanings": [
+              "girl, (female) child/daughter; maiden; young woman/wife; sweetheart; slavegirl;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 2,
+                  "$": "locative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 5,
+                  "$": "dative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "legi",
+      "file": "legi.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=legi&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "legi",
+        "queryInput": "legi",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936312996696",
+            "identityScope": "response-local",
+            "headword": "lego, legere, legi, lectus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "lego, legere, legi, lectus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "3rd"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "read; gather, collect (cremated bones); furl (sail), weigh (anchor); pick out;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "present"
+                },
+                "voice": {
+                  "$": "passive"
+                },
+                "mood": {
+                  "$": "infinitive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "perfect"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "1st"
+                },
+                "num": {
+                  "$": "singular"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936316675720",
+            "identityScope": "response-local",
+            "headword": "lex, legis",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "lex, legis"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "3rd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "area": {
+                "$": "government"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "law; motion, bill, statute; principle; condition;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 2,
+                  "$": "locative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 5,
+                  "$": "dative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "amaverunt",
+      "file": "amaverunt.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=amaverunt&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "amaverunt",
+        "queryInput": "amaverunt",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936313164680",
+            "identityScope": "response-local",
+            "headword": "amo, amare, amavi, amatus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "amo, amare, amavi, amatus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              },
+              "src": {
+                "$": "Ox.Lat.Dict."
+              }
+            },
+            "shortMeanings": [
+              "love, like; fall in love with; be fond of; have a tendency to;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "amav"
+                  },
+                  "suff": {
+                    "$": "erunt"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "perfect"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "3rd"
+                },
+                "num": {
+                  "$": "plural"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "mālum",
+      "file": "mālum.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=m%C4%81lum&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "mālum",
+        "queryInput": "mālum",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253761373264",
+            "identityScope": "response-local",
+            "headword": "mala, malae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "mala, malae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "cheeks, jaws;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253770898352",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "masculine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "mast; beam; tall pole, upright pole; standard, prop, staff;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253760072576",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple tree;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253761309072",
+            "identityScope": "response-local",
+            "headword": "malum, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malum, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "neuter"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple; fruit; lemon; quince;",
+              "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764726592",
+            "identityScope": "response-local",
+            "headword": "malus, mala -um, pejor -or -us, -",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mala -um, pejor -or -us, -"
+              },
+              "pofs": {
+                "order": 4,
+                "$": "adjective"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "bad, evil, wicked; ugly; unlucky;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "malum",
+      "file": "malum.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=malum&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "malum",
+        "queryInput": "malum",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253769660208",
+            "identityScope": "response-local",
+            "headword": "mala, malae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "mala, malae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "cheeks, jaws;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764875824",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "masculine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "mast; beam; tall pole, upright pole; standard, prop, staff;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253769589936",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple tree;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764256784",
+            "identityScope": "response-local",
+            "headword": "malum, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malum, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "neuter"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple; fruit; lemon; quince;",
+              "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764056256",
+            "identityScope": "response-local",
+            "headword": "malus, mala -um, pejor -or -us, -",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mala -um, pejor -or -us, -"
+              },
+              "pofs": {
+                "order": 4,
+                "$": "adjective"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "bad, evil, wicked; ugly; unlucky;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "word": "zzqxx",
+      "file": "zzqxx.json",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=zzqxx&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "status": 201,
+      "expected": {
+        "originalInput": "zzqxx",
+        "queryInput": "zzqxx",
+        "lookupLanguage": "lat",
+        "status": "no-match",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": []
+      }
+    }
+  ]
+}

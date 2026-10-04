@@ -1,3 +1,4 @@
+import { latinProviderOrigins } from '../providers/whitaker.ts';
 import type { State } from '../core/lookup.ts';
 import { permissionPattern, readingOrigin } from '../core/origins.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
@@ -24,11 +25,35 @@ async function refresh(): Promise<void> {
   analysis.replaceChildren();
   status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? 'Loading Latin analysis…' : state.status === 'complete' ? state.analysis.provider : state.message;
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
-  if (state?.status === 'complete') for (const candidate of state.analysis.candidates) {
-    const heading = document.createElement('h3'); heading.textContent = candidate.lemma;
-    const description = document.createElement('p'); description.textContent = candidate.interpretations.join('; ');
-    analysis.append(heading, description);
+  if (state?.status === 'complete') {
+    const result = state.analysis;
+    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
+      : result.outcome === 'missing-information' ? 'The provider supplied no usable Latin analysis information.'
+      : `Latin analysis — ${result.provider}`;
+    for (const candidate of result.candidates) {
+      const section = document.createElement('section');
+      const heading = document.createElement('h3'); heading.textContent = candidate.lemma ?? 'Headword unavailable';
+      section.append(heading);
+      const interpretations = document.createElement('ul');
+      for (const grammar of candidate.interpretations) { const item = document.createElement('li'); item.textContent = grammar; interpretations.append(item); }
+      section.append(interpretations);
+      for (const meaning of candidate.meanings) { const paragraph = document.createElement('p'); paragraph.textContent = meaning; section.append(paragraph); }
+      if (candidate.missing?.length) { const missing = document.createElement('p'); missing.textContent = `Not supplied: ${candidate.missing.join(', ')}.`; section.append(missing); }
+      analysis.append(section);
+    }
+    if (result.excludedForeignRecords) { const note = document.createElement('p'); note.textContent = 'Records explicitly labelled as another lookup language were excluded.'; analysis.append(note); }
+    for (const credit of result.attribution ?? []) { const attribution = document.createElement('p'); attribution.textContent = credit; analysis.append(attribution); }
   }
+  const retry = element<HTMLButtonElement>('retry');
+  retry.hidden = state?.status !== 'error';
+  retry.onclick = () => { void send({ type: 'retry', generation: state?.generation }).then(refresh).catch(report); };
+  const [analysisAccess, dictionaryAccess] = snapshot.providerAccess as boolean[];
+  const completeAccess = analysisAccess && dictionaryAccess;
+  element<HTMLButtonElement>('enable-providers').disabled = !!completeAccess;
+  const accessPrefix = snapshot.providerAccessDecision === 'denied' ? 'Access was denied.'
+    : snapshot.providerAccessDecision === 'granted' && !completeAccess ? 'Provider access was revoked or reduced.'
+    : !analysisAccess && !dictionaryAccess ? 'Provider access has not been granted.' : '';
+  element('provider-access').textContent = `${accessPrefix} Latin analysis access: ${analysisAccess ? 'enabled' : 'missing'}. Dictionary access: ${dictionaryAccess ? 'enabled' : 'missing'}.`;
   const focusKey = `${tabId}:${snapshot.focusRequest}`;
   if (snapshot.focusRequest && focusKey !== focused) { focused = focusKey; results.focus({ preventScroll: true }); }
   element<HTMLButtonElement>('enable-current').disabled = !origin;
@@ -58,6 +83,14 @@ element('lookup').addEventListener('submit', event => {
   event.preventDefault(); feedback.textContent = '';
   void send({ type: 'manual-lookup', text: word.value }).then(() => { results.focus({ preventScroll: true }); }).catch(report);
 });
+element('enable-providers').onclick = () => {
+  // Native permission prompting is only initiated by this explicit learner action.
+  void chrome.permissions.request({ origins: [...latinProviderOrigins] }).then(async granted => {
+    await send({ type: 'provider-access-result' });
+    feedback.textContent = granted ? 'Latin provider access enabled. Submit a word or retry the previous lookup.' : 'Latin provider access denied. No lookup was sent.';
+    await refresh();
+  }).catch(report);
+};
 element('enable-current').onclick = () => { if (origin) enable(origin); };
 element('site').addEventListener('submit', event => { event.preventDefault(); enable(element<HTMLInputElement>('origin').value); });
 function close(): void { void send({ type: 'close' }).catch(report); }
