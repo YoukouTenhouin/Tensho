@@ -4,10 +4,10 @@ import { permissionPattern, readingOrigin } from '../core/origins.ts';
 import { renderDictionary } from './dictionary-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 const results = element('results'), status = element('status'), target = element('target'), analysis = element('analysis');
-const word = element<HTMLInputElement>('word'), feedback = element('feedback');
+const word = element<HTMLTextAreaElement>('word'), feedback = element('feedback');
 let windowId: number;
 let origin: string | undefined;
-let revision = 0, displayed = '', focused = '', sitesKey = '', tabId = -1;
+let revision = 0, displayed = '', viewport = '', renderedPassage = '', focused = '', sitesKey = '', tabId = -1;
 async function send(message: Record<string, unknown>): Promise<any> {
   const reply = await chrome.runtime.sendMessage({ ...message, windowId, tabId });
   if (reply?.error) throw new Error(reply.error);
@@ -22,8 +22,28 @@ async function refresh(): Promise<void> {
   const state: State | undefined = snapshot.state;
   const key = `${tabId}:${state?.generation ?? 'none'}`;
   const focusId = key === displayed && document.activeElement instanceof HTMLElement ? document.activeElement.id : '';
-  if (key !== displayed) { displayed = key; window.scrollTo(0, 0); }
-  target.textContent = state?.text || 'Ready to read';
+  const viewportKey = state?.passage ? `${tabId}:passage:${state.passage.id}` : key;
+  if (viewportKey !== viewport) { viewport = viewportKey; window.scrollTo(0, 0); }
+  displayed = key;
+  const passage = state?.passage;
+  const passageKey = passage ? `${tabId}:${passage.id}` : '';
+  element('passage').hidden = !passage;
+  if (passageKey !== renderedPassage) {
+    renderedPassage = passageKey;
+    element('passage-original').textContent = passage?.original ?? '';
+    const controls = element('passage-words'); controls.replaceChildren();
+    passage?.words.forEach((offered, wordIndex) => {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = offered.text;
+      button.id = `passage-word-${wordIndex}`;
+      button.setAttribute('aria-label', `Look up ${offered.text} (word ${wordIndex + 1} of ${passage.words.length})`);
+      button.onclick = () => { void send({ type: 'passage-word', passageId: passage.id, wordIndex }).then(refresh).catch(report); };
+      controls.append(button);
+    });
+  }
+  for (const [index, button] of Array.from(element('passage-words').querySelectorAll('button')).entries()) {
+    button.setAttribute('aria-pressed', String(index === passage?.selectedIndex));
+  }
+  target.textContent = passage && passage.selectedIndex === undefined ? 'Choose a word' : state?.text || 'Ready to read';
   analysis.replaceChildren();
   status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? 'Loading Latin analysis…' : state.status === 'complete' ? state.analysis.provider : state.message;
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));

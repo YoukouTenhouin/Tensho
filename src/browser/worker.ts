@@ -222,6 +222,15 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     const identity = await source(tabId).catch(() => manualIdentity(tabId));
     void request.lookup(identity, message.text);
   }
+  if (message.type === 'passage-word') {
+    const previous = coordinator.get(tabId);
+    if (message.tabId !== tabId || !request || !previous?.passage || previous.passage.id !== message.passageId || typeof message.wordIndex !== 'number') {
+      throw new Error('The passage changed. Choose a word from the current passage.');
+    }
+    const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
+    if (!request.current()) return { ok: true };
+    void request.selectWord(identity, previous.passage.id, message.wordIndex);
+  }
   if (message.type === 'provider-access-result') {
     const granted = await chrome.permissions.contains({ origins: [...latinProviderOrigins] });
     await chrome.storage.local.set({ latinAccessDecision: granted ? 'granted' : 'denied' });
@@ -234,7 +243,9 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     }
     const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
     if (coordinator.get(tabId) !== previous || identity.documentId !== previous.identity.documentId) throw new Error('The reading source changed. Select the word again.');
-    void coordinator.lookup(identity, previous.text);
+    if (previous.passage?.selectedIndex !== undefined) {
+      void coordinator.begin(tabId, identity.frameId).selectWord(identity, previous.passage.id, previous.passage.selectedIndex);
+    } else void coordinator.lookup(identity, previous.text);
   }
   if (message.type === 'save-origin' && typeof message.origin === 'string') {
     const origin = readingOrigin(message.origin);
@@ -256,7 +267,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (!message || typeof message !== 'object') return;
   if (sender.url === chrome.runtime.getURL('panel.html')) {
-    const request = message.type === 'manual-lookup' && Number.isInteger(message.tabId) && message.tabId >= 0
+    const request = (message.type === 'manual-lookup' || message.type === 'passage-word') && Number.isInteger(message.tabId) && message.tabId >= 0
       ? coordinator.begin(message.tabId, 0) : undefined;
     void panelAction(message, request).then(reply, error => reply({ error: String(error) })); return true;
   }
