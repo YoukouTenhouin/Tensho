@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T05:36:46Z",
+  "observed_at_utc": "2026-10-04T05:33:17Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -10,7 +10,7 @@
     "double_click_native_focus_allowed": true,
     "double_click_preserves_scroll": true,
     "already_open_panel_lookup_preserves_page_focus": true,
-    "native_toggle_restores_focus_without_lookup": true,
+    "repeated_native_focus_shortcut_focuses_results": false,
     "drag_does_not_lookup": true,
     "editable_double_click_does_not_lookup": true,
     "page_click_keeps_panel_open": true,
@@ -34,12 +34,12 @@
       "shortcut": ""
     },
     {
-      "description": "Toggle existing results",
+      "description": "Focus existing results",
       "name": "focus-results",
       "shortcut": "Alt+Shift+K"
     },
     {
-      "description": "Look up selection",
+      "description": "Look up selection and focus results",
       "name": "lookup-selection",
       "shortcut": "Alt+Shift+L"
     }
@@ -58,18 +58,19 @@
     "active": "",
     "target": "puella"
   },
-  "native_toggle_attempts": [
+  "close_then_focus_existing": {
+    "focused": true,
+    "same_generation": true,
+    "same_text": true
+  },
+  "repeated_focus_shortcut": [
     {
-      "closed_and_restored_focus": true,
-      "reopened_with_focus": true,
-      "same_generation": true,
-      "same_text": true
+      "document": false,
+      "element": "results"
     },
     {
-      "closed_and_restored_focus": true,
-      "reopened_with_focus": true,
-      "same_generation": true,
-      "same_text": true
+      "document": false,
+      "element": "results"
     }
   ],
   "loading_announcements": [
@@ -80,23 +81,23 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 256582184,
-      "frameId": 12,
-      "documentId": "D04A747C468BAD079F285A5D5E58C0DF",
-      "topDocumentId": "F62F396A84D88D4572D13025FF9ADC72",
+      "tabId": 123926843,
+      "frameId": 11,
+      "documentId": "589314099410DB02D6269792071F6E5D",
+      "topDocumentId": "B8FE9A74D9E90D6E8723CCD6B5DA3B2D",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     },
     "separate_origin": {
-      "tabId": 256582184,
-      "frameId": 13,
-      "documentId": "2438BFB89F6BE2C767CEC3AE50D6F7B5",
-      "topDocumentId": "F62F396A84D88D4572D13025FF9ADC72",
+      "tabId": 123926843,
+      "frameId": 12,
+      "documentId": "0544F274D876282F3D74FAAB83DCEAA0",
+      "topDocumentId": "B8FE9A74D9E90D6E8723CCD6B5DA3B2D",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     }
   },
-  "passed": true
+  "passed": false
 }

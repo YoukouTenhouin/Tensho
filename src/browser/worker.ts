@@ -45,6 +45,11 @@ async function restoreFocus(tabId: number): Promise<void> {
     try { await chrome.tabs.update(tabId, { active: true }); } catch { /* Source tab was closed. */ }
   }
 }
+async function close(tabId: number, windowId: number): Promise<void> {
+  await chrome.sidePanel.close({ windowId });
+  for (const [port, panelWindow] of panelWindows) if (panelWindow === windowId) panelWindows.delete(port);
+  await restoreFocus(tabId);
+}
 function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?: number): Promise<boolean> {
   if (!focus && windowId !== undefined && [...panelWindows.values()].includes(windowId)) return Promise.resolve(true);
   if (focus) focusRequests.set(tabId, (focusRequests.get(tabId) ?? 0) + 1);
@@ -120,7 +125,11 @@ chrome.commands.onCommand.addListener((command, tab) => {
     const request = coordinator.begin(tab.id);
     open(tab.id, true, request);
     void capture(tab.id, request);
-  } else if (command === 'focus-results') open(tab.id, true);
+  } else if (command === 'focus-results') {
+    // Reopening in a second native gesture is the accepted focus fallback.
+    if ([...panelWindows.values()].includes(tab.windowId)) void close(tab.id, tab.windowId).catch(console.error);
+    else void open(tab.id, true);
+  }
 });
 chrome.webNavigation.onCommitted.addListener(details => {
   coordinator.navigate(details.tabId, details.frameId);
@@ -166,8 +175,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     }
   }
   if (message.type === 'close') {
-    await chrome.sidePanel.close({ windowId: message.windowId });
-    await restoreFocus(tabId);
+    await close(tabId, message.windowId);
   }
   return { ok: true };
 }

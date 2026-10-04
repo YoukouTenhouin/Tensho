@@ -10,8 +10,8 @@
   "action": {"default_title": "Open Tensho"},
   "side_panel": {"default_path": "panel.html"},
   "commands": {
-    "lookup-selection": {"suggested_key": {"default": "Alt+Shift+L"}, "description": "Look up selection and focus results"},
-    "focus-results": {"suggested_key": {"default": "Alt+Shift+K"}, "description": "Focus existing results"}
+    "lookup-selection": {"suggested_key": {"default": "Alt+Shift+L"}, "description": "Look up selection"},
+    "focus-results": {"suggested_key": {"default": "Alt+Shift+K"}, "description": "Toggle existing results"}
   },
   "incognito": "not_allowed"
 }

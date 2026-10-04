@@ -19,8 +19,8 @@ The UI starts with Latin lookup and English explanations. This slice stores expl
 
 ## Use the development workflow
 
-- Press **Alt+Shift+L** to look up accessible selected text and focus the results. Temporary native page access does not enable automatic lookup.
-- Press **Alt+Shift+K** to open/focus existing results without another lookup. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
+- Press **Alt+Shift+L** to look up accessible selected text. Opening the sidebar focuses results; if it is already open, use the toggle below to move focus into it. Temporary native page access does not enable automatic lookup.
+- Press **Alt+Shift+K** to toggle existing results without another lookup. When closed, one press opens and focuses them; when already open, press twice to close and reopen with focus. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
 - Use **Look up selection with Tensho** in the selection context menu, including explicitly selected editable text, or enter a word in the panel.
 - In **Reading-site access**, enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
 - To enable an embedded reading origin, enter it explicitly in the site-access form. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.

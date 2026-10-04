@@ -22,6 +22,7 @@ import time
 import urllib.request
 
 from permission_scope import CDP, QuietHandler
+from native_input import key
 
 
 def wait_for(predicate, seconds=10):
@@ -38,7 +39,7 @@ def version(command):
     return subprocess.check_output(command, text=True, stderr=subprocess.STDOUT).strip()
 
 
-def run(desktop):
+def run(desktop, restart=False):
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                 'browser': version(['microsoft-edge', '--version']),
@@ -112,6 +113,19 @@ def run(desktop):
                 wait_for(lambda: reading.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s.length===1)'))
                 evidence['commands'] = reading.evaluate('chrome.commands.getAll()')
                 evidence['checks']['both_shortcuts_registered'] = all(any(c['name'] == name and c['shortcut'] for c in evidence['commands']) for name in ['lookup-selection', 'focus-results'])
+                if restart:
+                    evidence['restart_before_first_lookup'] = True
+                    reading.call('Page.navigate', url=url)
+                    wait_for(lambda: reading.evaluate("!!document.querySelector('#word')"))
+                    reading.call('Browser.close')
+                    browser.wait(timeout=10)
+                    for c in connections: c.ws.close()
+                    connections.clear()
+                    port_file.unlink(missing_ok=True)
+                    browser = subprocess.Popen(browser.args, env=env, stdout=log, stderr=log)
+                    wait_for(port_file.exists)
+                    port = int(port_file.read_text().splitlines()[0])
+                    reading = connect(wait_for(lambda: target('/index.html')))
                 reading.call('Page.navigate', url=url)
                 wait_for(lambda: reading.evaluate("!!document.querySelector('#word')"))
                 # Allow document_idle content script execution, then bring the reading page forward.
@@ -138,6 +152,33 @@ def run(desktop):
                 double_click('#second')
                 wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='legi' && document.querySelector('#status').textContent==='Controlled development response'"))
                 checks['already_open_panel_lookup_preserves_page_focus'] = reading.evaluate('document.hasFocus()')
+                toggle_attempts = []
+                for _ in range(2):
+                    retained = panel.evaluate(snapshot)['state']
+                    rect = reading.evaluate("document.querySelector('#second').getBoundingClientRect().toJSON()")
+                    for kind in ['mousePressed', 'mouseReleased']:
+                        reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+20, y=rect['y']+12, button='left', clickCount=1)
+                    if desktop:
+                        windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
+                        matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
+                        if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
+                        subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
+                        time.sleep(.1)
+                    key(display, 'Alt_L', 'Shift_L', 'k')
+                    wait_for(lambda: target('/panel.html') is None)
+                    restored = reading.evaluate('document.hasFocus()')
+                    key(display, 'Alt_L', 'Shift_L', 'k')
+                    panel = connect(wait_for(lambda: target('/panel.html')))
+                    wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
+                    reopened = panel.evaluate(snapshot)['state']
+                    toggle_attempts.append({
+                        'closed_and_restored_focus': restored,
+                        'reopened_with_focus': panel.evaluate('document.hasFocus()'),
+                        'same_generation': reopened['generation'] == retained['generation'],
+                        'same_text': reopened['text'] == retained['text'],
+                    })
+                evidence['native_toggle_attempts'] = toggle_attempts
+                checks['native_toggle_restores_focus_without_lookup'] = all(all(a.values()) for a in toggle_attempts)
                 initial = panel.evaluate(snapshot)
                 # Dragging ordinary text produces no replacement lookup.
                 reading.call('Input.dispatchMouseEvent', type='mousePressed', x=40, y=242, button='left', clickCount=1)
@@ -240,7 +281,8 @@ def run(desktop):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--desktop', action='store_true')
+    parser.add_argument('--restart', action='store_true', help='Restart the disposable profile before its first lookup')
     args = parser.parse_args()
-    result = run(args.desktop)
+    result = run(args.desktop, args.restart)
     print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)
