@@ -49,9 +49,10 @@ export class LookupCoordinator {
   async lookup(identity: Identity, input: string): Promise<void> {
     const text = input.trim();
     if (!text) return this.notice(identity, '', 'Select text on an ordinary webpage or enter a word here.');
-    if ([...text].length > 2000) return this.notice(identity, '', 'Selection exceeds 2,000 Unicode code points. Select less text; nothing was sent.');
+    if ([...text].length > 4096) return this.notice(identity, '', 'Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent.');
+    if (!/[\p{L}\p{N}]/u.test(text)) return this.notice(identity, text, 'Enter a word containing letters or numbers. Nothing was sent.');
     if (/\s/u.test(text)) return this.notice(identity, text, 'Passage retained. Individual-word study arrives in the passage slice; no analysis was requested.');
-    if ([...text].length > 128) return this.notice(identity, text, 'A word must be at most 128 Unicode code points. Nothing was sent.');
+    if ([...text].length > 256) return this.notice(identity, text, 'A word must be at most 256 Unicode code points. Nothing was sent.');
     this.#pending.get(identity.tabId)?.abort();
     const abort = new AbortController();
     this.#pending.set(identity.tabId, abort);

@@ -4,6 +4,7 @@ import { controlledAnalyzer } from '../core/controlled.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 
 const ports = new Set<chrome.runtime.Port>();
+let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
 const coordinator = new LookupCoordinator(controlledAnalyzer, () => notify());
 function notify(): void { for (const port of ports) { try { port.postMessage({ type: 'changed' }); } catch { ports.delete(port); } } }
@@ -43,14 +44,16 @@ async function restoreFocus(tabId: number): Promise<void> {
     try { await chrome.tabs.update(tabId, { active: true }); } catch { /* Source tab was closed. */ }
   }
 }
-function open(tabId: number, focus: boolean): void {
+function open(tabId: number, focus: boolean): Promise<boolean> {
   if (focus) focusRequests.set(tabId, (focusRequests.get(tabId) ?? 0) + 1);
-  void chrome.sidePanel.open({ tabId }).then(async () => {
+  return chrome.sidePanel.open({ tabId }).then(async () => {
     notify();
     if (!focus) await restoreFocus(tabId);
+    return true;
   }).catch(error => {
     coordinator.notice(coordinator.get(tabId)?.identity ?? manualIdentity(tabId), '',
       `The native panel could not open: ${String(error)}. Open Tensho from the toolbar.`);
+    return false;
   });
 }
 async function capture(tabId: number): Promise<void> {
@@ -74,6 +77,7 @@ async function syncScripts(): Promise<void> {
   const origins = await enabledOrigins();
   const allowed: string[] = [];
   for (const origin of origins) if (await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) allowed.push(origin);
+  automaticOrigins = allowed;
   const existing = await chrome.scripting.getRegisteredContentScripts();
   if (existing.length) await chrome.scripting.unregisterContentScripts({ ids: existing.map(item => item.id) });
   if (allowed.length) await chrome.scripting.registerContentScripts([{ id: 'tensho-reading',
@@ -97,8 +101,8 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 chrome.runtime.onStartup.addListener(queueSync);
 chrome.permissions.onAdded.addListener(queueSync);
-chrome.permissions.onRemoved.addListener(queueSync);
-chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { queueSync(); notify(); } });
+chrome.permissions.onRemoved.addListener(() => { automaticOrigins = []; queueSync(); });
+chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { automaticOrigins = []; queueSync(); notify(); } });
 chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id || tab.incognito || info.menuItemId !== 'lookup') return;
@@ -165,14 +169,20 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
   }
   if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     const tabId = sender.tab.id, frameId = sender.frameId ?? 0;
+    // The native gesture must reach sidePanel.open before asynchronous API calls.
+    // Only already enabled/granted origins qualify; revocation invalidates this cache.
+    if (!automaticAllowed(sender.tab.url ?? '', sender.url ?? '', automaticOrigins)) return;
+    const opening = open(tabId, false);
     void (async () => {
       const [top, frame, enabled] = await Promise.all([
         chrome.webNavigation.getFrame({ tabId, frameId: 0 }), chrome.webNavigation.getFrame({ tabId, frameId }), enabledOrigins(),
       ]);
       if (!top || !frame || frame.documentId !== sender.documentId || !automaticAllowed(top.url, frame.url, enabled)) return;
       if (!await chrome.permissions.contains({ origins: [permissionPattern(top.url), permissionPattern(frame.url)] })) return;
-      open(tabId, false);
+      if (!await opening) return;
       await lookup(tabId, frameId, message.text, sender.documentId);
     })().then(() => reply({ ok: true }), error => reply({ error: String(error) })); return true;
   }
 });
+
+queueSync();

@@ -43,10 +43,10 @@ test('configuration and frame identity are preserved on new work', async () => {
 });
 test('manual and selection bounds prevent calls without truncation', async () => {
   const { coordinator, calls } = fixture();
-  for (const input of ['', 'arma virumque', 'ā'.repeat(129), '𐀀'.repeat(2001)]) await coordinator.lookup(identity, input);
+  for (const input of ['', '—…', 'arma virumque', 'ā'.repeat(257), '𐀀'.repeat(4097)]) await coordinator.lookup(identity, input);
   assert.equal(calls.length, 0);
-  const valid = coordinator.lookup(identity, 'ā'.repeat(128));
-  assert.equal(calls[0]!.text.length, 128); calls[0]!.finish(analysis); await valid;
+  const valid = coordinator.lookup(identity, 'ā'.repeat(256));
+  assert.equal(calls[0]!.text.length, 256); calls[0]!.finish(analysis); await valid;
 });
 test('origins and native patterns preserve scheme, hostname, and effective port', () => {
   assert.equal(readingOrigin('https://EXAMPLE.com:443/text'), 'https://example.com');
