@@ -4,6 +4,9 @@ Language learners look up words encountered in texts they are reading.
 
 ## Language
 
+**Multiword selection**:
+A passage selected by the learner containing more than one word, from which individual words can be chosen for analysis and dictionary lookup.
+
 **Lookup language**:
 The language in which a selected word is to be analyzed and looked up, regardless of whether the same spelling occurs in another language.
 
