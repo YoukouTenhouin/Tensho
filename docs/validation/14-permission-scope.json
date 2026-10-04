@@ -1,0 +1,56 @@
+{
+  "manifest": {
+    "background": {
+      "service_worker": "worker.js"
+    },
+    "host_permissions": [
+      "http://127.0.0.1:44605/*"
+    ],
+    "manifest_version": 3,
+    "name": "Tensho native permission acceptance",
+    "permissions": [
+      "scripting",
+      "tabs"
+    ],
+    "version": "0.0.1"
+  },
+  "granted": {
+    "origins": [
+      "http://127.0.0.1:44605/*"
+    ],
+    "permissions": [
+      "tabs",
+      "scripting"
+    ]
+  },
+  "results": [
+    {
+      "origin": "http://127.0.0.1:44605",
+      "contains": true,
+      "injection": [
+        {
+          "documentId": "20837FB660517AF6396ECF3EB3B96AF7",
+          "frameId": 0,
+          "result": {
+            "origin": "http://127.0.0.1:44605",
+            "text": "puella"
+          }
+        }
+      ]
+    },
+    {
+      "origin": "http://127.0.0.1:40015",
+      "contains": false,
+      "injection": {
+        "error": "Error: Cannot access contents of url \"http://127.0.0.1:40015/index.html\". Extension manifest must request permission to access this host."
+      }
+    }
+  ],
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "observed_at_utc": "2026-10-04T05:01:45Z",
+  "environment": {
+    "os": "NAME=\"openSUSE Tumbleweed\"\n# VERSION=\"20260923\"\nID=\"opensuse-tumbleweed\"\nID_LIKE=\"opensuse suse\"\nVERSION_ID=\"20260923\"\nPRETTY_NAME=\"openSUSE Tumbleweed\"\nANSI_COLOR=\"0;32\"\n# CPE 2.3 format, boo#1217921\nCPE_NAME=\"cpe:2.3:o:opensuse:tumbleweed:20260923:*:*:*:*:*:*:*\"\n#CPE 2.2 format\n#CPE_NAME=\"cpe:/o:opensuse:tumbleweed:20260923\"\nBUG_REPORT_URL=\"https://bugzilla.opensuse.org\"\nSUPPORT_URL=\"https://bugs.opensuse.org\"\nHOME_URL=\"https://www.opensuse.org\"\nDOCUMENTATION_URL=\"https://en.opensuse.org/Portal:Tumbleweed\"\nLOGO=\"distributor-logo-Tumbleweed\"\n",
+    "mode": "headless Edge; native extension permissions, no KDE UI assertion"
+  },
+  "exact_port_isolation": true
+}
