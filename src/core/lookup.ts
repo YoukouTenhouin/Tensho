@@ -56,19 +56,46 @@ export class LookupCoordinator {
   #generation = 0;
   #requests = new Map<number, { token: symbol; frameId: number | undefined }>();
   #wordChoices = new Map<number, symbol>();
+  #restorationClosed = new Set<number>();
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
-  #invalidate: (tabId: number) => void;
+  #invalidate: (tabId: number, preserve?: boolean) => void;
+  #prepareLookup: ((identity: Identity, current: () => boolean) => Promise<boolean>) | undefined;
   constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void,
     sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true,
-    invalidate: (tabId: number) => void = () => {}) {
+    invalidate: (tabId: number, preserve?: boolean) => void = () => {},
+    prepareLookup?: (identity: Identity, current: () => boolean) => Promise<boolean>) {
     this.#analyzer = analyzer;
     this.#publish = publish;
     this.#sourceIsCurrent = sourceIsCurrent;
     this.#invalidate = invalidate;
+    this.#prepareLookup = prepareLookup;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
+  /** Capture the current intent, including actions still acquiring their source. */
+  guard(tabId: number): () => boolean {
+    const token = this.#requests.get(tabId)?.token;
+    return () => this.#requests.get(tabId)?.token === token;
+  }
+  retainAfterRefusal(tabId: number): void {
+    const state = this.#states.get(tabId);
+    if (state?.status === 'loading' && !this.#pending.has(tabId)) this.#set({ ...state, status: 'error', failureKind: 'interrupted',
+      message: 'The previous lookup was interrupted. Retry explicitly when session storage is available.' });
+  }
+  /** Hydrate once without requests. A newly reserved browser action always wins
+   * over slower session loading, even before it has captured its source. */
+  restore(saved: State): boolean {
+    const tabId = saved.identity.tabId;
+    if (this.#restorationClosed.has(tabId) || this.#requests.has(tabId) || this.#states.has(tabId)) return false;
+    this.#restorationClosed.add(tabId);
+    const state = structuredClone(saved);
+    this.#generation = Math.max(this.#generation, state.generation, state.passage?.id ?? 0);
+    this.#requests.set(tabId, { token: Symbol(), frameId: state.identity.frameId });
+    this.#set(state.status === 'loading' ? { ...state, status: 'error', failureKind: 'interrupted',
+      message: 'The lookup was interrupted. Retry explicitly to resume.' } : state);
+    return true;
+  }
   /** Replace configuration identity before any refreshed request can publish.
    * Inactive tabs retain their input, but never display obsolete provider output. */
   reconfigure(configuration: Pick<Identity, 'configuration' | 'lookupLanguage' | 'explanationLanguage'>, visibleTabs: readonly number[]): void {
@@ -89,6 +116,7 @@ export class LookupCoordinator {
     }
   }
   clear(tabId: number): void {
+    this.#restorationClosed.add(tabId);
     this.#invalidate(tabId);
     this.#requests.delete(tabId);
     this.#wordChoices.delete(tabId);
@@ -104,8 +132,9 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    this.#restorationClosed.add(tabId);
     this.#wordChoices.delete(tabId);
-    this.#invalidate(tabId);
+    this.#invalidate(tabId, !!this.#prepareLookup);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
     const deadline = performance.now() + requestLimits.actionMs;
@@ -134,11 +163,14 @@ export class LookupCoordinator {
       },
       notice: (identity, text, message) => {
         if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
-        if (current()) {
+        const publish = () => { if (current()) {
+          this.#invalidate(tabId);
           this.#pending.get(tabId)?.abort();
           this.#pending.delete(tabId);
           this.#set({ identity: { ...identity }, text, generation: ++this.#generation, status: 'notice', message });
-        }
+        } };
+        if (this.#prepareLookup) void this.#prepareLookup(identity, current).then(accepted => { if (accepted) publish(); });
+        else publish();
       },
     };
     return request;
@@ -172,6 +204,10 @@ export class LookupCoordinator {
     this.#publish(state, state.identity.tabId);
   }
   async #lookup(identity: Identity, input: string, request: LookupRequest, deadline: number, passage?: Passage): Promise<void> {
+    // A superseded result must be durably invalidated before accepting another
+    // selection. If storage is unavailable, leave the previous selection current.
+    if (this.#prepareLookup && (!await this.#prepareLookup(identity, request.current) || !request.current())) return;
+    this.#invalidate(identity.tabId);
     const prepared = prepareSelection(input);
     if ('error' in prepared) return request.notice(identity, input, prepared.error);
     if (prepared.words.length > 1) {

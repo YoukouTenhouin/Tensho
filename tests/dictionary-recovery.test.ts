@@ -148,6 +148,20 @@ test('queued article choices cannot mix providers when an earlier choice starts 
   assert.deepEqual(app.dictionaries.get(1)[0]!.articles, {});
 });
 
+test('a successful article released for storage space still commits its dictionary provider', async () => {
+  const app = await setup({ first: { retrieve: async (_resolution, entryId) => {
+    if (entryId === 'n2') throw new RequestFailure('network', 'Later article failed');
+    return article('first', entryId);
+  } } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  app.dictionaries.releaseArticle(1, app.state.generation, 0, 'n1', article('first', 'n1'));
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n2');
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n1?.status, 'not-retained');
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n2?.status, 'error');
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'first:article:n2']);
+});
+
 test('a concurrent first success is retained before a queued failure and prevents fallback', async () => {
   let release!: () => void;
   const app = await setup({ first: { retrieve: async (_resolution, entryId) => {
