@@ -24,7 +24,7 @@ from permission_scope import CDP, QuietHandler
 from reading_workflow import wait_for, version
 
 
-def run(output):
+def run(output, idle=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'browser': version(['microsoft-edge', '--version']),
@@ -38,6 +38,11 @@ def run(output):
         server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
         threading.Thread(target=server.serve_forever, daemon=True).start()
         origin = f'http://127.0.0.1:{server.server_port}'; url = origin + '/index.html'
+        (root/'frame.html').write_text('<!doctype html><style>body{font:24px serif}</style><p>agricola</p>')
+        frame_server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
+        threading.Thread(target=frame_server.serve_forever, daemon=True).start()
+        frame_origin=f'http://127.0.0.1:{frame_server.server_port}'
+
         browser = xvfb = None
         connections = []
         try:
@@ -91,6 +96,10 @@ def run(output):
                 wait_for(lambda:panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
                 checks['native_focus_shortcut_does_not_lookup']=panel.evaluate(snapshot)['state']['generation']==before
                 checks['native_focus_shortcut_focuses_results']=panel.evaluate("document.hasFocus() && document.activeElement.id==='results'")
+                if idle:
+                    print('Waiting 35 seconds for native worker idle shutdown',flush=True)
+                    time.sleep(35)
+                    evidence['worker_present_after_idle']=target('/worker.js') is not None
                 # Explicit context-menu lookup in an editable field uses browser-supplied text.
                 reading.call('Page.bringToFront')
                 reading.evaluate("const i=document.querySelector('#editable');i.focus();i.select()")
@@ -103,8 +112,33 @@ def run(output):
                     print(f'{instruction}: inspect {path}, then enter X Y',flush=True)
                     a,b=map(int,input().split());click(display,a,b)
                 inspected_click('editable-context-menu','Select Look up selection with Tensho')
+                time.sleep(.5)
+                evidence['editable_context_snapshot']=panel.evaluate(snapshot)
+                evidence['editable_context_ui']=panel.evaluate("document.querySelector('#target').textContent")
+                (output/'editable-context-result.json').write_text(json.dumps(evidence,indent=2)+'\n')
                 wait_for(lambda:panel.evaluate("document.querySelector('#target').textContent==='puellae'"))
                 checks['native_context_menu_editable_lookup']=True
+                # Browser-supplied frame selection works without a DOM host grant.
+                reading.evaluate("(()=>{const f=document.createElement('iframe');f.id='ungranted';f.src="+json.dumps(frame_origin+'/frame.html')+";f.style.cssText='display:block;width:400px;height:100px';document.body.append(f)})()")
+                wait_for(lambda:len(reading.call('Page.getFrameTree')['frameTree'].get('childFrames',[]))==1)
+                time.sleep(.2)
+                rect=reading.evaluate("document.querySelector('#ungranted').getBoundingClientRect().toJSON()")
+                for count in [1,2]:
+                    for kind in ['mousePressed','mouseReleased']:
+                        reading.call('Input.dispatchMouseEvent',type=kind,x=rect['x']+35,y=rect['y']+40,button='left',clickCount=count)
+                # Edge's sidebar contributes to outerWidth-innerWidth, not the left inset.
+                offset=reading.evaluate('({x:screenX+4,y:screenY+outerHeight-innerHeight})')
+                click(display,int(offset['x']+rect['x']+35),int(offset['y']+rect['y']+40),button=3)
+                inspected_click('frame-context-menu','Select Look up selection with Tensho in the ungranted frame')
+                time.sleep(.5)
+                evidence['frame_context_snapshot']=panel.evaluate(snapshot)
+                (output/'frame-context-result.json').write_text(json.dumps(evidence,indent=2)+'\n')
+                wait_for(lambda:panel.evaluate("document.querySelector('#target').textContent==='agricola'"))
+                frame_state=panel.evaluate(snapshot)['state']
+                checks['native_frame_context_menu_routes_source']=frame_state['identity']['frameId']!=0
+                checks['frame_context_menu_does_not_grant_site']=panel.evaluate('chrome.permissions.getAll().then(p=>p.origins.length===0)')
+                checks['frame_context_menu_does_not_imply_dom_access']=panel.evaluate('(async()=>{try{await chrome.scripting.executeScript({target:{tabId:'+str(frame_state['identity']['tabId'])+',frameIds:['+str(frame_state['identity']['frameId'])+']},func:()=>document.title});return false}catch{return true}})()')
+
                 panel.evaluate("document.querySelector('details').open=true")
                 panel.call('Runtime.evaluate',expression="document.querySelector('#enable-current').click()",userGesture=True)
                 inspected_click('deny-prompt','Deny the native permission request')
@@ -162,8 +196,10 @@ def run(output):
                     try:process.wait(timeout=8)
                     except subprocess.TimeoutExpired:process.kill();process.wait()
             server.shutdown();server.server_close()
+            frame_server.shutdown();frame_server.server_close()
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True)
-    raise SystemExit(0 if run(parser.parse_args().output) else 1)
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);parser.add_argument('--idle',action='store_true')
+    args=parser.parse_args()
+    raise SystemExit(0 if run(args.output,args.idle) else 1)

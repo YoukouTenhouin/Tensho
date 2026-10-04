@@ -108,3 +108,24 @@ test('frame replacement invalidates pending capture only when its source may be 
   assert.equal(calls.length, 0);
   assert.equal(coordinator.get(1), undefined);
 });
+
+
+test('a detached source cannot publish analysis after its document disappears', async () => {
+  const coordinator = new LookupCoordinator({ analyze: async () => analysis }, () => {}, async () => false);
+  await coordinator.lookup(identity, 'puella');
+  assert.equal(coordinator.get(1), undefined);
+});
+
+test('a late source validation cannot clear a newer lookup', async () => {
+  const validations: ((valid: boolean) => void)[] = [];
+  const coordinator = new LookupCoordinator({ analyze: async () => analysis }, () => {},
+    () => new Promise(resolve => validations.push(resolve)));
+  const earlier = coordinator.lookup(identity, 'puella');
+  await Promise.resolve();
+  const later = coordinator.lookup({ ...identity, documentId: 'new-frame' }, 'legi');
+  await Promise.resolve();
+  validations[1]!(true); await later;
+  validations[0]!(false); await earlier;
+  assert.equal(coordinator.get(1)?.text, 'legi');
+  assert.equal(coordinator.get(1)?.status, 'complete');
+});

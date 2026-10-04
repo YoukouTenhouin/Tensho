@@ -3,12 +3,15 @@ import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { controlledAnalyzer } from '../core/controlled.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 
-const ports = new Set<chrome.runtime.Port>();
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
-const coordinator = new LookupCoordinator(controlledAnalyzer, () => notify());
-function notify(): void { for (const port of ports) { try { port.postMessage({ type: 'changed' }); } catch { ports.delete(port); } } }
+const coordinator = new LookupCoordinator(controlledAnalyzer, () => notify(), async identity => {
+  if (identity.documentId === 'manual') return true;
+  const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
+  return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
+});
+function notify(): void { void chrome.runtime.sendMessage({ type: 'changed' }).catch(() => {}); }
 const settingsReady = chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
 async function enabledOrigins(): Promise<string[]> {
   await settingsReady;
@@ -144,11 +147,10 @@ chrome.tabs.onRemoved.addListener(tabId => { coordinator.clear(tabId); focusRequ
 chrome.tabs.onActivated.addListener(notify);
 chrome.runtime.onConnect.addListener(port => {
   if (port.name !== 'panel' || port.sender?.url !== chrome.runtime.getURL('panel.html')) return;
-  ports.add(port);
   port.onMessage.addListener(message => {
     if (message?.type === 'ready' && Number.isInteger(message.windowId)) panelWindows.set(port, message.windowId);
   });
-  port.onDisconnect.addListener(() => { ports.delete(port); panelWindows.delete(port); });
+  port.onDisconnect.addListener(() => { panelWindows.delete(port); });
 });
 async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   const [tab] = await chrome.tabs.query({ windowId, active: true });

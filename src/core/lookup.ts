@@ -32,9 +32,12 @@ export class LookupCoordinator {
   #requests = new Map<number, { token: symbol; frameId: number | undefined }>();
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
-  constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void) {
+  #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
+  constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void,
+    sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true) {
     this.#analyzer = analyzer;
     this.#publish = publish;
+    this.#sourceIsCurrent = sourceIsCurrent;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
   clear(tabId: number): void {
@@ -102,7 +105,11 @@ export class LookupCoordinator {
     const current = () => request.current() && this.#states.get(identity.tabId)?.generation === base.generation && !abort.signal.aborted;
     try {
       const analysis = await this.#analyzer.analyze(text, base.identity, abort.signal);
-      if (current()) this.#set({ ...base, status: 'complete', analysis });
+      if (!current()) return;
+      const validSource = await this.#sourceIsCurrent(base.identity);
+      if (!current()) return;
+      if (validSource) this.#set({ ...base, status: 'complete', analysis });
+      else this.clear(identity.tabId);
     } catch (error) {
       if (current()) this.#set({ ...base, status: 'error', message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
     } finally {

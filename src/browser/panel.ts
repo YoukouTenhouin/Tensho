@@ -63,10 +63,22 @@ element('site').addEventListener('submit', event => { event.preventDefault(); en
 function close(): void { void send({ type: 'close' }).catch(report); }
 element('close').onclick = close;
 document.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });
+let panelPort: chrome.runtime.Port | undefined;
+function connect(): void {
+  if (panelPort) return;
+  const port = chrome.runtime.connect({ name: 'panel' });
+  panelPort = port;
+  port.postMessage({ type: 'ready', windowId });
+  port.onDisconnect.addListener(() => { if (panelPort === port) panelPort = undefined; });
+}
+// A native action can restart the worker after its old port was disconnected.
+chrome.runtime.onMessage.addListener(message => {
+  if (message?.type !== 'changed' || typeof windowId !== 'number') return;
+  connect();
+  void refresh().catch(report);
+});
 void chrome.windows.getCurrent().then(async current => {
   windowId = current.id!;
-  const port = chrome.runtime.connect({ name: 'panel' });
-  port.postMessage({ type: 'ready', windowId });
-  port.onMessage.addListener(() => { void refresh().catch(report); });
+  connect();
   await refresh();
 }).catch(report);

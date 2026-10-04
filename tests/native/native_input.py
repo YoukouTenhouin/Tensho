@@ -1,5 +1,6 @@
 """XTest input for disposable X11 acceptance sessions; never opens a display implicitly."""
 import ctypes
+import time
 
 
 def connection(display):
@@ -12,13 +13,16 @@ def connection(display):
     return x, t, handle
 
 
-def click(display, a, b):
+def click(display, a, b, button=1):
     x, t, d = connection(display)
     try:
         t.XTestFakeMotionEvent.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_ulong]
         t.XTestFakeButtonEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_int, ctypes.c_ulong]
-        t.XTestFakeMotionEvent(d, -1, a, b, 0)
-        t.XTestFakeButtonEvent(d, 1, 1, 0); t.XTestFakeButtonEvent(d, 1, 0, 0); x.XFlush(d)
+        t.XTestFakeMotionEvent(d, -1, a, b, 0); x.XFlush(d)
+        time.sleep(.05)
+        t.XTestFakeButtonEvent(d, button, 1, 0); x.XFlush(d)
+        time.sleep(.03)
+        t.XTestFakeButtonEvent(d, button, 0, 0); x.XFlush(d)
     finally:
         x.XCloseDisplay(d)
 
