@@ -67,15 +67,21 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
     await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
     const frames = await chrome.webNavigation.getAllFrames({ tabId }) ?? [];
-    let selected: { frameId: number; documentId: string; text: string; focused: boolean } | undefined;
+    const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number }[] = [];
     for (const frame of frames) {
       if (!readingOrigin(frame.url)) continue;
       try {
         const value = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: frame.documentId });
-        if (value?.text && value.origin === readingOrigin(frame.url) && (!selected || value.focused)) selected = { ...value, frameId: frame.frameId, documentId: frame.documentId };
+        if (typeof value?.text === 'string' && value.origin === readingOrigin(frame.url)) captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId });
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
-    if (!selected) throw new Error('No accessible selection. Select text on the page, use its context menu, or enter a word here.');
+    const focused = captures.filter(value => value.focused);
+    const recent = captures.filter(value => value.lastFocused > 0).sort((a, b) => b.lastFocused - a.lastFocused);
+    const withText = captures.filter(value => value.text);
+    const selected = focused.length === 1 ? focused[0]
+      : recent.length && recent[0]!.lastFocused !== recent[1]?.lastFocused ? recent[0]
+      : withText.length === 1 ? withText[0] : undefined;
+    if (!selected?.text) throw new Error('No unambiguous accessible selection. Select text on the page, use its context menu, or enter a word here.');
     await lookup(tabId, selected.frameId, selected.text, request, selected.documentId);
   } catch (error) { request.notice(manualIdentity(tabId), '', String(error)); }
 }
@@ -123,8 +129,8 @@ chrome.commands.onCommand.addListener((command, tab) => {
   if (!tab?.id || tab.incognito) return;
   if (command === 'lookup-selection') {
     const request = coordinator.begin(tab.id);
-    open(tab.id, true, request);
     void capture(tab.id, request);
+    open(tab.id, true, request);
   } else if (command === 'focus-results') {
     // Reopening in a second native gesture is the accepted focus fallback.
     if ([...panelWindows.values()].includes(tab.windowId)) void close(tab.id, tab.windowId).catch(console.error);

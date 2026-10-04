@@ -22,7 +22,7 @@ import time
 import urllib.request
 
 from permission_scope import CDP, QuietHandler
-from native_input import key
+from native_input import key, click
 
 
 def wait_for(predicate, seconds=10):
@@ -103,6 +103,15 @@ def run(desktop, restart=False):
                 def connect(item):
                     cdp = CDP(item['webSocketDebuggerUrl']); connections.append(cdp); return cdp
 
+                def native_key(*names):
+                    if desktop:
+                        windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
+                        matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
+                        if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
+                        subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
+                        time.sleep(.1)
+                    key(display, *names)
+
                 worker = wait_for(lambda: target('/worker.js'))
                 extension_id = worker['url'].split('/')[2]
                 reading = connect(wait_for(lambda: target('/index.html')))
@@ -158,16 +167,10 @@ def run(desktop, restart=False):
                     rect = reading.evaluate("document.querySelector('#second').getBoundingClientRect().toJSON()")
                     for kind in ['mousePressed', 'mouseReleased']:
                         reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+20, y=rect['y']+12, button='left', clickCount=1)
-                    if desktop:
-                        windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
-                        matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
-                        if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
-                        subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
-                        time.sleep(.1)
-                    key(display, 'Alt_L', 'Shift_L', 'k')
+                    native_key('Alt_L', 'Shift_L', 'k')
                     wait_for(lambda: target('/panel.html') is None)
                     restored = reading.evaluate('document.hasFocus()')
-                    key(display, 'Alt_L', 'Shift_L', 'k')
+                    native_key('Alt_L', 'Shift_L', 'k')
                     panel = connect(wait_for(lambda: target('/panel.html')))
                     wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
                     reopened = panel.evaluate(snapshot)['state']
@@ -262,6 +265,21 @@ def run(desktop, restart=False):
                 frame_double_click('embedded'); time.sleep(.15)
                 checks['embedded_frame_requires_containing_site_enablement'] = panel.evaluate(snapshot)['state']['generation'] == before
                 evidence['frame_identities'] = {'same_origin': same['identity'], 'separate_origin': embedded['identity']}
+                # Keyboard lookup must keep the selected frame even when opening takes focus.
+                frame_double_click('embedded')
+                # Native pointer focus is needed before XTest keyboard delivery to an OOPIF.
+                box = reading.evaluate("(()=>{const r=document.querySelector('#embedded').getBoundingClientRect();return {x:screenX+(outerWidth-innerWidth)/2+r.x+25,y:screenY+outerHeight-innerHeight+r.y+20}})()")
+                click(display, int(box['x']), int(box['y']));time.sleep(.1)
+                click(display, int(box['x']), int(box['y']));time.sleep(.1)
+                native_key('Alt_L', 'Shift_L', 'k')
+                wait_for(lambda: target('/panel.html') is None)
+                native_key('Alt_L', 'Shift_L', 'l')
+                panel = connect(wait_for(lambda: target('/panel.html')))
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'complete')
+                keyboard_frame = panel.evaluate(snapshot)['state']
+                evidence['keyboard_frame'] = keyboard_frame
+                checks['keyboard_open_preserves_selected_frame'] = keyboard_frame['identity']['frameId'] == embedded['identity']['frameId']
+
                 evidence['passed'] = all(checks.values())
                 return evidence
         finally:
