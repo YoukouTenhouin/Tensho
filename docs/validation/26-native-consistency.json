@@ -1,0 +1,32 @@
+{
+  "observed_at_utc": "2026-10-04T19:21:54Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_providers": true,
+  "production_session_coordination_and_ui": true,
+  "checks": {
+    "fresh_tab_does_not_show_other_selection": true,
+    "provider_reorder_refreshes_only_visible_tab": true,
+    "hidden_result_is_deferred_without_old_analysis": true,
+    "viewing_hidden_tab_refreshes_with_new_provider": true,
+    "switching_current_results_does_not_repeat_requests": true,
+    "all_disabled_visible_state_sends_no_request": true,
+    "all_disabled_deferred_tab_sends_no_request": true,
+    "worker_restart_does_not_replay_hidden_deferred_work": true,
+    "deferred_refresh_survives_actual_worker_restart": true,
+    "current_language_labels_match_result": true,
+    "session_keeps_one_current_result_per_tab": true,
+    "session_remains_within_budget": true,
+    "new_passage_word_resets_result_scroll": true,
+    "scroll_reset_preserves_passage_controls": true
+  },
+  "fixture_permission": "test-only exact-origin manifest pregrant for content-script privacy and site-setting persistence",
+  "provider_calls_after_restart": [
+    "a-first:analysis:malum",
+    "a-first:analysis:malum",
+    "d-first:resolve:candidate-one",
+    "d-first:article:n1",
+    "a-first:analysis:puella"
+  ],
+  "passed": true
+}

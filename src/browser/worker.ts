@@ -263,6 +263,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
     const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
     const settings = await configuration.get();
+    if (coordinator.get(tabId)?.identity.configuration === settings.revision) void coordinator.view(tabId);
     const state = coordinator.get(tabId);
     const current = state?.identity.configuration === settings.revision;
     reading!.view(tabId);
