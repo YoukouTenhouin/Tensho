@@ -56,6 +56,7 @@ export class LookupCoordinator {
   #generation = 0;
   #requests = new Map<number, { token: symbol; frameId: number | undefined }>();
   #wordChoices = new Map<number, symbol>();
+  #restorationClosed = new Set<number>();
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
@@ -69,6 +70,19 @@ export class LookupCoordinator {
     this.#invalidate = invalidate;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
+  /** Hydrate once without requests. A newly reserved browser action always wins
+   * over slower session loading, even before it has captured its source. */
+  restore(saved: State): boolean {
+    const tabId = saved.identity.tabId;
+    if (this.#restorationClosed.has(tabId) || this.#requests.has(tabId) || this.#states.has(tabId)) return false;
+    this.#restorationClosed.add(tabId);
+    const state = structuredClone(saved);
+    this.#generation = Math.max(this.#generation, state.generation, state.passage?.id ?? 0);
+    this.#requests.set(tabId, { token: Symbol(), frameId: state.identity.frameId });
+    this.#set(state.status === 'loading' ? { ...state, status: 'error', failureKind: 'interrupted',
+      message: 'The lookup was interrupted. Retry explicitly to resume.' } : state);
+    return true;
+  }
   /** Replace configuration identity before any refreshed request can publish.
    * Inactive tabs retain their input, but never display obsolete provider output. */
   reconfigure(configuration: Pick<Identity, 'configuration' | 'lookupLanguage' | 'explanationLanguage'>, visibleTabs: readonly number[]): void {
@@ -89,6 +103,7 @@ export class LookupCoordinator {
     }
   }
   clear(tabId: number): void {
+    this.#restorationClosed.add(tabId);
     this.#invalidate(tabId);
     this.#requests.delete(tabId);
     this.#wordChoices.delete(tabId);
@@ -104,6 +119,7 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    this.#restorationClosed.add(tabId);
     this.#wordChoices.delete(tabId);
     this.#invalidate(tabId);
     this.#pending.get(tabId)?.abort();

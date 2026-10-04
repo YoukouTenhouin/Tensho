@@ -38,6 +38,20 @@ export class DictionaryCoordinator {
     const saved = this.#states.get(tabId);
     return saved?.generation === this.#analysis(tabId)?.generation ? saved?.candidates ?? {} : {};
   }
+  /** Restore completed work without fetching; interrupted pieces require retry. */
+  restore(tabId: number, generation: number, saved: Record<number, CandidateDictionary>): boolean {
+    const analysis = this.#analysis(tabId);
+    if (analysis?.status !== 'complete' || analysis.generation !== generation || this.#states.has(tabId) ||
+      this.#invalidGeneration.get(tabId) === generation) return false;
+    const candidates = structuredClone(saved);
+    const interrupted = <T>(work: DictionaryWork<T>): DictionaryWork<T> => work.status === 'loading'
+      ? { status: 'error', failureKind: 'interrupted', message: 'This dictionary action was interrupted. Retry explicitly to resume.' } : work;
+    for (const candidate of Object.values(candidates)) {
+      candidate.resolution = interrupted(candidate.resolution);
+      for (const [id, article] of Object.entries(candidate.articles)) candidate.articles[id] = interrupted(article);
+    }
+    this.#states.set(tabId, { generation, candidates }); this.#publish(); return true;
+  }
   invalidate(tabId: number): void {
     const state = this.#analysis(tabId);
     if (state) this.#invalidGeneration.set(tabId, state.generation);
