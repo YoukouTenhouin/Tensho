@@ -4,10 +4,11 @@ import { LatinIndexCache, latinDictionary, resolveLatinCandidate } from './latin
 import type { DictionaryResolution, IndexStorage } from './latin-index.ts';
 import { extractLatinArticle, latinArticleUrl } from './latin-article.ts';
 import type { DictionaryArticle } from './latin-article.ts';
+import type { ProviderOptionValue } from '../core/configuration.ts';
 
 export interface DictionaryProvider {
-  resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryResolution>;
-  retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryArticle>;
+  resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryResolution>;
+  retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryArticle>;
 }
 export function createLatinDictionary(dependencies: {
   executor: RequestExecutor;

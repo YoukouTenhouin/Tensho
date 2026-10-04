@@ -15,6 +15,7 @@ export interface DictionaryAlternative {
   correspondence: 'unverified';
 }
 interface ResolutionDetails {
+  providerId?: string;
   originalHeadword: string | null;
   provenance: Analysis['candidates'][number]['provenance'];
   stableLemmaId: string | null;
