@@ -7,7 +7,7 @@ let windowId: number;
 let origin: string | undefined;
 let revision = 0, displayed = '', focused = '', tabId = -1;
 async function send(message: Record<string, unknown>): Promise<any> {
-  const reply = await chrome.runtime.sendMessage({ ...message, windowId });
+  const reply = await chrome.runtime.sendMessage({ ...message, windowId, tabId });
   if (reply?.error) throw new Error(reply.error);
   return reply;
 }

@@ -61,3 +61,50 @@ test('origins and native patterns preserve scheme, hostname, and effective port'
     assert.equal(automaticAllowed(other, enabled[1]!, enabled), false);
   }
 });
+
+test('late browser identity resolution cannot replace a newer learner action', async () => {
+  const { coordinator, calls } = fixture();
+  const earlier = coordinator.begin(1);
+  const later = coordinator.begin(1);
+  const result = later.lookup(identity, 'legi');
+  await earlier.lookup(identity, 'puella');
+  earlier.notice(identity, '', 'Old capture failed');
+  assert.deepEqual(calls.map(call => call.text), ['legi']);
+  assert.equal(coordinator.get(1)?.text, 'legi');
+  calls[0]!.finish(analysis); await result;
+});
+
+test('starting source capture immediately invalidates outstanding analysis', async () => {
+  const { coordinator, calls } = fixture();
+  const first = coordinator.lookup(identity, 'puella');
+  const capture = coordinator.begin(1);
+  assert.equal(calls[0]!.signal.aborted, true);
+  calls[0]!.finish(analysis); await first;
+  assert.notEqual(coordinator.get(1)?.status, 'complete');
+  capture.notice(identity, '', 'Selection is inaccessible; enter a word manually.');
+  assert.equal(coordinator.get(1)?.status, 'notice');
+});
+
+test('navigation invalidates unresolved browser capture as well as analysis', async () => {
+  const { coordinator, calls } = fixture();
+  const capture = coordinator.begin(1);
+  coordinator.clear(1);
+  await capture.lookup(identity, 'puella');
+  capture.notice(identity, '', 'Old document became inaccessible');
+  assert.equal(calls.length, 0);
+  assert.equal(coordinator.get(1), undefined);
+});
+
+test('frame replacement invalidates pending capture only when its source may be affected', async () => {
+  const { coordinator, calls } = fixture();
+  const frameCapture = coordinator.begin(1, 2);
+  coordinator.navigate(1, 3);
+  assert.equal(frameCapture.current(), true);
+  coordinator.navigate(1, 2);
+  await frameCapture.lookup(identity, 'stale-frame');
+  const keyboardCapture = coordinator.begin(1);
+  coordinator.navigate(1, 3);
+  await keyboardCapture.lookup(identity, 'stale-selection');
+  assert.equal(calls.length, 0);
+  assert.equal(coordinator.get(1), undefined);
+});

@@ -1,5 +1,5 @@
 import { LookupCoordinator } from '../core/lookup.ts';
-import type { Identity } from '../core/lookup.ts';
+import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { controlledAnalyzer } from '../core/controlled.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 
@@ -27,12 +27,12 @@ async function source(tabId: number, frameId = 0): Promise<Identity> {
 function manualIdentity(tabId: number): Identity {
   return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', configuration: 'controlled-latin-en-1', lookupLanguage: 'lat', explanationLanguage: 'en' };
 }
-async function lookup(tabId: number, frameId: number, text: string, documentId?: string): Promise<void> {
+async function lookup(tabId: number, frameId: number, text: string, request: LookupRequest, documentId?: string): Promise<void> {
   try {
     const identity = await source(tabId, frameId);
     if (documentId && identity.documentId !== documentId) return;
-    void coordinator.lookup(identity, text);
-  } catch (error) { coordinator.notice(manualIdentity(tabId), '', String(error)); }
+    void request.lookup(identity, text);
+  } catch (error) { request.notice(manualIdentity(tabId), '', String(error)); }
 }
 async function restoreFocus(tabId: number): Promise<void> {
   const identity = coordinator.get(tabId)?.identity;
@@ -44,19 +44,19 @@ async function restoreFocus(tabId: number): Promise<void> {
     try { await chrome.tabs.update(tabId, { active: true }); } catch { /* Source tab was closed. */ }
   }
 }
-function open(tabId: number, focus: boolean): Promise<boolean> {
+function open(tabId: number, focus: boolean, request?: LookupRequest): Promise<boolean> {
   if (focus) focusRequests.set(tabId, (focusRequests.get(tabId) ?? 0) + 1);
   return chrome.sidePanel.open({ tabId }).then(async () => {
     notify();
     if (!focus) await restoreFocus(tabId);
     return true;
   }).catch(error => {
-    coordinator.notice(coordinator.get(tabId)?.identity ?? manualIdentity(tabId), '',
+    (request ?? { notice: coordinator.notice.bind(coordinator) }).notice(coordinator.get(tabId)?.identity ?? manualIdentity(tabId), '',
       `The native panel could not open: ${String(error)}. Open Tensho from the toolbar.`);
     return false;
   });
 }
-async function capture(tabId: number): Promise<void> {
+async function capture(tabId: number, request: LookupRequest): Promise<void> {
   try {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
     await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
@@ -70,8 +70,8 @@ async function capture(tabId: number): Promise<void> {
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
     if (!selected) throw new Error('No accessible selection. Select text on the page, use its context menu, or enter a word here.');
-    await lookup(tabId, selected.frameId, selected.text, selected.documentId);
-  } catch (error) { coordinator.notice(manualIdentity(tabId), '', String(error)); }
+    await lookup(tabId, selected.frameId, selected.text, request, selected.documentId);
+  } catch (error) { request.notice(manualIdentity(tabId), '', String(error)); }
 }
 async function syncScripts(): Promise<void> {
   const origins = await enabledOrigins();
@@ -106,20 +106,23 @@ chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' &
 chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id || tab.incognito || info.menuItemId !== 'lookup') return;
-  open(tab.id, false);
-  void lookup(tab.id, info.frameId ?? 0, info.selectionText ?? '');
+  const request = coordinator.begin(tab.id, info.frameId ?? 0);
+  open(tab.id, false, request);
+  void lookup(tab.id, info.frameId ?? 0, info.selectionText ?? '', request);
   // Remember source focus where temporary access permits; lookup itself needs no DOM injection.
   void chrome.scripting.executeScript({ target: { tabId: tab.id, frameIds: [info.frameId ?? 0] }, files: ['page.js'] })
     .then(() => chrome.tabs.sendMessage(tab.id!, { type: 'capture' }, { frameId: info.frameId ?? 0 })).catch(() => {});
 });
 chrome.commands.onCommand.addListener((command, tab) => {
   if (!tab?.id || tab.incognito) return;
-  open(tab.id, true);
-  if (command === 'lookup-selection') void capture(tab.id);
+  if (command === 'lookup-selection') {
+    const request = coordinator.begin(tab.id);
+    open(tab.id, true, request);
+    void capture(tab.id, request);
+  } else if (command === 'focus-results') open(tab.id, true);
 });
 chrome.webNavigation.onCommitted.addListener(details => {
-  const state = coordinator.get(details.tabId);
-  if (details.frameId === 0 || state?.identity.frameId === details.frameId) coordinator.clear(details.tabId);
+  coordinator.navigate(details.tabId, details.frameId);
 });
 chrome.tabs.onRemoved.addListener(tabId => { coordinator.clear(tabId); focusRequests.delete(tabId); });
 chrome.tabs.onActivated.addListener(notify);
@@ -132,7 +135,7 @@ async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   if (!tab?.id || tab.incognito) throw new Error('No regular reading tab is available.');
   return tab;
 }
-async function panelAction(message: Record<string, unknown>): Promise<unknown> {
+async function panelAction(message: Record<string, unknown>, request?: LookupRequest): Promise<unknown> {
   if (typeof message.windowId !== 'number') throw new Error('Missing reading window');
   const tab = await activeTab(message.windowId), tabId = tab.id!;
   if (message.type === 'snapshot') {
@@ -141,8 +144,9 @@ async function panelAction(message: Record<string, unknown>): Promise<unknown> {
       enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
+    if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');
     const identity = await source(tabId).catch(() => manualIdentity(tabId));
-    void coordinator.lookup(identity, message.text);
+    void request.lookup(identity, message.text);
   }
   if (message.type === 'save-origin' && typeof message.origin === 'string') {
     const origin = readingOrigin(message.origin);
@@ -165,14 +169,17 @@ async function panelAction(message: Record<string, unknown>): Promise<unknown> {
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (!message || typeof message !== 'object') return;
   if (sender.url === chrome.runtime.getURL('panel.html')) {
-    void panelAction(message).then(reply, error => reply({ error: String(error) })); return true;
+    const request = message.type === 'manual-lookup' && Number.isInteger(message.tabId) && message.tabId >= 0
+      ? coordinator.begin(message.tabId, 0) : undefined;
+    void panelAction(message, request).then(reply, error => reply({ error: String(error) })); return true;
   }
   if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     const tabId = sender.tab.id, frameId = sender.frameId ?? 0;
     // The native gesture must reach sidePanel.open before asynchronous API calls.
     // Only already enabled/granted origins qualify; revocation invalidates this cache.
     if (!automaticAllowed(sender.tab.url ?? '', sender.url ?? '', automaticOrigins)) return;
-    const opening = open(tabId, false);
+    const request = coordinator.begin(tabId, frameId);
+    const opening = open(tabId, false, request);
     void (async () => {
       const [top, frame, enabled] = await Promise.all([
         chrome.webNavigation.getFrame({ tabId, frameId: 0 }), chrome.webNavigation.getFrame({ tabId, frameId }), enabledOrigins(),
@@ -180,7 +187,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       if (!top || !frame || frame.documentId !== sender.documentId || !automaticAllowed(top.url, frame.url, enabled)) return;
       if (!await chrome.permissions.contains({ origins: [permissionPattern(top.url), permissionPattern(frame.url)] })) return;
       if (!await opening) return;
-      await lookup(tabId, frameId, message.text, sender.documentId);
+      await lookup(tabId, frameId, message.text, request, sender.documentId);
     })().then(() => reply({ ok: true }), error => reply({ error: String(error) })); return true;
   }
 });
