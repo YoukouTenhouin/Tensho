@@ -1,4 +1,6 @@
-export const requestFailureKinds = ['missing-access', 'network', 'http', 'format', 'size',
+import { providerAccessRemoved } from './provider-access.ts';
+
+export const requestFailureKinds = ['missing-access', 'revoked-access', 'network', 'http', 'format', 'size',
   'request-timeout', 'action-deadline', 'cancelled', 'unconfigured', 'unsupported-explanation', 'unsupported-input', 'identity-mismatch', 'interrupted'] as const;
 export type RequestFailureKind = typeof requestFailureKinds[number];
 
@@ -22,23 +24,27 @@ interface Pending { start(): void; }
 
 /** Call inside the shared queue immediately before dispatch, and after awaited reads. */
 export async function requireProviderAccess(permitted: (origins: readonly string[]) => Promise<boolean>,
-  origins: readonly string[], signal: AbortSignal, deadline: number, message: string): Promise<void> {
+  origins: readonly string[], signal: AbortSignal, deadline: number, message: string, kind: 'missing-access' | 'revoked-access' = 'missing-access'): Promise<void> {
   const allowed = await permitted(origins);
   signal.throwIfAborted();
   if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.');
-  if (!allowed) throw new RequestFailure('missing-access', message);
+  if (!allowed) throw new RequestFailure(kind, message);
 }
 
 /** One shared instance owns all provider slots, including requests ignoring abort. */
 export class RequestExecutor {
   #active = 0;
   #queue: Pending[] = [];
+  #access = new Set<{ origins: readonly string[]; stop(): void }>();
   #limits: { concurrent: number; requestMs: number };
   constructor(limits: { concurrent: number; requestMs: number } = requestLimits) {
     this.#limits = limits;
     if (!Number.isInteger(limits.concurrent) || limits.concurrent < 1 || limits.requestMs <= 0) throw new Error('Invalid request limits');
   }
-  run<T>(execute: (signal: AbortSignal) => Promise<T>, options: { signal: AbortSignal; deadline: number }): Promise<T> {
+  revokeAccess(removed: readonly string[]): void {
+    for (const request of [...this.#access]) if (providerAccessRemoved(request.origins, removed)) request.stop();
+  }
+  run<T>(execute: (signal: AbortSignal) => Promise<T>, options: { signal: AbortSignal; deadline: number; origins?: readonly string[] }): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       const controller = new AbortController();
       let settled = false;
@@ -47,6 +53,7 @@ export class RequestExecutor {
       const finish = (result: { value: T } | { error: unknown }) => {
         if (settled) return;
         settled = true;
+        this.#access.delete(access);
         clearTimeout(requestTimer); clearTimeout(actionTimer);
         options.signal.removeEventListener('abort', cancel);
         const index = this.#queue.indexOf(pending);
@@ -55,6 +62,8 @@ export class RequestExecutor {
         else resolve(result.value);
       };
       const cancel = () => finish({ error: new RequestFailure('cancelled', 'Lookup cancelled.') });
+      const access = { origins: [...options.origins ?? []],
+        stop: () => finish({ error: new RequestFailure('revoked-access', 'Provider access was revoked. Enable access explicitly before retrying.') }) };
       const pending: Pending = { start: () => {
         if (performance.now() >= options.deadline) { finish({ error: new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.') }); return; }
         this.#active++;
@@ -78,6 +87,7 @@ export class RequestExecutor {
       const remaining = options.deadline - performance.now();
       if (remaining <= 0) { finish({ error: new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.') }); return; }
       options.signal.addEventListener('abort', cancel, { once: true });
+      if (access.origins.length) this.#access.add(access);
       actionTimer = setTimeout(() => finish({ error: new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.') }), remaining);
       this.#queue.push(pending);
       this.#pump();

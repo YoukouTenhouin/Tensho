@@ -20,11 +20,14 @@
   document.addEventListener('keydown', event => { if (event.isTrusted) rememberFocus(); }, true);
 
   function capture(): string {
-    source = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    rememberSource();
     if (source instanceof HTMLInputElement || source instanceof HTMLTextAreaElement) {
       return source.value.slice(source.selectionStart ?? 0, source.selectionEnd ?? 0);
     }
     return getSelection()?.toString() ?? '';
+  }
+  function rememberSource(): void {
+    source = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   }
   function restore(): void {
     window.focus();
@@ -39,12 +42,14 @@
         parentIndex: window === window.parent ? -1 : childIndex(window.parent, window), origin: globalThis.origin });
     }
     if (message?.type === 'restore-focus') { restore(); reply({ restored: true }); }
+    if (message?.type === 'remember-focus') { rememberSource(); reply({ remembered: true }); }
   });
   document.addEventListener('dblclick', event => {
     if (!event.isTrusted || globalThis.origin === 'null') return;
     const target = event.composedPath().find(item => item instanceof HTMLElement);
     if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,[role="textbox"]'))) return;
-    const text = capture();
-    if (text) void chrome.runtime.sendMessage({ type: 'automatic-lookup', text }).catch(() => {});
+    // Previously injected scripts survive permission removal. Send only the
+    // gesture; the worker must authorize this document before asking for text.
+    void chrome.runtime.sendMessage({ type: 'automatic-lookup' }).catch(() => {});
   });
 })();

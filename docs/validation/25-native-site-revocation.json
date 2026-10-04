@@ -1,0 +1,62 @@
+{
+  "observed_at_utc": "2026-10-04T19:08:27Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_analysis": true,
+  "production_session_coordination_and_ui": true,
+  "checks": {
+    "granted_embedded_frame_looks_up": true,
+    "empty_gesture_preserves_current_result": true,
+    "empty_gesture_keeps_dictionary_actions_usable": true,
+    "revocation_invalidates_pending_capture_authorization": true,
+    "revoked_scripts_do_not_capture_selection": true,
+    "revocation_preserves_completed_reading": true,
+    "revoked_double_clicks_do_not_start_lookup": true,
+    "revoked_gestures_do_not_reopen_closed_panel": true,
+    "closed_panel_revoked_gestures_do_not_capture": true,
+    "explicit_reopen_retains_completed_reading": true,
+    "keyboard_lookup_does_not_capture_revoked_cross_origin_frame": true,
+    "inaccessible_frame_selection_is_not_replaced_with_stale_text": true,
+    "site_change_during_keyboard_capture_prevents_text_read": true,
+    "cancelled_keyboard_capture_retains_completed_analysis": true,
+    "cancelled_keyboard_capture_restores_dictionary_actions": true
+  },
+  "empty_gesture_selection": "",
+  "empty_gesture_state": {
+    "identity": {
+      "tabId": 2122657881,
+      "frameId": 8,
+      "documentId": "15942073174692A43887D9F6A5642213",
+      "topDocumentId": "34B72FC21B764595F36C6C732900EB29",
+      "configuration": "155e3d08-ef98-4b5a-9307-d9e310c21955",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "malum",
+    "generation": 1,
+    "status": "complete",
+    "analysis": {
+      "provider": "Controlled development response",
+      "controlled": true,
+      "candidates": [
+        {
+          "lemma": "malum",
+          "stableId": null,
+          "interpretations": [
+            "No linguistic analysis: this is an interaction fixture."
+          ],
+          "meanings": []
+        }
+      ]
+    }
+  },
+  "selection_reads_before_revocation": [
+    1,
+    1
+  ],
+  "selection_reads_after_revoked_double_clicks": [
+    1,
+    1
+  ],
+  "passed": true
+}
