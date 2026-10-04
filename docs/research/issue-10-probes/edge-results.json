@@ -1,0 +1,200 @@
+{
+  "observed_at_utc": "2026-10-04T03:59:08Z",
+  "browser_version": "Microsoft Edge 154.0.4258.37",
+  "granted_then_revoked": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "host_permissions": [
+        "https://morph.alpheios.net/*",
+        "https://repos1.alpheios.net/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [
+          "https://morph.alpheios.net/*",
+          "https://repos1.alpheios.net/*"
+        ],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+          "granted": true,
+          "status": 201,
+          "type": "application/json",
+          "characters": 2074,
+          "sample": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:puellae:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:00.070929\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+        },
+        {
+          "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+          "granted": true,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 1003305,
+          "sample": "'st|n45200\r\n@A1|n0\r\n@AC1|n282\r\n@AC|n282\r\n@Abba1|n34\r\n@Abba|n34\r\n@Absyrtus1|n263\r\n@Absyrtus2|n264\r\n@Absyrtus|n263\r\n@Achaeus1|n471\r\n@Achaeus2|n472\r\n@Achaeus|n471\r\n@Achates1|n479\r\n@Achates2|n480\r\n@Achates|n479\r\n@Acis1|n529\r\n@Acis2|n530\r\n@Acis|n529\r\n@Acragas1|n560\r\n@Acragas2|n561\r\n@Acragas|n560\r\n@Acrita"
+        },
+        {
+          "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+          "granted": true,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 5298,
+          "sample": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n39421\" body-key=\"\"><b>"
+        }
+      ]
+    },
+    "revoked_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "revoked_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+          "granted": false,
+          "status": 201,
+          "type": "application/json",
+          "characters": 2074,
+          "sample": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:puellae:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:59:44.067718\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+        },
+        {
+          "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+          "granted": false,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 1003305,
+          "sample": "'st|n45200\r\n@A1|n0\r\n@AC1|n282\r\n@AC|n282\r\n@Abba1|n34\r\n@Abba|n34\r\n@Absyrtus1|n263\r\n@Absyrtus2|n264\r\n@Absyrtus|n263\r\n@Achaeus1|n471\r\n@Achaeus2|n472\r\n@Achaeus|n471\r\n@Achates1|n479\r\n@Achates2|n480\r\n@Achates|n479\r\n@Acis1|n529\r\n@Acis2|n530\r\n@Acis|n529\r\n@Acragas1|n560\r\n@Acragas2|n561\r\n@Acragas|n560\r\n@Acrita"
+        },
+        {
+          "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+          "granted": false,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 5298,
+          "sample": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n39421\" body-key=\"\"><b>"
+        }
+      ]
+    }
+  },
+  "optional_never_granted": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "optional_host_permissions": [
+        "https://morph.alpheios.net/*",
+        "https://repos1.alpheios.net/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "missing_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+          "granted": false,
+          "status": 201,
+          "type": "application/json",
+          "characters": 2074,
+          "sample": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:puellae:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:00.070929\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+        },
+        {
+          "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+          "granted": false,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 1003305,
+          "sample": "'st|n45200\r\n@A1|n0\r\n@AC1|n282\r\n@AC|n282\r\n@Abba1|n34\r\n@Abba|n34\r\n@Absyrtus1|n263\r\n@Absyrtus2|n264\r\n@Absyrtus|n263\r\n@Achaeus1|n471\r\n@Achaeus2|n472\r\n@Achaeus|n471\r\n@Achates1|n479\r\n@Achates2|n480\r\n@Achates|n479\r\n@Acis1|n529\r\n@Acis2|n530\r\n@Acis|n529\r\n@Acragas1|n560\r\n@Acragas2|n561\r\n@Acragas|n560\r\n@Acrita"
+        },
+        {
+          "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+          "granted": false,
+          "status": 200,
+          "type": "text/html;charset=utf-8",
+          "characters": 5298,
+          "sample": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n39421\" body-key=\"\"><b>"
+        }
+      ]
+    }
+  }
+}

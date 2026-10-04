@@ -1,0 +1,1859 @@
+{
+  "observedAt": "2026-10-04T03:57Z–04:01Z",
+  "morphology": [
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:important:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:32.737979\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:important\"}}, \"title\": {}, \"hasBody\": {\"resource\": \"urn:uuid:idm139936311755432\"}, \"Body\": {\"about\": \"urn:uuid:idm139936311755432\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"import\"}, \"suff\": {\"$\": \"ant\"}}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"tense\": {\"$\": \"present\"}, \"voice\": {\"$\": \"active\"}, \"mood\": {\"$\": \"indicative\"}, \"pers\": {\"$\": \"3rd\"}, \"num\": {\"$\": \"plural\"}}, \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"importo, importare, importavi, importatus\"}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"bring in, convey; import; bring about, cause;\"}}}}}}}",
+      "normalized": {
+        "originalInput": "important",
+        "queryInput": "important",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936311755432",
+            "identityScope": "response-local",
+            "headword": "importo, importare, importavi, importatus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "importo, importare, importavi, importatus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "bring in, convey; import; bring about, cause;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "import"
+                  },
+                  "suff": {
+                    "$": "ant"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "present"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "3rd"
+                },
+                "num": {
+                  "$": "plural"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:puellae:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:00.070929\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:puellae\"}}, \"title\": {}, \"hasBody\": {\"resource\": \"urn:uuid:idm140253759175904\"}, \"Body\": {\"about\": \"urn:uuid:idm140253759175904\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"puell\"}, \"suff\": {\"$\": \"ae\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"puell\"}, \"suff\": {\"$\": \"ae\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 2, \"$\": \"locative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"puell\"}, \"suff\": {\"$\": \"ae\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 5, \"$\": \"dative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"puell\"}, \"suff\": {\"$\": \"ae\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 7, \"$\": \"nominative\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"puell\"}, \"suff\": {\"$\": \"ae\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 1, \"$\": \"vocative\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"puella, puellae\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"gend\": {\"$\": \"feminine\"}, \"freq\": {\"order\": 5, \"$\": \"frequent\"}, \"src\": {\"$\": \"Ox.Lat.Dict.\"}}, \"mean\": {\"$\": \"girl, (female) child/daughter; maiden; young woman/wife; sweetheart; slavegirl;\"}}}}}}}",
+      "normalized": {
+        "originalInput": "puellae",
+        "queryInput": "puellae",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253759175904",
+            "identityScope": "response-local",
+            "headword": "puella, puellae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "puella, puellae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 5,
+                "$": "frequent"
+              },
+              "src": {
+                "$": "Ox.Lat.Dict."
+              }
+            },
+            "shortMeanings": [
+              "girl, (female) child/daughter; maiden; young woman/wife; sweetheart; slavegirl;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 2,
+                  "$": "locative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 5,
+                  "$": "dative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "puell"
+                  },
+                  "suff": {
+                    "$": "ae"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=legi&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:legi:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:34.779120\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:legi\"}}, \"title\": {}, \"hasBody\": [{\"resource\": \"urn:uuid:idm139936312996696\"}, {\"resource\": \"urn:uuid:idm139936316675720\"}], \"Body\": [{\"about\": \"urn:uuid:idm139936312996696\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"leg\"}, \"suff\": {\"$\": \"i\"}}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"3rd\"}, \"var\": {\"$\": \"1st\"}, \"tense\": {\"$\": \"present\"}, \"voice\": {\"$\": \"passive\"}, \"mood\": {\"$\": \"infinitive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"leg\"}, \"suff\": {\"$\": \"i\"}}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"3rd\"}, \"var\": {\"$\": \"1st\"}, \"tense\": {\"$\": \"perfect\"}, \"voice\": {\"$\": \"active\"}, \"mood\": {\"$\": \"indicative\"}, \"pers\": {\"$\": \"1st\"}, \"num\": {\"$\": \"singular\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"lego, legere, legi, lectus\"}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"3rd\"}, \"freq\": {\"order\": 6, \"$\": \"very frequent\"}}, \"mean\": {\"$\": \"read; gather, collect (cremated bones); furl (sail), weigh (anchor); pick out;\"}}}}, {\"about\": \"urn:uuid:idm139936316675720\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"leg\"}, \"suff\": {\"$\": \"i\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"3rd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 2, \"$\": \"locative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"leg\"}, \"suff\": {\"$\": \"i\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"3rd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 5, \"$\": \"dative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"lex, legis\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"3rd\"}, \"gend\": {\"$\": \"feminine\"}, \"area\": {\"$\": \"government\"}, \"freq\": {\"order\": 6, \"$\": \"very frequent\"}}, \"mean\": {\"$\": \"law; motion, bill, statute; principle; condition;\"}}}}]}}}",
+      "normalized": {
+        "originalInput": "legi",
+        "queryInput": "legi",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936312996696",
+            "identityScope": "response-local",
+            "headword": "lego, legere, legi, lectus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "lego, legere, legi, lectus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "3rd"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "read; gather, collect (cremated bones); furl (sail), weigh (anchor); pick out;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "present"
+                },
+                "voice": {
+                  "$": "passive"
+                },
+                "mood": {
+                  "$": "infinitive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "perfect"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "1st"
+                },
+                "num": {
+                  "$": "singular"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936316675720",
+            "identityScope": "response-local",
+            "headword": "lex, legis",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "lex, legis"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "3rd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "area": {
+                "$": "government"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "law; motion, bill, statute; principle; condition;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 2,
+                  "$": "locative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "leg"
+                  },
+                  "suff": {
+                    "$": "i"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "3rd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 5,
+                  "$": "dative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=amaverunt&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:amaverunt:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:35.287363\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:amaverunt\"}}, \"title\": {}, \"hasBody\": {\"resource\": \"urn:uuid:idm139936313164680\"}, \"Body\": {\"about\": \"urn:uuid:idm139936313164680\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"amav\"}, \"suff\": {\"$\": \"erunt\"}}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"tense\": {\"$\": \"perfect\"}, \"voice\": {\"$\": \"active\"}, \"mood\": {\"$\": \"indicative\"}, \"pers\": {\"$\": \"3rd\"}, \"num\": {\"$\": \"plural\"}}, \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"amo, amare, amavi, amatus\"}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"freq\": {\"order\": 6, \"$\": \"very frequent\"}, \"src\": {\"$\": \"Ox.Lat.Dict.\"}}, \"mean\": {\"$\": \"love, like; fall in love with; be fond of; have a tendency to;\"}}}}}}}",
+      "normalized": {
+        "originalInput": "amaverunt",
+        "queryInput": "amaverunt",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm139936313164680",
+            "identityScope": "response-local",
+            "headword": "amo, amare, amavi, amatus",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "amo, amare, amavi, amatus"
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              },
+              "src": {
+                "$": "Ox.Lat.Dict."
+              }
+            },
+            "shortMeanings": [
+              "love, like; fall in love with; be fond of; have a tendency to;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "amav"
+                  },
+                  "suff": {
+                    "$": "erunt"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "perfect"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "indicative"
+                },
+                "pers": {
+                  "$": "3rd"
+                },
+                "num": {
+                  "$": "plural"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=m%C4%81lum&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:mālum:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:01.600399\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:mālum\"}}, \"title\": {}, \"hasBody\": [{\"resource\": \"urn:uuid:idm140253761373264\"}, {\"resource\": \"urn:uuid:idm140253770898352\"}, {\"resource\": \"urn:uuid:idm140253760072576\"}, {\"resource\": \"urn:uuid:idm140253761309072\"}, {\"resource\": \"urn:uuid:idm140253764726592\"}], \"Body\": [{\"about\": \"urn:uuid:idm140253761373264\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}, \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"mala, malae\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"gend\": {\"$\": \"feminine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"cheeks, jaws;\"}}}}, {\"about\": \"urn:uuid:idm140253770898352\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"masculine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"masculine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"masculine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"mast; beam; tall pole, upright pole; standard, prop, staff;\"}}}}, {\"about\": \"urn:uuid:idm140253760072576\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"feminine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"apple tree;\"}}}}, {\"about\": \"urn:uuid:idm140253761309072\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 7, \"$\": \"nominative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 1, \"$\": \"vocative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"neuter\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malum, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"neuter\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": [{\"$\": \"apple; fruit; lemon; quince;\"}, {\"$\": \"evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;\"}]}}}, {\"about\": \"urn:uuid:idm140253764726592\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 7, \"$\": \"nominative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 1, \"$\": \"vocative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"masculine\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mala -um, pejor -or -us, -\"}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"freq\": {\"order\": 6, \"$\": \"very frequent\"}}, \"mean\": {\"$\": \"bad, evil, wicked; ugly; unlucky;\"}}}}]}}}",
+      "normalized": {
+        "originalInput": "mālum",
+        "queryInput": "mālum",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253761373264",
+            "identityScope": "response-local",
+            "headword": "mala, malae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "mala, malae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "cheeks, jaws;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253770898352",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "masculine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "mast; beam; tall pole, upright pole; standard, prop, staff;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253760072576",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple tree;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253761309072",
+            "identityScope": "response-local",
+            "headword": "malum, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malum, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "neuter"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple; fruit; lemon; quince;",
+              "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764726592",
+            "identityScope": "response-local",
+            "headword": "malus, mala -um, pejor -or -us, -",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mala -um, pejor -or -us, -"
+              },
+              "pofs": {
+                "order": 4,
+                "$": "adjective"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "bad, evil, wicked; ugly; unlucky;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=malum&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:malum:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:02.116727\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:malum\"}}, \"title\": {}, \"hasBody\": [{\"resource\": \"urn:uuid:idm140253769660208\"}, {\"resource\": \"urn:uuid:idm140253764875824\"}, {\"resource\": \"urn:uuid:idm140253769589936\"}, {\"resource\": \"urn:uuid:idm140253764256784\"}, {\"resource\": \"urn:uuid:idm140253764056256\"}], \"Body\": [{\"about\": \"urn:uuid:idm140253769660208\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}, \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"mala, malae\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"1st\"}, \"gend\": {\"$\": \"feminine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"cheeks, jaws;\"}}}}, {\"about\": \"urn:uuid:idm140253764875824\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"masculine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"masculine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"masculine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"mast; beam; tall pole, upright pole; standard, prop, staff;\"}}}}, {\"about\": \"urn:uuid:idm140253769589936\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"feminine\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"feminine\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"feminine\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"apple tree;\"}}}}, {\"about\": \"urn:uuid:idm140253764256784\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 7, \"$\": \"nominative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 1, \"$\": \"vocative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"var\": {\"$\": \"2nd\"}, \"case\": {\"order\": 6, \"$\": \"genitive\"}, \"num\": {\"$\": \"plural\"}, \"gend\": {\"$\": \"neuter\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malum, mali\"}, \"pofs\": {\"order\": 5, \"$\": \"noun\"}, \"decl\": {\"$\": \"2nd\"}, \"gend\": {\"$\": \"neuter\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": [{\"$\": \"apple; fruit; lemon; quince;\"}, {\"$\": \"evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;\"}]}}}, {\"about\": \"urn:uuid:idm140253764056256\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": [{\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 7, \"$\": \"nominative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 1, \"$\": \"vocative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"masculine\"}, \"comp\": {\"$\": \"positive\"}}, {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"mal\"}, \"suff\": {\"$\": \"um\"}}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"decl\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"case\": {\"order\": 4, \"$\": \"accusative\"}, \"num\": {\"$\": \"singular\"}, \"gend\": {\"$\": \"neuter\"}, \"comp\": {\"$\": \"positive\"}}], \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"malus, mala -um, pejor -or -us, -\"}, \"pofs\": {\"order\": 4, \"$\": \"adjective\"}, \"freq\": {\"order\": 6, \"$\": \"very frequent\"}}, \"mean\": {\"$\": \"bad, evil, wicked; ugly; unlucky;\"}}}}]}}}",
+      "normalized": {
+        "originalInput": "malum",
+        "queryInput": "malum",
+        "lookupLanguage": "lat",
+        "status": "usable",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": [
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253769660208",
+            "identityScope": "response-local",
+            "headword": "mala, malae",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "mala, malae"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "1st"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "cheeks, jaws;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764875824",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "masculine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "mast; beam; tall pole, upright pole; standard, prop, staff;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "masculine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253769589936",
+            "identityScope": "response-local",
+            "headword": "malus, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "feminine"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple tree;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "feminine"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764256784",
+            "identityScope": "response-local",
+            "headword": "malum, mali",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malum, mali"
+              },
+              "pofs": {
+                "order": 5,
+                "$": "noun"
+              },
+              "decl": {
+                "$": "2nd"
+              },
+              "gend": {
+                "$": "neuter"
+              },
+              "freq": {
+                "order": 3,
+                "$": "lesser"
+              }
+            },
+            "shortMeanings": [
+              "apple; fruit; lemon; quince;",
+              "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "2nd"
+                },
+                "var": {
+                  "$": "2nd"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "num": {
+                  "$": "plural"
+                },
+                "gend": {
+                  "$": "neuter"
+                }
+              }
+            ]
+          },
+          {
+            "provider": "alpheios-whitakerLat",
+            "providerLemmaId": null,
+            "providerBodyReference": "urn:uuid:idm140253764056256",
+            "identityScope": "response-local",
+            "headword": "malus, mala -um, pejor -or -us, -",
+            "lemmaFeatures": {
+              "hdwd": {
+                "lang": "lat",
+                "$": "malus, mala -um, pejor -or -us, -"
+              },
+              "pofs": {
+                "order": 4,
+                "$": "adjective"
+              },
+              "freq": {
+                "order": 6,
+                "$": "very frequent"
+              }
+            },
+            "shortMeanings": [
+              "bad, evil, wicked; ugly; unlucky;"
+            ],
+            "grammaticalInterpretations": [
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 7,
+                  "$": "nominative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 1,
+                  "$": "vocative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "masculine"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              },
+              {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "mal"
+                  },
+                  "suff": {
+                    "$": "um"
+                  }
+                },
+                "pofs": {
+                  "order": 4,
+                  "$": "adjective"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "case": {
+                  "order": 4,
+                  "$": "accusative"
+                },
+                "num": {
+                  "$": "singular"
+                },
+                "gend": {
+                  "$": "neuter"
+                },
+                "comp": {
+                  "$": "positive"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=zzqxx&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/json",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:zzqxx:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T03:57:36.833167\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:zzqxx\"}}, \"title\": {}}}}",
+      "normalized": {
+        "originalInput": "zzqxx",
+        "queryInput": "zzqxx",
+        "lookupLanguage": "lat",
+        "status": "no-match",
+        "provider": "alpheios-whitakerLat",
+        "attribution": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.",
+        "candidates": []
+      }
+    }
+  ],
+  "negotiation": [
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "application/xml",
+      "status": 201,
+      "contentType": "application/xml",
+      "body": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n  <oac:Annotation xmlns:oac=\"http://www.openannotation.org/ns/\" rdf:about=\"urn:TuftsMorphologyService:important:whitakerLat\">\n    <dcterms:creator xmlns:dcterms=\"http://purl.org/dc/terms/\">\n      <foaf:Agent xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" rdf:about=\"net.alpheios:tools:wordsxml.v1\"/>\n    </dcterms:creator>\n    <dcterms:created xmlns:dcterms=\"http://purl.org/dc/terms/\">2026-10-04T03:56:59.053276</dcterms:created>\n    <dc:rights xmlns:dc=\"http://purl.org/dc/elements/1.1/\">Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.</dc:rights>\n    <oac:hasTarget>\n      <rdf:Description rdf:about=\"urn:word:important\"/>\n    </oac:hasTarget>\n    <dc:title xmlns:dc=\"http://purl.org/dc/elements/1.1/\"/>\n    <oac:hasBody rdf:resource=\"urn:uuid:idm140253759916016\"/>\n    <oac:Body rdf:about=\"urn:uuid:idm140253759916016\">\n      <rdf:type rdf:resource=\"cnt:ContentAsXML\"/>\n      <cnt:rest xmlns:cnt=\"http://www.w3.org/2008/content#\">\n        <entry>\n          <infl>\n            <term xml:lang=\"lat\">\n              <stem>import</stem>\n              <suff>ant</suff>\n            </term>\n            <pofs order=\"3\">verb</pofs>\n            <conj>1st</conj>\n            <var>1st</var>\n            <tense>present</tense>\n            <voice>active</voice>\n            <mood>indicative</mood>\n            <pers>3rd</pers>\n            <num>plural</num>\n          </infl>\n          <dict>\n            <hdwd xml:lang=\"lat\">importo, importare, importavi, importatus</hdwd>\n            <pofs order=\"3\">verb</pofs>\n            <conj>1st</conj>\n            <freq order=\"3\">lesser</freq>\n          </dict>\n          <mean>bring in, convey; import; bring about, cause;</mean>\n        </entry>\n      </cnt:rest>\n    </oac:Body>\n  </oac:Annotation>\n</rdf:RDF>\n"
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho-research",
+      "accept": "*/*",
+      "status": 201,
+      "contentType": "application/json",
+      "body": "{\"RDF\": {\"Annotation\": {\"about\": \"urn:TuftsMorphologyService:important:whitakerLat\", \"creator\": {\"Agent\": {\"about\": \"net.alpheios:tools:wordsxml.v1\"}}, \"created\": {\"$\": \"2026-10-04T02:12:36.912555\"}, \"rights\": {\"$\": \"Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007.\"}, \"hasTarget\": {\"Description\": {\"about\": \"urn:word:important\"}}, \"title\": {}, \"hasBody\": {\"resource\": \"urn:uuid:idm139936314624840\"}, \"Body\": {\"about\": \"urn:uuid:idm139936314624840\", \"type\": {\"resource\": \"cnt:ContentAsXML\"}, \"rest\": {\"entry\": {\"infl\": {\"term\": {\"lang\": \"lat\", \"stem\": {\"$\": \"import\"}, \"suff\": {\"$\": \"ant\"}}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"var\": {\"$\": \"1st\"}, \"tense\": {\"$\": \"present\"}, \"voice\": {\"$\": \"active\"}, \"mood\": {\"$\": \"indicative\"}, \"pers\": {\"$\": \"3rd\"}, \"num\": {\"$\": \"plural\"}}, \"dict\": {\"hdwd\": {\"lang\": \"lat\", \"$\": \"importo, importare, importavi, importatus\"}, \"pofs\": {\"order\": 3, \"$\": \"verb\"}, \"conj\": {\"$\": \"1st\"}, \"freq\": {\"order\": 3, \"$\": \"lesser\"}}, \"mean\": {\"$\": \"bring in, convey; import; bring about, cause;\"}}}}}}}"
+    }
+  ],
+  "dictionary": [
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n21985",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n21985\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">importo</span></b>  (<b><span class=\"alpheios-lex-la\" lang=\"lat\">inp-</span></b> ), āvi, ātum, 1,\n\t\t\tv. a.\n\t\tinporto, <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>to bring</i>, <i>carry</i>, or <i>convey into</i>, <i>to bring in from\n\t\t\t\tabroad</i>, <i>to import</i> (class.).\n\t\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b>\n\t\t\t<b>Lit.</b>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">qui (D. Laelius) commeatus Bullide atque\n\t\t\t\t\tAmantia importari in oppidum prohibebat,</span>”\n\t\t\t\t <i><span class=\"en\">Caes.\n\t\t\t\t\tB. C. 3, 40, 5</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">vinum ad se omnino importari non sinunt,</span>”\n\t\t\t\t <i><span class=\"en\">id. B.\n\t\t\t\t\tG. 4, 2 <i>fin.</i></span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ullam rem ad se,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib.</span></i>\n\t\t\t\n\t\t\t<i>init.</i>; cf. <i><span class=\"en\">id. ib. 1, 1,\n\t\t\t\t3</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">aere utuntur importato,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 5, 12, 5</span></i>\n\t\t\t; so, \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">frumentum,</span>”\n\t\t\t\t <i><span class=\"en\">id. B.\n\t\t\t\t\tC. 3, 42 <i>fin.</i></span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">jumenta,</span>”\n\t\t\t\t <i><span class=\"en\">id. B.\n\t\t\t\t\tG. 4, 2, 2</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">instrumentum balinei,</span>”\n\t\t\t\t <i><span class=\"en\">Vell. 2, 114, 2</span></i>\n\t\t\t; <i><span class=\"en\">Varr. R. R. 1, 16, 3</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">grandines Septentrio importat et Corus,</span>”\n\t\t\t\t <i><span class=\"en\">Plin.\n\t\t\t\t\t2, 47, 48, § 126</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>II.</b>\n\t\t\t<b>Trop.</b>, <i>to introduce</i>,\n\t\t\t\t<i>bring about</i>, <i>occasion</i>,\n\t\t\t\t<i>cause</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">importantur non merces solum adventiciae, sed\n\t\t\t\t\tetiam mores,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tRep. 2, 4</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">facile patior, non esse nos transmarinis nec\n\t\t\t\t\timportatis artibus eruditos, sed genuinis domesticisque\n\t\t\t\t\tvirtutibus, id. ib, 2, 15: si quid importetur nobis\n\t\t\t\t\tincommodi, propulsemus,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tOff. 2, 5, 18</span></i>\n\t\t\t; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">plura detrimenta publicis rebus quam adjumenta\n\t\t\t\t\tper homines eloquentissimos importata,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tde Or. 1, 9, 38</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">calamitatem alicui,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tSest. 69, 146</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">pestem aut incolumem famam alicui,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tDeiot. 15, 43</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">luctum alicui,</span>”\n\t\t\t\t <i><span class=\"en\">Phaedr. 1, 28, 6</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">fecunditatem feminis, rabiem viris (vinum),</span>”\n\t\t\t\t <i><span class=\"en\">Plin.\n\t\t\t\t\t14, 18, 22, § 116</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">odium libellis,</span>”\n\t\t\t\t <i><span class=\"en\">Hor. Ep. 1, 13, 5</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">(perturbationes animi) important aegritudines\n\t\t\t\t\tanxias atque acerbas,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tTusc. 4, 15, 34</span></i>\n\t\t\t; so, \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">suspicionem,</span>”\n\t\t\t\t <i><span class=\"en\">id. Fil. Fam. 16, 21, 6</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">fraudem aut periculum,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t39, 14, 4</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ignominiam (crimen),</span>”\n\t\t\t\t <i><span class=\"en\">Dig.\n\t\t\t\t\t50, 2, 5</span></i>\n\t\t\t.</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n39421\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">pŭella</span></b> , ae\n\t\t(dat. and <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>abl. plur.</i> puellabus, Cn. Gell. ap.\n\t\t\t\t\t<i><span class=\"en\">Charis. p. 39</span></i> P.), f.\n\t\t\tpuellus, <i>a female child</i>, <i>a girl</i>, <i>maiden</i>, <i>lass.</i>\n\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b>\n\t\t\t<b>Lit.</b>\n\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>A.</b> In gen.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">eam nunc puellam filiam ejus quaerimus,</span>”\n\t\t\t\t <i><span class=\"en\">Plaut. Cist. 2, 3, 77</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">puellam parere,</span>”\n\t\t\t\t <i><span class=\"en\">Ter.\n\t\t\t\t\tHeaut. 4, 1, 14</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">parvola puella,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tEun. 1, 2, 29</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">puella infans,</span>”\n\t\t\t\t <i><span class=\"en\">Hor. Ep. 2, 1, 99</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">pueri atque puellae,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tS. 1, 1, 85</span></i>\n\t\t\t; <i><span class=\"en\">2, 3, 130</span></i>; <i><span class=\"en\">Cic. Att. 1,\n\t\t\t\t5, 6</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">audi, Luna, puellas,</span>”\n\t\t\t\t <i><span class=\"en\">Hor. C.\n\t\t\t\t\tS. 36</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">puellarum chorus,</span>”\n\t\t\t\t <i><span class=\"en\">id. C 2, 5, 21</span></i>\n\t\t\t: pueri innuptaeque puellae, Verg.  A. 6,\n\t\t\t307.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b> In\n\t\t\tpartic. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>1.</b>\n\t\t\t<i>A beloved maiden</i>, <i>a\n\t\t\tsweetheart</i>, <i>mistress</i> (<b>poet.</b>): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">vixi puellis nuper idoneus,</span>”\n\t\t\t\t <i><span class=\"en\">Hor.\n\t\t\t\t\tC. 3, 26, 1</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">proditor puellae risus ab angulo,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 1, 9, 22</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">mendax,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tS. 1, 5, 82</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">cara,</span>”\n\t\t\t\t <i><span class=\"en\">id. Ep. 1, 18, 74</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">blanda,</span>”\n\t\t\t\t <i><span class=\"en\">Ov.\n\t\t\t\t\tAm. 2, 2, 34</span></i>\n\t\t\t; <i><span class=\"en\">Mart. 10, 109, 3 al.</span></i>—<b>Transf.</b>, in jest, of <i>a\n\t\t\tkitten</i>, <i><span class=\"en\">Mart. 1, 109,\n\t\t\t16</span></i>.—*</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>2.</b>\n\t\t\t<i>A daughter</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Danai puellae,</span>”\n\t\t\t\t <i><span class=\"en\">Hor.\n\t\t\t\t\tC. 3, 11, 23</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>II.</b>\n\t\t\t<b>Transf.</b>, in gen., <i>a young\n\t\t\t\tfemale</i>, <i>young woman</i>, <i>young wife</i> (<b>poet.</b> and in post-Aug.\n\t\t\tprose): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">puellae Jam virum expertes,</span>”\n\t\t\t\t <i><span class=\"en\">Hor.\n\t\t\t\t\tC. 3, 14, 10</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">laborantes utero puellae,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 3, 22, 2</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">viduae cessate puellae,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. F.\n\t\t\t\t\t2, 557</span></i>\n\t\t\t. So of Penelope, who was married, <i><span class=\"en\">Ov. H. 1,\n\t\t\t\t115</span></i>; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of Antiope,</span>”\n\t\t\t\t <i><span class=\"en\">Prop.\n\t\t\t\t\t3, 13</span></i>\n\t\t\t (4, 14), 21; 34; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of Phædra,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. H.\n\t\t\t\t\t4, 2</span></i>\n\t\t\t; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of Helen,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tA. A. 1, 54 al.</span></i>\n\t\t\t; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of the wife of a second husband,</span>”\n\t\t\t\t <i><span class=\"en\">Stat. S. 1, 2, 163</span></i>\n\t\t\t; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of Servilia, wife of the exiled Pollio,</span>”\n\t\t\t\t <i><span class=\"en\">Tac.\n\t\t\t\t\tA. 16, 30</span></i>\n\t\t\t; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">of Octavia, wife of Nero,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 14, 64</span></i>\n\t\t\t; cf. <i><span class=\"en\">Gell. 12, 1, 4</span></i>.—\n\t\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\t<i>A female slave</i> (very rare), <i><span class=\"en\">Hor. C. 4,\n\t\t\t\t11, 10</span></i>.</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n26185",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n26185\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">lēgo</span></b> , āvi,\n\t\t\tātum (archaic <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>perf.</i> legassit for legaverit, Fragm. XII.\n\t\t\tTab. ap. <i><span class=\"en\">Cic. Inv. 2, 50, 148</span></i>),\n\t\t\t1, v. a.\n\t\t\tlex; and therefore qs. lege creare, a publicist's and\n\t\t\tjurid. t. t. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b> A\n\t\t\tpublicist's t. t. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>A.</b>\n\t\t\t<i>To send with a commission</i> or <i>charge, to send on an embassy, send as ambassador; to depute,\n\t\t\t\tdespatch</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ne hoc quidem senatui relinquebas, ut legati ex\n\t\t\t\t\tejus ordinis auctoritate legarentur,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tVatin. 15, 35</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">hominem honestum ac nobilem legarunt ad\n\t\t\t\t\tApronium,</span>”\n\t\t\t\t <i><span class=\"en\">id. Verr. 2, 3, 48, § 114</span></i>\n\t\t\t: eos privatae  rei causa legari, <i><span class=\"en\">id. Fam. 3,\n\t\t\t\t8, 4</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">juste pieque legatus venio,</span>”\n\t\t\t\t <i><span class=\"en\">Liv. 1,\n\t\t\t\t\t32</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">tres adulescentes in Africam legantur, qui\n\t\t\t\t\treges adeant, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">Sall. J. 21, 4</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quos Athenienses Romam ad senatum legaverant\n\t\t\t\t\timpetratum, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">Gell.\n\t\t\t\t\t7, 14, 8</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>2.</b>\n\t\t\t<b>Transf.</b> to the commission itself (ante- and\n\t\t\tpost-class.): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quae verba legaverint Rhodii ad hostium ducem,</span>”\n\t\t\t\t<i>what they told him through their deputies</i>,\n\t\t\t\t <i><span class=\"en\">Gell.\n\t\t\t\t\t15, 31</span></i>\n\t\t\t\n\t\t\t<i>in lemm.</i>—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense4\"><b>b.</b> Beyond the official sphere: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quin potius, quod legatum est tibi negotium, Id\n\t\t\t\t\tcuras?</span>”\n\t\t\t\t<i>committed, intrusted</i>,\n\t\t\t\t <i><span class=\"en\">Plaut.\n\t\t\t\t\tCas. 1, 12</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\t<i>To appoint</i> or <i>choose as\n\t\t\tdeputy</i> (as the official assistant, lieutenant, of a general or\n\t\t\tgovernor): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">eum (Messium) Caesari legarat Appius,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tAtt. 4, 15, 9</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ego me a Pompeio legari ita sum passus, ut,\n\t\t\t\t\tetc.,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 4, 2, 6</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">istum legatum iri non arbitror,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 10, 1, 4</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ne legaretur Gabinius Pompeio expetenti,</span>”\n\t\t\t\t <i><span class=\"en\">id. de Imp. Pomp. 19, 57</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Dolabella me sibi legavit,</span>”\n\t\t\t\t<i>chose me for his lieutenant</i>,\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tAtt. 15, 11, 4</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Calpurnius parato exercitu legat sibi homines\n\t\t\t\t\tnobiles, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">Sall.\n\t\t\t\t\tJ. 28</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>II.</b> A\n\t\t\tjurid. t. t.: aliquid, <i>to appoint by a last\n\t\t\twill</i> or <i>testament, to leave</i> or <i>bequeath as a legacy</i> (class.): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Numitori, qui stirpis maximus erat, regnum\n\t\t\t\t\tvetustum Silviae gentis legat,</span>”\n\t\t\t\t <i><span class=\"en\">Liv. 1,\n\t\t\t\t\t3</span></i>\n\t\t\t: legavit quidam uxori mundum omne penumque, Lucil. ap. <i><span class=\"en\">Gell. 4, 1,\n\t\t\t\t3</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">usumfructum omnium bonorum Caesenniae legat,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tCaecin. 4, 11</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Fabiae pecunia legata est a viro,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tTop. 3, 14</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">cui argentum omne legatum est,</span>”\n\t\t\t\t <i><span class=\"en\">Quint. 5, 10, 62</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">in argento legato,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\t7, 2, 11</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\tAliquid alicui ab aliquo, <i>to leave one a legacy to\n\t\t\t\tbe paid by the principal heir</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">uxori testamento legat grandem pecuniam a\n\t\t\t\t\tfilio, si qui natus esset: ab secundo herede nihil legat,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tClu. 12, 33</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">si paterfamilias uxori ancillarum usum fructum\n\t\t\t\t\tlegavit a filio, neque a secundo herede legavit,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tTop. 4, 21</span></i>\n\t\t\t; <i><span class=\"en\">Quint. 7, 9, 5</span></i>.—Hence,\n\t\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>1.</b>\n\t\t\t<b><span class=\"alpheios-lex-la\" lang=\"lat\">lēgātus</span></b> ,\n\t\t\t\ti, m.\n\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>A.</b> (Acc. to lego, I. A.) <i>An ambassador, legate</i>, <i><span class=\"en\">Cic. Vatin.\n\t\t\t\t15, 35</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatos mittere,</span>”\n\t\t\t\t <i><span class=\"en\">id. de Imp. Pomp. 12, 35</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ad senatum legatos de aliqua re mittere,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tde Or. 2, 37, 155</span></i>\n\t\t\t; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">missi magnis de rebus uterque Legati,</span>”\n\t\t\t\t <i><span class=\"en\">Hor.\n\t\t\t\t\tS. 1, 5, 29</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatos mittere ad indicendum bellum,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t31, 8</span></i>\n\t\t\t; <i><span class=\"en\">Ov. M. 14,\n\t\t\t527</span></i>.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\t(Acc. to lego, I. B.). </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense4\"><b>a.</b> An official assistant given to a general or the governor of a\n\t\t\tprovince, <i>a deputy, lieutenant,\n\t\t\tlieutenant-general</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quos legatos tute tibi legasti?</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tPis. 14, 33</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">qui M. Aemilio legati fuerunt,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tClu. 36, 99</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Quintus frater meus legatus est Caesaris,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tFam. 1, 9, 21</span></i>\n\t\t\t; <i><span class=\"en\">id. Off. 3, 20, 79</span></i>; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Murena summo imperatori legatus L. Lucullo\n\t\t\t\t\tfuit, qua in legatione duxit exercitum, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tMur. 9, 20</span></i>\n\t\t\t; <i><span class=\"en\">14, 32</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">neque se ei legatum defuturum,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tPhil. 11, 7, 17</span></i>\n\t\t\t; <i><span class=\"en\">Val.\n\t\t\t\tMax. 5, 5, 1</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">hiberna cum legato praefectoque tradidisses,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tPis. 35, 86</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">(Calvisius) duos legatos Uticae reliquerat,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tPhil. 3, 10 <i>fin.</i></span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quaestorius,</span>”\n\t\t\t\t <i><span class=\"en\">id. Verr. 2, 1, 21, § 56</span></i>\n\t\t\t; <i><span class=\"en\">Caes. B. G. 2, 5 <i>fin.</i></span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">L. Caesar, cujus pater Caesaris erat legatus,</span>”\n\t\t\t\t <i><span class=\"en\">id. B.\n\t\t\t\t\tC. 1, 8, 2</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">magnitudo et splendor legati,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t38, 58, 9</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">in magna legatum quaere popina,</span>”\n\t\t\t\t <i><span class=\"en\">Juv.\n\t\t\t\t\t8, 172</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense4\"><b>b.</b>\n\t\t\tUnder the emperors, <i>a governor sent to a province by\n\t\t\t\tthe emperor</i>, <i><span class=\"en\">Tac. A. 12, 40</span></i>; <i><span class=\"en\">id. Agr.\n\t\t\t33</span></i>; <i><span class=\"en\">Suet. Vesp. 4</span></i>;\n\t\t\t\t<i><span class=\"en\">Spart. Hadr. 3</span></i> et saep.; cf.\n\t\t\tlegatio, I. B. 2., and Orell. ad <i><span class=\"en\">Tac. Agr.\n\t\t\t9</span></i>.— </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense5\"><b>(b).</b> Legati legionum, <i>commanders</i>, <i><span class=\"en\">Suet.\n\t\t\t\tTib. 19</span></i>; <i><span class=\"en\">id. Vesp. 4</span></i>; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Caesar singulis legionibus singulos legatos et\n\t\t\t\t\tquaestorem praefecit,</span>”\n\t\t\t\t <i><span class=\"en\">Caes.\n\t\t\t\t\tB. G. 1, 52</span></i>\n\t\t\t; <i><span class=\"en\">Tac. A. 2, 36</span></i>; <i><span class=\"en\">id. H. 1,\n\t\t\t7</span></i>.—Also called; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatus praetorius,</span>”\n\t\t\t\t <i><span class=\"en\">Tac. Agr.\n\t\t\t\t\t7</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>2.</b>\n\t\t\t<b><span class=\"alpheios-lex-la\" lang=\"lat\">lēgātum</span></b> ,\n\t\t\t\ti, n. (acc. to lego, II.), <i>a bequest, legacy</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatum est delibatio hereditatis, qua testator\n\t\t\t\t\tex eo, quod universum heredis foret, alicui quid collatum\n\t\t\t\t\tvelit,</span>”\n\t\t\t\t <i><span class=\"en\">Dig.\n\t\t\t\t\t30, 116</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Hortensii legata cognovi,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tAtt. 7, 3, 9</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">reliqua legata varie dedit,</span>”\n\t\t\t\t <i><span class=\"en\">Suet. Aug. 101</span></i>\n\t\t\t; <i><span class=\"en\">id. Tib. 48</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatum peto ex testamento,</span>”\n\t\t\t\t <i><span class=\"en\">Quint.\n\t\t\t\t\t4, 2, 6</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">jus capiendi legata alicui adimere,</span>”\n\t\t\t\t <i><span class=\"en\">Suet. Dom. 8</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">cymbala pulsantis legatum amici,</span>”\n\t\t\t\t <i><span class=\"en\">Juv. 9,\n\t\t\t\t\t62</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legatorum genera sunt quattuor,</span>”\n\t\t\t\t <i><span class=\"en\">Gai. Inst. 2, 192</span></i>\n\t\t\t; cf. sqq.</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n26186",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n26186\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">lĕgo</span></b> , lēgi,\n\t\tlectum (<div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>gen. plur. part.</i> legentum, <i><span class=\"en\">Ov. Tr.\n\t\t\t1</span></i>. 7, 25), 3, v. a.\n\t\t\tGr. <span class=\"alpheios-lex-greek\" lang=\"grc\">λέγω, λόγος, λογάς</span>,\n\t\t\t\tetc.; Lat. legumen, di-leg-ens, neg-leg-o, etc.; cf. Germ.\n\t\t\tlesen, <i>to bring together, to gather,\n\t\t\tcollect</i>. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b>\n\t\t\t<b>Lit.</b>\n\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>A.</b> In gen.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">oleam,</span>”\n\t\t\t\t <i><span class=\"en\">Cato, R. R. 144</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">nuces,</span>”\n\t\t\t\t <i><span class=\"en\">Cic. de Or. 2, 66, 265</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">herbas collibus,</span>”\n\t\t\t\t <i><span class=\"en\">Ov.\n\t\t\t\t\tM. 14, 347</span></i>\n\t\t\t: flores et humi nascentia fraga, \n\t\t\t\n\t\t\t<i><span class=\"en\">Verg. E. 3,\n\t\t\t\t92</span></i>; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">roscida mala,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 8, 38</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">flores in calathos,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. F.\n\t\t\t\t\t5, 218</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">spolia caesorum,</span>”\n\t\t\t\t <i><span class=\"en\">Liv. 5,\n\t\t\t\t\t39</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quos (montanos asparagos),</span>”\n\t\t\t\t <i><span class=\"en\">Juv.\n\t\t\t\t\t11, 69</span></i>\n\t\t\t.—Of the dead who have been burned: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ossa,</span>”\n\t\t\t\t <i><span class=\"en\">Ov.\n\t\t\t\t\tH. 10, 150</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">homini mortuo ossa,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tLeg. 2, 24, 60</span></i>\n\t\t\t: ossa filii, Sen. de Ira, 2, 33, 6; cf. <i><span class=\"en\">Quint. 8,\n\t\t\t\t5, 21</span></i>; <i><span class=\"en\">Lact. de Mort. Persec. 21,\n\t\t\t\t11</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">reliquias legerunt primores equestris ordinis,</span>”\n\t\t\t\t <i><span class=\"en\">Suet. Aug. 100</span></i>\n\t\t\t. —</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\tEsp. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>1.</b>\n\t\t\t<i>To take out, pick out, extract, remove</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quibusdam et radi ossa et legi ... quae sine\n\t\t\t\t\ttotius pernicie corporis haerere non poterant,</span>”\n\t\t\t\t <i><span class=\"en\">Sen. Prov. 1, 3, 2</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ossa vivis,</span>”\n\t\t\t\t <i><span class=\"en\">id. ad Marc. 22, 3</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ossa in capite lecta,</span>”\n\t\t\t\t <i><span class=\"en\">id. Ben. 5, 24, 3</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ossa e vulneribus,</span>”\n\t\t\t\t <i><span class=\"en\">Quint. 6, 1, 30</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>2.</b>\n\t\t\t<i>To pluck, strip, gather fruit from</i> (a tree,\n\t\t\tetc.): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">oleam qui legerit,</span>”\n\t\t\t\t <i><span class=\"en\">Cato, R. R. 144, 1</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ficus non erat apta legi,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. F.\n\t\t\t\t\t2, 254</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>3.</b>\n\t\t\t<b>Poet.</b>: legere fila, <i>to wind\n\t\t\t\tup</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">extrema Lauso Parcae fila legunt,</span>”\n\t\t\t\ti. e. <i>spin the last thread of life</i>,\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 10, 815</span></i>\n\t\t\t; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quae dedit ingrato fila legenda viro,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. F.\n\t\t\t\t\t3, 462</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">stamen,</span>”\n\t\t\t\t <i><span class=\"en\">Prop.\n\t\t\t\t4</span></i>\n\t\t\t (5), 4, 40 (42).—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>4.</b> Naut. t. t.: vela legere, <i>to draw\n\t\t\t\ttogether, furl</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">omnis navita ponto umida vela legit,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tG. 1, 373</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">vela legunt socii,</span>”\n\t\t\t\t <i><span class=\"en\">id. A.\n\t\t\t\t\t3, 532</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ipse dabit tenera vela, legetque manu,</span>”\n\t\t\t\t <i><span class=\"en\">Ov.\n\t\t\t\t\tH. 15, 215</span></i>\n\t\t\t; <i><span class=\"en\">Val.\n\t\t\t\tFl. 2, 13</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">prora funem legit Argus ab alta,</span>”\n\t\t\t\t<i>draws in, takes in</i>,\n\t\t\t\t <i><span class=\"en\">id. 1,\n\t\t\t\t\t312</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ancoras classis legit,</span>”\n\t\t\t\t<i>is weighing anchor</i>,\n\t\t\t\t <i><span class=\"en\">Sen. Troad. 759</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>5.</b>\n\t\t\t<i>To take to one's self unjustly, to carry off, steal,\n\t\t\t\tpurloin, plunder, abstract</i> (not in Cic.): omnia viscatis\n\t\t\tmanibus leget, omnia sumet: crede mihi, auferet omnia, Lucil. ap.\n\t\t\t\t\t<i><span class=\"en\">Non. 332</span></i> and 396, 4: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">majus esse maleficium stuprare ingenuam quam\n\t\t\t\t\tsacrum legere,</span>”\n\t\t\t\t <i><span class=\"en\">Auct. Her. 2, 30 <i>fin.</i></span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">sacra divum,</span>”\n\t\t\t\t <i><span class=\"en\">Hor.\n\t\t\t\t\tS. 1, 3, 117</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">soceros legere et gremiis abducere pactas,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 10, 79</span></i>\n\t\t\t Serv. ad loc. (but Forbig. renders legere here as = eligere,\n\t\t\tsumere; cf. 8. infra).—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>6.</b> Of places, <i>to go, pass</i>, or <i>wander through</i> (<b>poet.</b>): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">nec me studiosius altera saltus Legit,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. M.\n\t\t\t\t\t5, 579</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">pars cetera pontum Pone legit,</span>”\n\t\t\t\t<i>sails through</i>,\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 2, 207</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">vada dura lego,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 3, 706</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">freta,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 3, 127</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">aequora Afra,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. F.\n\t\t\t\t\t4, 289</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Ioniumque rapax Icariumque legit,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tib. 4, 566</span></i>\n\t\t\t: vestigia alicujus, <i>to follow one's\n\t\t\t\tfootsteps, to track</i> or <i>pursue him</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">subsequitur pressoque legit vestigia gressu,</span>”\n\t\t\t\t <i><span class=\"en\">id. M.\n\t\t\t\t\t3, 17</span></i>\n\t\t\t; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">et vestigia retro Observata legit,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 9, 392</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">tortos orbes,</span>”\n\t\t\t\t<i>to wander through</i>,\n\t\t\t\t <i><span class=\"en\">id. ib. 12, 481</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>7.</b>\n\t\t\t<i>To pass</i> or <i>sail by, to skirt,\n\t\t\t\tto coast along a shore, land</i>, or <i>place</i>\n\t\t\t(mostly <b>poet.</b>): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Inarimen Prochytenque legit,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. M.\n\t\t\t\t\t14, 89</span></i>\n\t\t\t; <i><span class=\"en\">15, 705</span></i>; <i><span class=\"en\">709</span></i>: primi litoris oram,\n\t\t\t\t<i>coast along</i>, i. e. <i>not\n\t\t\t\tenter into details</i>, <i><span class=\"en\">Verg. G. 2, 44</span></i>; <i><span class=\"en\">id. E. 8,\n\t\t\t7</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">navibus oram Italiae,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t21, 51 <i>fin.</i></span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">oram Campaniae,</span>”\n\t\t\t\t <i><span class=\"en\">Suet. Tib. 11</span></i>\n\t\t\t; cf. \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">terram,</span>”\n\t\t\t\t <i><span class=\"en\">id. Aug. 16</span></i>\n\t\t\t. —</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>8.</b>\n\t\t\tPregn., <i>to choose</i> from a number, <i>to pick out, single out, select, elect</i>\n\t\t\t(class.): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">alia esse oportet forma quem tu pugno legeris,</span>”\n\t\t\t\t<i>pick out to fight with</i>,\n\t\t\t\t <i><span class=\"en\">Plaut. Am. 1, 1, 160</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">judices,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tPhil. 5, 6, 16</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">omnia, quae leget quaeque reiciet,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tFin. 4, 15, 40</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">scribam,</span>”\n\t\t\t\t<i>to elect, appoint</i>,\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tClu. 45, 126</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">condiciones nubendi,</span>”\n\t\t\t\t <i><span class=\"en\">id. Cael. 15</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">cives in patres,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t23, 22</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">viros ad bella,</span>”\n\t\t\t\t <i><span class=\"en\">Ov. M.\n\t\t\t\t\t7, 669</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">geminasque legit de classe biremes,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 8, 79</span></i>\n\t\t\t: legit virum vir, <i>each one singles out his\n\t\t\t\tman</i> (of the combatants in a battle),\n\t\t\t\t<i><span class=\"en\">id. ib. 11, 632</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">senatum ad modum pristinum redegit duabus\n\t\t\t\t\tlectionibus: prima ipsorum arbitratu, quo vir virum legit,</span>”\n\t\t\t\t <i><span class=\"en\">Suet. Aug. 35</span></i>\n\t\t\t; <i><span class=\"en\">Tac. H. 1, 18</span></i>: neque ejus legendam\n\t\t\tfiliam (sc. virginem Vestalem) qui domicilium in Italia non haberet,\n\t\t\tAt. Cap. ap. <i><span class=\"en\">Gell. 1, 12, 8</span></i>.—*\n\t\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense5\"><b>(b).</b> With <i>inf.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">fidissima custos Lecta sacrum justae veneri\n\t\t\t\t\toccultare pudorem,</span>”\n\t\t\t\t <i><span class=\"en\">Stat.\n\t\t\t\t\tTh. 1, 530</span></i>\n\t\t\t.</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>II.</b>\n\t\t\t<b>Trop.</b> * </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>A.</b>\n\t\t\t<i>To catch up</i>, i. e. <i>overhear</i> a conversation: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">nunc huc concedam, ut horum sermonem legam,</span>”\n\t\t\t\t <i><span class=\"en\">Plaut. Ps. 1, 4, 21</span></i>\n\t\t\t (cf. sublegere, <i><span class=\"en\">id. Mil. 4, 2</span></i>.\n\t\t\t98).—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>B.</b>\n\t\t\t<i>To catch with the eye, to view, observe, behold,\n\t\t\t\tsurvey, see</i>. * </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>1.</b> In gen.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">tumulum capit, unde omnes longo ordine posset\n\t\t\t\t\tAdversos legere,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 6, 755</span></i>\n\t\t\t Heyne ad loc.; and cf. <i><span class=\"en\">Verg. A. 6,\n\t\t\t\t34</span></i>.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense3\"><b>2.</b> In partic., <i>to read</i> or <i>peruse</i> a writing: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ut eos libros per te ipse legeres,</span>”\n\t\t\t\t <i><span class=\"en\">Cic. Top. 1</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">defensionem causae,</span>”\n\t\t\t\t <i><span class=\"en\">id. Verr. 2, 5, 43, § 112</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legi apud Clitomachum, A. Albium jocantem\n\t\t\t\t\tdixisse, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">id. Ac. 2, 45, 137</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">aliquid studiose intenteque,</span>”\n\t\t\t\t <i><span class=\"en\">Plin.\n\t\t\t\t\tEp. 9, 13, 1</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">significas legisse te in quadam epistula mea,\n\t\t\t\t\tjussisse Verginium, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">id. ib. 9, 19, 1</span></i>\n\t\t\t: philosophorum consultorumque opiniones, <i><span class=\"en\">Quint.\n\t\t\t\t12, 11, 17</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">liber tuus et lectus est et legitur a me\n\t\t\t\t\tdiligenter,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tFam. 6, 5, 1</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">orationem,</span>”\n\t\t\t\t <i><span class=\"en\">Quint.\n\t\t\t\t\t1, 1, 6</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">aiunt multum legendum esse non multa,</span>”\n\t\t\t\t <i><span class=\"en\">Plin.\n\t\t\t\t\tEp. 7, 9, 15</span></i>\n\t\t\t.—With a <i>pers. obj.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">antiquos et novos,</span>”\n\t\t\t\t <i><span class=\"en\">Quint. 2, 5, 23</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">antiquos studiosius,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\t3, 6, 62</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">poëtas,</span>”\n\t\t\t\t <i><span class=\"en\">id. 1,\n\t\t\t\t\t4, 4</span></i>\n\t\t\t. —In <i>pass.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">Horatius fere solus legi dignus,</span>”\n\t\t\t\t <i><span class=\"en\">Quint. 10, 1, 96</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">si cum judicio legatur Cassius Severus,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\t10, 1, 116</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">dumque legar, mecum pariter tua fama legetur,</span>”\n\t\t\t\t <i><span class=\"en\">Ov.\n\t\t\t\t\tTr. 5, 14, 5</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">sepulcra legens,</span>”\n\t\t\t\t<i>when reading epitaphs</i>,\n\t\t\t\t <i><span class=\"en\">Cic. de Sen. 7, 21</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legentium plerisque,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t1 praef.</span></i>\n\t\t\t § \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">4: opus nescio an minimae legentibus futurum\n\t\t\t\t\tvoluptati,</span>”\n\t\t\t\t<i>to my readers</i>,\n\t\t\t\t <i><span class=\"en\">Quint.\n\t\t\t\t\t3, 1, 2</span></i>\n\t\t\t; cf. <i><span class=\"en\">id. 9, 4, 2</span></i>; <i><span class=\"en\">2, 5, 3</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">nec Cynicos nec Stoica dogmata,</span>”\n\t\t\t\t <i><span class=\"en\">Juv.\n\t\t\t\t\t13, 121</span></i>\n\t\t\t.—<b>\n\t\t\t\t<i>Absol.</i>\n\t\t\t</b>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legendi usus,</span>”\n\t\t\t\t <i><span class=\"en\">Lact. 3, 25, 9</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">memoriam continuus legendi usus instruit,</span>”\n\t\t\t\t <i><span class=\"en\">Macr. S. 1, 5, 1</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense4\"><b>b.</b> In\n\t\t\tpartic. </div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense5\"><b>(a).</b>\n\t\t\t<i>To read out, read aloud, recite</i> (esp. freq. in\n\t\t\tpost-Aug. authors): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">convocatis auditoribus volumen legere, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tBrut. 51, 191</span></i>\n\t\t\t: codicem pro contione, id. Fragm. ap. <i><span class=\"en\">Quint. 4, 4,\n\t\t\t\t8</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">audio me male legere, dumtaxat versus,\n\t\t\t\t\torationes enim commodius,</span>”\n\t\t\t\t <i><span class=\"en\">Plin.\n\t\t\t\t\tEp. 9, 34</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">obturem impune legentibus aures,</span>”\n\t\t\t\t <i><span class=\"en\">Hor. Ep. 2, 2, 105</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quem vero arripuit tenet occiditque legendo,</span>”\n\t\t\t\t<i>with recitation</i>,\n\t\t\t\t <i><span class=\"en\">id. A.\n\t\t\t\t\tP. 475</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">quis dabit historico quantum daret acta\n\t\t\t\t\tlegenti,</span>”\n\t\t\t\t<i>to read him the news</i>,\n\t\t\t\t <i><span class=\"en\">Juv.\n\t\t\t\t\t7, 104</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense5\"><b>(b).</b>\n\t\t\t<i>To find</i> in an author or a writing: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ut scriptum legimus,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tDeiot. 7, 19</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">legi etiam scriptum, esse avem quandam, etc.,</span>”\n\t\t\t\t <i><span class=\"en\">id. N. D. 2</span></i>\n\t\t\t. 49 <i>init.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ego vero haec scripta legi,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tPlanc. 39, 94</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">praeterea scriptum legimus, Gallos in venatibus\n\t\t\t\t\ttinguere sagittas,</span>”\n\t\t\t\t <i><span class=\"en\">Gell. 17, 15, 7</span></i>\n\t\t\t. relatum legere, Nep. praef. 1.—<i>Pass.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">in aliis codicibus non peccato sed peccatis\n\t\t\t\t\tlegitur,</span>”\n\t\t\t\t <i><span class=\"en\">Aug. Cont. Jul. Rel. 1, 22</span></i>\n\t\t\t; <i><span class=\"en\">id. Don. Persev. 6 <i>init.</i></span></i> al.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense2\"><b>C.</b> A publicist's t. t.: legere senatum, <i>to read over</i> or <i>call off the\n\t\t\t\tnames of senators</i> (which was done by the censors; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">v. lectio, II. A. 2.): censores fideli\n\t\t\t\t\tconcordia senatum legerunt,</span>”\n\t\t\t\t <i><span class=\"en\">Liv.\n\t\t\t\t\t40, 51</span></i>\n\t\t\t; <i><span class=\"en\">9, 29</span></i>; <i><span class=\"en\">9, 30</span></i>; 9, 46; 43, 15\n\t\t\tal.—Hence, <b><span class=\"alpheios-lex-la\" lang=\"lat\">lĕgens</span></b> , entis, Part.\n\t\t\tas <i>subst. m., a reader</i> (<b>poet.</b> and in post-Aug. prose for lector), <i><span class=\"en\">Ov. Tr. 1,\n\t\t\t\t7, 25</span></i>.—<i>Plur.</i>, Liv. praef.\n\t\t\t4; <i><span class=\"en\">Quint.\n\t\t\t\t3, 1, 2</span></i>; <i><span class=\"en\">Plin. 8, 16, 17, § 44</span></i>;\n\t\t\t\t<i><span class=\"en\">Tac. A.\n\t\t\t\t4, 33</span></i>.—Also, <b><span class=\"alpheios-lex-la\" lang=\"lat\">lectus</span></b> , a, um, <i>P. a.,\n\t\t\t\tchosen, picked out, selected; choice, excellent</i> (class.):\n\t\t\targenti lectae numeratae minae, <i>good</i>, i. e. <i>of full weight</i>, <i><span class=\"en\">Plaut. Ps.\n\t\t\t\t4, 7, 50</span></i>; so, \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">argentum,</span>”\n\t\t\t\t <i><span class=\"en\">Ter.\n\t\t\t\t\tPhorm. 1, 2, 3</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ut neque vir melior neque lectior femina in\n\t\t\t\t\tterris sit,</span>”\n\t\t\t\t <i><span class=\"en\">Cic.\n\t\t\t\t\tInv. 1, 31, 52</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">lectissimi viri atque ornatissimi,</span>”\n\t\t\t\t <i><span class=\"en\">id. Verr. 2, 1, 6, § 15</span></i>\n\t\t\t; cf. <i><span class=\"en\">id. Div. in Caecil. 9, 29</span></i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">uxor lectissima,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tInv. 1, 31, 52</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">(verbis) lectis atque illustribus uti,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tde Or. 3, 37, 150</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">nihil est aliud ... pulcre et oratorie dicere\n\t\t\t\t\tnisi optimis sententiis verbisque lectissimis dicere,</span>”\n\t\t\t\t <i><span class=\"en\">id.\n\t\t\t\t\tOr. 68, 227</span></i>\n\t\t\t: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">juvenum lectissime,</span>”\n\t\t\t\t <i><span class=\"en\">Stat. S. 5, 1, 247</span></i>\n\t\t\t; cf.: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">viginti lectis equitum comitatus,</span>”\n\t\t\t\t <i><span class=\"en\">Verg.\n\t\t\t\t\tA. 9, 48</span></i>\n\t\t\t.—Hence, adv.: <b><span class=\"alpheios-lex-la\" lang=\"lat\">lectē</span></b> , <i>choicely,\n\t\t\t\tselectly</i> (very rare): \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">ab lego lecte ac lectissime,</span>”\n\t\t\t\t <i><span class=\"en\">Varr. L. L. 6, § 36</span></i>\n\t\t\t Müll.— <i>Comp.</i>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">lectius,</span>”\n\t\t\t\t <i><span class=\"en\">Varr. R. R. 1, 54, 2</span></i>\n\t\t\t (al. lecta).</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n27773",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n27773\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">mălum</span></b> , i, v. 1. malus,\n\t\t\t<div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>fin.</i>\n\t\t1.</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n27774",
+      "status": 200,
+      "body": "<div xmlns:perseus=\"http://www.perseus.org/meta/perseus.rdfs#\" xmlns:dctype=\"http://purl.org/dc/dcmitype/\" xmlns:tufts=\"http://www.tufts.edu/\" xmlns:alph=\"http://alpheios.net/namespaces/tei\" class=\"alpheios-lex-text_container en\">\n    <div class=\"alpheios-lex-entry\" lemma-id=\"n27774\" body-key=\"\"><b><span class=\"alpheios-lex-la\" lang=\"lat\">mālum</span></b> , i, n., =\n\t\t\t<span class=\"alpheios-lex-greek\" lang=\"grc\">μῆλον</span> (Doric <span class=\"alpheios-lex-greek\" lang=\"grc\">μᾶ λον</span>), <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b><i>an apple</i>, i. e. any tree-fruit fleshy on the\n\t\t\toutside, and having a kernel within (opp. nux); hence, applied also\n\t\t\tto quinces, pomegranates, peaches, oranges, lemons, etc.\n\t\t\t</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>I.</b> In gen., <i><span class=\"en\">Plin. 15,\n\t\t\t\t14, 14, § 47</span></i>; <i><span class=\"en\">Col. 5,\n\t\t\t\t10, 19</span></i>; <i><span class=\"en\">Verg. G. 2, 127 al.</span></i>: malis\n\t\t\torbiculatis pasci, Cael. ad <i><span class=\"en\">Cic. Fam. 8, 15</span></i>.—In a pun\n\t\t\twith mălum, <i>a calamity</i>, <i><span class=\"en\">Plaut. Am.\n\t\t\t\t2, 2, 89</span></i>; <i><span class=\"en\">91 al.</span></i>—Prov.: ab ovo\n\t\t\tusque ad mala, i. e. <i>from beginning to end</i>\n\t\t\t(from the Roman custom to begin meals with eggs and end with fruit),\n\t\t\t\t<i><span class=\"en\">Hor.\n\t\t\t\tS. 1, 3, 7</span></i>.—<b>Trop.</b>: \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">malum discordiae,</span>”\n\t\t\t\t<i>an apple of discord</i>,\n\t\t\t\t <i><span class=\"en\">Just. 12, 15, 11</span></i>\n\t\t\t.—</div>\n        <div class=\"alpheios-lex-lex_sense alpheios-lex-lex_sense1\"><b>II.</b>\n\t\t\tMalum terrae, <i>a plant</i> (the Aristolochia),\n\t\t\thaving four varieties, <i><span class=\"en\">Plin. 25, 8, 54, § 95</span></i>;\n\t\t\t\t<i><span class=\"en\">Scrib. Comp. 202</span></i>; \n\t\t\t\t“<span class=\"alpheios-lex-la\" lang=\"lat\">also called malum terrenum,</span>”\n\t\t\t\t <i><span class=\"en\">Veg. Vet. 4, 13</span></i>\n\t\t\t.</div>\n    </div> <div class=\"alpheios-lex-footnotes en\"> </div>\n    <div class=\"alpheios-lex-alph-source\">From <u>\n            <u>A Latin Dictionary</u>\n        </u> (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879) </div>\n</div>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&l=zzqxx",
+      "status": 403,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>S09FVACYD7X809JB</RequestId><HostId>VaN04ECVnR3Db/sAdV8ILJLRlH3HGuQVTVpeYR949F4A1fLCrNr+zDx51TQ4L/3YhKYo2LH/68A=</HostId></Error>"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&l=malum",
+      "status": 403,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>S097NPWMKRF4KVCS</RequestId><HostId>8RjgM0DN34vRmPzXnKzQ4/dwHQIk3ZfpX88iXpI7t8PSVxQotKdEaodGwxCwQVcdWHdeedbg1Fs=</HostId></Error>"
+    }
+  ],
+  "index": {
+    "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+    "rows": [
+      "@lego1|n26185",
+      "@lego2|n26186",
+      "@lego|n26185",
+      "@malum1|n27773",
+      "@malum2|n27774",
+      "@malum|n27773",
+      "@malus1|n27776",
+      "@malus2|n27777",
+      "@malus3|n27778",
+      "@malus|n27776",
+      "amo|n2280",
+      "importo|n21985",
+      "lego|@",
+      "lex|n26431",
+      "mala|n27674",
+      "malum|@",
+      "malus|@",
+      "puella|n39421"
+    ]
+  }
+}
