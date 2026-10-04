@@ -3,17 +3,28 @@ import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { RequestExecutor } from '../core/requests.ts';
 import { createWhitakerAnalyzer, latinProviderOrigins } from '../providers/whitaker.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
+import { DictionaryCoordinator } from '../core/dictionary.ts';
+import { createLatinDictionary } from '../providers/latin-dictionary.ts';
 
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
 const executor = new RequestExecutor();
 const analyzer = createWhitakerAnalyzer({ executor, permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis) });
-const coordinator = new LookupCoordinator(analyzer, () => notify(), async identity => {
+async function sourceIsCurrent(identity: Identity): Promise<boolean> {
   if (identity.documentId === 'manual') return true;
   const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
   return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
+}
+const coordinator = new LookupCoordinator(analyzer, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
+const dictionary = createLatinDictionary({ executor,
+  permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis),
+  storage: {
+    read: async () => { await settingsReady; return (await chrome.storage.local.get('latinDictionaryIndex')).latinDictionaryIndex; },
+    write: async value => { await settingsReady; await chrome.storage.local.set({ latinDictionaryIndex: value }); },
+  },
 });
+const dictionaries = new DictionaryCoordinator(dictionary, tabId => coordinator.get(tabId), notify, sourceIsCurrent);
 function notify(): void { void chrome.runtime.sendMessage({ type: 'changed' }).catch(() => {}); }
 const settingsReady = chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
 async function enabledOrigins(): Promise<string[]> {
@@ -194,9 +205,17 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
     const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
     const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
-    return { tabId, state: coordinator.get(tabId), providerAccess,
+    return { tabId, state: coordinator.get(tabId), dictionaries: dictionaries.get(tabId), providerAccess,
       providerAccessDecision: latinAccessDecision ?? 'never', origin: top ? readingOrigin(top.url) : undefined,
       enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
+  }
+  if (message.type === 'dictionary-resolve' || message.type === 'dictionary-retrieve' || message.type === 'dictionary-collapse') {
+    if (message.tabId !== tabId || typeof message.generation !== 'number' || typeof message.candidateIndex !== 'number') {
+      throw new Error('The reading result changed. Open the current candidate again.');
+    }
+    if (message.type === 'dictionary-resolve') void dictionaries.resolve(tabId, message.generation, message.candidateIndex, message.retry === true);
+    else if (message.type === 'dictionary-collapse') dictionaries.collapse(tabId, message.generation, message.candidateIndex);
+    else if (typeof message.entryId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true);
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
     if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');
