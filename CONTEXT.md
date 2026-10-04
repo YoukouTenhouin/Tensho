@@ -10,6 +10,9 @@ The language in which a selected word is to be analyzed and looked up, regardles
 **Explanation language**:
 The language used to present definitions and explanations, distinct from the lookup language.
 
+**Explanation preference**:
+The learner's chosen explanation language for a particular lookup language, which need not be available for every part of a result.
+
 **Analysis**:
 The identification of candidate lemmas and possible grammatical interpretations of a selected word in its lookup language.
 

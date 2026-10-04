@@ -1,0 +1,5 @@
+# Explanation preferences determine provider eligibility by role
+
+An explanation preference is selectable when either configured provider role supports it; requiring both would unnecessarily exclude useful partial results for personal study. Analysis uses providers supporting the requested explanation language when any are configured, otherwise it uses the configured analysis providers for candidate lemmas and grammatical interpretations only; dictionary lookup uses only providers supporting the requested explanation language. Eligibility is determined before applying the configured order and ADR 0001's fallback rules, so unavailable explanatory text is explicitly marked rather than replaced with another language or fetched from further providers to fill gaps.
+
+The interface and standardized grammatical labels initially remain English, independently of the preference for provider-authored short meanings and dictionary entries. This keeps structural analysis usable without introducing automatic translation or rewriting backend-authored articles. These decisions were agreed in [issue #6](https://github.com/YoukouTenhouin/Tensho/issues/6)'s design interview.
