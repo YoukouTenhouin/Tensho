@@ -11,3 +11,13 @@ Use the five default triage labels. Before triaging issues, read `docs/agents/tr
 ### Domain docs
 
 Use a single-context layout. Before exploring the codebase, read `docs/agents/domain.md`.
+
+## Feature implementation workflow
+
+Apply this workflow to each feature implementation ticket. Documentation-only updates and other non-feature work are out of scope.
+
+1. Create a ticket-specific branch from `master` named `<ticket>-dev`.
+2. Implement the feature on the dev branch, committing frequently in small, incremental steps.
+3. Once implementation is complete and the required tests pass, create `<ticket>-reflow` from the dev branch. Preserve the dev branch while reorganizing the reflow branch's commits into a clean, logical history of small increments.
+4. Verify that the final tips of the dev and reflow branches have identical Git trees: `git rev-parse <ticket>-dev^{tree} <ticket>-reflow^{tree}` must print the same tree ID twice.
+5. Push the reflow branch and create a pull request from `<ticket>-reflow` to `master`.
