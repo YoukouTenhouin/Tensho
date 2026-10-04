@@ -66,7 +66,7 @@ async function refresh(): Promise<void> {
     const result = state.analysis;
     const recovery = providerFeedback(result.providerIssues, result.provider); if (recovery) analysis.append(recovery);
     if (result.explanationNotice) { const note = document.createElement('p'); note.textContent = result.explanationNotice; analysis.append(note); }
-    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
+    status.textContent = result.controlled && !result.outcome ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
       : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
       : `${language} analysis — ${result.provider}`;
     for (const [candidateIndex, candidate] of result.candidates.entries()) {

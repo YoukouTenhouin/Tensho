@@ -62,7 +62,8 @@ export async function runProviderChain<T>(options: {
         // an instruction to request permission or retry the same provider.
         if (error instanceof RequestFailure && error.kind === 'missing-access') { record(provider, error, true); continue; }
         if (!technicalFailure(error)) {
-          if (error instanceof RequestFailure) throw new RequestFailure(error.kind, error.message, issues);
+          if (error instanceof RequestFailure) throw new RequestFailure(error.kind, error.kind === 'action-deadline'
+            ? 'Lookup exceeded its 30-second deadline; remaining providers were not attempted.' : error.message, issues);
           throw error;
         }
         record(provider, error, true);
