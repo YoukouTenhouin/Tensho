@@ -81,7 +81,7 @@ export class LookupCoordinator {
   retainAfterRefusal(tabId: number): void {
     const state = this.#states.get(tabId);
     if (state?.status === 'loading' && !this.#pending.has(tabId)) this.#set({ ...state, status: 'error', failureKind: 'interrupted',
-      message: 'The previous lookup was interrupted. Retry explicitly when session storage is available.' });
+      message: 'The previous lookup was interrupted. Retry explicitly to resume.' });
   }
   /** Hydrate once without requests. A newly reserved browser action always wins
    * over slower session loading, even before it has captured its source. */

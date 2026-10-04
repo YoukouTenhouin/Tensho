@@ -16,6 +16,8 @@ import { readingSessionStorage } from './session-storage.ts';
 
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
+let readingAccessRevision = 0;
+const automaticGestures = new Map<number, symbol>();
 const focusRequests = new Map<number, number>();
 const settingsReady = chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
 const configuration = new ConfigurationStore(providerCatalog, {
@@ -125,15 +127,26 @@ function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?:
   });
 }
 async function capture(tabId: number, request: LookupRequest): Promise<void> {
+  const accessRevision = readingAccessRevision;
+  const current = () => {
+    if (!request.current()) return false;
+    if (accessRevision === readingAccessRevision) return true;
+    dictionaries.resume(tabId);
+    coordinator.retainAfterRefusal(tabId);
+    return false;
+  };
   try {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
-    await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
+    const injected = await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
+    const accessibleDocuments = new Set(injected.map(result => result.documentId));
     const frames = await chrome.webNavigation.getAllFrames({ tabId }) ?? [];
     const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number; origin: string; expectedOrigin: string | undefined; hasFocusedChild: boolean; focusedChildIndex: number; parentIndex: number }[] = [];
     for (const frame of frames) {
-      if (!readingOrigin(frame.url)) continue;
+      if (!current()) return;
+      if (!readingOrigin(frame.url) || !accessibleDocuments.has(frame.documentId)) continue;
       try {
         const value = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: frame.documentId });
+        if (!current()) return;
         if (typeof value?.text === 'string') captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId, expectedOrigin: readingOrigin(frame.url) });
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
@@ -162,9 +175,11 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
   } catch { request.notice(await manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.'); }
 }
 async function syncScripts(): Promise<void> {
+  const accessRevision = readingAccessRevision;
   const origins = await enabledOrigins();
   const allowed: string[] = [];
   for (const origin of origins) if (await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) allowed.push(origin);
+  if (accessRevision !== readingAccessRevision) return;
   automaticOrigins = allowed;
   const existing = await chrome.scripting.getRegisteredContentScripts();
   if (existing.length) await chrome.scripting.unregisterContentScripts({ ids: existing.map(item => item.id) });
@@ -190,9 +205,10 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onStartup.addListener(queueSync);
 chrome.permissions.onAdded.addListener(() => { queueSync(); notify(); });
 chrome.permissions.onRemoved.addListener(removed => {
+  readingAccessRevision++;
   executor.revokeAccess(removed.origins ?? []); automaticOrigins = []; queueSync(); notify();
 });
-chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { automaticOrigins = []; queueSync(); notify(); } });
+chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { readingAccessRevision++; automaticOrigins = []; queueSync(); notify(); } });
 chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id || tab.incognito || info.menuItemId !== 'lookup') return;
@@ -201,7 +217,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   void lookup(tab.id, info.frameId ?? 0, info.selectionText ?? '', request);
   // Remember source focus where temporary access permits; lookup itself needs no DOM injection.
   void chrome.scripting.executeScript({ target: { tabId: tab.id, frameIds: [info.frameId ?? 0] }, files: ['page.js'] })
-    .then(() => chrome.tabs.sendMessage(tab.id!, { type: 'capture' }, { frameId: info.frameId ?? 0 })).catch(() => {});
+    .then(() => chrome.tabs.sendMessage(tab.id!, { type: 'remember-focus' }, { frameId: info.frameId ?? 0 })).catch(() => {});
 });
 chrome.commands.onCommand.addListener((command, tab) => {
   if (!tab?.id || tab.incognito) return;
@@ -333,23 +349,32 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       ? coordinator.prepareWordChoice(message.tabId, message.passageId, message.wordIndex) : undefined;
     void panelAction(message, request, startWord).then(reply, error => reply({ error: String(error) })); return true;
   }
-  if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
+  if (message.type === 'automatic-lookup' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     if (!sender.origin || sender.origin !== readingOrigin(sender.url ?? '')) return;
     const tabId = sender.tab.id, frameId = sender.frameId ?? 0;
     // The native gesture must reach sidePanel.open before asynchronous API calls.
     // Only already enabled/granted origins qualify; revocation invalidates this cache.
     if (!automaticAllowed(sender.tab.url ?? '', sender.url ?? '', automaticOrigins)) return;
-    const request = coordinator.begin(tabId, frameId);
-    const opening = open(tabId, false, request, sender.tab.windowId);
+    // Reserve capture intent without aborting usable work for an empty gesture.
+    const gesture = Symbol(); automaticGestures.set(tabId, gesture);
+    const accessRevision = readingAccessRevision;
+    const lookupCurrent = coordinator.guard(tabId);
+    const current = () => automaticGestures.get(tabId) === gesture && lookupCurrent() && accessRevision === readingAccessRevision;
+    const opening = open(tabId, false, undefined, sender.tab.windowId);
     void (async () => {
       const [top, frame, enabled] = await Promise.all([
         chrome.webNavigation.getFrame({ tabId, frameId: 0 }), chrome.webNavigation.getFrame({ tabId, frameId }), enabledOrigins(),
       ]);
       if (!top || !frame || frame.documentId !== sender.documentId || !automaticAllowed(top.url, frame.url, enabled)) return;
-      if (!await chrome.permissions.contains({ origins: [permissionPattern(top.url), permissionPattern(frame.url)] })) return;
       if (!await opening) return;
-      await lookup(tabId, frameId, message.text, request, sender.documentId);
-    })().then(() => reply({ ok: true }), error => reply({ error: String(error) })); return true;
+      if (!await chrome.permissions.contains({ origins: [permissionPattern(top.url), permissionPattern(frame.url)] }) || !current()) return;
+      const selected = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: sender.documentId });
+      if (!current() || typeof selected?.text !== 'string' || !selected.text || selected.origin !== sender.origin) return;
+      const request = coordinator.begin(tabId, frameId);
+      await lookup(tabId, frameId, selected.text, request, sender.documentId);
+    })().then(() => reply({ ok: true }), error => reply({ error: String(error) })).finally(() => {
+      if (automaticGestures.get(tabId) === gesture) automaticGestures.delete(tabId);
+    }); return true;
   }
 });
 
