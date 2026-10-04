@@ -40,7 +40,7 @@ class ObservedCDP(CDP):
                 return reply['result']
 
 
-def run(output):
+def run(output, dictionary=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -118,12 +118,16 @@ def run(output):
                 checks['english_short_meanings_visible'] = panel.evaluate("document.querySelector('#analysis').textContent.includes('bring in')")
                 observed = requests(); evidence['provider_requests'] = observed
                 checks['one_explicit_latin_request'] = len(observed) == 1 and 'engine=whitakerLat' in observed[0]['url'] and 'lang=lat' in observed[0]['url']
+                if dictionary:
+                    from dictionary_workflow import exercise_dictionary
+                    exercise_dictionary(panel, snapshot, requests, evidence)
+                request_count = len(requests())
                 panel.evaluate("chrome.permissions.remove({origins:['https://morph.alpheios.net/*','https://repos1.alpheios.net/*']})")
                 wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
                 revoked = submit()
-                checks['revocation_visible_without_new_request'] = revoked.get('failureKind') == 'missing-access' and len(requests()) == 1
+                checks['revocation_visible_without_new_request'] = revoked.get('failureKind') == 'missing-access' and len(requests()) == request_count
                 retried_revoked = retry()
-                checks['retry_after_revocation_sends_no_request'] = retried_revoked.get('failureKind') == 'missing-access' and len(requests()) == 1
+                checks['retry_after_revocation_sends_no_request'] = retried_revoked.get('failureKind') == 'missing-access' and len(requests()) == request_count
                 checks['explicit_retry_is_available'] = panel.evaluate("!document.querySelector('#retry').hidden")
                 evidence['passed'] = all(checks.values())
         except Exception as error:
@@ -142,5 +146,6 @@ def run(output):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path, required=True)
-    args = parser.parse_args(); result = run(args.output); print(json.dumps(result, indent=2, ensure_ascii=False))
+    parser.add_argument('--dictionary', action='store_true')
+    args = parser.parse_args(); result = run(args.output, args.dictionary); print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)

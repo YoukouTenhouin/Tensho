@@ -1,4 +1,4 @@
-import { RequestFailure, RequestExecutor, readBoundedJson } from '../core/requests.ts';
+import { RequestFailure, RequestExecutor, readBoundedJson, requireProviderAccess } from '../core/requests.ts';
 import type { Analyzer } from '../core/lookup.ts';
 
 export const whitaker = {
@@ -129,10 +129,8 @@ export function createWhitakerAnalyzer(dependencies: {
     }
     return dependencies.executor.run(async requestSignal => {
       // This guard is inside the queue slot, immediately before the actual fetch.
-      const allowed = await dependencies.permitted(whitaker.origins);
-      requestSignal.throwIfAborted();
-      if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.');
-      if (!allowed) throw new RequestFailure('missing-access', 'Latin analysis access is missing. Enable Latin providers to continue.');
+      await requireProviderAccess(dependencies.permitted, whitaker.origins, requestSignal, deadline,
+        'Latin analysis access is missing. Enable Latin providers to continue.');
       const url = new URL(whitaker.endpoint);
       url.search = new URLSearchParams({ word: query, engine: 'whitakerLat', lang: 'lat', clientId: 'tensho' }).toString();
       let response: Response;
