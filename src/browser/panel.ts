@@ -1,6 +1,7 @@
 import { latinProviderOrigins } from '../providers/whitaker.ts';
 import type { State } from '../core/lookup.ts';
 import { permissionPattern, readingOrigin } from '../core/origins.ts';
+import { renderDictionary } from './dictionary-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 const results = element('results'), status = element('status'), target = element('target'), analysis = element('analysis');
 const word = element<HTMLInputElement>('word'), feedback = element('feedback');
@@ -20,6 +21,7 @@ async function refresh(): Promise<void> {
   tabId = snapshot.tabId; origin = snapshot.origin;
   const state: State | undefined = snapshot.state;
   const key = `${tabId}:${state?.generation ?? 'none'}`;
+  const focusId = key === displayed && document.activeElement instanceof HTMLElement ? document.activeElement.id : '';
   if (key !== displayed) { displayed = key; window.scrollTo(0, 0); }
   target.textContent = state?.text || 'Ready to read';
   analysis.replaceChildren();
@@ -30,7 +32,7 @@ async function refresh(): Promise<void> {
     status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
       : result.outcome === 'missing-information' ? 'The provider supplied no usable Latin analysis information.'
       : `Latin analysis — ${result.provider}`;
-    for (const candidate of result.candidates) {
+    for (const [candidateIndex, candidate] of result.candidates.entries()) {
       const section = document.createElement('section');
       const heading = document.createElement('h3'); heading.textContent = candidate.lemma ?? 'Headword unavailable';
       section.append(heading);
@@ -39,10 +41,16 @@ async function refresh(): Promise<void> {
       section.append(interpretations);
       for (const meaning of candidate.meanings) { const paragraph = document.createElement('p'); paragraph.textContent = meaning; section.append(paragraph); }
       if (candidate.missing?.length) { const missing = document.createElement('p'); missing.textContent = `Not supplied: ${candidate.missing.join(', ')}.`; section.append(missing); }
+      section.append(renderDictionary(snapshot.dictionaries?.[candidateIndex], candidateIndex, (type, extra = {}) => {
+        void send({ type, generation: state.generation, candidateIndex, ...extra }).then(refresh).catch(report);
+      }));
       analysis.append(section);
     }
     if (result.excludedForeignRecords) { const note = document.createElement('p'); note.textContent = 'Records explicitly labelled as another lookup language were excluded.'; analysis.append(note); }
     for (const credit of result.attribution ?? []) { const attribution = document.createElement('p'); attribution.textContent = credit; analysis.append(attribution); }
+  }
+  if (focusId && document.activeElement === document.body) {
+    (document.getElementById(focusId) ?? document.getElementById(`${focusId}-region`))?.focus({ preventScroll: true });
   }
   const retry = element<HTMLButtonElement>('retry');
   retry.hidden = state?.status !== 'error';

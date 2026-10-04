@@ -40,14 +40,18 @@ export class LookupCoordinator {
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
+  #invalidate: (tabId: number) => void;
   constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void,
-    sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true) {
+    sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true,
+    invalidate: (tabId: number) => void = () => {}) {
     this.#analyzer = analyzer;
     this.#publish = publish;
     this.#sourceIsCurrent = sourceIsCurrent;
+    this.#invalidate = invalidate;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
   clear(tabId: number): void {
+    this.#invalidate(tabId);
     this.#requests.delete(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
@@ -61,6 +65,7 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    this.#invalidate(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
     const deadline = performance.now() + requestLimits.actionMs;
