@@ -1,0 +1,26 @@
+{
+  "observed_at_utc": "2026-10-04T16:30:52Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "headless Edge; controlled responses through production modules",
+  "live_provider_requests": false,
+  "checks": {
+    "active_content_positive_control": true,
+    "provider_content_never_executes": true,
+    "complete_retained_text_survives_production_reading_path": true,
+    "browser_displays_every_extracted_paragraph": true,
+    "hostile_prose_and_credits_retained": true,
+    "no_provider_elements_or_active_attributes": true,
+    "links_revalidated_at_presentation": true,
+    "multiple_articles_preserve_analysis": true,
+    "single_cached_index_and_only_selected_articles": true,
+    "unresolved_absence_and_failure_stay_distinct": true
+  },
+  "passed": true,
+  "terminal_text": {
+    "unresolved-mapping": "Hide dictionary alternativesUnresolved dictionary mapping: unable to identify a matching entry. This does not establish that the dictionary has no entry.Original headword: test. Stable analysis identity: unknown.",
+    "confirmed-absence": "Hide dictionary alternativesThe dictionary confirmed that no entry is available. Evidence: controlled provider contractOriginal headword: test. Stable analysis identity: unknown.",
+    "technical-failure": "Hide dictionary alternativesControlled identity mismatch.Retry dictionary resolution"
+  },
+  "article_count": 14,
+  "safe_link_count": 15
+}
