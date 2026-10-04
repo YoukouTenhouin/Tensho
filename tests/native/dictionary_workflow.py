@@ -41,6 +41,11 @@ def exercise_dictionary(panel, snapshot, requests, evidence):
     checks['persistent_cache_contains_index_only'] = sorted(cache) == ['key', 'storedAt', 'text'] and all(key in ['latinDictionaryIndex', 'latinAccessDecision', 'enabledOrigins', 'lookupSettings'] for key in local)
     settings = local.get('lookupSettings', {})
     checks['persistent_settings_do_not_contain_reading_results'] = sorted(settings) == ['languages', 'lookupLanguage', 'revision', 'schema'] and 'important' not in json.dumps(settings)
+    current = state()
+    session = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults)")
+    retained = session['tabs'][str(current['tabId'])]['value']
+    checks['live_analysis_and_complete_article_retained_in_session'] = retained['state'] == original and retained['dictionaries']['0']['articles']['n21985']['value'] == value
+    checks['live_session_within_serialized_budget'] = len(json.dumps({'readingResults': session}, ensure_ascii=False, separators=(',', ':')).encode('utf-8')) <= 6 * 1024 * 1024
     # Revoke just dictionary access; a new explicit analysis still works. The fresh
     # persisted index must not bypass the permission guard for new resolution.
     panel.evaluate("chrome.permissions.remove({origins:['https://repos1.alpheios.net/*']})")

@@ -47,7 +47,8 @@ const router = new ProviderRouter({ catalog: providerCatalog, settings: () => co
   ...integrated });
 let reading: ReadingSession | undefined;
 function readingChanged(tabId: number): void { reading?.changed(tabId); notify(); }
-const coordinator = new LookupCoordinator(router, (_state, tabId) => readingChanged(tabId), sourceIsCurrent, tabId => dictionaries.invalidate(tabId),
+const coordinator = new LookupCoordinator(router, (_state, tabId) => readingChanged(tabId), sourceIsCurrent,
+  (tabId, preserve) => preserve ? dictionaries.suspend(tabId) : dictionaries.invalidate(tabId),
   (identity, current) => reading!.prepareLookup(identity.tabId, current));
 const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), readingChanged, sourceIsCurrent);
 reading = new ReadingSession({ lookup: coordinator, dictionaries, storage: new SessionResults(readingSessionStorage(), isReadingRecord),

@@ -168,6 +168,14 @@ window.addEventListener('scroll', () => {
   scrollTimer = setTimeout(flushScroll, 100);
 }, { passive: true });
 window.addEventListener('pagehide', flushScroll);
+chrome.tabs.onActivated.addListener(active => {
+  if (active.windowId !== windowId || active.tabId === tabId) return;
+  flushScroll(); ++revision; tabId = active.tabId;
+  displayedGeneration = undefined; displayed = ''; viewport = ''; renderedPassage = ''; restoringScroll = true;
+  analysis.replaceChildren(); element('passage').hidden = true; element('retry').hidden = true;
+  target.textContent = 'Ready to read'; status.textContent = 'Loading retained result…';
+  void refresh().catch(report);
+});
 function close(): void { flushScroll(); void send({ type: 'close' }).catch(report); }
 element('close').onclick = close;
 document.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });

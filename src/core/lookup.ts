@@ -60,11 +60,11 @@ export class LookupCoordinator {
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
-  #invalidate: (tabId: number) => void;
+  #invalidate: (tabId: number, preserve?: boolean) => void;
   #prepareLookup: ((identity: Identity, current: () => boolean) => Promise<boolean>) | undefined;
   constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void,
     sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true,
-    invalidate: (tabId: number) => void = () => {},
+    invalidate: (tabId: number, preserve?: boolean) => void = () => {},
     prepareLookup?: (identity: Identity, current: () => boolean) => Promise<boolean>) {
     this.#analyzer = analyzer;
     this.#publish = publish;
@@ -77,6 +77,11 @@ export class LookupCoordinator {
   guard(tabId: number): () => boolean {
     const token = this.#requests.get(tabId)?.token;
     return () => this.#requests.get(tabId)?.token === token;
+  }
+  retainAfterRefusal(tabId: number): void {
+    const state = this.#states.get(tabId);
+    if (state?.status === 'loading' && !this.#pending.has(tabId)) this.#set({ ...state, status: 'error', failureKind: 'interrupted',
+      message: 'The previous lookup was interrupted. Retry explicitly when session storage is available.' });
   }
   /** Hydrate once without requests. A newly reserved browser action always wins
    * over slower session loading, even before it has captured its source. */
@@ -129,7 +134,7 @@ export class LookupCoordinator {
   begin(tabId: number, frameId?: number): LookupRequest {
     this.#restorationClosed.add(tabId);
     this.#wordChoices.delete(tabId);
-    this.#invalidate(tabId);
+    this.#invalidate(tabId, !!this.#prepareLookup);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
     const deadline = performance.now() + requestLimits.actionMs;
@@ -158,11 +163,14 @@ export class LookupCoordinator {
       },
       notice: (identity, text, message) => {
         if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
-        if (current()) {
+        const publish = () => { if (current()) {
+          this.#invalidate(tabId);
           this.#pending.get(tabId)?.abort();
           this.#pending.delete(tabId);
           this.#set({ identity: { ...identity }, text, generation: ++this.#generation, status: 'notice', message });
-        }
+        } };
+        if (this.#prepareLookup) void this.#prepareLookup(identity, current).then(accepted => { if (accepted) publish(); });
+        else publish();
       },
     };
     return request;
@@ -199,6 +207,7 @@ export class LookupCoordinator {
     // A superseded result must be durably invalidated before accepting another
     // selection. If storage is unavailable, leave the previous selection current.
     if (this.#prepareLookup && (!await this.#prepareLookup(identity, request.current) || !request.current())) return;
+    this.#invalidate(identity.tabId);
     const prepared = prepareSelection(input);
     if ('error' in prepared) return request.notice(identity, input, prepared.error);
     if (prepared.words.length > 1) {

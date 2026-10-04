@@ -67,10 +67,25 @@ export class DictionaryCoordinator {
     this.#states.set(tabId, { generation, candidates }); this.#publish(tabId); return true;
   }
   invalidate(tabId: number): void {
+    this.suspend(tabId); this.#states.delete(tabId);
+  }
+  /** Stop old work while a replacement is acquiring durable storage, retaining
+   * completed content until the new selection is actually accepted. */
+  suspend(tabId: number): void {
     const state = this.#analysis(tabId);
     if (state) this.#invalidGeneration.set(tabId, state.generation);
     for (const controller of this.#pending.get(tabId) ?? []) controller.abort();
-    this.#pending.delete(tabId); this.#states.delete(tabId);
+    this.#pending.delete(tabId);
+  }
+  resume(tabId: number): void {
+    if (this.#invalidGeneration.get(tabId) !== this.#analysis(tabId)?.generation) return;
+    this.#invalidGeneration.delete(tabId);
+    const interrupted = { status: 'error', failureKind: 'interrupted', message: 'This dictionary action was interrupted. Retry explicitly to resume.' } as const;
+    for (const candidate of Object.values(this.get(tabId))) {
+      if (candidate.resolution.status === 'loading') candidate.resolution = interrupted;
+      for (const [id, article] of Object.entries(candidate.articles)) if (article.status === 'loading') candidate.articles[id] = interrupted;
+    }
+    this.#publish(tabId);
   }
   collapse(tabId: number, generation: number, candidateIndex: number): void {
     if (this.#analysis(tabId)?.generation !== generation) return;

@@ -33,7 +33,7 @@ function application(durable = browser(), current: (identity: Identity) => Promi
   const changed = (tabId: number) => session?.changed(tabId);
   const lookup = new LookupCoordinator({ analyze: async text => {
     calls++; return { provider: 'Controlled', controlled: true, candidates: [{ lemma: text, stableId: null, meanings: ['meaning'], interpretations: ['noun'] }] };
-  } }, (_state, tabId) => changed(tabId), current, tabId => dictionaries.invalidate(tabId),
+  } }, (_state, tabId) => changed(tabId), current, (tabId, preserve) => preserve ? dictionaries.suspend(tabId) : dictionaries.invalidate(tabId),
   (identity, current) => session!.prepareLookup(identity.tabId, current));
   const dictionaries = new DictionaryCoordinator({
     resolve: async candidate => { calls++; return { status: 'alternatives', originalHeadword: candidate.lemma, stableLemmaId: null,
@@ -159,12 +159,37 @@ test('activation and a new lookup during an eviction write preserve the newer in
 
 test('unavailable storage refuses a replacement before dispatch if the previous selection cannot be invalidated', async () => {
   const app = application(); await article(app, 1, 'amo'); const calls = app.calls();
+  const dictionary = structuredClone(app.dictionaries.get(1));
   app.durable.fail(new Error('Storage unavailable'));
   await app.lookup.lookup(identity(1), 'legi'); await app.session.settled();
   assert.equal(app.calls(), calls); assert.equal(app.lookup.get(1)?.text, 'amo');
+  assert.deepEqual(app.dictionaries.get(1), dictionary);
   assert.match(app.session.information(1).retentionNotice!, /new lookup could not start/);
   app.durable.fail(); const restarted = application(app.durable); await restarted.session.settled();
   assert.equal(restarted.lookup.get(1)?.text, 'amo', 'the replacement was never accepted');
   await app.lookup.lookup(identity(1), 'legi'); await app.session.settled();
   assert.equal(app.lookup.get(1)?.text, 'legi');
+});
+
+test('a non-query notice also requires durable invalidation before replacing the current selection', async () => {
+  const app = application(); await article(app, 1, 'amo');
+  app.durable.fail(new Error('Storage unavailable'));
+  app.lookup.notice(identity(1), '', 'Selection unavailable'); await app.session.settled();
+  assert.equal(app.lookup.get(1)?.text, 'amo'); assert.equal(app.dictionaries.get(1)[0]?.articles.n1?.status, 'complete');
+  app.durable.fail(); app.lookup.notice(identity(1), '', 'Selection unavailable'); await app.session.settled();
+  await new Promise<void>(resolve => setImmediate(resolve)); await app.session.settled();
+  const restarted = application(app.durable); await restarted.session.settled();
+  assert.equal(restarted.lookup.get(1)?.status, 'notice'); assert.equal(restarted.lookup.get(1)?.text, '');
+});
+
+test('refusing a replacement leaves an interrupted prior analysis retryable instead of permanently loading', async () => {
+  let release!: () => void, entered!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  const started = new Promise<void>(resolve => { entered = resolve; });
+  const app = application(browser(), async () => { entered(); await pending; return true; });
+  const first = app.lookup.lookup(identity(1), 'amo'); await started; await app.session.settled();
+  app.durable.fail(new Error('Storage unavailable'));
+  await app.lookup.lookup(identity(1), 'legi'); await app.session.settled();
+  release(); await first;
+  assert.equal(app.lookup.get(1)?.text, 'amo'); assert.equal(app.lookup.get(1)?.status, 'error');
 });

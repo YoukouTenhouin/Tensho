@@ -66,6 +66,10 @@ export class ReadingSession {
       try { await this.#dependencies.storage.remove(tabId); accepted = true; }
       catch {
         this.#failures.set(tabId, 'A new lookup could not start because the previous result could not be cleared from session storage. Try again.');
+        if (current()) {
+          this.#dependencies.dictionaries.resume(tabId);
+          this.#dependencies.lookup.retainAfterRefusal(tabId);
+        }
         this.#dependencies.notify();
       }
     });
