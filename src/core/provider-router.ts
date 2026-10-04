@@ -51,20 +51,28 @@ export class ProviderRouter implements Analyzer, DictionaryProvider {
   }
   async resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryResolution> {
     const routes = await this.#routes(identity, signal);
-    const selected = routes.dictionary[0];
-    const dictionary = selected && this.#dictionaries[selected.declaration.id];
-    if (!selected || !dictionary) throw new RequestFailure('unsupported-explanation', 'Dictionary entries are unavailable for the selected explanation preference and enabled providers.');
-    const resolution = await dictionary.resolve(candidate, identity, signal, deadline, { ...selected.configuration.options });
-    await this.#routes(identity, signal);
-    return { ...resolution, providerId: selected.declaration.id };
+    if (!routes.dictionary.length) throw new RequestFailure('unsupported-explanation', 'Dictionary entries are unavailable for the selected explanation preference and enabled providers.');
+    const recovered = await runProviderChain({ providers: routes.dictionary, operation: 'resolution', signal, deadline,
+      permitted: this.#permitted, current: active => this.#routes(identity, active),
+      supports: selected => this.#dictionaries[selected.declaration.id]?.supportsCandidate?.(candidate, identity) ?? true,
+      execute: (selected, active) => {
+        const dictionary = this.#dictionaries[selected.declaration.id];
+        if (!dictionary) throw new RequestFailure('unconfigured', 'The configured dictionary is not integrated.');
+        return dictionary.resolve(candidate, identity, active, deadline, { ...selected.configuration.options });
+      } });
+    return { ...recovered.value, providerId: recovered.provider.declaration.id, providerName: recovered.provider.declaration.name,
+      ...(recovered.issues.length ? { providerIssues: recovered.issues } : {}) };
   }
+
   async retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryArticle> {
     const routes = await this.#routes(identity, signal);
     const selected = routes.dictionary.find(provider => provider.declaration.id === resolution.providerId);
     const dictionary = selected && this.#dictionaries[selected.declaration.id];
     if (!selected || !dictionary) throw new RequestFailure('unsupported-explanation', 'This dictionary alternative is unavailable under the current settings.');
-    const article = await dictionary.retrieve(resolution, entryId, identity, signal, deadline, { ...selected.configuration.options });
-    await this.#routes(identity, signal);
-    return article;
+    const recovered = await runProviderChain({ providers: [selected], operation: 'article', signal, deadline,
+      permitted: this.#permitted, current: active => this.#routes(identity, active), supports: () => true,
+      priorIssues: resolution.providerIssues,
+      execute: (_selected, active) => dictionary.retrieve(resolution, entryId, identity, active, deadline, { ...selected.configuration.options }) });
+    return recovered.issues.length ? { ...recovered.value, providerIssues: recovered.issues } : recovered.value;
   }
 }

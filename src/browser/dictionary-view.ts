@@ -1,3 +1,4 @@
+import { providerFeedback } from './provider-feedback.ts';
 import type { CandidateDictionary } from '../core/dictionary.ts';
 import type { DictionaryArticle } from '../providers/latin-article.ts';
 import { safeHttpsUrl } from '../core/safe-links.ts';
@@ -22,6 +23,7 @@ export function renderArticle(article: DictionaryArticle): HTMLElement {
   const section = document.createElement('section'); section.className = 'dictionary-article';
   const heading = document.createElement('h5'); heading.textContent = `${article.dictionary} · ${article.entryId}`;
   section.append(heading);
+  const feedback = providerFeedback(article.providerIssues, article.dictionary); if (feedback) section.append(feedback);
   for (const text of article.paragraphs) section.append(paragraph(text));
   // Source credits are also preserved in their original position in paragraphs.
   if (article.attribution.length) section.setAttribute('aria-label', `${article.dictionary} article with source attribution`);
@@ -51,12 +53,14 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
   const work = candidate.resolution;
   const status = paragraph(''); status.setAttribute('role', 'status'); content.append(status);
   content.setAttribute('aria-busy', String(work.status === 'loading'));
-  if (work.status === 'loading') status.textContent = 'Resolving Lewis & Short alternatives…';
+  if (work.status === 'loading') status.textContent = 'Resolving dictionary alternatives…';
   else if (work.status === 'error' || work.status === 'unavailable') {
     status.textContent = work.message;
+    const feedback = providerFeedback(work.providerIssues); if (feedback) content.append(feedback);
     if (work.status === 'error') content.append(button('Retry dictionary resolution', `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
   } else if (work.status === 'complete') {
     const resolution = work.value;
+    const feedback = providerFeedback(resolution.providerIssues, resolution.providerName); if (feedback) content.append(feedback);
     status.textContent = resolution.status === 'confirmed-absence'
       ? `The dictionary confirmed that no entry is available. Evidence: ${resolution.evidence}`
       : resolution.status === 'unresolved-mapping'
@@ -77,6 +81,7 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
       else {
         const message = paragraph(article.status === 'loading' ? 'Loading full article…' : article.message);
         message.setAttribute('role', 'status'); item.append(message);
+        if (article.status !== 'loading') { const feedback = providerFeedback(article.providerIssues); if (feedback) item.append(feedback); }
         if (article.status === 'error') item.append(button('Retry this article', id,
           () => action('dictionary-retrieve', { entryId: alternative.entryId, retry: true })));
       }

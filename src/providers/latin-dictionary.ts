@@ -7,6 +7,7 @@ import type { DictionaryArticle } from './latin-article.ts';
 import type { ProviderOptionValue } from '../core/configuration.ts';
 
 export interface DictionaryProvider {
+  supportsCandidate?(candidate: Analysis['candidates'][number], identity: Identity): boolean;
   resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryResolution>;
   retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryArticle>;
 }

@@ -1,3 +1,4 @@
+import type { ProviderIssue } from '../core/requests.ts';
 import { parseFragment } from 'parse5';
 import type { DefaultTreeAdapterTypes } from 'parse5';
 import { RequestFailure, requestLimits } from '../core/requests.ts';
@@ -7,6 +8,7 @@ import { latinDictionary } from './latin-index.ts';
 type Node = DefaultTreeAdapterTypes.Node;
 type Element = DefaultTreeAdapterTypes.Element;
 export interface DictionaryArticle {
+  providerIssues?: ProviderIssue[];
   dictionary: string;
   entryId: string;
   paragraphs: string[];

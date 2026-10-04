@@ -1,3 +1,4 @@
+import type { ProviderIssue } from './requests.ts';
 import type { Analysis, Identity, State } from './lookup.ts';
 import { RequestFailure, requestLimits, capabilityUnavailable } from './requests.ts';
 import type { DictionaryProvider } from '../providers/latin-dictionary.ts';
@@ -5,7 +6,7 @@ import type { DictionaryResolution } from '../providers/latin-index.ts';
 import type { DictionaryArticle } from '../providers/latin-article.ts';
 
 export type DictionaryWork<T> = { status: 'loading' } | { status: 'complete'; value: T } |
-  { status: 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind'] };
+  { status: 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] };
 export interface CandidateDictionary {
   expanded: boolean;
   resolution: DictionaryWork<DictionaryResolution>;
@@ -108,7 +109,7 @@ export class DictionaryCoordinator {
     } catch (error) {
       if (current()) {
         const failureKind = error instanceof RequestFailure ? error.kind : undefined;
-        save({ status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', message: error instanceof Error ? error.message : 'Dictionary action failed. Retry explicitly.', failureKind });
+        save({ status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', message: error instanceof Error ? error.message : 'Dictionary action failed. Retry explicitly.', failureKind, providerIssues: error instanceof RequestFailure ? error.issues : undefined });
         this.#publish();
       }
     } finally {
