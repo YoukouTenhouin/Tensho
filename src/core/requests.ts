@@ -9,6 +9,15 @@ export class RequestFailure extends Error {
 export const requestLimits = { concurrent: 2, requestMs: 15_000, actionMs: 30_000, analysisBytes: 1024 * 1024, articleBytes: 1024 * 1024, indexBytes: 8 * 1024 * 1024 } as const;
 interface Pending { start(): void; }
 
+/** Call inside the shared queue immediately before dispatch, and after awaited reads. */
+export async function requireProviderAccess(permitted: (origins: readonly string[]) => Promise<boolean>,
+  origins: readonly string[], signal: AbortSignal, deadline: number, message: string): Promise<void> {
+  const allowed = await permitted(origins);
+  signal.throwIfAborted();
+  if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.');
+  if (!allowed) throw new RequestFailure('missing-access', message);
+}
+
 /** One shared instance owns all provider slots, including requests ignoring abort. */
 export class RequestExecutor {
   #active = 0;

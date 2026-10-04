@@ -1,5 +1,5 @@
 import type { Analysis, Identity } from '../core/lookup.ts';
-import { RequestExecutor, RequestFailure, readBoundedText, requestLimits } from '../core/requests.ts';
+import { RequestExecutor, RequestFailure, readBoundedText, requestLimits, requireProviderAccess } from '../core/requests.ts';
 import { LatinIndexCache, latinDictionary, resolveLatinCandidate } from './latin-index.ts';
 import type { DictionaryResolution, IndexStorage } from './latin-index.ts';
 import { extractLatinArticle, latinArticleUrl } from './latin-article.ts';
@@ -21,10 +21,8 @@ export function createLatinDictionary(dependencies: {
     if (identity.lookupLanguage !== 'lat' || identity.explanationLanguage !== 'en') {
       throw new RequestFailure('format', 'Lewis & Short supports Latin lookup with English explanations.');
     }
-    const allowed = await dependencies.permitted(latinDictionary.origins);
-    signal.throwIfAborted();
-    if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Dictionary action exceeded its 30-second deadline.');
-    if (!allowed) throw new RequestFailure('missing-access', 'Dictionary access is missing. Enable Latin providers and retry this dictionary action.');
+    await requireProviderAccess(dependencies.permitted, latinDictionary.origins, signal, deadline,
+      'Dictionary access is missing. Enable Latin providers and retry this dictionary action.');
   }
   async function fetchText(url: string, accept: string, limit: number, signal: AbortSignal): Promise<string> {
     let response: Response;

@@ -14,8 +14,7 @@ export interface DictionaryAlternative {
   rows: IndexRow[];
   correspondence: 'unverified';
 }
-export interface DictionaryResolution {
-  status: 'alternatives' | 'unresolved-mapping';
+interface ResolutionDetails {
   originalHeadword: string | null;
   provenance: Analysis['candidates'][number]['provenance'];
   stableLemmaId: string | null;
@@ -24,6 +23,10 @@ export interface DictionaryResolution {
   automaticSelection: null;
   exhaustive: false;
 }
+export type DictionaryResolution = ResolutionDetails & (
+  { status: 'alternatives' | 'unresolved-mapping' } |
+  { status: 'confirmed-absence'; evidence: string }
+);
 
 /** The integrated format is a UTF-8 key|target row; @ denotes a redirect family. */
 export function parseLatinIndex(text: string): IndexRow[] {

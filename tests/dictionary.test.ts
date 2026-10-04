@@ -135,3 +135,29 @@ test('detached source cannot start dictionary requests or publish a completed ar
   await turn(); later.source(false); held.resolve(new Response(fixture('lewis-short/n21985.html')));
   await pending; assert.deepEqual(later.dictionary.get(1), {});
 });
+
+test('permission removal during article retrieval prevents publishing the returned content', async () => {
+  const held = deferred<Response>();
+  const app = setup({ article: () => held.promise });
+  await app.lookup.lookup(identity, 'important'); await app.dictionary.resolve(1, app.generation(), 0);
+  const original = app.lookup.get(1);
+  const pending = app.dictionary.retrieve(1, app.generation(), 0, 'n21985');
+  await turn(); app.permit(false);
+  held.resolve(new Response(fixture('lewis-short/n21985.html'))); await pending;
+  const result = app.dictionary.get(1)[0]!.articles.n21985;
+  assert.equal(result?.status, 'error');
+  if (result?.status === 'error') assert.equal(result.failureKind, 'missing-access');
+  assert.equal(app.lookup.get(1), original);
+});
+
+test('identity mismatch remains a local technical failure and explicit retry can recover', async () => {
+  let wrong = true;
+  const app = setup({ article: async () => new Response(fixture(`lewis-short/${wrong ? 'n39421' : 'n21985'}.html`)) });
+  await app.lookup.lookup(identity, 'important'); await app.dictionary.resolve(1, app.generation(), 0);
+  await app.dictionary.retrieve(1, app.generation(), 0, 'n21985');
+  const result = app.dictionary.get(1)[0]!.articles.n21985;
+  assert.equal(result?.status, 'error');
+  if (result?.status === 'error') assert.equal(result.failureKind, 'format');
+  wrong = false; await app.dictionary.retrieve(1, app.generation(), 0, 'n21985', true);
+  assert.equal(app.dictionary.get(1)[0]!.articles.n21985?.status, 'complete');
+});

@@ -57,7 +57,9 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
     content.append(button('Retry dictionary resolution', `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
   } else {
     const resolution = work.value;
-    status.textContent = resolution.status === 'unresolved-mapping'
+    status.textContent = resolution.status === 'confirmed-absence'
+      ? `The dictionary confirmed that no entry is available. Evidence: ${resolution.evidence}`
+      : resolution.status === 'unresolved-mapping'
       ? 'Unresolved dictionary mapping: unable to identify a matching entry. This does not establish that the dictionary has no entry.'
       : 'Correspondence with this lemma is unverified, even for a single alternative. Choose an entry to read; these alternatives may not be exhaustive.';
     content.append(paragraph(`Original headword: ${resolution.originalHeadword ?? 'not supplied'}. Stable analysis identity: ${resolution.stableLemmaId ?? 'unknown'}.`));
