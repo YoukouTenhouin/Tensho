@@ -1,4 +1,6 @@
 import { RequestFailure, requestLimits } from './requests.ts';
+import { prepareSelection } from './input.ts';
+import type { OfferedWord } from './input.ts';
 export interface Identity {
   tabId: number;
   frameId: number;
@@ -7,6 +9,11 @@ export interface Identity {
   configuration: string;
   lookupLanguage: string;
   explanationLanguage: string;
+}
+export function sameIdentity(left: Identity, right: Identity): boolean {
+  return left.tabId === right.tabId && left.frameId === right.frameId && left.documentId === right.documentId &&
+    left.topDocumentId === right.topDocumentId && left.configuration === right.configuration &&
+    left.lookupLanguage === right.lookupLanguage && left.explanationLanguage === right.explanationLanguage;
 }
 export interface Analysis {
   provider: string;
@@ -19,7 +26,8 @@ export interface Analysis {
     provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
     missing?: string[] }[];
 }
-export type State = { generation: number; identity: Identity; text: string } & (
+export interface Passage { id: number; original: string; words: OfferedWord[]; selectedIndex?: number; }
+export type State = { generation: number; identity: Identity; text: string; passage?: Passage } & (
   { status: 'loading' } | { status: 'complete'; analysis: Analysis } |
   { status: 'notice' | 'error'; message: string; failureKind?: RequestFailure['kind'] }
 );
@@ -29,6 +37,7 @@ export interface Analyzer {
 export interface LookupRequest {
   current(): boolean;
   lookup(identity: Identity, input: string): Promise<void>;
+  selectWord(identity: Identity, passageId: number, wordIndex: number): Promise<void>;
   notice(identity: Identity, text: string, message: string): void;
 }
 /** Browser-independent production entry point shared by every lookup action. */
@@ -37,6 +46,7 @@ export class LookupCoordinator {
   #pending = new Map<number, AbortController>();
   #generation = 0;
   #requests = new Map<number, { token: symbol; frameId: number | undefined }>();
+  #wordChoices = new Map<number, symbol>();
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
@@ -53,6 +63,7 @@ export class LookupCoordinator {
   clear(tabId: number): void {
     this.#invalidate(tabId);
     this.#requests.delete(tabId);
+    this.#wordChoices.delete(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
     this.#states.delete(tabId);
@@ -65,6 +76,7 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    this.#wordChoices.delete(tabId);
     this.#invalidate(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
@@ -81,6 +93,16 @@ export class LookupCoordinator {
           scope.frameId = identity.frameId;
           await this.#lookup(identity, input, request, deadline);
         }
+      },
+      selectWord: async (identity, passageId, wordIndex) => {
+        if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
+        const previous = this.#states.get(tabId);
+        const passage = previous?.passage;
+        if (!current() || !passage || passage.id !== passageId || !Number.isInteger(wordIndex)) return;
+        const word = passage.words[wordIndex];
+        if (!word || !previous || !sameIdentity(identity, previous.identity)) return;
+        scope.frameId = identity.frameId;
+        await this.#lookup(identity, word.text, request, deadline, { ...passage, selectedIndex: wordIndex });
       },
       notice: (identity, text, message) => {
         if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
@@ -99,21 +121,42 @@ export class LookupCoordinator {
   lookup(identity: Identity, input: string): Promise<void> {
     return this.begin(identity.tabId).lookup(identity, input);
   }
+  selectWord(tabId: number, passageId: number, wordIndex: number): Promise<void> {
+    const state = this.#states.get(tabId);
+    const request = this.prepareWordChoice(tabId, passageId, wordIndex)?.();
+    return state && request ? request.selectWord(state.identity, passageId, wordIndex) : Promise.resolve();
+  }
+  /** Reserve ordering without cancelling useful work while the browser validates
+   * the active tab. Only a still-current, valid choice may start a new request. */
+  prepareWordChoice(tabId: number, passageId: number, wordIndex: number): (() => LookupRequest | undefined) | undefined {
+    const state = this.#states.get(tabId);
+    if (!state?.passage || state.passage.id !== passageId || !Number.isInteger(wordIndex) || !state.passage.words[wordIndex]) return;
+    const sourceToken = this.#requests.get(tabId)?.token;
+    const choiceToken = Symbol();
+    this.#wordChoices.set(tabId, choiceToken);
+    return () => {
+      if (this.#wordChoices.get(tabId) !== choiceToken || this.#requests.get(tabId)?.token !== sourceToken) return;
+      return this.begin(tabId, state.identity.frameId);
+    };
+  }
   #set(state: State): void {
     this.#states.set(state.identity.tabId, state);
     this.#publish(state, state.identity.tabId);
   }
-  async #lookup(identity: Identity, input: string, request: LookupRequest, deadline: number): Promise<void> {
-    const text = input.trim();
-    if (!text) return request.notice(identity, '', 'Select text on an ordinary webpage or enter a word here.');
-    if ([...text].length > 4096) return request.notice(identity, '', 'Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent.');
-    if (!/[\p{L}\p{N}]/u.test(text)) return request.notice(identity, input, 'Enter a word containing letters or numbers. Nothing was sent.');
-    if (/\s/u.test(text)) return request.notice(identity, input, 'Passage retained. Individual-word study arrives in the passage slice; no analysis was requested.');
-    if ([...text].length > 256) return request.notice(identity, input, 'A word must be at most 256 Unicode code points. Nothing was sent.');
+  async #lookup(identity: Identity, input: string, request: LookupRequest, deadline: number, passage?: Passage): Promise<void> {
+    const prepared = prepareSelection(input);
+    if ('error' in prepared) return request.notice(identity, input, prepared.error);
+    if (prepared.words.length > 1) {
+      const generation = ++this.#generation;
+      this.#set({ identity: { ...identity }, text: input, generation, status: 'notice',
+        passage: { id: generation, original: input, words: prepared.words }, message: 'Passage retained. Choose one word to look up; nothing has been sent.' });
+      return;
+    }
+    const text = prepared.words[0]!.text;
     this.#pending.get(identity.tabId)?.abort();
     const abort = new AbortController();
     this.#pending.set(identity.tabId, abort);
-    const base = { identity: { ...identity }, text: input, generation: ++this.#generation };
+    const base = { identity: { ...identity }, text: input, generation: ++this.#generation, ...(passage ? { passage } : {}) };
     this.#set({ ...base, status: 'loading' });
     const current = () => request.current() && this.#states.get(identity.tabId)?.generation === base.generation && !abort.signal.aborted;
     try {

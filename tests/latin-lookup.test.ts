@@ -44,6 +44,23 @@ test('original selection is retained while only surrounding space and canonical 
   assert.equal(query, 'mālum'); assert.equal(coordinator.get(1)!.text, original);
 });
 
+test('a selected passage word reaches the production analyzer with canonical query normalization and unchanged original spelling', async () => {
+  const queries: string[] = [];
+  const coordinator = setup(async input => {
+    queries.push(new URL(String(input)).searchParams.get('word')!);
+    return new Response(fixture('mālum'));
+  });
+  const original = ' “ma\u0304lum,” important ';
+  await coordinator.lookup(identity, original);
+  assert.deepEqual(queries, []);
+  const passage = coordinator.get(1)!.passage!;
+  assert.equal(passage.words[0]!.text, 'ma\u0304lum');
+  await coordinator.selectWord(1, passage.id, 0);
+  assert.deepEqual(queries, ['mālum']);
+  assert.equal(coordinator.get(1)!.text, 'ma\u0304lum');
+  assert.equal(coordinator.get(1)!.passage!.original, original);
+});
+
 test('missing or revoked access is checked after queueing and sends zero guarded requests', async () => {
   const executor = new RequestExecutor();
   let release!: () => void;

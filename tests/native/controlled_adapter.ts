@@ -2,4 +2,11 @@
 import { controlledAnalyzer } from '../../src/core/controlled.ts';
 import type { createWhitakerAnalyzer as productionFactory } from '../../src/providers/whitaker.ts';
 export { latinProviderOrigins } from '../../src/providers/whitaker.ts';
-export const createWhitakerAnalyzer: typeof productionFactory = () => controlledAnalyzer;
+export const createWhitakerAnalyzer: typeof productionFactory = () => ({
+  async analyze(...args) {
+    const scope = globalThis as typeof globalThis & { __tenshoControlledCalls?: string[] };
+    (scope.__tenshoControlledCalls ??= []).push(args[0]);
+    if (args[0] === 'controlled-failure') throw new Error('Controlled analysis failure.');
+    return controlledAnalyzer.analyze(...args);
+  },
+});
