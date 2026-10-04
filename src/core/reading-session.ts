@@ -1,5 +1,6 @@
 import type { LookupCoordinator, Identity } from './lookup.ts';
 import type { DictionaryCoordinator } from './dictionary.ts';
+import { unretainedArticle } from './dictionary.ts';
 import type { ReadingRecord } from './reading-record.ts';
 import type { SessionResults } from './session-results.ts';
 
@@ -95,6 +96,7 @@ export class ReadingSession {
     this.#positions.set(tabId, { key: positionKey(record), x, y }); this.changed(tabId);
   }
   #failure(tabId: number): void {
+    if (this.#failures.has(tabId)) return;
     this.#failures.set(tabId, 'This result could not be retained in session storage. It may be unavailable after reopening.');
     this.#dependencies.notify();
   }
@@ -116,8 +118,7 @@ export class ReadingSession {
           this.#suppress = true;
           try { dictionaries.releaseArticle(tabId, record.state.generation, Number(index), entryId, article.value); }
           finally { this.#suppress = false; }
-          candidate.articles[entryId] = { status: 'not-retained', sourceUrl: article.value.sourceUrl,
-            message: 'This article could not be retained in session storage. Existing results have been preserved. Read the complete article at its source.' };
+          candidate.articles[entryId] = unretainedArticle(article.value.sourceUrl);
         }
       }
       if (released) result = await storage.save(tabId, record, (await storage.entries()).map(([id]) => id));

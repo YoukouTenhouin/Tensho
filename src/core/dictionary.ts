@@ -10,6 +10,10 @@ export type DictionaryWork<T> = { status: 'loading' } | { status: 'complete'; va
   { status: 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] };
 export type ArticleWork = DictionaryWork<DictionaryArticle> |
   { status: 'not-retained'; message: string; sourceUrl: string; providerIssues?: ProviderIssue[] };
+export function unretainedArticle(sourceUrl: string): ArticleWork {
+  return { status: 'not-retained', sourceUrl,
+    message: 'This article could not be retained in session storage. Existing results have been preserved. Read the complete article at its source.' };
+}
 export interface CandidateDictionary {
   expanded: boolean;
   resolution: DictionaryWork<DictionaryResolution>;
@@ -45,8 +49,7 @@ export class DictionaryCoordinator {
     const candidate = this.get(tabId)[candidateIndex];
     const current = candidate?.articles[entryId];
     if (!candidate || current?.status !== 'complete' || current.value.sourceUrl !== article.sourceUrl) return;
-    candidate.articles[entryId] = { status: 'not-retained', sourceUrl: article.sourceUrl,
-      message: 'This article could not be retained in session storage. Existing results have been preserved. Read the complete article at its source.' };
+    candidate.articles[entryId] = unretainedArticle(article.sourceUrl);
     this.#publish(tabId);
   }
   /** Restore completed work without fetching; interrupted pieces require retry. */
@@ -115,7 +118,7 @@ export class DictionaryCoordinator {
         try { return { article: await this.#provider.retrieve(resolution, entryId, scope.state.identity, signal, actionDeadline, undefined, observe) }; }
         catch (error) {
           signal.throwIfAborted();
-          if (!technicalFailure(error) || !this.#provider.recover || Object.values(candidate.articles).some(article => article.status === 'complete')) throw error;
+          if (!technicalFailure(error) || !this.#provider.recover || Object.values(candidate.articles).some(article => article.status === 'complete' || article.status === 'not-retained')) throw error;
           recovering = true; candidate.resolution = { status: 'loading' }; this.#publish(tabId);
           const next = await this.#provider.recover(scope.candidate, resolution, error, scope.state.identity, signal, actionDeadline, observe);
           if (next) return { resolution: next };
