@@ -1,0 +1,7 @@
+# Separate analysis and dictionary provider roles
+
+Provider configuration distinguishes analysis from dictionary lookup, with an ordered fallback chain for each role rather than a single chain of services required to supply both. The Latin research identified separate analysis and full-entry services; keeping these roles independent lets a dictionary serve candidate lemmas without repeating analysis or requiring every provider to offer both capabilities.
+
+Fallback occurs only on technical failure. A valid no-match response ends that role's chain, including when a dictionary has no entry for a candidate lemma. Usable results also end the chain, retaining all distinct interpretations without querying additional providers to fill gaps. This deliberately favors a stable language-study result over broader provider coverage: no match must not silently broaden the search to another provider's vocabulary or another lookup language. Dictionary failure leaves the analysis available. These decisions were agreed in [issue #5](https://github.com/YoukouTenhouin/Tensho/issues/5)'s design interview.
+
+Lookup-language isolation does not require the extension to identify an unmatched word's language or judge whether a borrowing is established. Explicitly foreign-language results cannot appear as target-language matches, while explanations may use a different language. An empty response means only no match in the selected lookup language; the learner can investigate elsewhere.
