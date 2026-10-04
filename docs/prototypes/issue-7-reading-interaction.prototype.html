@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tensho · lookup interaction prototype</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f4ef;color:#252b29;font:16px/1.55 system-ui,sans-serif}button,input,select{font:inherit}button,select,input{padding:.45rem .65rem;border:1px solid #afb8b2;border-radius:5px;background:white;color:inherit}button{cursor:pointer}button:hover{background:#e9f1ec}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid #348360;outline-offset:3px}header,section.lab{padding:1rem 2rem;border-bottom:1px solid #d4d8d2;background:#fff}h1{font-size:1.35rem;margin:0}h2{font-size:1.15rem}h3{font-size:1rem}p{margin:.65rem 0}.muted,small{color:#57675f}.tag{font-size:.75rem;letter-spacing:.08em;color:#38674f}#layout{display:grid;grid-template-columns:minmax(0,1fr)}#layout.open{grid-template-columns:minmax(0,1fr) minmax(320px,390px)}article{padding:3rem 2rem;max-width:760px;margin:auto;min-height:480px}#reading{font:25px/1.9 Georgia,serif}aside{background:white;border-left:1px solid #c7cec8;padding:1.2rem;max-height:75vh;overflow:auto}aside[hidden]{display:none}.row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.card{padding:.8rem 0;border-top:1px solid #dce2dc}.notice{padding:.65rem;background:#f2f1df;border-radius:5px}.words button{margin:.2rem}.words [aria-pressed=true]{background:#d7ebdd}.article{background:#f5f4ef;padding:.8rem;margin-top:.6rem}.state{display:flex;gap:.5rem 1.8rem;flex-wrap:wrap;font-size:.85rem}.state div{max-width:340px}.state dt{font-weight:600}.state dd{margin:0}.tabs{margin:1rem 0}.tabs [aria-selected=true]{background:#d7ebdd}#walkthrough{padding:.8rem;border:1px solid #dce2dc}#steps button{margin:.3rem}.lab{font-size:.9rem}kbd{background:#eef0ec;padding:.1rem .3rem}ul{padding-left:1.2rem}@media(max-width:680px){#layout.open{grid-template-columns:1fr}aside{border-left:0;border-top:1px solid #ccc}article{padding:1.5rem}header,section.lab{padding:1rem}}
+</style>
+<header>
+  <span class="tag">THROWAWAY PROTOTYPE · ISSUE #7</span>
+  <h1>Look up a word. Keep your place.</h1>
+  <p>Does one side panel work for repeated lookups, ambiguity, and partial failure while reading?</p>
+  <small>All responses are illustrative fixtures. No providers, permissions, browser integration, or storage are connected. Close/reopen retains the current result. Per-tab state and reset on document navigation are agreed but not modeled here.</small>
+</header>
+<section class="lab" aria-label="Current prototype state">
+  <dl id="state" class="state"></dl>
+  <div class="row">
+    <label><input id="enabled" type="checkbox" checked> Double-click enabled for this demo site</label>
+    <label>Next analysis <select id="outcome"><option value="ok">Success</option><option value="empty">No match</option><option value="error">Technical failure</option><option value="permission">Permission missing</option><option value="unconfigured">No provider configured</option><option value="partial">English meanings unavailable</option><option value="fallback">Fallback succeeded</option></select></label>
+    <label>Next dictionary response <select id="dictionary"><option value="ok">Entry</option><option value="error">Technical failure</option><option value="empty">No entry</option><option value="unavailable">English entry unavailable</option><option value="alternatives">Two possible entries</option></select></label>
+  </div>
+</section>
+<main id="layout">
+  <article id="source" tabindex="-1" aria-label="Reading page">
+    <span class="tag">SAMPLE READING PAGE</span>
+    <h2>A few lines of Latin</h2>
+    <div id="reading"><p>Arma virumque cano, Troiae qui primus ab oris.</p><p>In vino, veritas!</p><p>Legis.</p></div>
+    <p class="muted">Double-click a word, or drag to select a passage. Dragging alone does not open results.</p>
+    <div class="row"><button id="explicit">Look up selection (context-menu simulation)</button><button id="keyboard">Look up selection & focus results</button><button id="reopen">Show current results</button></div>
+    <p><small>Demo keyboard controls: <kbd>Alt+L</kbd> looks up the reading selection; <kbd>Alt+R</kbd> focuses results. These keys are placeholders, not agreed extension shortcuts.</small></p>
+    <label>Editable text — double-click should only select<br><input value="in vino veritas" aria-label="Editable text example"></label>
+  </article>
+  <aside id="panel" aria-label="Word lookup" hidden>
+    <div class="row between"><strong>Word lookup</strong><button id="close" aria-label="Close lookup panel">Close</button></div>
+    <p><small>Lookup: <strong>Latin</strong> · Explanations: <strong>English</strong></small></p>
+    <div id="results" aria-live="polite"></div>
+    <form id="manual"><label for="word">Look up another word or selection</label><div class="row"><input id="word" required size="18"><button>Look up</button></div></form>
+  </aside>
+</main>
+<section class="lab">
+  <h2>Guided walkthroughs</h2>
+  <p>Choose a scenario to reset the demo, then press its numbered buttons. You can also use the reading page freely.</p>
+  <div id="tabs" class="row tabs" role="tablist" aria-label="Scenarios"></div>
+  <div id="walkthrough" role="tabpanel" tabindex="0"><p id="scenario-description"></p><div id="steps"></div></div>
+</section>
+<script>
+// Pure state model; browser events and simulated delivery live in the next script.
+const Model = (() => {
+  const words = text => text.match(/[\p{L}\p{M}\p{N}]+(?:[’'\-][\p{L}\p{M}\p{N}]+)*/gu) || [];
+  const initial = () => ({enabled:true,open:false,selection:'',original:'',words:[],target:'',phase:'idle',request:0,outcome:'ok',entries:{},event:'Ready to read'});
+  function reduce(s,a) {
+    switch(a.type) {
+      case 'select': return {...s,selection:a.text,event:'Selection changed; no lookup started'};
+      case 'enable': return {...s,enabled:a.value,event:a.value?'Double-click enabled':'Double-click disabled'};
+      case 'open': {
+        if(a.automatic && !s.enabled) return {...s,event:'Double-click selected text; this site is not enabled'};
+        const original=(a.text||'').trim(); const parts=words(original);
+        if(!parts.length) return {...s,open:true,event:'Enter or select a word'};
+        return {...s,open:true,original,words:parts.length>1?parts:[],target:parts.length===1?parts[0]:'',phase:parts.length===1?'loading':'choose',request:s.request+1,outcome:a.outcome||'ok',entries:{},event:parts.length===1?'Analysis requested':'Choose a word from the preserved selection'};
+      }
+      case 'choose': return {...s,target:a.text,phase:'loading',request:s.request+1,outcome:a.outcome||'ok',entries:{},event:'Analysis requested for chosen word'};
+      case 'ready': return a.request!==s.request?{...s,event:'Ignored an older lookup response'}:{...s,phase:s.outcome==='ok'||s.outcome==='partial'||s.outcome==='fallback'?'ready':s.outcome,event:'Analysis response received'};
+      case 'retry': return {...s,phase:'loading',request:s.request+1,outcome:a.outcome||'ok',event:'Analysis requested again'};
+      case 'dictionary': return {...s,entries:{...s.entries,[a.id]:{phase:'loading',outcome:a.outcome}},event:'Dictionary entry requested'};
+      case 'entry': return a.request!==s.request?s:{...s,entries:{...s.entries,[a.id]:{phase:a.outcome,expanded:true}},event:'Dictionary response received'};
+      case 'toggle': return {...s,entries:{...s.entries,[a.id]:{...s.entries[a.id],expanded:!s.entries[a.id].expanded}},event:'Entry visibility changed'};
+      case 'close': return {...s,open:false,event:'Panel closed; current result retained'};
+      case 'reopen': return {...s,open:true,event:'Current results shown'};
+      default:return s;
+    }
+  }
+  return {initial,reduce};
+})();
+</script>
+<script>
+const $=id=>document.getElementById(id);
+const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let state=Model.initial(), epoch=0, scenario=0, step=0, panelScroll=0;
+const fixture=target=>target.toLowerCase()==='legis'?[
+  {id:'lex',head:'lēx',meaning:'law',grammar:'Noun · genitive singular',entry:'Illustrative entry: lēx — law; a rule or condition. This shortened fixture stands in for the full provider article.'},
+  {id:'lego',head:'legō',meaning:'read; gather',grammar:'Verb · present active indicative · second person singular',entry:'Illustrative entry: legō — gather, collect; choose; read. In the extension, the complete provider article appears here.'}
+]:[{id:'sample',head:target.toLowerCase()==='vino'?'vīnum':target.toLowerCase()==='arma'?'arma':target,meaning:'Sample short meaning',grammar:target.toLowerCase()==='vino'?'Noun · dative singular; ablative singular':'Illustrative grammatical interpretation',entry:'Illustrative dictionary article for this candidate lemma. A real result retains the full provider article, including its senses and usage information. No dictionary service is contacted by this demo.'}];
+function send(action,delay=850){
+  if(state.open)panelScroll=$('panel').scrollTop;
+  state=Model.reduce(state,action); render();
+  if(['open','choose'].includes(action.type)&&!(action.automatic&&!state.enabled))panelScroll=0;
+  if(state.open)$('panel').scrollTop=panelScroll;
+  if(['open','choose','retry'].includes(action.type)&&state.phase==='loading'&&!(action.automatic&&!state.enabled)){
+    const request=state.request, run=epoch;
+    setTimeout(()=>{if(run===epoch)send({type:'ready',request});},delay);
+  }
+  if(action.type==='dictionary'){
+    const request=state.request,run=epoch;
+    setTimeout(()=>{if(run===epoch)send({type:'entry',request,id:action.id,outcome:action.outcome});},700);
+  }
+}
+function open(text,focus=false,automatic=false,delay){send({type:'open',text,automatic,outcome:$('outcome').value},delay);if(focus)$('close').focus();}
+function dictionary(id){send({type:'dictionary',id,outcome:$('dictionary').value});}
+function render(){
+  $('layout').classList.toggle('open',state.open);$('panel').hidden=!state.open;$('enabled').checked=state.enabled;
+  const fields={'Page selection':state.selection||'None','Current lookup':state.target||'None','Analysis':state.phase,'Panel':state.open?'Open':'Closed','Site enabled':state.enabled?'Yes':'No','Dictionary entries':Object.entries(state.entries).map(([id,e])=>id+': '+e.phase).join('; ')||'None requested','Last change':state.event};
+  $('state').innerHTML=Object.entries(fields).map(([k,v])=>'<div><dt>'+escape(k)+'</dt><dd>'+escape(v)+'</dd></div>').join('');
+  let html=state.original?'<p><small>Selected: “'+escape(state.original)+'”</small></p>':'';
+  if(state.words.length)html+='<div class="words" aria-label="Words in selection">'+state.words.map((w,i)=>'<button data-word="'+i+'" aria-pressed="'+(w===state.target)+'">'+escape(w)+'</button>').join('')+'</div>';
+  if(state.target)html+='<h2>'+escape(state.target)+'</h2>';
+  if(state.phase==='idle')html+='<p>Select text on the page or enter a word below.</p>';
+  if(state.phase==='choose')html+='<p>Choose one word to look up.</p>';
+  if(state.phase==='loading')html+='<p role="status">Looking for Latin analysis…</p>';
+  if(state.phase==='empty')html+='<p>No Latin analysis found for “'+escape(state.target)+'”.</p>';
+  if(state.phase==='error')html+='<p class="notice">Analysis services failed. No further providers are available.</p><button data-action="retry">Retry analysis</button>';
+  if(state.phase==='permission')html+='<p class="notice">The analysis service needs permission. Page access and service access are separate.</p><button data-action="permission">Grant service permission (simulate)</button>';
+  if(state.phase==='unconfigured')html+='<p class="notice">No Latin analysis provider is configured. In the extension, this links to provider settings.</p>';
+  if(state.phase==='ready'){
+    if(state.outcome==='fallback')html+='<p class="notice">The first service failed; a fallback service supplied these results.</p>';
+    if(state.outcome==='partial')html+='<p class="notice">Short meanings in English are unavailable. Grammatical interpretations remain available.</p>';
+    html+=fixture(state.target).map(c=>{
+      const e=state.entries[c.id];let body='';
+      if(e?.phase==='loading')body='<p role="status">Loading dictionary entry…</p>';
+      else if(e?.phase==='error')body='<p class="notice">Dictionary service failed. Analysis remains available.</p><button data-entry="'+c.id+'">Retry dictionary lookup</button>';
+      else if(e?.phase==='empty')body='<p>No dictionary entry found for this candidate lemma.</p>';
+      else if(e?.phase==='unavailable')body='<p>Dictionary entries in English are unavailable.</p>';
+      else if(e?.phase==='alternatives')body='<p>Two possible dictionary entries; choose which to inspect.</p><details><summary>Entry A · '+escape(c.head)+'</summary><p>'+escape(c.entry)+'</p></details><details><summary>Entry B · '+escape(c.head)+'</summary><p>Illustrative alternative article for a distinct dictionary identity.</p></details>';
+      else if(e?.phase==='ok')body='<button data-toggle="'+c.id+'">'+(e.expanded?'Hide':'Show')+' dictionary entry</button>'+(e.expanded?'<div class="article">'+escape(c.entry)+'</div>':'');
+      else body='<button data-entry="'+c.id+'">Show dictionary entry</button>';
+      return '<section class="card"><h3>'+escape(c.head)+'</h3><p>'+escape(c.grammar)+'</p>'+(state.outcome==='partial'?'':'<p>'+escape(c.meaning)+'</p>')+body+'</section>';
+    }).join('');
+  }
+  const active=document.activeElement;
+  const key=active?.closest('#results')?['word','entry','toggle','action'].find(k=>active.dataset[k]!==undefined):null;
+  const value=key?active.dataset[key]:null;
+  $('results').innerHTML=html;
+  if(key){const replacement=Array.from($('results').querySelectorAll('[data-'+key+']')).find(e=>e.dataset[key]===value);if(replacement)replacement.focus();else $('close').focus();}
+}
+$('reading').addEventListener('mouseup',()=>send({type:'select',text:window.getSelection().toString()}));
+$('reading').addEventListener('dblclick',()=>{const text=window.getSelection().toString();send({type:'select',text});open(text,false,true);});
+$('explicit').onclick=()=>open(state.selection);
+$('keyboard').onclick=()=>open(state.selection,true);
+$('reopen').onclick=()=>{send({type:'reopen'});$('close').focus();};
+$('enabled').onchange=e=>send({type:'enable',value:e.target.checked});
+function close(){send({type:'close'});$('source').focus({preventScroll:true});}
+$('close').onclick=close;
+$('manual').onsubmit=e=>{e.preventDefault();open($('word').value,true);};
+$('panel').onkeydown=e=>{if(e.key==='Escape'){e.preventDefault();close();}};
+document.addEventListener('keydown',e=>{if(e.altKey&&e.key.toLowerCase()==='l'){e.preventDefault();open(state.selection,true);}if(e.altKey&&e.key.toLowerCase()==='r'){e.preventDefault();send({type:'reopen'});$('close').focus();}});
+$('results').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.word!==undefined)send({type:'choose',text:state.words[Number(b.dataset.word)],outcome:$('outcome').value});
+  if(b.dataset.entry)dictionary(b.dataset.entry);
+  if(b.dataset.toggle)send({type:'toggle',id:b.dataset.toggle});
+  if(b.dataset.action==='retry')send({type:'retry',outcome:$('outcome').value});
+  if(b.dataset.action==='permission'){$('outcome').value='ok';send({type:'retry',outcome:'ok'});}
+};
+const scenarios=[
+ {name:'Selection',description:'Dragging selects without lookup. Explicit lookup offers words; choosing one preserves the passage.',steps:[['Select “In vino, veritas!”',()=>send({type:'select',text:'In vino, veritas!'})],['Invoke context-menu lookup',()=>open(state.selection)],['Choose vino',()=>send({type:'choose',text:'vino',outcome:'ok'})]]},
+ {name:'Ambiguity & failure',description:'Two candidates stay visible. Request a dictionary entry, then retry its failure without discarding analysis. Let each response arrive before continuing.',steps:[['Look up legis',()=>open('legis')],['Request entry with failure',()=>{if(state.phase!=='ready')return false;$('dictionary').value='error';dictionary('lex');}],['Retry successfully',()=>{if(state.entries.lex?.phase!=='error')return false;$('dictionary').value='ok';dictionary('lex');}],['Open the other candidate',()=>{if(state.phase!=='ready')return false;dictionary('lego');}]]},
+ {name:'Older response',description:'Start a slow lookup, then replace it. The first response must never overwrite the newer word. Press the second button promptly.',steps:[['Look up arma slowly (4 seconds)',()=>open('arma',false,false,4000)],['Immediately look up legis',()=>open('legis')]]},
+ {name:'Site access',description:'Turning off automatic lookup does not remove explicit lookup. These controls simulate permissions; no browser permission is requested.',steps:[['Disable this site',()=>send({type:'enable',value:false})],['Double-click arma (simulate)',()=>{send({type:'select',text:'arma'});open('arma',false,true);}],['Use context-menu lookup',()=>open('arma')]]},
+ {name:'No match & partial',description:'No match does not broaden the search. A result without English meanings still has grammatical interpretations.',steps:[['Return no match',()=>{$('outcome').value='empty';open('ignotum');}],['Return analysis without English meanings',()=>{$('outcome').value='partial';open('legis');}]]}
+];
+function renderSteps(){const s=scenarios[scenario];$('scenario-description').textContent=s.description;$('steps').innerHTML=s.steps.map(([label],i)=>'<button data-step="'+i+'" '+(i!==step?'disabled':'')+'>'+ (i+1)+'. '+escape(label)+'</button>').join('');}
+function start(index){epoch++;state=Model.initial();scenario=index;step=0;$('outcome').value='ok';$('dictionary').value='ok';render();renderSteps();Array.from($('tabs').children).forEach((b,i)=>{b.setAttribute('aria-selected',i===index);b.tabIndex=i===index?0:-1;});$('walkthrough').setAttribute('aria-labelledby','scenario-'+index);}
+$('tabs').innerHTML=scenarios.map((s,i)=>'<button id="scenario-'+i+'" role="tab" aria-controls="walkthrough" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-scenario="'+i+'">'+s.name+'</button>').join('');
+$('tabs').onclick=e=>{const b=e.target.closest('button');if(b)start(Number(b.dataset.scenario));};
+$('tabs').onkeydown=e=>{if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){e.preventDefault();let i=e.key==='Home'?0:e.key==='End'?scenarios.length-1:(scenario+(e.key==='ArrowRight'?1:-1)+scenarios.length)%scenarios.length;start(i);$('scenario-'+i).focus();}};
+$('steps').onclick=e=>{const b=e.target.closest('button');if(b&&Number(b.dataset.step)===step){if(scenarios[scenario].steps[step][1]()===false)return;step++;renderSteps();const next=$('steps').querySelector('button:not(:disabled)');if(next)next.focus();else $('walkthrough').focus();}};
+render();renderSteps();
+</script>
+</html>
