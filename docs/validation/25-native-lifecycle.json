@@ -1,0 +1,51 @@
+{
+  "observed_at_utc": "2026-10-04T18:55:57Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_transport": true,
+  "production_provider_adapters": true,
+  "production_session_coordination_and_ui": true,
+  "checks": {
+    "never_granted_access_blocks_all_transport": true,
+    "native_denial_visible_without_transport": true,
+    "native_grant_does_not_replay_denied_lookup": true,
+    "actual_worker_stop_marks_pending_analysis_interrupted": true,
+    "explicit_analysis_retry_uses_one_production_request": true,
+    "actual_worker_stop_preserves_analysis_interrupts_resolution": true,
+    "explicit_resolution_retry_fetches_only_index": true,
+    "actual_worker_stop_preserves_completed_article_interrupts_pending_sibling": true,
+    "explicit_article_retry_does_not_replay_analysis_or_index": true,
+    "backend_revocation_retains_all_completed_reading": true,
+    "revoked_backend_blocks_cached_index_resolution": true,
+    "retry_without_access_has_no_transport": true,
+    "regrant_waits_for_explicit_retry": true,
+    "authorized_retry_can_reuse_fresh_index": true,
+    "native_revocation_aborts_pending_adapter_work": true,
+    "ignored_abort_late_response_does_not_reopen_panel": true,
+    "ignored_abort_late_response_cannot_replace_failure_or_sibling": true,
+    "revoked_article_retry_sends_no_request": true
+  },
+  "last_worker_transport_calls": [
+    {
+      "operation": "article",
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n2",
+      "aborted": false
+    },
+    {
+      "operation": "analysis",
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=malum&engine=whitakerLat&lang=lat&clientId=tensho",
+      "aborted": false
+    },
+    {
+      "operation": "article",
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n1",
+      "aborted": false
+    },
+    {
+      "operation": "article",
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n2",
+      "aborted": true
+    }
+  ],
+  "passed": true
+}
