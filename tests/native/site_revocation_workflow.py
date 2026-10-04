@@ -118,9 +118,28 @@ def run(output):
                 frame_cdp = CDP(frame_target['webSocketDebuggerUrl']); connections.append(frame_cdp)
                 def reads(frame=False):
                     return int((frame_cdp if frame else page).evaluate('document.documentElement.dataset.selectionReads'))
+                # Empty trusted gestures must not suspend the completed result.
+                page.evaluate("(()=>{getSelection().removeAllRanges();const b=document.createElement('button');b.id='empty-gesture';b.style.cssText='position:fixed;left:450px;top:400px;width:100px;height:100px;user-select:none';document.body.append(b)})()")
+                for count in [1, 2]:
+                    for kind in ['mousePressed', 'mouseReleased']:
+                        page.call('Input.dispatchMouseEvent', type=kind, x=500, y=450, button='left', clickCount=count)
+                time.sleep(.2)
+                evidence['empty_gesture_selection'] = page.evaluate('getSelection().toString()')
+                evidence['empty_gesture_state'] = snapshot()['state']
+                checks['empty_gesture_preserves_current_result'] = snapshot()['state'] == retained
+                choose('#dictionary-0')
+                wait_for(lambda: snapshot().get('dictionaries', {}).get('0', {}).get('resolution', {}).get('status') == 'error')
+                checks['empty_gesture_keeps_dictionary_actions_usable'] = True
                 before = [reads(), reads(True)]
+                # Hold a successful native permission answer across revocation.
+                worker.evaluate("(()=>{const original=chrome.permissions.contains.bind(chrome.permissions);chrome.permissions.contains=async options=>{const granted=await original(options);if(options.origins?.length===2){globalThis.__captureAuthorizationHeld=true;await new Promise(resolve=>globalThis.__releaseCaptureAuthorization=resolve)}return granted}})()")
+                double_click(True)
+                wait_for(lambda: worker.evaluate('globalThis.__captureAuthorizationHeld===true'))
                 panel.evaluate('chrome.permissions.remove({origins:' + json.dumps(origins) + '})')
                 wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s.length===0)'))
+                worker.evaluate('globalThis.__releaseCaptureAuthorization()')
+                time.sleep(.2)
+                checks['revocation_invalidates_pending_capture_authorization'] = [reads(), reads(True)] == before
                 double_click(True); double_click()
                 time.sleep(.2)
                 after = [reads(), reads(True)]
@@ -144,6 +163,21 @@ def run(output):
                 terminal = wait_for(lambda: (lambda state: state if state and state['status'] != 'loading' else None)(snapshot().get('state')))
                 checks['keyboard_lookup_does_not_capture_revoked_cross_origin_frame'] = reads(True) == frame_reads
                 checks['inaccessible_frame_selection_is_not_replaced_with_stale_text'] = terminal['status'] == 'notice'
+                panel.evaluate("document.querySelector('#word').value='malum';document.querySelector('#lookup').requestSubmit()")
+                completed = wait_for(lambda: (lambda state: state if state and state['status'] == 'complete' else None)(snapshot().get('state')))
+                worker.evaluate("(()=>{const original=chrome.webNavigation.getAllFrames.bind(chrome.webNavigation);chrome.webNavigation.getAllFrames=async options=>{const frames=await original(options);chrome.webNavigation.getAllFrames=original;globalThis.__keyboardCaptureHeld=true;await new Promise(resolve=>globalThis.__releaseKeyboardCapture=resolve);return frames};chrome.storage.onChanged.addListener((changes,area)=>{if(area==='local'&&changes.enabledOrigins)globalThis.__siteChangeObserved=true})})()")
+                key(display, 'Alt_L', 'Shift_L', 'l')
+                wait_for(lambda: worker.evaluate('globalThis.__keyboardCaptureHeld===true'))
+                before_keyboard_release = [reads(), reads(True)]
+                panel.evaluate('chrome.storage.local.set({enabledOrigins:[]})')
+                wait_for(lambda: worker.evaluate('globalThis.__siteChangeObserved===true'))
+                worker.evaluate('globalThis.__releaseKeyboardCapture()')
+                time.sleep(.2)
+                checks['site_change_during_keyboard_capture_prevents_text_read'] = [reads(), reads(True)] == before_keyboard_release
+                checks['cancelled_keyboard_capture_retains_completed_analysis'] = snapshot()['state'] == completed
+                choose('#dictionary-0')
+                wait_for(lambda: snapshot().get('dictionaries', {}).get('0', {}).get('resolution', {}).get('status') == 'error')
+                checks['cancelled_keyboard_capture_restores_dictionary_actions'] = True
                 evidence['passed'] = all(checks.values())
         except Exception as error:
             evidence['failure'] = str(error); evidence['traceback'] = traceback.format_exc(); evidence['passed'] = False

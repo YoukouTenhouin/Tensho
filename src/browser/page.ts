@@ -20,11 +20,14 @@
   document.addEventListener('keydown', event => { if (event.isTrusted) rememberFocus(); }, true);
 
   function capture(): string {
-    source = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    rememberSource();
     if (source instanceof HTMLInputElement || source instanceof HTMLTextAreaElement) {
       return source.value.slice(source.selectionStart ?? 0, source.selectionEnd ?? 0);
     }
     return getSelection()?.toString() ?? '';
+  }
+  function rememberSource(): void {
+    source = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   }
   function restore(): void {
     window.focus();
@@ -39,6 +42,7 @@
         parentIndex: window === window.parent ? -1 : childIndex(window.parent, window), origin: globalThis.origin });
     }
     if (message?.type === 'restore-focus') { restore(); reply({ restored: true }); }
+    if (message?.type === 'remember-focus') { rememberSource(); reply({ remembered: true }); }
   });
   document.addEventListener('dblclick', event => {
     if (!event.isTrusted || globalThis.origin === 'null') return;
