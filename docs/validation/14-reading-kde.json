@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T05:10:19Z",
+  "observed_at_utc": "2026-10-04T05:14:55Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -13,6 +13,7 @@
     "editable_double_click_does_not_lookup": true,
     "page_click_keeps_panel_open": true,
     "manual_lookup_through_production_interface": true,
+    "loading_status_can_be_announced": true,
     "close_restores_page_focus": true,
     "closed_panel_stays_closed_after_completion": true
   },
@@ -68,5 +69,11 @@
       "after": false
     }
   },
+  "loading_announcements": [
+    {
+      "role": "status",
+      "blocked": false
+    }
+  ],
   "passed": false
 }

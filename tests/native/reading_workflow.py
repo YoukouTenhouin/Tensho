@@ -154,10 +154,21 @@ def run(desktop):
                 double_click('#editable'); time.sleep(.1)
                 checks['editable_double_click_does_not_lookup'] = panel.evaluate(snapshot)['state']['generation'] == initial['state']['generation']
                 checks['page_click_keeps_panel_open'] = target('/panel.html') is not None
+                panel.evaluate("""(()=>{
+                  window.loadingAnnouncements=[];
+                  const status=document.querySelector('#status');
+                  new MutationObserver(()=>{
+                    if(status.textContent.includes('Loading')) loadingAnnouncements.push({
+                      role:status.getAttribute('role'),blocked:!!status.closest('[aria-busy=true]')});
+                  }).observe(status,{childList:true,subtree:true,characterData:true});
+                })()""")
                 panel.evaluate("document.querySelector('#word').value='mālum'")
                 panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
                 wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='mālum' && document.querySelector('#status').textContent==='Controlled development response'"))
                 checks['manual_lookup_through_production_interface'] = True
+                announcements = panel.evaluate('loadingAnnouncements')
+                evidence['loading_announcements'] = announcements
+                checks['loading_status_can_be_announced'] = bool(announcements) and all(a['role'] == 'status' and not a['blocked'] for a in announcements)
                 panel.call('Runtime.evaluate', expression="document.querySelector('#close').click()", userGesture=True)
                 wait_for(lambda: target('/panel.html') is None)
                 checks['close_restores_page_focus'] = reading.evaluate('document.hasFocus()')

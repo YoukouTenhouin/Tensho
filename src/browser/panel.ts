@@ -5,7 +5,7 @@ const results = element('results'), status = element('status'), target = element
 const word = element<HTMLInputElement>('word'), feedback = element('feedback');
 let windowId: number;
 let origin: string | undefined;
-let revision = 0, displayed = '', focused = '', tabId = -1;
+let revision = 0, displayed = '', focused = '', sitesKey = '', tabId = -1;
 async function send(message: Record<string, unknown>): Promise<any> {
   const reply = await chrome.runtime.sendMessage({ ...message, windowId, tabId });
   if (reply?.error) throw new Error(reply.error);
@@ -23,7 +23,7 @@ async function refresh(): Promise<void> {
   target.textContent = state?.text || 'Ready to read';
   analysis.replaceChildren();
   status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? 'Loading Latin analysis…' : state.status === 'complete' ? state.analysis.provider : state.message;
-  results.setAttribute('aria-busy', String(state?.status === 'loading'));
+  analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') for (const candidate of state.analysis.candidates) {
     const heading = document.createElement('h3'); heading.textContent = candidate.lemma;
     const description = document.createElement('p'); description.textContent = candidate.interpretations.join('; ');
@@ -33,6 +33,9 @@ async function refresh(): Promise<void> {
   if (snapshot.focusRequest && focusKey !== focused) { focused = focusKey; results.focus({ preventScroll: true }); }
   element<HTMLButtonElement>('enable-current').disabled = !origin;
   element('enable-current').textContent = origin ? `Enable ${origin}` : 'Reading-site access unavailable on this surface';
+  const nextSitesKey = JSON.stringify(snapshot.enabledOrigins);
+  if (nextSitesKey === sitesKey) return;
+  sitesKey = nextSitesKey;
   const list = element('sites'); list.replaceChildren();
   for (const site of snapshot.enabledOrigins as string[]) {
     const item = document.createElement('li'); item.append(document.createTextNode(site));
