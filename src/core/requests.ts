@@ -1,5 +1,6 @@
-export type RequestFailureKind = 'missing-access' | 'network' | 'http' | 'format' | 'size' |
-  'request-timeout' | 'action-deadline' | 'cancelled' | 'unconfigured' | 'unsupported-explanation' | 'unsupported-input' | 'identity-mismatch';
+export const requestFailureKinds = ['missing-access', 'network', 'http', 'format', 'size',
+  'request-timeout', 'action-deadline', 'cancelled', 'unconfigured', 'unsupported-explanation', 'unsupported-input', 'identity-mismatch', 'interrupted'] as const;
+export type RequestFailureKind = typeof requestFailureKinds[number];
 
 export const capabilityUnavailable = (kind: RequestFailureKind | undefined) => kind === 'unconfigured' || kind === 'unsupported-explanation' || kind === 'unsupported-input';
 

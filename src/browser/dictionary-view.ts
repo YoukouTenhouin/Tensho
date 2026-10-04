@@ -82,6 +82,7 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
         const message = paragraph(article.status === 'loading' ? 'Loading full article…' : article.message);
         message.setAttribute('role', 'status'); item.append(message);
         if (article.status !== 'loading') { const feedback = providerFeedback(article.providerIssues); if (feedback) item.append(feedback); }
+        if (article.status === 'not-retained') { const source = link(article.sourceUrl, 'Read complete article at source'); if (source) item.append(source); }
         if (article.status === 'error') item.append(button('Retry this article', id,
           () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId, retry: true })));
       }
