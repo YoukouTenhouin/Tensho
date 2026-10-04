@@ -47,7 +47,8 @@ const router = new ProviderRouter({ catalog: providerCatalog, settings: () => co
   ...integrated });
 let reading: ReadingSession | undefined;
 function readingChanged(tabId: number): void { reading?.changed(tabId); notify(); }
-const coordinator = new LookupCoordinator(router, (_state, tabId) => readingChanged(tabId), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
+const coordinator = new LookupCoordinator(router, (_state, tabId) => readingChanged(tabId), sourceIsCurrent, tabId => dictionaries.invalidate(tabId),
+  (identity, current) => reading!.prepareLookup(identity.tabId, current));
 const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), readingChanged, sourceIsCurrent);
 reading = new ReadingSession({ lookup: coordinator, dictionaries, storage: new SessionResults(readingSessionStorage(), isReadingRecord),
   current: sourceIsCurrent, activeTabs: async () => (await chrome.tabs.query({ active: true })).flatMap(tab => tab.id === undefined ? [] : [tab.id]), notify });
@@ -214,7 +215,7 @@ chrome.webNavigation.onCommitted.addListener(details => {
   coordinator.navigate(details.tabId, details.frameId);
 });
 chrome.tabs.onRemoved.addListener(tabId => { coordinator.clear(tabId); focusRequests.delete(tabId); });
-chrome.tabs.onActivated.addListener(notify);
+chrome.tabs.onActivated.addListener(({ tabId }) => { reading!.activate(tabId); notify(); });
 chrome.runtime.onConnect.addListener(port => {
   if (port.name !== 'panel' || port.sender?.url !== chrome.runtime.getURL('panel.html')) return;
   port.onMessage.addListener(message => {

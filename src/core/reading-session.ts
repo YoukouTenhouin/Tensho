@@ -22,6 +22,7 @@ export class ReadingSession {
   #tail: Promise<void> = Promise.resolve();
   #touched = new Set<number>();
   #epochs = new Map<number, number>();
+  #activity = new Map<number, number>();
   #positions = new Map<number, { key: string; x: number; y: number }>();
   #cleared = new Set<number>();
   #failures = new Map<number, string>();
@@ -56,6 +57,20 @@ export class ReadingSession {
     this.#tail = this.#tail.then(async () => { await this.#ready; await operation(); }).catch(() => {});
   }
   async settled(): Promise<void> { await this.#ready; await this.#tail; }
+  async prepareLookup(tabId: number, current: () => boolean): Promise<boolean> {
+    let accepted = false;
+    this.#touched.add(tabId);
+    this.#epochs.set(tabId, (this.#epochs.get(tabId) ?? 0) + 1);
+    this.#queue(async () => {
+      if (!current()) return;
+      try { await this.#dependencies.storage.remove(tabId); accepted = true; }
+      catch {
+        this.#failures.set(tabId, 'A new lookup could not start because the previous result could not be cleared from session storage. Try again.');
+        this.#dependencies.notify();
+      }
+    });
+    await this.settled(); return accepted && current();
+  }
   information(tabId: number) {
     const position = this.#positions.get(tabId);
     return { scroll: { x: position?.x ?? 0, y: position?.y ?? 0 },
@@ -90,6 +105,9 @@ export class ReadingSession {
   view(tabId: number): void {
     this.#queue(async () => { try { await this.#dependencies.storage.view(tabId); } catch { this.#failure(tabId); } });
   }
+  activate(tabId: number): void {
+    this.#activity.set(tabId, (this.#activity.get(tabId) ?? 0) + 1); this.view(tabId);
+  }
   scroll(tabId: number, generation: number, x: number, y: number): void {
     if (this.#dependencies.lookup.get(tabId)?.generation !== generation || ![x, y].every(value => Number.isFinite(value) && value >= 0)) return;
     const record = this.#capture(tabId); if (!record) return;
@@ -103,6 +121,12 @@ export class ReadingSession {
   async #save(tabId: number, record: ReadingRecord): Promise<void> {
     const { storage, lookup, dictionaries, activeTabs, notify } = this.#dependencies;
     const previous = await storage.get(tabId);
+    // Non-query notices and settings changes can also replace a selection.
+    if (previous?.status === 'retained' && previous.value.state.generation !== record.state.generation) await storage.remove(tabId);
+    const evictionGuards = new Map((await storage.entries()).map(([id]) => {
+      const current = lookup.guard(id), activity = this.#activity.get(id);
+      return [id, { current, inactive: () => this.#activity.get(id) === activity }] as const;
+    }));
     let result = await storage.save(tabId, record, await activeTabs());
     if (!result.retained) {
       // Replace only newly completed articles with an explicit resource outcome.
@@ -125,13 +149,20 @@ export class ReadingSession {
       if (!result.retained) { this.#failure(tabId); return; }
     }
     this.#failures.delete(tabId);
+    const preserve: number[] = [];
     this.#suppress = true;
     try {
       for (const evicted of result.evicted) {
+        // Storage writes are asynchronous. Activation or a newer reserved
+        // lookup wins over the old victim snapshot; persist its live state next.
+        const guard = evictionGuards.get(evicted);
+        if (!guard?.current()) continue;
+        if (!guard.inactive()) { preserve.push(evicted); continue; }
         this.#epochs.set(evicted, (this.#epochs.get(evicted) ?? 0) + 1);
         lookup.clear(evicted); this.#positions.delete(evicted); this.#cleared.add(evicted);
       }
     } finally { this.#suppress = false; }
+    for (const tab of preserve) this.changed(tab);
     if (result.evicted.length) notify();
   }
 }

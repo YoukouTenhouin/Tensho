@@ -11,13 +11,15 @@ import { readingSessionStorage } from '../src/browser/session-storage.ts';
 const identity = (tabId: number): Identity => ({ tabId, frameId: 0, documentId: `document-${tabId}`, topDocumentId: `document-${tabId}`,
   configuration: 'settings', lookupLanguage: 'lat', explanationLanguage: 'en' });
 function browser() {
-  let values: Record<string, unknown> = {}, quota = Infinity;
+  let values: Record<string, unknown> = {}, quota = Infinity, failure: Error | undefined;
   let nextWrite: (() => Promise<void>) | undefined;
   return { area: { setAccessLevel: async () => {}, get: async () => structuredClone(values), set: async (next: Record<string, unknown>) => {
     const wait = nextWrite; nextWrite = undefined; if (wait) await wait();
+    if (failure) throw failure;
     if (Buffer.byteLength(JSON.stringify(next)) > quota) throw new Error('QUOTA_BYTES quota exceeded');
     values = structuredClone(next);
   } }, bytes: () => Buffer.byteLength(JSON.stringify(values)), quota: (value: number) => { quota = value; },
+    fail: (error?: Error) => { failure = error; },
     blockWrite: () => {
       let unblock!: () => void, started!: () => void;
       const pending = new Promise<void>(resolve => { unblock = resolve; });
@@ -31,7 +33,8 @@ function application(durable = browser(), current: (identity: Identity) => Promi
   const changed = (tabId: number) => session?.changed(tabId);
   const lookup = new LookupCoordinator({ analyze: async text => {
     calls++; return { provider: 'Controlled', controlled: true, candidates: [{ lemma: text, stableId: null, meanings: ['meaning'], interpretations: ['noun'] }] };
-  } }, (_state, tabId) => changed(tabId), current, tabId => dictionaries.invalidate(tabId));
+  } }, (_state, tabId) => changed(tabId), current, tabId => dictionaries.invalidate(tabId),
+  (identity, current) => session!.prepareLookup(identity.tabId, current));
   const dictionaries = new DictionaryCoordinator({
     resolve: async candidate => { calls++; return { status: 'alternatives', originalHeadword: candidate.lemma, stableLemmaId: null,
       root: candidate.lemma!, provenance: undefined, providerId: 'controlled', automaticSelection: null, exhaustive: false,
@@ -130,4 +133,38 @@ test('an update queued during eviction cannot resurrect the evicted tab in sessi
   assert.equal(app.lookup.get(1), undefined); assert.equal((await app.storage.get(1))?.status, 'cleared');
   const restarted = application(app.durable); await restarted.session.settled();
   assert.equal(restarted.lookup.get(1), undefined); assert.equal(restarted.session.information(1).retentionNotice, 'Previous result cleared to free space');
+});
+
+test('a replacement that cannot fit never restores the superseded selection after worker restart', async () => {
+  const app = application(); await app.lookup.lookup(identity(1), 'amo'); await app.session.settled();
+  app.durable.quota(app.durable.bytes());
+  await app.lookup.lookup(identity(1), 'x'.repeat(256)); await app.session.settled();
+  const restarted = application(app.durable); await restarted.session.settled();
+  assert.notEqual(restarted.lookup.get(1)?.text, 'amo');
+  assert.equal(JSON.stringify(await app.storage.entries()).includes('amo'), false);
+});
+
+test('activation and a new lookup during an eviction write preserve the newer intent and its durable result', async () => {
+  const app = application(); await article(app, 1, 'malum'); await article(app, 2, 'puella');
+  app.durable.quota(app.durable.bytes() + 100); app.active([2, 3]);
+  const gate = app.durable.blockWrite();
+  const third = app.lookup.lookup(identity(3), 'amo'); await gate.entered;
+  app.active([1, 2]); app.session.activate(1);
+  const replacement = app.lookup.lookup(identity(1), 'legi');
+  gate.unblock(); await Promise.all([third, replacement]); await app.session.settled();
+  assert.equal(app.lookup.get(1)?.text, 'legi');
+  const restarted = application(app.durable); await restarted.session.settled();
+  assert.equal(restarted.lookup.get(1)?.text, 'legi');
+});
+
+test('unavailable storage refuses a replacement before dispatch if the previous selection cannot be invalidated', async () => {
+  const app = application(); await article(app, 1, 'amo'); const calls = app.calls();
+  app.durable.fail(new Error('Storage unavailable'));
+  await app.lookup.lookup(identity(1), 'legi'); await app.session.settled();
+  assert.equal(app.calls(), calls); assert.equal(app.lookup.get(1)?.text, 'amo');
+  assert.match(app.session.information(1).retentionNotice!, /new lookup could not start/);
+  app.durable.fail(); const restarted = application(app.durable); await restarted.session.settled();
+  assert.equal(restarted.lookup.get(1)?.text, 'amo', 'the replacement was never accepted');
+  await app.lookup.lookup(identity(1), 'legi'); await app.session.settled();
+  assert.equal(app.lookup.get(1)?.text, 'legi');
 });

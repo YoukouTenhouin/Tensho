@@ -61,15 +61,23 @@ export class LookupCoordinator {
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
   #invalidate: (tabId: number) => void;
+  #prepareLookup: ((identity: Identity, current: () => boolean) => Promise<boolean>) | undefined;
   constructor(analyzer: Analyzer, publish: (state: State | undefined, tabId: number) => void,
     sourceIsCurrent: (identity: Identity) => Promise<boolean> = async () => true,
-    invalidate: (tabId: number) => void = () => {}) {
+    invalidate: (tabId: number) => void = () => {},
+    prepareLookup?: (identity: Identity, current: () => boolean) => Promise<boolean>) {
     this.#analyzer = analyzer;
     this.#publish = publish;
     this.#sourceIsCurrent = sourceIsCurrent;
     this.#invalidate = invalidate;
+    this.#prepareLookup = prepareLookup;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
+  /** Capture the current intent, including actions still acquiring their source. */
+  guard(tabId: number): () => boolean {
+    const token = this.#requests.get(tabId)?.token;
+    return () => this.#requests.get(tabId)?.token === token;
+  }
   /** Hydrate once without requests. A newly reserved browser action always wins
    * over slower session loading, even before it has captured its source. */
   restore(saved: State): boolean {
@@ -188,6 +196,9 @@ export class LookupCoordinator {
     this.#publish(state, state.identity.tabId);
   }
   async #lookup(identity: Identity, input: string, request: LookupRequest, deadline: number, passage?: Passage): Promise<void> {
+    // A superseded result must be durably invalidated before accepting another
+    // selection. If storage is unavailable, leave the previous selection current.
+    if (this.#prepareLookup && (!await this.#prepareLookup(identity, request.current) || !request.current())) return;
     const prepared = prepareSelection(input);
     if ('error' in prepared) return request.notice(identity, input, prepared.error);
     if (prepared.words.length > 1) {
