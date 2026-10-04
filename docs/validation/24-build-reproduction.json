@@ -1,0 +1,18 @@
+{
+  "node": "v24.18.1",
+  "npm": "11.16.0",
+  "command": "npm ci --offline && npm run check",
+  "tests": 118,
+  "artifact_hashes_match": true,
+  "sha256": {
+    "dist/manifest.json": "ad46e12527afd82db2ab6e3d329f5f965b249ad0cd83f5fcc372f096081e7177",
+    "dist/page.js": "a2c50504300f780b557cfb3e60aa84611ec1252e3df87e283686feb26ec26fc8",
+    "dist/page.js.map": "fc15d5e13e87c4d4a1f46e4ee4e6176a2bd26809c1c6c7fc934e9a02659e36d2",
+    "dist/panel.css": "ecdeb2ecc0f0ac9c4bfaab8d0e70e28d02467ce6660091dd2a64016c09261325",
+    "dist/panel.html": "fc06cd9d91f24b49d9c5ffd17faca4d851315910db3eb49dc41dc2f970964dc0",
+    "dist/panel.js": "a8fb8ff634028c27ddb8e9f8e7dc49e474874ac2c6c41eb1a9e10ea9520a6484",
+    "dist/panel.js.map": "dc8439c14b4ea548aad54c90856de2a5692f16c3f3685acbcc4ee68ac8d011b7",
+    "dist/worker.js": "ea895a93ce96c18ff09fe90da40bc5b17c6c209298858e5b33269b636c87a8d3",
+    "dist/worker.js.map": "18df18eb9df57d2f7684ee8db3ba50a994908e85e7ca8f5df2c7b64a9bf8d2bd"
+  }
+}
