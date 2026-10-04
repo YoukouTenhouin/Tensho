@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T05:36:46Z",
+  "observed_at_utc": "2026-10-04T05:54:49Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -22,7 +22,22 @@
     "same_origin_frame_routes_identity": true,
     "separately_enabled_frame_routes_identity": true,
     "opaque_sandbox_frame_does_not_lookup": true,
-    "embedded_frame_requires_containing_site_enablement": true
+    "embedded_frame_requires_containing_site_enablement": true,
+    "keyboard_open_preserves_selected_frame": true,
+    "opaque_keyboard_offers_manual_recovery": true,
+    "keyboard_reaches_named_manual_input": true,
+    "keyboard_focus_is_visible": true,
+    "native_keyboard_manual_submission": true,
+    "keyboard_can_leave_panel": true,
+    "panel_was_scrolled_before_lookup": true,
+    "new_lookup_resets_scroll_while_loading": true,
+    "rapid_lookup_keeps_latest_result": true,
+    "navigation_rejects_pending_browser_result": true,
+    "restricted_surface_explains_manual_recovery": true,
+    "restricted_surface_manual_lookup_works": true,
+    "focus_return_source_lookup": true,
+    "removed_source_falls_back_without_scroll": true,
+    "native_escape_returns_focus_without_scroll": true
   },
   "desktop": "plasmashell 6.7.5",
   "window_manager": "kwin 6.7.5",
@@ -80,23 +95,157 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 256582184,
+      "tabId": 481458525,
       "frameId": 12,
-      "documentId": "D04A747C468BAD079F285A5D5E58C0DF",
-      "topDocumentId": "F62F396A84D88D4572D13025FF9ADC72",
+      "documentId": "55337A59F7A98301318E5C3FC04F51B7",
+      "topDocumentId": "E6FA44748206760DC4AD032F92C9DE5D",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     },
     "separate_origin": {
-      "tabId": 256582184,
+      "tabId": 481458525,
       "frameId": 13,
-      "documentId": "2438BFB89F6BE2C767CEC3AE50D6F7B5",
-      "topDocumentId": "F62F396A84D88D4572D13025FF9ADC72",
+      "documentId": "CFD79D859C84FCFA059735859D0C6306",
+      "topDocumentId": "E6FA44748206760DC4AD032F92C9DE5D",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     }
+  },
+  "keyboard_frame": {
+    "identity": {
+      "tabId": 481458525,
+      "frameId": 13,
+      "documentId": "CFD79D859C84FCFA059735859D0C6306",
+      "topDocumentId": "E6FA44748206760DC4AD032F92C9DE5D",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    },
+    "text": "servus",
+    "generation": 8,
+    "status": "complete",
+    "analysis": {
+      "provider": "Controlled development response",
+      "controlled": true,
+      "candidates": [
+        {
+          "lemma": "servus",
+          "stableId": null,
+          "interpretations": [
+            "No linguistic analysis: this is an interaction fixture."
+          ],
+          "meanings": []
+        }
+      ]
+    }
+  },
+  "opaque_keyboard": {
+    "identity": {
+      "tabId": 481458525,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "controlled-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 9,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "keyboard_traversal": [
+    {
+      "focused": true,
+      "element": "SUMMARY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    }
+  ],
+  "focus_return_selection": {
+    "text": "puella",
+    "focus": true,
+    "active": "word"
+  },
+  "focus_return_lookup": {
+    "tabId": 481458525,
+    "state": {
+      "identity": {
+        "tabId": 481458525,
+        "frameId": 0,
+        "documentId": "5FD93B3A2901D9C8B0B57EC77B58B208",
+        "topDocumentId": "5FD93B3A2901D9C8B0B57EC77B58B208",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "configuration": "controlled-latin-en-1"
+      },
+      "text": "puella",
+      "generation": 16,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "puella",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "origin": "http://127.0.0.1:33271",
+    "enabledOrigins": [
+      "http://127.0.0.1:43171"
+    ],
+    "focusRequest": 7
   },
   "passed": true
 }

@@ -67,12 +67,12 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
     await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
     const frames = await chrome.webNavigation.getAllFrames({ tabId }) ?? [];
-    const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number }[] = [];
+    const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number; origin: string; expectedOrigin: string | undefined }[] = [];
     for (const frame of frames) {
       if (!readingOrigin(frame.url)) continue;
       try {
         const value = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: frame.documentId });
-        if (typeof value?.text === 'string' && value.origin === readingOrigin(frame.url)) captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId });
+        if (typeof value?.text === 'string') captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId, expectedOrigin: readingOrigin(frame.url) });
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
     const focused = captures.filter(value => value.focused);
@@ -81,9 +81,9 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
     const selected = focused.length === 1 ? focused[0]
       : recent.length && recent[0]!.lastFocused !== recent[1]?.lastFocused ? recent[0]
       : withText.length === 1 ? withText[0] : undefined;
-    if (!selected?.text) throw new Error('No unambiguous accessible selection. Select text on the page, use its context menu, or enter a word here.');
+    if (!selected?.text || selected.origin !== selected.expectedOrigin) throw new Error('No unambiguous accessible selection. Select text on the page, use its context menu, or enter a word here.');
     await lookup(tabId, selected.frameId, selected.text, request, selected.documentId);
-  } catch (error) { request.notice(manualIdentity(tabId), '', String(error)); }
+  } catch { request.notice(manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.'); }
 }
 async function syncScripts(): Promise<void> {
   const origins = await enabledOrigins();

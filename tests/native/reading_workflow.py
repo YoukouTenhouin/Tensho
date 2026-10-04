@@ -103,14 +103,23 @@ def run(desktop, restart=False):
                 def connect(item):
                     cdp = CDP(item['webSocketDebuggerUrl']); connections.append(cdp); return cdp
 
-                def native_key(*names):
+                def activate():
                     if desktop:
                         windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
                         matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
                         if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
                         subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
                         time.sleep(.1)
+
+                def native_key(*names):
+                    activate()
                     key(display, *names)
+
+                def native_click(selector, count=1, dx=20, dy=12):
+                    activate()
+                    box = reading.evaluate("(()=>{const r=document.querySelector("+json.dumps(selector)+").getBoundingClientRect();return {x:screenX+(outerWidth-innerWidth)/2+r.x,y:screenY+outerHeight-innerHeight+r.y}})()")
+                    for _ in range(count):
+                        click(display, int(box['x']+dx), int(box['y']+dy));time.sleep(.1)
 
                 worker = wait_for(lambda: target('/worker.js'))
                 extension_id = worker['url'].split('/')[2]
@@ -164,9 +173,7 @@ def run(desktop, restart=False):
                 toggle_attempts = []
                 for _ in range(2):
                     retained = panel.evaluate(snapshot)['state']
-                    rect = reading.evaluate("document.querySelector('#second').getBoundingClientRect().toJSON()")
-                    for kind in ['mousePressed', 'mouseReleased']:
-                        reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+20, y=rect['y']+12, button='left', clickCount=1)
+                    native_click('#second')
                     native_key('Alt_L', 'Shift_L', 'k')
                     wait_for(lambda: target('/panel.html') is None)
                     restored = reading.evaluate('document.hasFocus()')
@@ -267,10 +274,7 @@ def run(desktop, restart=False):
                 evidence['frame_identities'] = {'same_origin': same['identity'], 'separate_origin': embedded['identity']}
                 # Keyboard lookup must keep the selected frame even when opening takes focus.
                 frame_double_click('embedded')
-                # Native pointer focus is needed before XTest keyboard delivery to an OOPIF.
-                box = reading.evaluate("(()=>{const r=document.querySelector('#embedded').getBoundingClientRect();return {x:screenX+(outerWidth-innerWidth)/2+r.x+25,y:screenY+outerHeight-innerHeight+r.y+20}})()")
-                click(display, int(box['x']), int(box['y']));time.sleep(.1)
-                click(display, int(box['x']), int(box['y']));time.sleep(.1)
+                native_click('#embedded', count=2, dx=25, dy=20)
                 native_key('Alt_L', 'Shift_L', 'k')
                 wait_for(lambda: target('/panel.html') is None)
                 native_key('Alt_L', 'Shift_L', 'l')
@@ -279,6 +283,84 @@ def run(desktop, restart=False):
                 keyboard_frame = panel.evaluate(snapshot)['state']
                 evidence['keyboard_frame'] = keyboard_frame
                 checks['keyboard_open_preserves_selected_frame'] = keyboard_frame['identity']['frameId'] == embedded['identity']['frameId']
+                # An opaque frame must not fall back to a stale selection elsewhere.
+                frame_double_click('opaque')
+                native_click('#opaque', count=2, dx=25, dy=20)
+                native_key('Alt_L', 'Shift_L', 'l')
+                wait_for(lambda: panel.evaluate(snapshot)['state']['generation'] > keyboard_frame['generation'])
+                opaque_keyboard = panel.evaluate(snapshot)['state']
+                evidence['opaque_keyboard'] = opaque_keyboard
+                checks['opaque_keyboard_offers_manual_recovery'] = opaque_keyboard['status'] == 'notice' and 'manual' in opaque_keyboard.get('message', '')
+                # Focus retained results, then traverse backward to the manual input.
+                native_key('Alt_L', 'Shift_L', 'k')
+                wait_for(lambda: target('/panel.html') is None)
+                native_key('Alt_L', 'Shift_L', 'k')
+                panel = connect(wait_for(lambda: target('/panel.html')))
+                wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
+                native_key('Shift_L', 'Tab');native_key('Shift_L', 'Tab')
+                wait_for(lambda: panel.evaluate("document.activeElement.id==='word'"))
+                checks['keyboard_reaches_named_manual_input'] = panel.evaluate("document.activeElement.id==='word' && !!document.querySelector('label[for=word]')")
+                checks['keyboard_focus_is_visible'] = panel.evaluate("document.activeElement.matches(':focus-visible') && getComputedStyle(document.activeElement).outlineStyle!=='none'")
+                native_key('l');native_key('e');native_key('g');native_key('i');native_key('Return')
+                wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='legi'"))
+                checks['native_keyboard_manual_submission'] = True
+                traversal=[]
+                for _ in range(12):
+                    native_key('Tab')
+                    traversal.append(panel.evaluate("({focused:document.hasFocus(),element:document.activeElement.tagName})"))
+                evidence['keyboard_traversal']=traversal
+                checks['keyboard_can_leave_panel'] = any(not step['focused'] for step in traversal)
+                # A replacement target/loading state resets scroll before completion.
+                panel.evaluate("document.body.style.minHeight='3000px';window.scrollTo(0,800);document.querySelector('#word').value='replacement'")
+                checks['panel_was_scrolled_before_lookup'] = panel.evaluate('scrollY>0')
+                panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
+                wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='replacement' && document.querySelector('#status').textContent.includes('Loading')"))
+                checks['new_lookup_resets_scroll_while_loading'] = panel.evaluate('scrollY===0')
+                panel.evaluate("document.querySelector('#word').value='latest'")
+                panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
+                wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='latest' && document.querySelector('#status').textContent==='Controlled development response'"))
+                time.sleep(.4)
+                checks['rapid_lookup_keeps_latest_result'] = panel.evaluate("document.querySelector('#target').textContent==='latest'")
+                # Top-document replacement invalidates a pending browser-bound lookup.
+                panel.evaluate("document.querySelector('#word').value='pending'")
+                panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
+                reading.call('Page.navigate', url=url+'?replacement')
+                wait_for(lambda: panel.evaluate(snapshot).get('state') is None)
+                time.sleep(.4)
+                checks['navigation_rejects_pending_browser_result'] = panel.evaluate(snapshot).get('state') is None
+                # Restricted browser pages explain capture failure and retain manual input.
+                reading.call('Page.navigate', url='edge://version')
+                wait_for(lambda: reading.evaluate("location.protocol==='edge:'"))
+                native_key('Alt_L', 'Shift_L', 'l')
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'notice')
+                checks['restricted_surface_explains_manual_recovery'] = 'manually' in panel.evaluate(snapshot)['state']['message'] or 'here' in panel.evaluate(snapshot)['state']['message']
+                panel.evaluate("document.querySelector('#word').value='puella'")
+                panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'complete')
+                checks['restricted_surface_manual_lookup_works'] = panel.evaluate(snapshot)['state']['text'] == 'puella'
+                reading.call('Page.navigate', url=url+'?focus-return')
+                wait_for(lambda: reading.evaluate("!!document.querySelector('#word')"))
+                reading.evaluate("document.querySelector('#word').style.marginTop='600px';document.querySelector('#word').scrollIntoView({block:'center'})")
+                native_click('#word')
+                reading.evaluate("(()=>{const r=document.createRange();r.selectNodeContents(document.querySelector('#word'));getSelection().removeAllRanges();getSelection().addRange(r)})()")
+                evidence['focus_return_selection'] = reading.evaluate('({text:getSelection().toString(),focus:document.hasFocus(),active:document.activeElement.id})')
+                native_key('Alt_L', 'Shift_L', 'l')
+                time.sleep(.5)
+                evidence['focus_return_lookup'] = panel.evaluate(snapshot)
+                checks['focus_return_source_lookup'] = panel.evaluate(snapshot).get('state', {}).get('text') == 'puella'
+                reading.evaluate("document.querySelector('#word').remove()")
+                before_scroll=reading.evaluate('scrollY')
+                native_key('Alt_L', 'Shift_L', 'k')
+                wait_for(lambda: target('/panel.html') is None)
+                checks['removed_source_falls_back_without_scroll'] = reading.evaluate('document.hasFocus()') and reading.evaluate('scrollY') == before_scroll
+                native_key('Alt_L', 'Shift_L', 'k')
+                panel = connect(wait_for(lambda: target('/panel.html')))
+                wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
+                native_key('Escape')
+                wait_for(lambda: target('/panel.html') is None)
+                checks['native_escape_returns_focus_without_scroll'] = reading.evaluate('document.hasFocus()') and reading.evaluate('scrollY') == before_scroll
+
+
 
                 evidence['passed'] = all(checks.values())
                 return evidence
