@@ -52,10 +52,10 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
   const status = paragraph(''); status.setAttribute('role', 'status'); content.append(status);
   content.setAttribute('aria-busy', String(work.status === 'loading'));
   if (work.status === 'loading') status.textContent = 'Resolving Lewis & Short alternatives…';
-  else if (work.status === 'error') {
+  else if (work.status === 'error' || work.status === 'unavailable') {
     status.textContent = work.message;
-    content.append(button('Retry dictionary resolution', `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
-  } else {
+    if (work.status === 'error') content.append(button('Retry dictionary resolution', `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
+  } else if (work.status === 'complete') {
     const resolution = work.value;
     status.textContent = resolution.status === 'confirmed-absence'
       ? `The dictionary confirmed that no entry is available. Evidence: ${resolution.evidence}`

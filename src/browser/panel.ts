@@ -49,6 +49,7 @@ async function refresh(): Promise<void> {
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') {
     const result = state.analysis;
+    if (result.explanationNotice) { const note = document.createElement('p'); note.textContent = result.explanationNotice; analysis.append(note); }
     status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
       : result.outcome === 'missing-information' ? 'The provider supplied no usable Latin analysis information.'
       : `Latin analysis — ${result.provider}`;
