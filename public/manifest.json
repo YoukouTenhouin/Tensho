@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tensho — Latin reading",
-  "description": "Native reading workflow with clearly marked controlled analysis for development.",
+  "description": "Latin word analysis with Alpheios-hosted Whitaker and explicit provider access.",
   "version": "0.1.0",
   "minimum_chrome_version": "154",
   "permissions": ["activeTab", "scripting", "storage", "contextMenus", "sidePanel", "webNavigation"],

@@ -1,12 +1,15 @@
 import { LookupCoordinator } from '../core/lookup.ts';
 import type { Identity, LookupRequest } from '../core/lookup.ts';
-import { controlledAnalyzer } from '../core/controlled.ts';
+import { RequestExecutor } from '../core/requests.ts';
+import { createWhitakerAnalyzer, latinProviderOrigins } from '../providers/whitaker.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
-const coordinator = new LookupCoordinator(controlledAnalyzer, () => notify(), async identity => {
+const executor = new RequestExecutor();
+const analyzer = createWhitakerAnalyzer({ executor, permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis) });
+const coordinator = new LookupCoordinator(analyzer, () => notify(), async identity => {
   if (identity.documentId === 'manual') return true;
   const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
   return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
@@ -26,10 +29,10 @@ async function source(tabId: number, frameId = 0): Promise<Identity> {
     throw new Error('Selection is unavailable on this surface. Use an ordinary HTTP/HTTPS page, or enter a word manually.');
   }
   return { tabId, frameId, documentId: frame.documentId, topDocumentId: top.documentId,
-    lookupLanguage: 'lat', explanationLanguage: 'en', configuration: 'controlled-latin-en-1' };
+    lookupLanguage: 'lat', explanationLanguage: 'en', configuration: 'whitaker-latin-en-1' };
 }
 function manualIdentity(tabId: number): Identity {
-  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', configuration: 'controlled-latin-en-1', lookupLanguage: 'lat', explanationLanguage: 'en' };
+  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', configuration: 'whitaker-latin-en-1', lookupLanguage: 'lat', explanationLanguage: 'en' };
 }
 async function lookup(tabId: number, frameId: number, text: string, request: LookupRequest, documentId?: string): Promise<void> {
   try {
@@ -143,8 +146,8 @@ chrome.runtime.onInstalled.addListener(() => {
   queueSync();
 });
 chrome.runtime.onStartup.addListener(queueSync);
-chrome.permissions.onAdded.addListener(queueSync);
-chrome.permissions.onRemoved.addListener(() => { automaticOrigins = []; queueSync(); });
+chrome.permissions.onAdded.addListener(() => { queueSync(); notify(); });
+chrome.permissions.onRemoved.addListener(() => { automaticOrigins = []; queueSync(); notify(); });
 chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { automaticOrigins = []; queueSync(); notify(); } });
 chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -189,13 +192,30 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   const tab = await activeTab(message.windowId), tabId = tab.id!;
   if (message.type === 'snapshot') {
     const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
-    return { tabId, state: coordinator.get(tabId), origin: top ? readingOrigin(top.url) : undefined,
+    const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
+    const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
+    return { tabId, state: coordinator.get(tabId), providerAccess,
+      providerAccessDecision: latinAccessDecision ?? 'never', origin: top ? readingOrigin(top.url) : undefined,
       enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
     if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');
     const identity = await source(tabId).catch(() => manualIdentity(tabId));
     void request.lookup(identity, message.text);
+  }
+  if (message.type === 'provider-access-result') {
+    const granted = await chrome.permissions.contains({ origins: [...latinProviderOrigins] });
+    await chrome.storage.local.set({ latinAccessDecision: granted ? 'granted' : 'denied' });
+    notify();
+  }
+  if (message.type === 'retry') {
+    const previous = coordinator.get(tabId);
+    if (message.tabId !== tabId || !previous || previous.status !== 'error' || previous.generation !== message.generation) {
+      throw new Error('The lookup changed. Select the word again.');
+    }
+    const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
+    if (coordinator.get(tabId) !== previous || identity.documentId !== previous.identity.documentId) throw new Error('The reading source changed. Select the word again.');
+    void coordinator.lookup(identity, previous.text);
   }
   if (message.type === 'save-origin' && typeof message.origin === 'string') {
     const origin = readingOrigin(message.origin);
