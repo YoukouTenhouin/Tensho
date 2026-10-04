@@ -1,0 +1,228 @@
+{
+  "observed_at_utc": "2026-10-04T17:46:25Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb",
+  "unmodified_production_build": true,
+  "live_provider_word": "important",
+  "checks": {
+    "setup_sends_no_provider_requests": true,
+    "missing_access_visible_without_request": true,
+    "denial_visible_without_request": true,
+    "grant_does_not_automatically_lookup": true,
+    "exact_default_provider_origins": true,
+    "explicit_retry_after_grant_completes": true,
+    "live_latin_importo_analysis": true,
+    "live_attribution_visible": true,
+    "english_short_meanings_visible": true,
+    "one_explicit_latin_request": true,
+    "dictionary_starts_without_eager_requests": true,
+    "live_singleton_requires_choice": true,
+    "labels_precede_article_retrieval": true,
+    "live_full_article_preserves_credit_and_all_paragraphs": true,
+    "safe_successful_request_source_link": true,
+    "dictionary_keeps_analysis_and_generation": true,
+    "one_index_and_one_chosen_article_request": true,
+    "reopening_keeps_article_without_request": true,
+    "persistent_cache_contains_index_only": true,
+    "persistent_settings_do_not_contain_reading_results": true,
+    "revoked_dictionary_access_blocks_cached_resolution": true,
+    "dictionary_retry_is_local_without_access": true,
+    "revocation_visible_without_new_request": true,
+    "retry_after_revocation_sends_no_request": true,
+    "explicit_retry_is_available": true
+  },
+  "granted_origins": [
+    "https://morph.alpheios.net/*",
+    "https://repos1.alpheios.net/*"
+  ],
+  "live_state": {
+    "identity": {
+      "tabId": 982962983,
+      "frameId": 0,
+      "documentId": "F8A556C0611F1D74E5C56B9FF46527AE",
+      "topDocumentId": "F8A556C0611F1D74E5C56B9FF46527AE",
+      "configuration": "efe7ea50-0ee0-4acc-9b6b-1bf22dfdb52f",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "important",
+    "generation": 3,
+    "status": "complete",
+    "analysis": {
+      "provider": "Whitaker via Alpheios",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "outcome": "usable",
+      "candidates": [
+        {
+          "lemma": "importo, importare, importavi, importatus",
+          "stableId": null,
+          "meanings": [
+            "bring in, convey; import; bring about, cause;"
+          ],
+          "grammar": [
+            {
+              "term": {
+                "lang": "lat",
+                "stem": {
+                  "$": "import"
+                },
+                "suff": {
+                  "$": "ant"
+                }
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "var": {
+                "$": "1st"
+              },
+              "tense": {
+                "$": "present"
+              },
+              "voice": {
+                "$": "active"
+              },
+              "mood": {
+                "$": "indicative"
+              },
+              "pers": {
+                "$": "3rd"
+              },
+              "num": {
+                "$": "plural"
+              }
+            }
+          ],
+          "lemmaFeatures": {
+            "hdwd": {
+              "lang": "lat",
+              "$": "importo, importare, importavi, importatus"
+            },
+            "pofs": {
+              "order": 3,
+              "$": "verb"
+            },
+            "conj": {
+              "$": "1st"
+            },
+            "freq": {
+              "order": 3,
+              "$": "lesser"
+            }
+          },
+          "provenance": {
+            "provider": "alpheios-whitakerLat",
+            "bodyReference": "urn:uuid:idm140253766876128",
+            "annotationIndex": 0,
+            "bodyIndex": 0,
+            "entryIndex": 0
+          },
+          "missing": [],
+          "interpretations": [
+            "Form: Language: lat, Stem: import, Ending: ant, Part of speech: verb, Conjugation: 1st, Variant: 1st, Tense: present, Voice: active, Mood: indicative, Person: 3rd, Number: plural"
+          ]
+        }
+      ],
+      "attribution": [
+        "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+      ],
+      "excludedForeignRecords": 0,
+      "controlled": false
+    }
+  },
+  "provider_requests": [
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "application/json",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "text/plain",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n21985",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "text/html",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "application/json",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    }
+  ],
+  "live_dictionary_resolution": {
+    "status": "complete",
+    "value": {
+      "status": "alternatives",
+      "originalHeadword": "importo, importare, importavi, importatus",
+      "provenance": {
+        "provider": "alpheios-whitakerLat",
+        "bodyReference": "urn:uuid:idm140253766876128",
+        "annotationIndex": 0,
+        "bodyIndex": 0,
+        "entryIndex": 0
+      },
+      "stableLemmaId": null,
+      "root": "importo",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n21985",
+          "rows": [
+            {
+              "key": "importo",
+              "entryId": "n21985",
+              "line": 29089
+            }
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false,
+      "providerId": "alpheios-ls",
+      "providerName": "Lewis & Short"
+    }
+  },
+  "live_dictionary_article": {
+    "entryId": "n21985",
+    "sourceUrl": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n21985",
+    "paragraphCount": 5,
+    "textCharacters": 1606,
+    "attribution": [
+      "From A Latin Dictionary (Charlton T. Lewis, Charles Short, Oxford, Clarendon Press, 1879)"
+    ]
+  },
+  "passed": true
+}

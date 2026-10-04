@@ -1,0 +1,64 @@
+{
+  "observed_at_utc": "2026-10-04T17:45:27Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_providers": true,
+  "production_coordination_routing_and_ui": true,
+  "checks": {
+    "later_analysis_provider_succeeds_once": true,
+    "analysis_warning_and_original_reason_visible": true,
+    "disabled_and_ungranted_analysis_not_called": true,
+    "missing_access_reason_visible_without_prompt": true,
+    "no_match_stops_chain_and_is_visible": true,
+    "partial_analysis_stops_chain": true,
+    "exhausted_analysis_has_explicit_retry": true,
+    "native_explicit_analysis_retry_one_attempt": true,
+    "resolution_fallback_offers_later_alternatives": true,
+    "resolution_calls_are_one_attempt_and_skip_ineligible": true,
+    "dictionary_warning_and_uncertainty_visible": true,
+    "later_article_requires_explicit_choice": true,
+    "dictionary_does_not_rerun_or_erase_analysis": true,
+    "full_article_and_embedded_quotes_visible": true,
+    "absence_terminates_without_later_dictionary": true,
+    "unresolved_terminates_without_later_dictionary": true,
+    "failed_first_article_offers_new_choices_only": true,
+    "article_failure_warning_visible": true,
+    "replacement_article_requires_new_choice": true,
+    "post_success_failure_stays_local": true,
+    "native_local_retry_preserves_prior_article_and_analysis": true,
+    "real_action_deadline_stops_before_third_provider": true,
+    "deadline_preserves_first_failure_without_claiming_unattempted_failure": true,
+    "deadline_has_visible_explicit_retry": true
+  },
+  "deadline_elapsed_seconds": 30.01425616000779,
+  "deadline_failure": {
+    "status": "error",
+    "message": "Lookup exceeded its 30-second deadline; remaining providers were not attempted.",
+    "failureKind": "action-deadline",
+    "providerIssues": [
+      {
+        "providerId": "d-denied",
+        "providerName": "d-denied",
+        "operation": "resolution",
+        "kind": "missing-access",
+        "message": "Provider access is missing. Enable access explicitly to use this provider.",
+        "attempted": false
+      },
+      {
+        "providerId": "d-first",
+        "providerName": "d-first",
+        "operation": "article",
+        "kind": "request-timeout",
+        "message": "Provider request exceeded 15 seconds.",
+        "attempted": true
+      }
+    ]
+  },
+  "deadline_calls": [
+    "a-first:analysis:important",
+    "d-first:resolve:candidate-one",
+    "d-first:article:n1",
+    "d-second:resolve:candidate-one"
+  ],
+  "passed": true
+}
