@@ -2,7 +2,7 @@
 
 Tensho is a personal-use Microsoft Edge reading extension for openSUSE Tumbleweed and KDE Plasma. This development build implements the first native interaction slice from [ticket 14](https://github.com/YoukouTenhouin/Tensho/issues/14). Responses are explicitly controlled fixtures, not real Latin analysis. It makes no provider requests.
 
-The slice remains in development while native acceptance is completed. The user-approved focus policy allows Edge to move keyboard focus into the sidebar when opening it; updates to an already-open panel preserve page focus, and Close/Escape restores it. See [native acceptance evidence](docs/validation/14-native-acceptance.md).
+This controlled-response slice establishes the native interaction contract; later tickets add live services and session restoration. The user-approved focus policy allows Edge to move keyboard focus into the sidebar when opening it; updates to an already-open panel preserve page focus, and Close/Escape restores it. See [native acceptance evidence](docs/validation/14-native-acceptance.md).
 
 ## Build and load
 
@@ -20,7 +20,7 @@ The UI starts with Latin lookup and English explanations. This slice stores expl
 ## Use the development workflow
 
 - Press **Alt+Shift+L** to look up accessible selected text. Opening the sidebar focuses results; if it is already open, use the toggle below to move focus into it. Temporary native page access does not enable automatic lookup.
-- Press **Alt+Shift+K** to toggle existing results without another lookup. When closed, one press opens and focuses them; when already open, press twice to close and reopen with focus. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
+- Press **Alt+Shift+K** to toggle existing results without another lookup. When closed, one press opens and focuses them; when already open, press twice to close and reopen with focus. Dismiss Edge’s floating text-selection menu with Escape if it intercepts a shortcut. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
 - Use **Look up selection with Tensho** in the selection context menu, including explicitly selected editable text, or enter a word in the panel.
 - In **Reading-site access**, enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
 - To enable an embedded reading origin, enter it explicitly in the site-access form. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.
@@ -36,6 +36,7 @@ Sites are identified by scheme, hostname, and effective port. Disabling an origi
 python3 tests/native/permission_scope.py
 python3 tests/native/reading_workflow.py
 python3 tests/native/reading_workflow.py --desktop
+python3 tests/native/reading_workflow.py --desktop --idle
 python3 tests/native/permission_workflow.py --output /tmp/tensho-access
 ```
 

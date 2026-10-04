@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T06:36:23Z",
+  "observed_at_utc": "2026-10-04T15:40:04Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -76,6 +76,27 @@
     "active": "",
     "target": "puella"
   },
+  "native_contexts": [
+    {
+      "contextId": "136fe93e-b7e8-4d54-9b7a-9870a0fa3eae",
+      "contextType": "BACKGROUND",
+      "frameId": -1,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    },
+    {
+      "contextId": "0a7e4fef-d506-44e8-b72f-02d6c1650178",
+      "contextType": "SIDE_PANEL",
+      "documentId": "8DE6B12DAB357BE3603EA04478D379F0",
+      "documentOrigin": "chrome-extension://alnofaegaaechlpcdaadmfacbbkngajg",
+      "documentUrl": "chrome-extension://alnofaegaaechlpcdaadmfacbbkngajg/panel.html",
+      "frameId": 0,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    }
+  ],
   "native_pointer_trace": [
     {
       "selector": "#second",
@@ -113,279 +134,7 @@
         "width": 2114,
         "height": 1464
       },
-      "received": {
-        "testPointer": "top",
-        "x": 41.5384635925293,
-        "y": 265.7692565917969
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49
-      }
-    },
-    {
-      "selector": "#same",
-      "box": {
-        "x": 38,
-        "y": 345.0769348144531,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:42947/frame.html?same",
-        "x": 6.615385055541992,
-        "y": 48.6923828125
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49
-      }
-    },
-    {
-      "selector": "#opaque",
-      "box": {
-        "x": 38,
-        "y": 161.6923065185547,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:42947/frame.html?opaque",
-        "x": 6.461539268493652,
-        "y": 48.5384635925293
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49
-      }
-    },
-    {
-      "selector": "#twin",
-      "box": {
-        "x": 38,
-        "y": 58.000003814697266,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
-        "x": 6.615385055541992,
-        "y": 49.00001907348633
-      }
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 345.0769348144531,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
       "received": null
-    },
-    {
-      "selector": "#embedded",
-      "box": {
-        "x": 38,
-        "y": 265.3846130371094,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": null
-    },
-    {
-      "selector": "#ungranted",
-      "box": {
-        "x": 38,
-        "y": 58.000003814697266,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://localhost:32815/frame.html?ungranted",
-        "x": 6.461539268493652,
-        "y": 49.15386199951172
-      }
-    },
-    {
-      "selector": "#opaque",
-      "box": {
-        "x": 38,
-        "y": 161.6923065185547,
-        "innerHeight": 773,
-        "outerHeight": 902,
-        "scale": 1.625,
-        "screenX": 1096,
-        "screenY": 1338
-      },
-      "geometry": {
-        "x": 1782,
-        "y": 2175,
-        "width": 2114,
-        "height": 1464
-      },
-      "received": {
-        "testPointer": "http://127.0.0.1:42947/frame.html?opaque",
-        "x": 6.461539268493652,
-        "y": 48.5384635925293
-      }
     },
     {
       "selector": "#word",
@@ -404,11 +153,7 @@
         "width": 2114,
         "height": 1464
       },
-      "received": {
-        "testPointer": "top",
-        "x": 41.5384635925293,
-        "y": 415.3077087402344
-      }
+      "received": null
     }
   ],
   "native_toggle_attempts": [
@@ -433,19 +178,19 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 852502241,
+      "tabId": 1756104168,
       "frameId": 12,
-      "documentId": "8BD77D06E12E11C514516393CC5EEBDE",
-      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
+      "documentId": "6D3FDFE6001247903FD12F91CB7579FC",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     },
     "separate_origin": {
-      "tabId": 852502241,
+      "tabId": 1756104168,
       "frameId": 13,
-      "documentId": "1F9FB3E6F11E0E1105718F52B20CFC79",
-      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
+      "documentId": "07B23B9F5E67A23AC409176D4FA5528E",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
@@ -453,10 +198,10 @@
   },
   "keyboard_frame": {
     "identity": {
-      "tabId": 852502241,
+      "tabId": 1756104168,
       "frameId": 13,
-      "documentId": "1F9FB3E6F11E0E1105718F52B20CFC79",
-      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
+      "documentId": "07B23B9F5E67A23AC409176D4FA5528E",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
@@ -481,7 +226,7 @@
   },
   "ungranted_keyboard": {
     "identity": {
-      "tabId": 852502241,
+      "tabId": 1756104168,
       "frameId": 0,
       "documentId": "manual",
       "topDocumentId": "manual",
@@ -496,7 +241,7 @@
   },
   "opaque_keyboard": {
     "identity": {
-      "tabId": 852502241,
+      "tabId": 1756104168,
       "frameId": 0,
       "documentId": "manual",
       "topDocumentId": "manual",
@@ -561,17 +306,17 @@
   ],
   "focus_return_selection": {
     "text": "puella",
-    "focus": true,
+    "focus": false,
     "active": ""
   },
   "focus_return_lookup": {
-    "tabId": 852502241,
+    "tabId": 1756104168,
     "state": {
       "identity": {
-        "tabId": 852502241,
+        "tabId": 1756104168,
         "frameId": 0,
-        "documentId": "E0CB270132CAC89EE045D9EA4B43A70C",
-        "topDocumentId": "E0CB270132CAC89EE045D9EA4B43A70C",
+        "documentId": "00A4D38342C609307DD34AEF71151154",
+        "topDocumentId": "00A4D38342C609307DD34AEF71151154",
         "lookupLanguage": "lat",
         "explanationLanguage": "en",
         "configuration": "controlled-latin-en-1"
@@ -594,12 +339,12 @@
         ]
       }
     },
-    "origin": "http://127.0.0.1:42947",
+    "origin": "http://127.0.0.1:37857",
     "enabledOrigins": [
-      "http://127.0.0.1:42947",
-      "http://127.0.0.1:32815"
+      "http://127.0.0.1:37857",
+      "http://127.0.0.1:35427"
     ],
-    "focusRequest": 9
+    "focusRequest": 14
   },
   "passed": true
 }

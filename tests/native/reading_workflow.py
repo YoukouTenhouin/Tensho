@@ -40,7 +40,7 @@ def version(command):
     return subprocess.check_output(command, text=True, stderr=subprocess.STDOUT).strip()
 
 
-def run(desktop, restart=False):
+def run(desktop, restart=False, idle=False):
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                 'browser': version(['microsoft-edge', '--version']),
@@ -185,6 +185,7 @@ def run(desktop, restart=False):
                 double_click('#second')
                 wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='legi' && document.querySelector('#status').textContent==='Controlled development response'"))
                 checks['already_open_panel_lookup_preserves_page_focus'] = reading.evaluate('document.hasFocus()')
+                evidence['native_contexts'] = panel.evaluate('chrome.runtime.getContexts({})')
                 toggle_attempts = []
                 for _ in range(2):
                     retained = panel.evaluate(snapshot)['state']
@@ -204,6 +205,21 @@ def run(desktop, restart=False):
                     })
                 evidence['native_toggle_attempts'] = toggle_attempts
                 checks['native_toggle_restores_focus_without_lookup'] = all(all(a.values()) for a in toggle_attempts)
+                if idle:
+                    time.sleep(35)
+                    checks['worker_suspends_before_idle_toggle'] = target('/worker.js') is None
+                    if not checks['worker_suspends_before_idle_toggle']:
+                        raise RuntimeError('Idle toggle test requires worker suspension')
+                    native_key('Alt_L', 'Shift_L', 'k')
+                    wait_for(lambda: target('/panel.html') is None)
+                    checks['first_idle_toggle_closes_panel'] = True
+                    native_key('Alt_L', 'Shift_L', 'k')
+                    panel = connect(wait_for(lambda: target('/panel.html')))
+                    wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
+                    checks['second_idle_toggle_opens_with_focus'] = True
+
+                    evidence['passed'] = all(checks.values())
+                    return evidence
                 initial = panel.evaluate(snapshot)
                 # Dragging ordinary text produces no replacement lookup.
                 reading.call('Input.dispatchMouseEvent', type='mousePressed', x=40, y=242, button='left', clickCount=1)
@@ -256,7 +272,11 @@ def run(desktop, restart=False):
 
                 def frame_double_click(frame_id):
                     reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).scrollIntoView({{block:"center"}})')
-                    native_click('#'+frame_id, count=2, dx=25, dy=20)
+                    rect = reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).getBoundingClientRect().toJSON()')
+                    for count in [1, 2]:
+                        for kind in ['mousePressed', 'mouseReleased']:
+                            reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+25, y=rect['y']+20, button='left', clickCount=count)
+                    assert reading.evaluate('document.activeElement.id') == frame_id
                     # Edge's floating selection menu otherwise consumes shortcuts.
                     native_key('Escape')
 
@@ -409,7 +429,6 @@ def run(desktop, restart=False):
                 checks['native_escape_returns_focus_without_scroll'] = reading.evaluate('document.hasFocus()') and reading.evaluate('scrollY') == before_scroll
 
 
-
                 evidence['passed'] = all(checks.values())
                 return evidence
         except Exception as error:
@@ -447,7 +466,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--desktop', action='store_true')
     parser.add_argument('--restart', action='store_true', help='Restart the disposable profile before its first lookup')
+    parser.add_argument('--idle', action='store_true', help='Verify toggling after real worker suspension')
     args = parser.parse_args()
-    result = run(args.desktop, args.restart)
+    result = run(args.desktop, args.restart, args.idle)
     print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)

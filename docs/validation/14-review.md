@@ -1,6 +1,6 @@
 # Ticket 14 review
 
-Reviewed `e90c3f4...18bb766` against the approved ticket 14 specification, including the two accepted native focus revisions. The code-review skill ran Standards and Spec reviews independently. Later fixes are tracked below; final follow-up remains pending.
+Reviewed `e90c3f4...18bb766` against the approved ticket 14 specification, including the two accepted native focus revisions. The code-review skill ran Standards and Spec reviews independently. Later fixes and follow-up reviews are tracked below.
 
 ## Standards
 
@@ -25,4 +25,4 @@ No scope creep was identified. Live providers, passages, settings, bounded reten
 
 Native investigation also confirmed that worker idle shutdown disconnected the panel's notification port: a new context-menu lookup completed but the panel displayed old text. Runtime change notifications now reconnect the panel, and the production-build idle test verifies that a new lookup updates the existing panel after the worker has stopped.
 
-Standards: 0 hard violations and 2 maintainability suggestions; the internal message protocol is the larger maintainability concern. Spec: 2 correctness findings, both verified fixed. The reviewer found no remaining must-fix issue in the frame-index correction. Numeric frame indexes could change during sequential capture if the page inserts/removes siblings; that concurrency edge remains a future coverage opportunity. The separately identified first toggle after worker idle shutdown still needs resolution.
+Standards: 0 hard violations and 2 maintainability suggestions; the internal message protocol is the larger maintainability concern. Spec: 2 correctness findings, both verified fixed. The reviewer found no remaining must-fix issue in the frame-index correction. Numeric frame indexes could change during sequential capture if the page inserts/removes siblings; that concurrency edge remains a future coverage opportunity. The separately identified first toggle after worker idle shutdown is corrected with an existing-panel probe and synchronous native opening; a regression confirms real worker suspension before first-press closure and second-press opening.

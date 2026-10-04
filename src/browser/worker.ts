@@ -53,6 +53,20 @@ async function close(tabId: number, windowId: number): Promise<void> {
   for (const [port, panelWindow] of panelWindows) if (panelWindow === windowId) panelWindows.delete(port);
   await restoreFocus(tabId);
 }
+function toggle(tabId: number, windowId: number): void {
+  // Probe existing receivers before opening creates a new panel context.
+  // Opening must run synchronously in the native command gesture; replies do not
+  // retain that privilege. If a panel already existed, finish by closing it.
+  const existing = new Promise<boolean>(resolve => {
+    chrome.runtime.sendMessage({ type: 'panel-present', windowId }, present => {
+      void chrome.runtime.lastError; // No receiver means this window has no panel.
+      resolve(present === true);
+    });
+  });
+  const opening = open(tabId, true);
+  void existing.then(async present => { if (present) { await opening; await close(tabId, windowId); } }).catch(console.error);
+}
+
 function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?: number): Promise<boolean> {
   if (!focus && windowId !== undefined && [...panelWindows.values()].includes(windowId)) return Promise.resolve(true);
   if (focus) focusRequests.set(tabId, (focusRequests.get(tabId) ?? 0) + 1);
@@ -150,8 +164,7 @@ chrome.commands.onCommand.addListener((command, tab) => {
     open(tab.id, true, request);
   } else if (command === 'focus-results') {
     // Reopening in a second native gesture is the accepted focus fallback.
-    if ([...panelWindows.values()].includes(tab.windowId)) void close(tab.id, tab.windowId).catch(console.error);
-    else void open(tab.id, true);
+    toggle(tab.id, tab.windowId);
   }
 });
 chrome.webNavigation.onCommitted.addListener(details => {

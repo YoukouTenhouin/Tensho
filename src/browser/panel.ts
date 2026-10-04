@@ -72,7 +72,8 @@ function connect(): void {
   port.onDisconnect.addListener(() => { if (panelPort === port) panelPort = undefined; });
 }
 // A native action can restart the worker after its old port was disconnected.
-chrome.runtime.onMessage.addListener(message => {
+chrome.runtime.onMessage.addListener((message, _sender, reply) => {
+  if (message?.type === 'panel-present' && message.windowId === windowId) { reply(true); return; }
   if (message?.type !== 'changed' || typeof windowId !== 'number') return;
   connect();
   void refresh().catch(report);
