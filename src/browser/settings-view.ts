@@ -1,4 +1,4 @@
-import { defaultOptions, lookupRoutes, providerCapability } from '../core/configuration.ts';
+import { lookupRoutes, providerCapability } from '../core/configuration.ts';
 import type { ProviderCatalog, ProviderRole, Settings, SettingsDraft } from '../core/configuration.ts';
 
 export function languageName(id: string, catalog: ProviderCatalog): string {
@@ -15,7 +15,7 @@ function option(value: string, text: string): HTMLOptionElement {
 }
 /** Keeps an explicit draft separate from the saved configuration used by results. */
 export class SettingsView {
-  #save: (draft: SettingsDraft, revision: string) => Promise<void>;
+  #save: (draft: SettingsDraft, revision: string) => Promise<Settings>;
   #saved?: Settings;
   #draft?: SettingsDraft;
   #catalog!: ProviderCatalog;
@@ -28,7 +28,7 @@ export class SettingsView {
   #explanations = node('select');
   #providers = node('div');
   #apply = node('button', 'Save settings');
-  constructor(root: HTMLElement, save: (draft: SettingsDraft, revision: string) => Promise<void>) {
+  constructor(root: HTMLElement, save: (draft: SettingsDraft, revision: string) => Promise<Settings>) {
     this.#save = save;
     const form = node('form'); form.id = 'lookup-settings';
     this.#fields.append(node('legend', 'Edit lookup settings'));
@@ -87,10 +87,6 @@ export class SettingsView {
     const language = this.#draft.lookupLanguage, profile = this.#draft.languages[language]!;
     for (const role of ['analysis', 'dictionary'] as const) {
       const section = node('section'); section.append(node('h3', role === 'analysis' ? 'Analysis providers' : 'Dictionary providers'));
-      // An integrated provider can be added after an older saved configuration.
-      for (const provider of this.#catalog.providers) if (providerCapability(this.#catalog, provider.id, language, role) && !profile[role].some(item => item.id === provider.id)) {
-        profile[role].push({ id: provider.id, enabled: false, options: defaultOptions(provider) });
-      }
       if (!profile[role].length) section.append(node('p', 'No integrated provider is available for this role and lookup language.'));
       const list = node('ol');
       profile[role].forEach((configured, index) => {
@@ -134,7 +130,7 @@ export class SettingsView {
     if (!this.#draft || this.#saving) return;
     this.#saving = true; this.#fields.disabled = true; this.#message.textContent = 'Saving settings…';
     try {
-      await this.#save(structuredClone(this.#draft), this.#baseRevision);
+      this.#saved = await this.#save(structuredClone(this.#draft), this.#baseRevision);
       this.#dirty = false; this.#reset(); this.#message.textContent = 'Settings saved. The visible selection uses the new settings.';
     } catch (error) { this.#message.textContent = error instanceof Error ? error.message : String(error); }
     finally { this.#saving = false; this.#fields.disabled = false; }

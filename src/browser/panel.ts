@@ -15,7 +15,8 @@ async function send(message: Record<string, unknown>): Promise<any> {
   return reply;
 }
 const settingsView = new SettingsView(element('settings-editor'), async (settings, expectedRevision) => {
-  await send({ type: 'save-settings', settings, expectedRevision }); await refresh();
+  const saved = await send({ type: 'save-settings', settings, expectedRevision }); await refresh();
+  return saved.settings;
 });
 function report(error: unknown): void { feedback.textContent = String(error); }
 async function refresh(): Promise<void> {

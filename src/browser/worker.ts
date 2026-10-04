@@ -230,6 +230,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   if (message.type === 'save-settings') {
     if (message.tabId !== tabId || typeof message.expectedRevision !== 'string') throw new Error('The reading tab changed. Reload settings before saving.');
     const windows = new Set(panelWindows.values());
+    windows.add(message.windowId);
     const visible = await chrome.tabs.query({ active: true });
     const previous = await configuration.get();
     const saved = await configuration.save(message.settings, message.expectedRevision);
@@ -237,7 +238,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
       coordinator.reconfigure(configurationIdentity(saved), visible.filter(item => windows.has(item.windowId) && item.id !== undefined).map(item => item.id!));
       notify();
     }
-    return { ok: true };
+    return { ok: true, settings: saved };
   }
   if (message.type === 'dictionary-resolve' || message.type === 'dictionary-retrieve' || message.type === 'dictionary-collapse') {
     if (message.tabId !== tabId || typeof message.generation !== 'number' || typeof message.candidateIndex !== 'number') {
