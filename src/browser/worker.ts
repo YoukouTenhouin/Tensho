@@ -67,7 +67,7 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
       if (!readingOrigin(frame.url)) continue;
       try {
         const value = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: frame.documentId });
-        if (value?.text && (!selected || value.focused)) selected = { ...value, frameId: frame.frameId, documentId: frame.documentId };
+        if (value?.text && value.origin === readingOrigin(frame.url) && (!selected || value.focused)) selected = { ...value, frameId: frame.frameId, documentId: frame.documentId };
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
     if (!selected) throw new Error('No accessible selection. Select text on the page, use its context menu, or enter a word here.');
@@ -179,6 +179,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
     void panelAction(message, request).then(reply, error => reply({ error: String(error) })); return true;
   }
   if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
+    if (!sender.origin || sender.origin !== readingOrigin(sender.url ?? '')) return;
     const tabId = sender.tab.id, frameId = sender.frameId ?? 0;
     // The native gesture must reach sidePanel.open before asynchronous API calls.
     // Only already enabled/granted origins qualify; revocation invalidates this cache.

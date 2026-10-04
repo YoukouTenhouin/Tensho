@@ -18,11 +18,11 @@
     else document.body.focus({ preventScroll: true });
   }
   chrome.runtime.onMessage.addListener((message, _sender, reply) => {
-    if (message?.type === 'capture') reply({ text: capture(), focused: document.hasFocus() });
+    if (message?.type === 'capture') reply({ text: capture(), focused: document.hasFocus(), origin: globalThis.origin });
     if (message?.type === 'restore-focus') { restore(); reply({ restored: true }); }
   });
   document.addEventListener('dblclick', event => {
-    if (!event.isTrusted) return;
+    if (!event.isTrusted || globalThis.origin === 'null') return;
     const target = event.composedPath().find(item => item instanceof HTMLElement);
     if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,[role="textbox"]'))) return;
     const text = capture();

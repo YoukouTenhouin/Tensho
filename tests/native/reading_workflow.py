@@ -58,12 +58,16 @@ def run(desktop):
 <input id="editable" value="puellae"><div style="height:1800px"></div><p>finis</p>''')
         server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
         threading.Thread(target=server.serve_forever, daemon=True).start()
+        frame_server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
+        threading.Thread(target=frame_server.serve_forever, daemon=True).start()
+        frame_origin = f'http://127.0.0.1:{frame_server.server_port}'
+        (root / 'frame.html').write_text('<!doctype html><meta charset="utf-8"><style>body{font:24px serif;margin:8px}p{margin:0}</style><p tabindex="0">servus</p>')
         origin = f'http://127.0.0.1:{server.server_port}'
         url = origin + '/index.html'
         extension = root / 'extension'
         shutil.copytree(repo / 'dist', extension)
         manifest = json.loads((extension / 'manifest.json').read_text())
-        manifest['host_permissions'] = [origin + '/*']
+        manifest['host_permissions'] = [origin + '/*', frame_origin + '/*']
         (extension / 'manifest.json').write_text(json.dumps(manifest))
         xvfb = browser = None
         connections = []
@@ -170,6 +174,53 @@ def run(desktop):
                 wait_for(lambda: target('/panel.html') is None)
                 time.sleep(.5)
                 checks['closed_panel_stays_closed_after_completion'] = target('/panel.html') is None
+                # Frame paths use the same production content script and worker.
+                double_click('#word')
+                panel = connect(wait_for(lambda: target('/panel.html')))
+                wait_for(lambda: panel.evaluate("document.querySelector('#status')?.textContent === 'Controlled development response'"))
+                frame_urls = {'same': origin + '/frame.html?same', 'embedded': frame_origin + '/frame.html?embedded', 'opaque': origin + '/frame.html?opaque'}
+                reading.evaluate("""(()=>{for(const [id,url] of Object.entries(URLS)) {
+                  const frame=document.createElement('iframe');frame.id=id;frame.src=url;
+                  frame.style.cssText='display:block;width:400px;height:80px;margin:20px 0';
+                  if(id==='opaque') frame.sandbox='allow-scripts';
+                  document.body.prepend(frame);
+                }})()""".replace('URLS', json.dumps(frame_urls)))
+                wait_for(lambda: len(reading.call('Page.getFrameTree')['frameTree'].get('childFrames', [])) == 3)
+                time.sleep(.2)
+
+                def frame_double_click(frame_id):
+                    reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).scrollIntoView({{block:"center"}})')
+                    rect = reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).getBoundingClientRect().toJSON()')
+                    for count in [1, 2]:
+                        for kind in ['mousePressed', 'mouseReleased']:
+                            reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+25, y=rect['y']+20, button='left', clickCount=count)
+
+                before = panel.evaluate(snapshot)['state']['generation']
+                frame_double_click('embedded'); time.sleep(.15)
+                checks['embedded_origin_requires_explicit_enablement'] = panel.evaluate(snapshot)['state']['generation'] == before
+                frame_double_click('same')
+                wait_for(lambda: panel.evaluate(snapshot)['state']['text'] == 'servus')
+                same = panel.evaluate(snapshot)['state']
+                checks['same_origin_frame_routes_identity'] = same['identity']['frameId'] != 0 and same['identity']['documentId'] != same['identity']['topDocumentId']
+                # Explicit settings action names the embedded origin before requesting access.
+                panel.evaluate("document.querySelector('details').open=true;document.querySelector('#origin').value=" + json.dumps(frame_origin))
+                panel.call('Runtime.evaluate', expression="document.querySelector('#site').requestSubmit()", userGesture=True)
+                wait_for(lambda: frame_origin in panel.evaluate('chrome.storage.local.get("enabledOrigins").then(s=>s.enabledOrigins)'))
+                wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s[0]?.matches.length===2)'))
+                time.sleep(.1)
+                frame_double_click('embedded')
+                wait_for(lambda: panel.evaluate(snapshot)['state']['identity']['frameId'] != same['identity']['frameId'])
+                embedded = panel.evaluate(snapshot)['state']
+                checks['separately_enabled_frame_routes_identity'] = embedded['text'] == 'servus' and embedded['identity']['frameId'] != 0
+                before = embedded['generation']
+                frame_double_click('opaque'); time.sleep(.15)
+                checks['opaque_sandbox_frame_does_not_lookup'] = panel.evaluate(snapshot)['state']['generation'] == before
+                panel.evaluate('chrome.storage.local.set({enabledOrigins:[' + json.dumps(frame_origin) + ']})')
+                wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s[0]?.matches.length===1)'))
+                before = panel.evaluate(snapshot)['state']['generation']
+                frame_double_click('embedded'); time.sleep(.15)
+                checks['embedded_frame_requires_containing_site_enablement'] = panel.evaluate(snapshot)['state']['generation'] == before
+                evidence['frame_identities'] = {'same_origin': same['identity'], 'separate_origin': embedded['identity']}
                 evidence['passed'] = all(checks.values())
                 return evidence
         finally:
@@ -183,6 +234,7 @@ def run(desktop):
                     except subprocess.TimeoutExpired:
                         process.kill(); process.wait()
             server.shutdown(); server.server_close()
+            frame_server.shutdown(); frame_server.server_close()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T05:16:14Z",
+  "observed_at_utc": "2026-10-04T05:18:58Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -16,7 +16,12 @@
     "manual_lookup_through_production_interface": true,
     "loading_status_can_be_announced": true,
     "close_restores_page_focus": true,
-    "closed_panel_stays_closed_after_completion": true
+    "closed_panel_stays_closed_after_completion": true,
+    "embedded_origin_requires_explicit_enablement": true,
+    "same_origin_frame_routes_identity": true,
+    "separately_enabled_frame_routes_identity": true,
+    "opaque_sandbox_frame_does_not_lookup": true,
+    "embedded_frame_requires_containing_site_enablement": true
   },
   "desktop": "plasmashell 6.7.5",
   "window_manager": "kwin 6.7.5",
@@ -58,5 +63,25 @@
       "blocked": false
     }
   ],
+  "frame_identities": {
+    "same_origin": {
+      "tabId": 883900882,
+      "frameId": 10,
+      "documentId": "8ECAE31B10DD2B1D5CBAFF276DCA7B3E",
+      "topDocumentId": "395B37A99193C9584E7FEF40D5FDC395",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    },
+    "separate_origin": {
+      "tabId": 883900882,
+      "frameId": 11,
+      "documentId": "BD66DA0637AE3908100A394C939928C1",
+      "topDocumentId": "395B37A99193C9584E7FEF40D5FDC395",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    }
+  },
   "passed": true
 }
