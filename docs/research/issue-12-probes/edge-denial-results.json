@@ -1,0 +1,91 @@
+{
+  "observed_at_utc": "2026-10-04T04:18:16Z",
+  "browser_version": "Microsoft Edge 154.0.4258.37",
+  "manifest": {
+    "manifest_version": 3,
+    "name": "Tensho native denial probe",
+    "version": "0.0.1",
+    "optional_host_permissions": [
+      "https://morph.alpheios.net/*",
+      "https://repos1.alpheios.net/*"
+    ],
+    "background": {
+      "service_worker": "worker.js"
+    }
+  },
+  "mode": "headed X11 on isolated Xvfb",
+  "initial_guarded": {
+    "permissions": {
+      "origins": [],
+      "permissions": []
+    },
+    "fetches": 0,
+    "results": [
+      {
+        "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+        "granted": false,
+        "state": "access-not-granted"
+      },
+      {
+        "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+        "granted": false,
+        "state": "access-not-granted"
+      },
+      {
+        "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+        "granted": false,
+        "state": "access-not-granted"
+      }
+    ]
+  },
+  "while_prompt_pending": [
+    {
+      "event": "requested",
+      "active": true
+    }
+  ],
+  "native_click": {
+    "screen_x": 724,
+    "screen_y": 291,
+    "method": "XTest pointer click on visually inspected Deny button"
+  },
+  "after_denial_events": [
+    {
+      "event": "requested",
+      "active": true
+    },
+    {
+      "event": "resolved",
+      "granted": false,
+      "permissions": {
+        "origins": [],
+        "permissions": []
+      }
+    }
+  ],
+  "after_denial_guarded": {
+    "permissions": {
+      "origins": [],
+      "permissions": []
+    },
+    "fetches": 0,
+    "results": [
+      {
+        "url": "https://morph.alpheios.net/api/v1/analysis/word?word=puellae&engine=whitakerLat&lang=lat&clientId=tensho-research",
+        "granted": false,
+        "state": "access-not-granted"
+      },
+      {
+        "url": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+        "granted": false,
+        "state": "access-not-granted"
+      },
+      {
+        "url": "https://repos1.alpheios.net/exist/rest/db/xq/lexi-get.xq?lx=ls&lg=lat&out=html&n=n39421",
+        "granted": false,
+        "state": "access-not-granted"
+      }
+    ]
+  },
+  "passed": true
+}

@@ -1,0 +1,737 @@
+{
+  "status": "PASS",
+  "roots": {
+    "importo": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n21985",
+          "indexKeys": [
+            "importo"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "puella": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n39421",
+          "indexKeys": [
+            "puella"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "lego": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n26185",
+          "indexKeys": [
+            "@lego1",
+            "@lego"
+          ],
+          "correspondence": "unverified"
+        },
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n26186",
+          "indexKeys": [
+            "@lego2"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "lex": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n26431",
+          "indexKeys": [
+            "lex"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "amo": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n2280",
+          "indexKeys": [
+            "amo"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "mala": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27674",
+          "indexKeys": [
+            "mala"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "malus": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27776",
+          "indexKeys": [
+            "@malus1",
+            "@malus"
+          ],
+          "correspondence": "unverified"
+        },
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27777",
+          "indexKeys": [
+            "@malus2"
+          ],
+          "correspondence": "unverified"
+        },
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27778",
+          "indexKeys": [
+            "@malus3"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "malum": {
+      "status": "alternatives",
+      "alternatives": [
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27773",
+          "indexKeys": [
+            "@malum1",
+            "@malum"
+          ],
+          "correspondence": "unverified"
+        },
+        {
+          "dictionary": "Lewis & Short",
+          "entryId": "n27774",
+          "indexKeys": [
+            "@malum2"
+          ],
+          "correspondence": "unverified"
+        }
+      ],
+      "automaticSelection": null,
+      "exhaustive": false
+    },
+    "zzqxx": {
+      "status": "unresolved-mapping",
+      "alternatives": [],
+      "automaticSelection": null,
+      "exhaustive": false
+    }
+  },
+  "articleIdentities": {
+    "n21985": {
+      "status": "usable",
+      "entryId": "n21985"
+    },
+    "n39421": {
+      "status": "usable",
+      "entryId": "n39421"
+    },
+    "n26185": {
+      "status": "usable",
+      "entryId": "n26185"
+    },
+    "n26186": {
+      "status": "usable",
+      "entryId": "n26186"
+    },
+    "n26431": {
+      "status": "usable",
+      "entryId": "n26431"
+    },
+    "n2280": {
+      "status": "usable",
+      "entryId": "n2280"
+    },
+    "n27674": {
+      "status": "usable",
+      "entryId": "n27674"
+    },
+    "n27776": {
+      "status": "usable",
+      "entryId": "n27776"
+    },
+    "n27777": {
+      "status": "usable",
+      "entryId": "n27777"
+    },
+    "n27778": {
+      "status": "usable",
+      "entryId": "n27778"
+    },
+    "n27773": {
+      "status": "usable",
+      "entryId": "n27773"
+    },
+    "n27774": {
+      "status": "usable",
+      "entryId": "n27774"
+    }
+  },
+  "cases": [
+    {
+      "originalInput": "important",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "importo, importare, importavi, importatus",
+          "shortMeanings": [
+            "bring in, convey; import; bring about, cause;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n21985",
+                "indexKeys": [
+                  "importo"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "puellae",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "puella, puellae",
+          "shortMeanings": [
+            "girl, (female) child/daughter; maiden; young woman/wife; sweetheart; slavegirl;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n39421",
+                "indexKeys": [
+                  "puella"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "legi",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "lego, legere, legi, lectus",
+          "shortMeanings": [
+            "read; gather, collect (cremated bones); furl (sail), weigh (anchor); pick out;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n26185",
+                "indexKeys": [
+                  "@lego1",
+                  "@lego"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n26186",
+                "indexKeys": [
+                  "@lego2"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 1,
+          "headword": "lex, legis",
+          "shortMeanings": [
+            "law; motion, bill, statute; principle; condition;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n26431",
+                "indexKeys": [
+                  "lex"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "amaverunt",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "amo, amare, amavi, amatus",
+          "shortMeanings": [
+            "love, like; fall in love with; be fond of; have a tendency to;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n2280",
+                "indexKeys": [
+                  "amo"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "mālum",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "mala, malae",
+          "shortMeanings": [
+            "cheeks, jaws;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27674",
+                "indexKeys": [
+                  "mala"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 1,
+          "headword": "malus, mali",
+          "shortMeanings": [
+            "mast; beam; tall pole, upright pole; standard, prop, staff;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 2,
+          "headword": "malus, mali",
+          "shortMeanings": [
+            "apple tree;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 3,
+          "headword": "malum, mali",
+          "shortMeanings": [
+            "apple; fruit; lemon; quince;",
+            "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27773",
+                "indexKeys": [
+                  "@malum1",
+                  "@malum"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27774",
+                "indexKeys": [
+                  "@malum2"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 4,
+          "headword": "malus, mala -um, pejor -or -us, -",
+          "shortMeanings": [
+            "bad, evil, wicked; ugly; unlucky;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "malum",
+      "lookupLanguage": "lat",
+      "candidates": [
+        {
+          "responseLocalPosition": 0,
+          "headword": "mala, malae",
+          "shortMeanings": [
+            "cheeks, jaws;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27674",
+                "indexKeys": [
+                  "mala"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 1,
+          "headword": "malus, mali",
+          "shortMeanings": [
+            "mast; beam; tall pole, upright pole; standard, prop, staff;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 2,
+          "headword": "malus, mali",
+          "shortMeanings": [
+            "apple tree;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 3,
+          "headword": "malum, mali",
+          "shortMeanings": [
+            "apple; fruit; lemon; quince;",
+            "evil, mischief; disaster, misfortune, calamity, plague; punishment; harm/hurt;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27773",
+                "indexKeys": [
+                  "@malum1",
+                  "@malum"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27774",
+                "indexKeys": [
+                  "@malum2"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        },
+        {
+          "responseLocalPosition": 4,
+          "headword": "malus, mala -um, pejor -or -us, -",
+          "shortMeanings": [
+            "bad, evil, wicked; ugly; unlucky;"
+          ],
+          "stableLemmaId": null,
+          "resolution": {
+            "status": "alternatives",
+            "alternatives": [
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27776",
+                "indexKeys": [
+                  "@malus1",
+                  "@malus"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27777",
+                "indexKeys": [
+                  "@malus2"
+                ],
+                "correspondence": "unverified"
+              },
+              {
+                "dictionary": "Lewis & Short",
+                "entryId": "n27778",
+                "indexKeys": [
+                  "@malus3"
+                ],
+                "correspondence": "unverified"
+              }
+            ],
+            "automaticSelection": null,
+            "exhaustive": false
+          }
+        }
+      ]
+    },
+    {
+      "originalInput": "zzqxx",
+      "lookupLanguage": "lat",
+      "candidates": []
+    }
+  ],
+  "fallback": "PASS: unresolved/confirmed-no-entry/partial stop; technical failures alone advance; analysis retained",
+  "absenceEvidence": "No live dictionary no-entry established; HTTP 403 is technical failure"
+}
