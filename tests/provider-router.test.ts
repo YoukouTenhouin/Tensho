@@ -43,7 +43,7 @@ function setup(options: { settings?: Settings; analyze?: Analyzer['analyze']; de
     dictionaryCalls++;
     return { dictionary: 'Controlled French dictionary', entryId: 'n1', paragraphs: ['French prose with Latin mālum and Greek ἅμα'], attribution: ['Credit'], links: [], sourceUrl: 'https://fixture.invalid/n1' };
   } };
-  const router = new ProviderRouter({ catalog: declarations, settings: async () => structuredClone(settings), analyzers, dictionaries: { 'dictionary-fr': dictionary } });
+  const router = new ProviderRouter({ permitted: async () => true, catalog: declarations, settings: async () => structuredClone(settings), analyzers, dictionaries: { 'dictionary-fr': dictionary } });
   const lookup = new LookupCoordinator(router, () => {});
   const dictionaries = new DictionaryCoordinator(router, tab => lookup.get(tab), () => {}, async () => true);
   return { router, lookup, dictionaries, calls, settings: () => settings, replace: (next: Settings) => { settings = next; }, dictionaryCalls: () => dictionaryCalls };

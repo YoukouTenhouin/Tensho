@@ -1,4 +1,5 @@
 import { RequestFailure, requestLimits, capabilityUnavailable } from './requests.ts';
+import type { ProviderIssue } from './requests.ts';
 import type { ProviderOptionValue } from './configuration.ts';
 import { prepareSelection } from './input.ts';
 import type { OfferedWord } from './input.ts';
@@ -24,6 +25,7 @@ export interface Analysis {
   excludedForeignRecords?: number;
   explanationLanguage?: string | null;
   explanationNotice?: string;
+  providerIssues?: ProviderIssue[];
   candidates: { lemma: string | null; interpretations: string[]; meanings: string[]; stableId: string | null;
     grammar?: Record<string, unknown>[]; lemmaFeatures?: Record<string, unknown>;
     provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
@@ -32,10 +34,11 @@ export interface Analysis {
 export interface Passage { id: number; original: string; words: OfferedWord[]; selectedIndex?: number; }
 export type State = { generation: number; identity: Identity; text: string; passage?: Passage } & (
   { status: 'loading' } | { status: 'complete'; analysis: Analysis } |
-  { status: 'notice' | 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind'] }
+  { status: 'notice' | 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] }
 );
 export interface AnalysisInvocation { explanationMode: 'explanations' | 'structural-only'; options: Record<string, ProviderOptionValue>; }
 export interface Analyzer {
+  supportsInput?(text: string, identity: Identity): boolean;
   // Interpretations contain application-authored English grammar labels, never
   // provider prose repurposed to bypass explanation-language eligibility.
   analyze(text: string, identity: Identity, signal: AbortSignal, deadline: number, invocation?: AnalysisInvocation): Promise<Analysis>;
@@ -193,7 +196,7 @@ export class LookupCoordinator {
       else this.clear(identity.tabId);
     } catch (error) {
       const failureKind = error instanceof RequestFailure ? error.kind : undefined;
-      if (current()) this.#set({ ...base, status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', failureKind, message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
+      if (current()) this.#set({ ...base, status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', failureKind, providerIssues: error instanceof RequestFailure ? error.issues : undefined, message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
     } finally {
       if (this.#pending.get(identity.tabId) === abort) this.#pending.delete(identity.tabId);
     }

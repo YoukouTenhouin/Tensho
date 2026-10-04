@@ -38,6 +38,7 @@ const dictionary = createLatinDictionary({ executor,
   },
 });
 const router = new ProviderRouter({ catalog: providerCatalog, settings: () => configuration.get(),
+  permitted: origins => chrome.permissions.contains({ origins: [...origins] }),
   analyzers: { 'alpheios-whitakerLat': analyzer }, dictionaries: { 'alpheios-ls': dictionary } });
 const coordinator = new LookupCoordinator(router, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
 const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), notify, sourceIsCurrent);

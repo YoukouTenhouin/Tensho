@@ -2,19 +2,21 @@ import type { Analysis, Analyzer, Identity } from './lookup.ts';
 import type { ProviderCatalog, Settings } from './configuration.ts';
 import { lookupRoutes } from './configuration.ts';
 import { RequestFailure } from './requests.ts';
+import { runProviderChain } from './provider-chain.ts';
 import type { DictionaryProvider } from '../providers/latin-dictionary.ts';
 import type { DictionaryResolution } from '../providers/latin-index.ts';
 import type { DictionaryArticle } from '../providers/latin-article.ts';
 
-/** Select one eligible role route before execution. Technical-failure fallback
- * is a separate delivery slice; no failure can switch explanation routes. */
+/** Preselect language and explanation eligibility before ordered recovery. */
 export class ProviderRouter implements Analyzer, DictionaryProvider {
   #catalog: ProviderCatalog;
+  #permitted: (origins: readonly string[]) => Promise<boolean>;
   #settings: () => Promise<Settings>;
   #analyzers: Readonly<Record<string, Analyzer>>;
   #dictionaries: Readonly<Record<string, DictionaryProvider>>;
-  constructor(dependencies: { catalog: ProviderCatalog; settings(): Promise<Settings>;
+  constructor(dependencies: { catalog: ProviderCatalog; settings(): Promise<Settings>; permitted(origins: readonly string[]): Promise<boolean>;
     analyzers: Readonly<Record<string, Analyzer>>; dictionaries: Readonly<Record<string, DictionaryProvider>> }) {
+    this.#permitted = dependencies.permitted;
     this.#catalog = dependencies.catalog; this.#settings = dependencies.settings;
     this.#analyzers = dependencies.analyzers; this.#dictionaries = dependencies.dictionaries;
   }
@@ -29,14 +31,19 @@ export class ProviderRouter implements Analyzer, DictionaryProvider {
   }
   async analyze(text: string, identity: Identity, signal: AbortSignal, deadline: number): Promise<Analysis> {
     const routes = await this.#routes(identity, signal);
-    const selected = routes.analysis[0];
-    const analyzer = selected && this.#analyzers[selected.declaration.id];
-    if (!selected || !analyzer) throw new RequestFailure('unconfigured', routes.allDisabled
+    if (!routes.analysis.length) throw new RequestFailure('unconfigured', routes.allDisabled
       ? 'No providers are enabled for this lookup language. Enable a supported provider in settings.'
       : 'Analysis is unavailable for this configuration. Enable a supported analyzer in settings.');
-    const result = await analyzer.analyze(text, identity, signal, deadline,
-      { explanationMode: routes.analysisMode, options: { ...selected.configuration.options } });
-    await this.#routes(identity, signal);
+    const recovered = await runProviderChain({ providers: routes.analysis, operation: 'analysis', signal, deadline,
+      permitted: this.#permitted, current: active => this.#routes(identity, active),
+      supports: selected => this.#analyzers[selected.declaration.id]?.supportsInput?.(text, identity) ?? true,
+      execute: (selected, active) => {
+        const analyzer = this.#analyzers[selected.declaration.id];
+        if (!analyzer) throw new RequestFailure('unconfigured', 'The configured analyzer is not integrated.');
+        return analyzer.analyze(text, identity, active, deadline,
+          { explanationMode: routes.analysisMode, options: { ...selected.configuration.options } });
+      } });
+    const result = recovered.issues.length ? { ...recovered.value, providerIssues: recovered.issues } : recovered.value;
     if (routes.analysisMode === 'explanations') return result;
     return { ...result, explanationLanguage: null,
       explanationNotice: `Short meanings are unavailable for explanation preference ${identity.explanationLanguage}. Lemmas and grammatical interpretations are retained.`,

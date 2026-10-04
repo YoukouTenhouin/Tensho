@@ -1,11 +1,18 @@
 export type RequestFailureKind = 'missing-access' | 'network' | 'http' | 'format' | 'size' |
-  'request-timeout' | 'action-deadline' | 'cancelled' | 'unconfigured' | 'unsupported-explanation';
+  'request-timeout' | 'action-deadline' | 'cancelled' | 'unconfigured' | 'unsupported-explanation' | 'unsupported-input' | 'identity-mismatch';
 
-export const capabilityUnavailable = (kind: RequestFailureKind | undefined) => kind === 'unconfigured' || kind === 'unsupported-explanation';
+export const capabilityUnavailable = (kind: RequestFailureKind | undefined) => kind === 'unconfigured' || kind === 'unsupported-explanation' || kind === 'unsupported-input';
 
+export interface ProviderIssue {
+  providerId: string; providerName: string; operation: 'analysis' | 'resolution' | 'article';
+  kind: RequestFailureKind; message: string; attempted: boolean;
+}
 export class RequestFailure extends Error {
   readonly kind: RequestFailureKind;
-  constructor(kind: RequestFailureKind, message: string) { super(message); this.kind = kind; this.name = 'RequestFailure'; }
+  readonly issues: ProviderIssue[];
+  constructor(kind: RequestFailureKind, message: string, issues: readonly ProviderIssue[] = []) {
+    super(message); this.kind = kind; this.issues = [...issues]; this.name = 'RequestFailure';
+  }
 }
 
 export const requestLimits = { concurrent: 2, requestMs: 15_000, actionMs: 30_000, analysisBytes: 1024 * 1024, articleBytes: 1024 * 1024, indexBytes: 8 * 1024 * 1024 } as const;
