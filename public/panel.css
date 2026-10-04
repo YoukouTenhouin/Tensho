@@ -12,3 +12,8 @@ li { margin-bottom: .7rem; overflow-wrap: anywhere; } li button { margin-left: .
 #passage-original { white-space: pre-wrap; }
 #passage-words { display: flex; flex-wrap: wrap; gap: .4rem; }
 #passage-words [aria-pressed="true"] { border: 2px solid currentColor; font-weight: bold; }
+
+select { font: inherit; max-width: 100%; padding: .5rem; }
+input[type="checkbox"] { width: auto; }
+#lookup-settings fieldset { margin: .75rem 0; min-width: 0; }
+#lookup-settings li { overflow-wrap: anywhere; }
