@@ -7,6 +7,7 @@ import type { DictionaryProvider } from '../src/providers/latin-dictionary.ts';
 import { isReadingRecord } from '../src/core/reading-record.ts';
 import type { ReadingRecord } from '../src/core/reading-record.ts';
 import { SessionResults } from '../src/core/session-results.ts';
+import { readingSessionStorage } from '../src/browser/session-storage.ts';
 
 const identity: Identity = { tabId: 1, frameId: 0, documentId: 'document', topDocumentId: 'document', configuration: 'settings', lookupLanguage: 'lat', explanationLanguage: 'en' };
 const analysis: Analysis = { provider: 'Controlled', controlled: true, candidates: [{ lemma: 'malum', stableId: null, interpretations: ['noun'], meanings: ['apple'] }] };
@@ -35,8 +36,10 @@ async function reading(): Promise<ReadingRecord> {
 
 test('completed production reading data restores from the session adapter without requests or loss of context', async () => {
   const record = await reading(); assert.equal(isReadingRecord(record), true);
-  let persisted: unknown;
-  const adapter = { read: async () => structuredClone(persisted), write: async (value: unknown) => { persisted = structuredClone(value); } };
+  let persisted: Record<string, unknown> = {};
+  const adapter = readingSessionStorage({ setAccessLevel: async () => {},
+    get: async key => structuredClone({ [key]: persisted[key] }),
+    set: async value => { persisted = structuredClone(value); } });
   await new SessionResults(adapter, isReadingRecord).save(1, record, [1]);
   const reloaded = await new SessionResults(adapter, isReadingRecord).get(1);
   assert.equal(reloaded?.status, 'retained'); if (reloaded?.status !== 'retained') assert.fail();
