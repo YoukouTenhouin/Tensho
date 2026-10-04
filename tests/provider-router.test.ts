@@ -144,7 +144,7 @@ test('saving settings refreshes visible chosen passage words, retains unchosen p
   const callsBefore = app.calls.length;
   const changed = structuredClone(app.settings()); changed.revision = 'two'; changed.languages.lat!.explanationLanguage = 'fr'; app.replace(changed);
   app.lookup.reconfigure(identity(changed), [1, 3]);
-  assert.equal(app.lookup.get(1)?.status, 'notice');
+  assert.equal(app.lookup.get(1)?.status, 'loading');
   assert.equal(app.lookup.get(2)?.status, 'notice');
   assert.equal(app.lookup.get(3)?.status, 'notice');
   await turn();

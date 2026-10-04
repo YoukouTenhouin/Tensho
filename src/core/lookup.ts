@@ -145,8 +145,10 @@ export class LookupCoordinator {
   begin(tabId: number, frameId?: number): LookupRequest {
     const deferred = this.#states.get(tabId);
     if (deferred?.status === 'notice' && deferred.refreshOnView) {
-      const { refreshOnView: _refresh, ...retained } = deferred;
-      this.#set(retained);
+      // Persist the handoff as unfinished work. A worker stopped during source
+      // validation must restore explicit Retry, not an inert ordinary notice.
+      this.#set({ identity: deferred.identity, text: deferred.text, passage: deferred.passage,
+        generation: deferred.generation, status: 'loading' });
     }
     this.#restorationClosed.add(tabId);
     this.#wordChoices.delete(tabId);

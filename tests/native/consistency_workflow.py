@@ -25,6 +25,9 @@ def exercise_consistency(evidence, panel, worker, page, snapshot, submit, reopen
         result = panel().evaluate('chrome.runtime.sendMessage(' + json.dumps(message) + ')')
         assert result.get('ok'), result
         return result['settings']['revision']
+    def choose(selector):
+        wait_for(lambda: panel().evaluate('!!document.querySelector(' + json.dumps(selector) + ')'))
+        panel().evaluate('document.querySelector(' + json.dumps(selector) + ').click()')
     def complete(text):
         return wait_for(lambda: (lambda state: state if state and state['status'] == 'complete' and state['text'] == text else None)(snapshot().get('state')))
 
@@ -59,5 +62,22 @@ def exercise_consistency(evidence, panel, worker, page, snapshot, submit, reopen
     checks['current_language_labels_match_result'] = panel().evaluate("document.querySelector('#active-settings').textContent.includes('Lookup: Latin')") and snapshot()['state']['identity']['lookupLanguage'] == 'lat'
     checks['session_keeps_one_current_result_per_tab'] = all(saved(tab)['value']['state']['identity']['configuration'] == snapshot()['settings']['revision'] for tab in [first, second])
     checks['session_remains_within_budget'] = panel().evaluate("chrome.storage.session.get('readingResults').then(v=>new TextEncoder().encode(JSON.stringify(v)).byteLength<=6*1024*1024)")
+    panel().evaluate("document.querySelector('#word').value='malum puella';document.querySelector('#lookup').requestSubmit()")
+    wait_for(lambda: snapshot().get('state', {}).get('passage', {}).get('original') == 'malum puella')
+    choose('#passage-word-0')
+    complete('malum')
+    worker.evaluate("globalThis.__tenshoRecoveryScenario='session-long'")
+    choose('#dictionary-0')
+    wait_for(lambda: snapshot().get('dictionaries', {}).get('0', {}).get('resolution', {}).get('status') == 'complete')
+    choose('#article-0-n1')
+    wait_for(lambda: snapshot().get('dictionaries', {}).get('0', {}).get('articles', {}).get('n1', {}).get('status') == 'complete')
+    panel().evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))')
+    panel().evaluate('window.scrollTo(0,900)')
+    wait_for(lambda: snapshot()['scroll']['y'] == 900)
+    choose('#passage-word-1')
+    complete('puella')
+    wait_for(lambda: panel().evaluate('window.scrollY') == 0)
+    checks['new_passage_word_resets_result_scroll'] = snapshot()['scroll']['y'] == 0
+    checks['scroll_reset_preserves_passage_controls'] = snapshot()['state']['passage']['original'] == 'malum puella' and panel().evaluate("document.querySelectorAll('#passage-words button').length===2")
     evidence['provider_calls_after_restart'] = calls()
     evidence['passed'] = all(checks.values())

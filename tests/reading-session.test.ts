@@ -233,3 +233,42 @@ test('eviction of deferred settings work survives restart as a notice without im
   assert.equal(restarted.calls(), 0);
   assert.equal(restarted.session.information(1).retentionNotice, 'Previous result cleared to free space');
 });
+
+test('worker interruption while acquiring a deferred refresh becomes explicitly retryable', async () => {
+  let hold = false, release!: () => void;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  const app = application(browser(), async () => { if (hold) await gate; return true; });
+  await article(app, 1, 'malum');
+  app.lookup.reconfigure({ configuration: 'new-settings', lookupLanguage: 'lat', explanationLanguage: 'en' }, []);
+  await app.session.settled();
+  hold = true;
+  const viewing = app.lookup.view(1);
+  await app.session.settled();
+  const saved = await app.storage.get(1);
+  assert.equal(saved?.status === 'retained' && saved.value.state.status, 'loading');
+  // Discard the old worker's intent without modifying its durable snapshot.
+  app.lookup.begin(1); release(); await viewing;
+  const restarted = application(app.durable); await restarted.session.settled();
+  const interrupted = restarted.lookup.get(1)!;
+  assert.equal(interrupted.status, 'error');
+  if (interrupted.status === 'error') assert.equal(interrupted.failureKind, 'interrupted');
+  await restarted.lookup.view(1); assert.equal(restarted.calls(), 0);
+  await restarted.lookup.lookup(interrupted.identity, interrupted.text);
+  assert.equal(restarted.calls(), 1); assert.equal(restarted.lookup.get(1)?.status, 'complete');
+});
+
+test('choosing another passage word resets result scroll while reopening the same word restores it', async () => {
+  const app = application();
+  await app.lookup.lookup(identity(1), 'malum puella');
+  const passageId = app.lookup.get(1)!.passage!.id;
+  await app.lookup.selectWord(1, passageId, 0);
+  app.session.scroll(1, app.lookup.get(1)!.generation, 0, 500);
+  await app.session.settled();
+  const restarted = application(app.durable); await restarted.session.settled();
+  assert.equal(restarted.session.information(1).scroll.y, 500);
+  await restarted.lookup.selectWord(1, passageId, 1);
+  await restarted.session.settled();
+  assert.equal(restarted.session.information(1).scroll.y, 0);
+  assert.equal(restarted.lookup.get(1)!.passage!.original, 'malum puella');
+  assert.equal(restarted.lookup.get(1)?.text, 'puella');
+});
