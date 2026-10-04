@@ -142,9 +142,11 @@ export function createWhitakerAnalyzer(dependencies: {
         throw new RequestFailure('network', `Latin provider request failed: ${error instanceof Error ? error.message : 'network error'}`);
       }
       const normalized = normalizeWhitaker(await readBoundedJson(response, requestSignal));
+      await requireProviderAccess(dependencies.permitted, whitaker.origins, requestSignal, deadline,
+        'Latin analysis access was revoked. Enable Latin providers before retrying.', 'revoked-access');
       return { ...normalized, controlled: false, candidates: normalized.candidates.map(candidate => ({
         ...candidate, interpretations: candidate.grammar.map(describeGrammar),
       })) };
-    }, { signal, deadline });
+    }, { signal, deadline, origins: whitaker.origins });
   } };
 }

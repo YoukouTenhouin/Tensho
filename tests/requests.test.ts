@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { RequestExecutor, RequestFailure, readBoundedJson, requestLimits } from '../src/core/requests.ts';
+import { providerAccessRemoved } from '../src/core/provider-access.ts';
 const options = () => ({ signal: new AbortController().signal, deadline: performance.now() + 1_000 });
 const turn = () => new Promise<void>(resolve => setImmediate(resolve));
 function deferred<T>() {
@@ -84,4 +85,42 @@ test('aborting a stalled response cancels its reader and prevents parsing', asyn
   const result = readBoundedJson(new Response(stream), controller.signal);
   controller.abort(); await assert.rejects(result, { name: 'AbortError' });
   assert.equal(cancelled, true);
+});
+
+test('revocation cancels affected active and queued operations without releasing an abort-ignoring slot', async () => {
+  const executor = new RequestExecutor({ concurrent: 1, requestMs: 1_000 });
+  const held = deferred<number>(); let signal: AbortSignal | undefined;
+  const origins = ['https://morph.alpheios.net/*'];
+  const first = executor.run(active => { signal = active; return held.promise; }, { ...options(), origins });
+  const queued = executor.run(async () => { assert.fail('revoked queued request started'); }, { ...options(), origins });
+  const firstRejected = assert.rejects(first, failure('revoked-access'));
+  const queuedRejected = assert.rejects(queued, failure('revoked-access'));
+  let unrelatedStarted = false;
+  const unrelated = executor.run(async () => { unrelatedStarted = true; return 3; }, { ...options(), origins: ['https://repos1.alpheios.net/*'] });
+  await turn(); executor.revokeAccess(origins);
+  await Promise.all([firstRejected, queuedRejected]); assert.equal(signal?.aborted, true);
+  assert.equal(unrelatedStarted, false, 'ignored abort still owns its actual operation slot');
+  held.resolve(1); assert.equal(await unrelated, 3);
+});
+
+test('revocation between queue dispatch and execution prevents the provider callback', async () => {
+  const executor = new RequestExecutor();
+  const origins = ['https://morph.alpheios.net/*'];
+  const request = executor.run(async () => { assert.fail('revoked request reached provider'); }, { ...options(), origins });
+  const rejected = assert.rejects(request, failure('revoked-access'));
+  executor.revokeAccess(['https://*.alpheios.net/*']); await rejected;
+  assert.equal(await executor.run(async () => 2, { ...options(), origins }), 2, 'new actions still undergo adapter permission guards');
+});
+
+test('provider revocation scopes respect scheme and hostname boundaries including wildcard removals', () => {
+  const origins = ['https://morph.alpheios.net/*'];
+  for (const removed of ['https://morph.alpheios.net/*', 'https://*.alpheios.net/*', '*://*.alpheios.net/*', 'https://*/*', '<all_urls>']) {
+    assert.equal(providerAccessRemoved(origins, [removed]), true, removed);
+  }
+  for (const removed of ['http://morph.alpheios.net/*', 'https://repos1.alpheios.net/*', 'https://alpheios.net/*', 'https://*.notalpheios.net/*', 'https://morph.alpheios.net:8443/*']) {
+    assert.equal(providerAccessRemoved(origins, [removed]), false, removed);
+  }
+  assert.equal(providerAccessRemoved([], ['<all_urls>']), false);
+  assert.equal(providerAccessRemoved(['https://provider.invalid:8443/*'], ['https://provider.invalid:443/*']), false);
+  assert.equal(providerAccessRemoved(['https://provider.invalid:8443/*'], ['https://provider.invalid/*']), true);
 });
