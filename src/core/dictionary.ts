@@ -8,10 +8,12 @@ import type { DictionaryArticle } from '../providers/latin-article.ts';
 
 export type DictionaryWork<T> = { status: 'loading' } | { status: 'complete'; value: T } |
   { status: 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] };
+export type ArticleWork = DictionaryWork<DictionaryArticle> |
+  { status: 'not-retained'; message: string; sourceUrl: string; providerIssues?: ProviderIssue[] };
 export interface CandidateDictionary {
   expanded: boolean;
   resolution: DictionaryWork<DictionaryResolution>;
-  articles: Record<string, DictionaryWork<DictionaryArticle>>;
+  articles: Record<string, ArticleWork>;
 }
 interface RecoveringDictionary extends DictionaryProvider {
   recover?(candidate: Analysis['candidates'][number], previous: DictionaryResolution, failure: RequestFailure,
@@ -28,15 +30,24 @@ export class DictionaryCoordinator {
   #provider: RecoveringDictionary;
   #articleTails = new WeakMap<CandidateDictionary, Promise<void>>();
   #analysis: (tabId: number) => State | undefined;
-  #publish: () => void;
+  #publish: (tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
   constructor(provider: RecoveringDictionary, analysis: (tabId: number) => State | undefined,
-    publish: () => void, sourceIsCurrent: (identity: Identity) => Promise<boolean>) {
+    publish: (tabId: number) => void, sourceIsCurrent: (identity: Identity) => Promise<boolean>) {
     this.#provider = provider; this.#analysis = analysis; this.#publish = publish; this.#sourceIsCurrent = sourceIsCurrent;
   }
   get(tabId: number): Record<number, CandidateDictionary> {
     const saved = this.#states.get(tabId);
     return saved?.generation === this.#analysis(tabId)?.generation ? saved?.candidates ?? {} : {};
+  }
+  releaseArticle(tabId: number, generation: number, candidateIndex: number, entryId: string, article: DictionaryArticle): void {
+    if (this.#analysis(tabId)?.generation !== generation) return;
+    const candidate = this.get(tabId)[candidateIndex];
+    const current = candidate?.articles[entryId];
+    if (!candidate || current?.status !== 'complete' || current.value.sourceUrl !== article.sourceUrl) return;
+    candidate.articles[entryId] = { status: 'not-retained', sourceUrl: article.sourceUrl,
+      message: 'This article could not be retained in session storage. Existing results have been preserved. Read the complete article at its source.' };
+    this.#publish(tabId);
   }
   /** Restore completed work without fetching; interrupted pieces require retry. */
   restore(tabId: number, generation: number, saved: Record<number, CandidateDictionary>): boolean {
@@ -48,9 +59,9 @@ export class DictionaryCoordinator {
       ? { status: 'error', failureKind: 'interrupted', message: 'This dictionary action was interrupted. Retry explicitly to resume.' } : work;
     for (const candidate of Object.values(candidates)) {
       candidate.resolution = interrupted(candidate.resolution);
-      for (const [id, article] of Object.entries(candidate.articles)) candidate.articles[id] = interrupted(article);
+      for (const [id, article] of Object.entries(candidate.articles)) candidate.articles[id] = article.status === 'not-retained' ? article : interrupted(article);
     }
-    this.#states.set(tabId, { generation, candidates }); this.#publish(); return true;
+    this.#states.set(tabId, { generation, candidates }); this.#publish(tabId); return true;
   }
   invalidate(tabId: number): void {
     const state = this.#analysis(tabId);
@@ -61,7 +72,7 @@ export class DictionaryCoordinator {
   collapse(tabId: number, generation: number, candidateIndex: number): void {
     if (this.#analysis(tabId)?.generation !== generation) return;
     const candidate = this.get(tabId)[candidateIndex];
-    if (candidate) { candidate.expanded = false; this.#publish(); }
+    if (candidate) { candidate.expanded = false; this.#publish(tabId); }
   }
   async resolve(tabId: number, generation: number, candidateIndex: number, retry = false): Promise<void> {
     const scope = this.#scope(tabId, generation, candidateIndex);
@@ -73,11 +84,11 @@ export class DictionaryCoordinator {
     const existing = reading.candidates[candidateIndex];
     if (existing) {
       existing.expanded = true;
-      if (existing.resolution.status !== 'error' || !retry) { this.#publish(); return; }
+      if (existing.resolution.status !== 'error' || !retry) { this.#publish(tabId); return; }
     }
     const candidate = existing ?? { expanded: true, resolution: { status: 'loading' }, articles: {} };
     reading.candidates[candidateIndex] = candidate;
-    candidate.resolution = { status: 'loading' }; this.#publish();
+    candidate.resolution = { status: 'loading' }; this.#publish(tabId);
     await this.#run(scope, (signal, deadline, observe) => this.#provider.resolve(scope.candidate, scope.state.identity, signal, deadline, undefined, observe),
       value => { candidate.resolution = value; });
   }
@@ -91,7 +102,7 @@ export class DictionaryCoordinator {
     if (!resolution.alternatives.some(item => item.entryId === entryId)) return;
     const existing = candidate.articles[entryId];
     if (existing && (existing.status !== 'error' || !retry)) return;
-    candidate.articles[entryId] = { status: 'loading' }; this.#publish();
+    candidate.articles[entryId] = { status: 'loading' }; this.#publish(tabId);
     const deadline = performance.now() + requestLimits.actionMs;
     // Serialize choices for this candidate only. A first usable article commits
     // its provider before a later choice can fail; other candidates remain independent.
@@ -105,7 +116,7 @@ export class DictionaryCoordinator {
         catch (error) {
           signal.throwIfAborted();
           if (!technicalFailure(error) || !this.#provider.recover || Object.values(candidate.articles).some(article => article.status === 'complete')) throw error;
-          recovering = true; candidate.resolution = { status: 'loading' }; this.#publish();
+          recovering = true; candidate.resolution = { status: 'loading' }; this.#publish(tabId);
           const next = await this.#provider.recover(scope.candidate, resolution, error, scope.state.identity, signal, actionDeadline, observe);
           if (next) return { resolution: next };
           recovering = false; candidate.resolution = { status: 'complete', value: resolution }; throw error;
@@ -144,7 +155,7 @@ export class DictionaryCoordinator {
       if (!current()) return;
       controller.abort();
       save({ status: 'error', failureKind: 'action-deadline', message: 'Dictionary action exceeded its 30-second deadline; remaining providers were not attempted.', providerIssues });
-      this.#publish();
+      this.#publish(tabId);
     }, Math.max(0, deadline - performance.now()));
     let interrupted!: () => void;
     const stopped = new Promise<void>(resolve => { interrupted = resolve; });
@@ -152,20 +163,20 @@ export class DictionaryCoordinator {
     const perform = async () => {
       const validSource = await this.#sourceIsCurrent(scope.state.identity);
       if (!current()) return;
-      if (!validSource) { this.invalidate(tabId); this.#publish(); return; }
+      if (!validSource) { this.invalidate(tabId); this.#publish(tabId); return; }
       if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Dictionary action exceeded its 30-second deadline before dispatch.', providerIssues);
       const value = await execute(controller.signal, deadline, observe);
       if (!current()) return;
       const sourceCurrent = await this.#sourceIsCurrent(scope.state.identity);
       if (!current()) return;
-      if (!sourceCurrent) { this.invalidate(tabId); this.#publish(); return; }
-      save({ status: 'complete', value }); this.#publish();
+      if (!sourceCurrent) { this.invalidate(tabId); this.#publish(tabId); return; }
+      save({ status: 'complete', value }); this.#publish(tabId);
     };
     try { await Promise.race([perform(), stopped]); } catch (error) {
       if (current()) {
         const failureKind = error instanceof RequestFailure ? error.kind : undefined;
         save({ status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', message: error instanceof Error ? error.message : 'Dictionary action failed. Retry explicitly.', failureKind, providerIssues: error instanceof RequestFailure ? error.issues : undefined });
-        this.#publish();
+        this.#publish(tabId);
       }
     } finally {
       clearTimeout(timer); controller.signal.removeEventListener('abort', interrupted);

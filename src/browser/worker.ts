@@ -9,6 +9,10 @@ import { ConfigurationStore, lookupRoutes } from '../core/configuration.ts';
 import type { Settings } from '../core/configuration.ts';
 import { providerCatalog } from '../providers/catalog.ts';
 import { ProviderRouter } from '../core/provider-router.ts';
+import { SessionResults } from '../core/session-results.ts';
+import { isReadingRecord } from '../core/reading-record.ts';
+import { ReadingSession } from '../core/reading-session.ts';
+import { readingSessionStorage } from './session-storage.ts';
 
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
@@ -24,8 +28,10 @@ function configurationIdentity(settings: Settings) {
 }
 const executor = new RequestExecutor();
 async function sourceIsCurrent(identity: Identity): Promise<boolean> {
-  if (identity.configuration !== (await configuration.get()).revision) return false;
-  if (identity.documentId === 'manual') return true;
+  const configured = configurationIdentity(await configuration.get());
+  if (identity.configuration !== configured.configuration || identity.lookupLanguage !== configured.lookupLanguage ||
+    identity.explanationLanguage !== configured.explanationLanguage) return false;
+  if (identity.documentId === 'manual') return identity.topDocumentId === (await manualIdentity(identity.tabId)).topDocumentId;
   const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
   return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
 }
@@ -39,8 +45,12 @@ const integrated = createIntegratedProviders({ executor,
 const router = new ProviderRouter({ catalog: providerCatalog, settings: () => configuration.get(),
   permitted: origins => chrome.permissions.contains({ origins: [...origins] }),
   ...integrated });
-const coordinator = new LookupCoordinator(router, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
-const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), notify, sourceIsCurrent);
+let reading: ReadingSession | undefined;
+function readingChanged(tabId: number): void { reading?.changed(tabId); notify(); }
+const coordinator = new LookupCoordinator(router, (_state, tabId) => readingChanged(tabId), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
+const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), readingChanged, sourceIsCurrent);
+reading = new ReadingSession({ lookup: coordinator, dictionaries, storage: new SessionResults(readingSessionStorage(), isReadingRecord),
+  current: sourceIsCurrent, activeTabs: async () => (await chrome.tabs.query({ active: true })).flatMap(tab => tab.id === undefined ? [] : [tab.id]), notify });
 function notify(): void { void chrome.runtime.sendMessage({ type: 'changed' }).catch(() => {}); }
 async function enabledOrigins(): Promise<string[]> {
   await settingsReady;
@@ -58,7 +68,11 @@ async function source(tabId: number, frameId = 0): Promise<Identity> {
     ...configurationIdentity(await configuration.get()) };
 }
 async function manualIdentity(tabId: number): Promise<Identity> {
-  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', ...configurationIdentity(await configuration.get()) };
+  const tab = await chrome.tabs.get(tabId);
+  if (tab.incognito) throw new Error('No regular reading tab is available.');
+  const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
+  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: top?.documentId ?? `restricted:${tab.url ?? ''}`,
+    ...configurationIdentity(await configuration.get()) };
 }
 async function lookup(tabId: number, frameId: number, text: string, request: LookupRequest, documentId?: string): Promise<void> {
   try {
@@ -215,6 +229,14 @@ async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
 }
 async function panelAction(message: Record<string, unknown>, request?: LookupRequest, startWord?: () => LookupRequest | undefined): Promise<unknown> {
   if (typeof message.windowId !== 'number') throw new Error('Missing reading window');
+  await reading!.settled();
+  if (message.type === 'panel-scroll') {
+    if (typeof message.tabId === 'number' && typeof message.generation === 'number' && typeof message.x === 'number' && typeof message.y === 'number') {
+      const previousTab = await chrome.tabs.get(message.tabId).catch(() => undefined);
+      if (previousTab?.windowId === message.windowId) reading!.scroll(message.tabId, message.generation, message.x, message.y);
+    }
+    return { ok: true };
+  }
   const tab = await activeTab(message.windowId), tabId = tab.id!;
   if (message.type === 'snapshot') {
     const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
@@ -223,7 +245,8 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     const settings = await configuration.get();
     const state = coordinator.get(tabId);
     const current = state?.identity.configuration === settings.revision;
-    return { settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), tabId, state: current ? state : undefined, dictionaries: current ? dictionaries.get(tabId) : {}, providerAccess,
+    reading!.view(tabId);
+    return { ...reading!.information(tabId), settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), tabId, state: current ? state : undefined, dictionaries: current ? dictionaries.get(tabId) : {}, providerAccess,
       providerAccessDecision: latinAccessDecision ?? 'never', origin: top ? readingOrigin(top.url) : undefined,
       enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
   }

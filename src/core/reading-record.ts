@@ -59,14 +59,15 @@ function article(value: unknown): boolean {
   return object(value) && text(value.dictionary) && text(value.entryId) && texts(value.paragraphs) && texts(value.attribution) &&
     texts(value.links) && value.links.every(link => !!safeHttpsUrl(link)) && text(value.sourceUrl) && !!safeHttpsUrl(value.sourceUrl) && optional(value.providerIssues, issues);
 }
-function work(value: unknown, valid: (value: unknown) => boolean): boolean {
+function work(value: unknown, valid: (value: unknown) => boolean, resourceOutcome = false): boolean {
   return object(value) && (value.status === 'loading' || (value.status === 'complete' ? valid(value.value) :
+    value.status === 'not-retained' ? resourceOutcome && text(value.message) && text(value.sourceUrl) && !!safeHttpsUrl(value.sourceUrl) && optional(value.providerIssues, issues) :
     oneOf(value.status, ['error', 'unavailable']) && text(value.message) && optional(value.failureKind, failureKind) && optional(value.providerIssues, issues)));
 }
 
 function candidateDictionary(value: unknown, candidate: Analysis['candidates'][number]): boolean {
   if (!object(value) || typeof value.expanded !== 'boolean' || !work(value.resolution, resolution) || !object(value.articles) ||
-    !Object.entries(value.articles).every(([entryId, saved]) => work(saved, article) &&
+    !Object.entries(value.articles).every(([entryId, saved]) => work(saved, article, true) &&
       (!object(saved) || saved.status !== 'complete' || (object(saved.value) && saved.value.entryId === entryId)))) return false;
   // The rendering shapes above are validated before checking their association.
   const saved = value as unknown as CandidateDictionary;

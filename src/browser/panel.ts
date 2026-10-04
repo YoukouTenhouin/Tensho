@@ -10,8 +10,11 @@ const word = element<HTMLTextAreaElement>('word'), feedback = element('feedback'
 let windowId: number;
 let origin: string | undefined;
 let revision = 0, displayed = '', viewport = '', renderedPassage = '', focused = '', sitesKey = '', tabId = -1;
+let displayedGeneration: number | undefined, restoringScroll = false;
+let scrollTimer: ReturnType<typeof setTimeout> | undefined;
+let pendingScroll: Record<string, unknown> | undefined;
 async function send(message: Record<string, unknown>): Promise<any> {
-  const reply = await chrome.runtime.sendMessage({ ...message, windowId, tabId });
+  const reply = await chrome.runtime.sendMessage({ windowId, tabId, ...message });
   if (reply?.error) throw new Error(reply.error);
   return reply;
 }
@@ -21,6 +24,7 @@ const settingsView = new SettingsView(element('settings-editor'), async (setting
 });
 function report(error: unknown): void { feedback.textContent = String(error); }
 async function refresh(): Promise<void> {
+  flushScroll();
   const current = ++revision;
   const snapshot = await send({ type: 'snapshot' });
   if (current !== revision) return;
@@ -38,7 +42,8 @@ async function refresh(): Promise<void> {
   const key = `${tabId}:${state?.generation ?? 'none'}`;
   const focusId = key === displayed && document.activeElement instanceof HTMLElement ? document.activeElement.id : '';
   const viewportKey = state?.passage ? `${tabId}:passage:${state.passage.id}` : key;
-  if (viewportKey !== viewport) { viewport = viewportKey; window.scrollTo(0, 0); }
+  const scroll = viewportKey !== viewport ? snapshot.scroll ?? { x: 0, y: 0 } : { x: window.scrollX, y: window.scrollY };
+  viewport = viewportKey; displayedGeneration = state?.generation; restoringScroll = true;
   displayed = key;
   const passage = state?.passage;
   const passageKey = passage ? `${tabId}:${passage.id}` : '';
@@ -60,7 +65,8 @@ async function refresh(): Promise<void> {
   }
   target.textContent = passage && passage.selectedIndex === undefined ? 'Choose a word' : state?.text || 'Ready to read';
   analysis.replaceChildren();
-  status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? `Loading ${language} analysis…` : state.status === 'complete' ? state.analysis.provider : state.message;
+  status.textContent = !state ? snapshot.retentionNotice ?? 'Select a word or enter one above.' : state.status === 'loading' ? `Loading ${language} analysis…` : state.status === 'complete' ? state.analysis.provider : state.message;
+  if (state && snapshot.retentionNotice) { const notice = document.createElement('p'); notice.textContent = snapshot.retentionNotice; analysis.append(notice); }
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') {
     const result = state.analysis;
@@ -107,6 +113,8 @@ async function refresh(): Promise<void> {
   if (snapshot.focusRequest && focusKey !== focused) { focused = focusKey; results.focus({ preventScroll: true }); }
   element<HTMLButtonElement>('enable-current').disabled = !origin;
   element('enable-current').textContent = origin ? `Enable ${origin}` : 'Reading-site access unavailable on this surface';
+  window.scrollTo(scroll.x, scroll.y);
+  requestAnimationFrame(() => { if (current === revision) restoringScroll = false; });
   const nextSitesKey = JSON.stringify(snapshot.enabledOrigins);
   if (nextSitesKey === sitesKey) return;
   sitesKey = nextSitesKey;
@@ -147,7 +155,20 @@ element('enable-providers').onclick = () => {
 };
 element('enable-current').onclick = () => { if (origin) enable(origin); };
 element('site').addEventListener('submit', event => { event.preventDefault(); enable(element<HTMLInputElement>('origin').value); });
-function close(): void { void send({ type: 'close' }).catch(report); }
+function flushScroll(): void {
+  if (scrollTimer !== undefined) clearTimeout(scrollTimer);
+  scrollTimer = undefined;
+  const position = pendingScroll; pendingScroll = undefined;
+  if (position) void send(position).catch(report);
+}
+window.addEventListener('scroll', () => {
+  if (restoringScroll || displayedGeneration === undefined) return;
+  pendingScroll = { type: 'panel-scroll', tabId, generation: displayedGeneration, x: window.scrollX, y: window.scrollY };
+  if (scrollTimer !== undefined) clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(flushScroll, 100);
+}, { passive: true });
+window.addEventListener('pagehide', flushScroll);
+function close(): void { flushScroll(); void send({ type: 'close' }).catch(report); }
 element('close').onclick = close;
 document.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); close(); } });
 let panelPort: chrome.runtime.Port | undefined;
