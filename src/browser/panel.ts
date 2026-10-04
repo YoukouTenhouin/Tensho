@@ -41,7 +41,7 @@ async function refresh(): Promise<void> {
   const state: State | undefined = snapshot.state;
   const key = `${tabId}:${state?.generation ?? 'none'}`;
   const focusId = key === displayed && document.activeElement instanceof HTMLElement ? document.activeElement.id : '';
-  const viewportKey = state?.passage ? `${tabId}:passage:${state.passage.id}` : key;
+  const viewportKey = key;
   const scroll = viewportKey !== viewport ? snapshot.scroll ?? { x: 0, y: 0 } : { x: window.scrollX, y: window.scrollY };
   viewport = viewportKey; displayedGeneration = state?.generation; restoringScroll = true;
   displayed = key;

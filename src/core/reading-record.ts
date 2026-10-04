@@ -36,12 +36,14 @@ function state(value: unknown): value is State {
   if (!object(value) || !integer(value.generation) || !text(value.text) || !object(value.identity)) return false;
   const identity = value.identity;
   if (!integer(identity.tabId) || !integer(identity.frameId) || !['documentId', 'topDocumentId', 'configuration', 'lookupLanguage', 'explanationLanguage'].every(key => text(identity[key]) && !!identity[key])) return false;
+  if (value.refreshOnView !== undefined && (value.refreshOnView !== true || value.status !== 'notice' || !value.text)) return false;
   if (value.passage !== undefined) {
     const passage = value.passage;
     if (!object(passage) || !integer(passage.id) || !text(passage.original) || !Array.isArray(passage.words) || !passage.words.length) return false;
     if (!passage.words.every(word => object(word) && text(word.text) && integer(word.start) && integer(word.end) && word.end > word.start &&
       word.end <= (passage.original as string).length && (passage.original as string).slice(word.start, word.end) === word.text)) return false;
     if (passage.selectedIndex !== undefined && (!integer(passage.selectedIndex) || passage.selectedIndex >= passage.words.length)) return false;
+    if (value.refreshOnView && passage.selectedIndex === undefined) return false;
   }
   if (value.status === 'complete') return analysis(value.analysis);
   return value.status === 'loading' || (oneOf(value.status, ['notice', 'error', 'unavailable']) && text(value.message) &&

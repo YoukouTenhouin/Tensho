@@ -95,3 +95,14 @@ test('stored reading data rejects invalid candidate/article identity, rendering 
   for (const change of changes) { const copy = structuredClone(original); change(copy); assert.equal(isReadingRecord(copy), false); }
   assert.equal(isReadingRecord(original), true);
 });
+
+test('session validation permits deferred settings refresh only for a notice with a chosen input', async () => {
+  const record = await reading();
+  const { analysis: _analysis, ...previous } = record.state.status === 'complete' ? record.state : assert.fail();
+  const deferred: ReadingRecord = { state: { ...previous, status: 'notice', message: 'Settings changed', refreshOnView: true }, dictionaries: {}, scroll: record.scroll };
+  assert.equal(isReadingRecord(deferred), true);
+  assert.equal(isReadingRecord({ ...deferred, state: { ...deferred.state, status: 'loading' } }), false);
+  assert.equal(isReadingRecord({ ...deferred, state: { ...deferred.state, refreshOnView: 'true' } }), false);
+  assert.equal(isReadingRecord({ ...deferred, state: { ...deferred.state, text: '' } }), false);
+  assert.equal(isReadingRecord({ ...deferred, state: { ...deferred.state, passage: { ...deferred.state.passage, selectedIndex: undefined } } }), false);
+});

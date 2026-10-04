@@ -12,7 +12,7 @@ interface SessionCoordination {
   activeTabs(): Promise<number[]>;
   notify(): void;
 }
-const positionKey = (record: ReadingRecord) => record.state.passage ? `passage:${record.state.passage.id}` : `lookup:${record.state.generation}`;
+const positionKey = (record: ReadingRecord) => `lookup:${record.state.generation}`;
 
 /** Coordinates durable per-tab snapshots with live lookup state. Browser
  * visibility is deliberately absent: completion/restoration never opens UI. */
