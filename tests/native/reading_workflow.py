@@ -19,10 +19,11 @@ import subprocess
 import tempfile
 import threading
 import time
+import traceback
 import urllib.request
 
 from permission_scope import CDP, QuietHandler
-from native_input import key, click
+from native_input import key, click, window_geometry, focus_window
 
 
 def wait_for(predicate, seconds=10):
@@ -55,14 +56,15 @@ def run(desktop, restart=False):
         root = Path(temporary)
         (root / 'index.html').write_text('''<!doctype html><meta charset="utf-8"><title>Reading fixture</title>
 <style>body{font:24px serif;padding:30px}p{margin:35px 0}input{font-size:24px}</style>
-<h1>Latin reading</h1><p id="word" tabindex="0">puella</p><p id="second">legi malum mālum</p>
+<script>addEventListener('message',e=>{if(e.data?.testPointer)globalThis.lastPointer=e.data});addEventListener('pointerdown',e=>{globalThis.lastPointer={testPointer:'top',x:e.clientX,y:e.clientY}})</script><h1>Latin reading</h1><p id="word" tabindex="0">puella</p><p id="second">legi malum mālum</p>
 <input id="editable" value="puellae"><div style="height:1800px"></div><p>finis</p>''')
         server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
         threading.Thread(target=server.serve_forever, daemon=True).start()
         frame_server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
         threading.Thread(target=frame_server.serve_forever, daemon=True).start()
         frame_origin = f'http://127.0.0.1:{frame_server.server_port}'
-        (root / 'frame.html').write_text('<!doctype html><meta charset="utf-8"><style>body{font:24px serif;margin:8px}p{margin:0}</style><p tabindex="0">servus</p>')
+        (root / 'frame.html').write_text('<!doctype html><meta charset="utf-8"><style>body{font:24px serif;margin:8px}p{margin:0}</style><p tabindex="0">servus</p><script>addEventListener("pointerdown",e=>parent.postMessage({testPointer:location.href,x:e.clientX,y:e.clientY},"*"))</script>')
+        (root / 'navigated.html').write_text('<!doctype html><meta charset="utf-8"><style>body{font:24px serif;margin:8px}p{margin:0}</style><p tabindex="0">agricola</p>')
         origin = f'http://127.0.0.1:{server.server_port}'
         url = origin + '/index.html'
         extension = root / 'extension'
@@ -109,6 +111,7 @@ def run(desktop, restart=False):
                         matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
                         if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
                         subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
+                        focus_window(display, int(matching[0],16))
                         time.sleep(.1)
 
                 def native_key(*names):
@@ -117,9 +120,21 @@ def run(desktop, restart=False):
 
                 def native_click(selector, count=1, dx=20, dy=12):
                     activate()
-                    box = reading.evaluate("(()=>{const r=document.querySelector("+json.dumps(selector)+").getBoundingClientRect();return {x:screenX+(outerWidth-innerWidth)/2+r.x,y:screenY+outerHeight-innerHeight+r.y}})()")
+                    box = reading.evaluate("(()=>{const r=document.querySelector("+json.dumps(selector)+").getBoundingClientRect();return {x:r.x,y:r.y,innerHeight,outerHeight,scale:devicePixelRatio,screenX,screenY}})()")
+                    if desktop:
+                        rows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True).splitlines()
+                        row = next(line.split() for line in rows if len(line.split())>2 and line.split()[2]==str(browser.pid))
+                        geometry = window_geometry(display, int(row[0],16))
+                        native_x = 4*box['scale']
+                        native_y = geometry['height'] - (box['innerHeight']+4)*box['scale']
+                    else:
+                        geometry = None
+                        native_x = (box['screenX']+4)*box['scale']
+                        native_y = (box['screenY']+box['outerHeight']-box['innerHeight']-4)*box['scale']
+                    reading.evaluate('window.lastPointer=null')
                     for _ in range(count):
-                        click(display, int(box['x']+dx), int(box['y']+dy));time.sleep(.1)
+                        click(display, int(native_x+(box['x']+dx)*box['scale']), int(native_y+(box['y']+dy)*box['scale']), window=int(row[0],16) if desktop else None);time.sleep(.1)
+                    evidence.setdefault('native_pointer_trace', []).append({'selector':selector,'box':box,'geometry':geometry,'received':reading.evaluate('window.lastPointer')})
 
                 worker = wait_for(lambda: target('/worker.js'))
                 extension_id = worker['url'].split('/')[2]
@@ -229,22 +244,21 @@ def run(desktop, restart=False):
                 double_click('#word')
                 panel = connect(wait_for(lambda: target('/panel.html')))
                 wait_for(lambda: panel.evaluate("document.querySelector('#status')?.textContent === 'Controlled development response'"))
-                frame_urls = {'same': origin + '/frame.html?same', 'embedded': frame_origin + '/frame.html?embedded', 'opaque': origin + '/frame.html?opaque'}
+                frame_urls = {'same': origin + '/frame.html?same', 'embedded': frame_origin + '/frame.html?embedded', 'opaque': origin + '/frame.html?opaque', 'ungranted': f'http://localhost:{frame_server.server_port}/frame.html?ungranted'}
                 reading.evaluate("""(()=>{for(const [id,url] of Object.entries(URLS)) {
                   const frame=document.createElement('iframe');frame.id=id;frame.src=url;
                   frame.style.cssText='display:block;width:400px;height:80px;margin:20px 0';
                   if(id==='opaque') frame.sandbox='allow-scripts';
                   document.body.prepend(frame);
                 }})()""".replace('URLS', json.dumps(frame_urls)))
-                wait_for(lambda: len(reading.call('Page.getFrameTree')['frameTree'].get('childFrames', [])) == 3)
+                wait_for(lambda: len(reading.call('Page.getFrameTree')['frameTree'].get('childFrames', [])) == 4)
                 time.sleep(.2)
 
                 def frame_double_click(frame_id):
                     reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).scrollIntoView({{block:"center"}})')
-                    rect = reading.evaluate(f'document.getElementById({json.dumps(frame_id)}).getBoundingClientRect().toJSON()')
-                    for count in [1, 2]:
-                        for kind in ['mousePressed', 'mouseReleased']:
-                            reading.call('Input.dispatchMouseEvent', type=kind, x=rect['x']+25, y=rect['y']+20, button='left', clickCount=count)
+                    native_click('#'+frame_id, count=2, dx=25, dy=20)
+                    # Edge's floating selection menu otherwise consumes shortcuts.
+                    native_key('Escape')
 
                 before = panel.evaluate(snapshot)['state']['generation']
                 frame_double_click('embedded'); time.sleep(.15)
@@ -274,20 +288,54 @@ def run(desktop, restart=False):
                 evidence['frame_identities'] = {'same_origin': same['identity'], 'separate_origin': embedded['identity']}
                 # Keyboard lookup must keep the selected frame even when opening takes focus.
                 frame_double_click('embedded')
-                native_click('#embedded', count=2, dx=25, dy=20)
+                time.sleep(.1)
                 native_key('Alt_L', 'Shift_L', 'k')
                 wait_for(lambda: target('/panel.html') is None)
+                time.sleep(.6)
+                frame_double_click('embedded')
                 native_key('Alt_L', 'Shift_L', 'l')
                 panel = connect(wait_for(lambda: target('/panel.html')))
                 wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'complete')
                 keyboard_frame = panel.evaluate(snapshot)['state']
                 evidence['keyboard_frame'] = keyboard_frame
                 checks['keyboard_open_preserves_selected_frame'] = keyboard_frame['identity']['frameId'] == embedded['identity']['frameId']
+                # A stale DOM src must not identify another sibling after navigation.
+                reading.evaluate("(()=>{const original=document.querySelector('#embedded');const twin=original.cloneNode();twin.id='twin';document.body.prepend(twin)})()")
+                time.sleep(.2)
+                frame_double_click('twin')
+                reading.evaluate("document.querySelector('#embedded').contentWindow.location="+json.dumps(frame_origin+'/navigated.html'))
+                time.sleep(.2)
+                native_key('Alt_L', 'Shift_L', 'k')
+                wait_for(lambda: target('/panel.html') is None)
+                frame_double_click('embedded')
+                native_key('Alt_L', 'Shift_L', 'l')
+                panel = connect(wait_for(lambda: target('/panel.html')))
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'complete')
+                navigated = panel.evaluate(snapshot)['state']
+                checks['navigated_frame_not_confused_with_original_url_sibling'] = navigated['text'] == 'agricola' and navigated['identity']['frameId'] == embedded['identity']['frameId']
+                reading.evaluate("document.querySelector('#twin').remove()")
+                panel.evaluate('chrome.storage.local.set({enabledOrigins:['+json.dumps(origin)+','+json.dumps(frame_origin)+']})')
+                wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s[0]?.matches.length===2)'))
+                frame_double_click('embedded')
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('status') == 'loading')
+                reading.evaluate("document.querySelector('#embedded').remove()")
+                time.sleep(.5)
+                checks['removed_frame_cannot_publish_result'] = panel.evaluate(snapshot).get('state') is None
+                # A real ungranted frame cannot cause lookup of an older accessible selection.
+                frame_double_click('ungranted')
+                time.sleep(.1)
+                before_ungranted = panel.evaluate(snapshot).get('state', {}).get('generation', 0)
+                native_key('Alt_L', 'Shift_L', 'l')
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('generation', 0) > before_ungranted)
+                ungranted_keyboard = panel.evaluate(snapshot)['state']
+                evidence['ungranted_keyboard'] = ungranted_keyboard
+                checks['ungranted_keyboard_offers_manual_recovery'] = ungranted_keyboard['status'] == 'notice' and 'manual' in ungranted_keyboard.get('message', '')
                 # An opaque frame must not fall back to a stale selection elsewhere.
                 frame_double_click('opaque')
-                native_click('#opaque', count=2, dx=25, dy=20)
+                time.sleep(.1)
+                before_opaque = panel.evaluate(snapshot).get('state', {}).get('generation', 0)
                 native_key('Alt_L', 'Shift_L', 'l')
-                wait_for(lambda: panel.evaluate(snapshot)['state']['generation'] > keyboard_frame['generation'])
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('generation', 0) > before_opaque)
                 opaque_keyboard = panel.evaluate(snapshot)['state']
                 evidence['opaque_keyboard'] = opaque_keyboard
                 checks['opaque_keyboard_offers_manual_recovery'] = opaque_keyboard['status'] == 'notice' and 'manual' in opaque_keyboard.get('message', '')
@@ -364,6 +412,23 @@ def run(desktop, restart=False):
 
                 evidence['passed'] = all(checks.values())
                 return evidence
+        except Exception as error:
+            evidence['failure'] = str(error)
+            evidence['failure_trace'] = traceback.format_exc()
+            if 'panel' in locals():
+                try:
+                    evidence['failure_snapshot'] = panel.evaluate(snapshot)
+                except Exception: pass
+            if 'reading' in locals():
+                try: evidence['failure_source'] = reading.evaluate('({focus:document.hasFocus(),active:document.activeElement.id,selection:getSelection().toString()})')
+                except Exception: pass
+            if desktop:
+                windows = subprocess.check_output(['wmctrl', '-lp'], env=env, text=True)
+                matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
+                if matching: subprocess.run(['import','-display',display,'-window',matching[0],'/tmp/tensho-native-failure.png'],check=True)
+            else: subprocess.run(['import','-display',display,'-window','root','/tmp/tensho-native-failure.png'],check=True)
+            evidence['passed'] = False
+            return evidence
         finally:
             for cdp in connections:
                 cdp.ws.close()

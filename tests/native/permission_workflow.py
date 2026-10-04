@@ -127,8 +127,8 @@ def run(output, idle=False):
                     for kind in ['mousePressed','mouseReleased']:
                         reading.call('Input.dispatchMouseEvent',type=kind,x=rect['x']+35,y=rect['y']+40,button='left',clickCount=count)
                 # Edge's sidebar contributes to outerWidth-innerWidth, not the left inset.
-                offset=reading.evaluate('({x:screenX+4,y:screenY+outerHeight-innerHeight})')
-                click(display,int(offset['x']+rect['x']+35),int(offset['y']+rect['y']+40),button=3)
+                offset=reading.evaluate('({x:screenX+4,y:screenY+outerHeight-innerHeight,scale:devicePixelRatio})')
+                click(display,int((offset['x']+rect['x']+35)*offset['scale']),int((offset['y']+rect['y']+40)*offset['scale']),button=3)
                 inspected_click('frame-context-menu','Select Look up selection with Tensho in the ungranted frame')
                 time.sleep(.5)
                 evidence['frame_context_snapshot']=panel.evaluate(snapshot)

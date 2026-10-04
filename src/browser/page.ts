@@ -7,7 +7,12 @@
   let source: HTMLElement | null = null;
   // Native sidebar opening can remove document focus before capture arrives.
   // Keep only focus timing, never continuously capture reading text.
-  const ownsFocus = () => document.hasFocus() && !(document.activeElement instanceof HTMLIFrameElement);
+  const focusedChild = () => document.activeElement instanceof HTMLIFrameElement || document.activeElement instanceof HTMLFrameElement ? document.activeElement : null;
+  const ownsFocus = () => document.hasFocus() && !focusedChild();
+  function childIndex(parentWindow: Window, child: Window | null): number {
+    for (let index = 0; index < parentWindow.length; index++) if (parentWindow[index] === child) return index;
+    return -1;
+  }
   let lastFocused = ownsFocus() ? performance.timeOrigin + performance.now() : 0;
   const rememberFocus = () => { if (ownsFocus()) lastFocused = performance.timeOrigin + performance.now(); };
   window.addEventListener('focus', rememberFocus, true);
@@ -27,7 +32,12 @@
     else document.body.focus({ preventScroll: true });
   }
   chrome.runtime.onMessage.addListener((message, _sender, reply) => {
-    if (message?.type === 'capture') reply({ text: capture(), focused: ownsFocus(), lastFocused, origin: globalThis.origin });
+    if (message?.type === 'capture') {
+      const child = focusedChild();
+      reply({ text: capture(), focused: ownsFocus(), lastFocused,
+        hasFocusedChild: child !== null, focusedChildIndex: childIndex(window, child?.contentWindow ?? null),
+        parentIndex: window === window.parent ? -1 : childIndex(window.parent, window), origin: globalThis.origin });
+    }
     if (message?.type === 'restore-focus') { restore(); reply({ restored: true }); }
   });
   document.addEventListener('dblclick', event => {

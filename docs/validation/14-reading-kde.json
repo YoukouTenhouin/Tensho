@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T06:02:20Z",
+  "observed_at_utc": "2026-10-04T06:36:23Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -24,7 +24,9 @@
     "opaque_sandbox_frame_does_not_lookup": true,
     "embedded_frame_requires_containing_site_enablement": true,
     "keyboard_open_preserves_selected_frame": true,
+    "navigated_frame_not_confused_with_original_url_sibling": true,
     "removed_frame_cannot_publish_result": true,
+    "ungranted_keyboard_offers_manual_recovery": true,
     "opaque_keyboard_offers_manual_recovery": true,
     "keyboard_reaches_named_manual_input": true,
     "keyboard_focus_is_visible": true,
@@ -74,6 +76,341 @@
     "active": "",
     "target": "puella"
   },
+  "native_pointer_trace": [
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 265.7692565917969
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49
+      }
+    },
+    {
+      "selector": "#same",
+      "box": {
+        "x": 38,
+        "y": 345.0769348144531,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:42947/frame.html?same",
+        "x": 6.615385055541992,
+        "y": 48.6923828125
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49
+      }
+    },
+    {
+      "selector": "#opaque",
+      "box": {
+        "x": 38,
+        "y": 161.6923065185547,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:42947/frame.html?opaque",
+        "x": 6.461539268493652,
+        "y": 48.5384635925293
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49
+      }
+    },
+    {
+      "selector": "#twin",
+      "box": {
+        "x": 38,
+        "y": 58.000003814697266,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:32815/frame.html?embedded",
+        "x": 6.615385055541992,
+        "y": 49.00001907348633
+      }
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 345.0769348144531,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#embedded",
+      "box": {
+        "x": 38,
+        "y": 265.3846130371094,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#ungranted",
+      "box": {
+        "x": 38,
+        "y": 58.000003814697266,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://localhost:32815/frame.html?ungranted",
+        "x": 6.461539268493652,
+        "y": 49.15386199951172
+      }
+    },
+    {
+      "selector": "#opaque",
+      "box": {
+        "x": 38,
+        "y": 161.6923065185547,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "http://127.0.0.1:42947/frame.html?opaque",
+        "x": 6.461539268493652,
+        "y": 48.5384635925293
+      }
+    },
+    {
+      "selector": "#word",
+      "box": {
+        "x": 38,
+        "y": 372.923095703125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 415.3077087402344
+      }
+    }
+  ],
   "native_toggle_attempts": [
     {
       "closed_and_restored_focus": true,
@@ -96,19 +433,19 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 1931255628,
+      "tabId": 852502241,
       "frameId": 12,
-      "documentId": "EA548DC4D9E4E92C025CEA24344BEB24",
-      "topDocumentId": "BD53B0C4870CAD5FD7E21621ACD0C084",
+      "documentId": "8BD77D06E12E11C514516393CC5EEBDE",
+      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
     },
     "separate_origin": {
-      "tabId": 1931255628,
+      "tabId": 852502241,
       "frameId": 13,
-      "documentId": "E65287906746A8A2CD4414157593F4A1",
-      "topDocumentId": "BD53B0C4870CAD5FD7E21621ACD0C084",
+      "documentId": "1F9FB3E6F11E0E1105718F52B20CFC79",
+      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
@@ -116,10 +453,10 @@
   },
   "keyboard_frame": {
     "identity": {
-      "tabId": 1931255628,
+      "tabId": 852502241,
       "frameId": 13,
-      "documentId": "E65287906746A8A2CD4414157593F4A1",
-      "topDocumentId": "BD53B0C4870CAD5FD7E21621ACD0C084",
+      "documentId": "1F9FB3E6F11E0E1105718F52B20CFC79",
+      "topDocumentId": "F21E04627ED25A3B967506B0E57CA853",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "controlled-latin-en-1"
@@ -142,9 +479,9 @@
       ]
     }
   },
-  "opaque_keyboard": {
+  "ungranted_keyboard": {
     "identity": {
-      "tabId": 1931255628,
+      "tabId": 852502241,
       "frameId": 0,
       "documentId": "manual",
       "topDocumentId": "manual",
@@ -153,7 +490,22 @@
       "explanationLanguage": "en"
     },
     "text": "",
-    "generation": 10,
+    "generation": 11,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "opaque_keyboard": {
+    "identity": {
+      "tabId": 852502241,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "controlled-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 12,
     "status": "notice",
     "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
   },
@@ -210,22 +562,22 @@
   "focus_return_selection": {
     "text": "puella",
     "focus": true,
-    "active": "word"
+    "active": ""
   },
   "focus_return_lookup": {
-    "tabId": 1931255628,
+    "tabId": 852502241,
     "state": {
       "identity": {
-        "tabId": 1931255628,
+        "tabId": 852502241,
         "frameId": 0,
-        "documentId": "5E83EF707B67BA62F878109FC67AEBCB",
-        "topDocumentId": "5E83EF707B67BA62F878109FC67AEBCB",
+        "documentId": "E0CB270132CAC89EE045D9EA4B43A70C",
+        "topDocumentId": "E0CB270132CAC89EE045D9EA4B43A70C",
         "lookupLanguage": "lat",
         "explanationLanguage": "en",
         "configuration": "controlled-latin-en-1"
       },
       "text": "puella",
-      "generation": 17,
+      "generation": 19,
       "status": "complete",
       "analysis": {
         "provider": "Controlled development response",
@@ -242,12 +594,12 @@
         ]
       }
     },
-    "origin": "http://127.0.0.1:40261",
+    "origin": "http://127.0.0.1:42947",
     "enabledOrigins": [
-      "http://127.0.0.1:40261",
-      "http://127.0.0.1:40173"
+      "http://127.0.0.1:42947",
+      "http://127.0.0.1:32815"
     ],
-    "focusRequest": 7
+    "focusRequest": 9
   },
   "passed": true
 }

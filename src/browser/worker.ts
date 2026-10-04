@@ -70,7 +70,7 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
     await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
     const frames = await chrome.webNavigation.getAllFrames({ tabId }) ?? [];
-    const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number; origin: string; expectedOrigin: string | undefined }[] = [];
+    const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number; origin: string; expectedOrigin: string | undefined; hasFocusedChild: boolean; focusedChildIndex: number; parentIndex: number }[] = [];
     for (const frame of frames) {
       if (!readingOrigin(frame.url)) continue;
       try {
@@ -78,9 +78,23 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
         if (typeof value?.text === 'string') captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId, expectedOrigin: readingOrigin(frame.url) });
       } catch { /* Inaccessible frames do not grant page access. */ }
     }
+    // Parent activeElement survives native sidebar focus transfer. Do not let
+    // historical text in an unrelated frame stand in for an inaccessible child.
+    const onFocusPath = (capture: typeof captures[number]): boolean => {
+      if (capture.hasFocusedChild) return false;
+      let frame = frames.find(item => item.frameId === capture.frameId);
+      while (frame && frame.parentFrameId >= 0) {
+        const parent = captures.find(item => item.frameId === frame!.parentFrameId);
+        const child = captures.find(item => item.frameId === frame!.frameId);
+        if (!parent?.hasFocusedChild || !child || child.parentIndex < 0 || parent.focusedChildIndex !== child.parentIndex) return false;
+        frame = frames.find(item => item.frameId === frame!.parentFrameId);
+      }
+      return frame?.frameId === 0;
+    };
     const focused = captures.filter(value => value.focused);
-    const recent = captures.filter(value => value.lastFocused > 0).sort((a, b) => b.lastFocused - a.lastFocused);
-    const withText = captures.filter(value => value.text);
+    const candidates = captures.filter(onFocusPath);
+    const recent = candidates.filter(value => value.lastFocused > 0).sort((a, b) => b.lastFocused - a.lastFocused);
+    const withText = candidates.filter(value => value.text);
     const selected = focused.length === 1 ? focused[0]
       : recent.length && recent[0]!.lastFocused !== recent[1]?.lastFocused ? recent[0]
       : withText.length === 1 ? withText[0] : undefined;

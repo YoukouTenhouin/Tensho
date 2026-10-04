@@ -1,6 +1,6 @@
 # Native reading acceptance for ticket 14
 
-The production development extension builds and routes reading actions through one browser-independent lookup coordinator. Ticket 14 remains incomplete pending the remaining acceptance work listed below. The user explicitly accepted native sidebar focus when opening on 2026-10-04; [ADR 0010](../adr/0010-native-sidebar-opening-focus.md) records the narrow revision. The current 34 KDE reading checks pass, including page-focus preservation for updates to an already-open panel and source-focus restoration on close.
+The production development extension builds and routes reading actions through one browser-independent lookup coordinator. Ticket 14 remains incomplete pending the remaining acceptance work listed below. The user explicitly accepted native sidebar focus when opening on 2026-10-04; [ADR 0010](../adr/0010-native-sidebar-opening-focus.md) records the narrow revision. The current 36 KDE reading checks pass, including page-focus preservation for updates to an already-open panel and source-focus restoration on close.
 
 ## Reproducible evidence
 
@@ -35,6 +35,12 @@ The [pre-toggle evidence](14-reading-kde-before-toggle-revision.json) records th
 
 ## Remaining acceptance work
 
-This is an incomplete vertical slice, not a release claim. The expanded KDE run covers keyboard routing through an enabled embedded frame, opaque/restricted manual recovery, visible keyboard focus and traversal out of the panel, missing-element and native Escape focus return without scrolling, immediate scroll reset during loading, rapid replacement and top-document navigation, and frame removal during pending analysis. The independent review found the missing frame-removal guard; the native regression first failed, then passed with source validation before publishing. Final ungranted-frame keyboard validation, review follow-up, and reproducible-build verification remain before reflow and PR. Subsequent provider, passage, settings, retention, fallback, and restart tickets remain separate work.
+This is an incomplete vertical slice, not a release claim. The expanded KDE run covers keyboard routing through an enabled embedded frame, opaque/restricted manual recovery, visible keyboard focus and traversal out of the panel, missing-element and native Escape focus return without scrolling, immediate scroll reset during loading, rapid replacement and top-document navigation, and frame removal during pending analysis. The independent review found the missing frame-removal guard; the native regression first failed, then passed with source validation before publishing. Ungranted-frame keyboard recovery now passes: historical text in accessible frames cannot substitute for the focused inaccessible frame. Review follow-up and reproducible-build verification remain before reflow and PR. Subsequent provider, passage, settings, retention, fallback, and restart tickets remain separate work.
 
 Controlled responses contain no linguistic claims. No live-provider acceptance, Orca acceptance, or production dictionary extraction is established by this ticket's current results.
+
+## Frame capture regression and native input
+
+Native frame selection uses XTest pointer events. Edge's floating text-selection menu can consume extension shortcuts; the runner dismisses it with native Escape before sending the command. The runner also spaces key press/release events to avoid zero-duration chords. The clean KDE run verifies both accessible-frame routing and ungranted/opaque-frame manual recovery. Earlier CDP-only frame pointer events did not reliably establish native keyboard delivery, so those failed shortcut-delivery attempts are not treated as product failures.
+
+Historical capture follows parent/child WindowProxy indexes rather than iframe URLs. Parents with focused children are never substituted, even when the child has an empty `src`. The native redirected-sibling regression keeps a sibling at the original URL while independently navigating the selected frame; keyboard opening retrieves the selected frame's distinct text and browser frame identity. Inaccessible child frames offer context-menu/manual recovery rather than another frame's historical text.
