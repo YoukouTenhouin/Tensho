@@ -88,6 +88,10 @@ def run(output):
                     previous = panel.evaluate(snapshot).get('state', {}).get('generation', 0)
                     panel.evaluate("document.querySelector('#word').value='important';document.querySelector('#lookup').requestSubmit()")
                     return wait_for(lambda: (lambda state: state if state and state['generation'] > previous and state['status'] != 'loading' else None)(panel.evaluate(snapshot).get('state')), seconds=35)
+                def retry():
+                    previous = panel.evaluate(snapshot)['state']['generation']
+                    panel.evaluate("document.querySelector('#retry').click()")
+                    return wait_for(lambda: (lambda state: state if state and state['generation'] > previous and state['status'] != 'loading' else None)(panel.evaluate(snapshot).get('state')), seconds=35)
                 checks['setup_sends_no_provider_requests'] = len(requests()) == 0
                 missing = submit()
                 checks['missing_access_visible_without_request'] = missing.get('failureKind') == 'missing-access' and len(requests()) == 0
@@ -107,7 +111,8 @@ def run(output):
                 checks['grant_does_not_automatically_lookup'] = len(requests()) == 0
                 evidence['granted_origins'] = panel.evaluate('chrome.permissions.getAll().then(p=>p.origins)')
                 checks['exact_default_provider_origins'] = sorted(evidence['granted_origins']) == ['https://morph.alpheios.net/*', 'https://repos1.alpheios.net/*']
-                live = submit(); evidence['live_state'] = live
+                live = retry(); evidence['live_state'] = live
+                checks['explicit_retry_after_grant_completes'] = live['status'] == 'complete'
                 checks['live_latin_importo_analysis'] = live['status'] == 'complete' and live['analysis']['candidates'][0]['lemma'].startswith('importo,')
                 checks['live_attribution_visible'] = panel.evaluate("document.querySelector('#analysis').textContent.includes('William Whitaker')")
                 checks['english_short_meanings_visible'] = panel.evaluate("document.querySelector('#analysis').textContent.includes('bring in')")
@@ -117,6 +122,8 @@ def run(output):
                 wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
                 revoked = submit()
                 checks['revocation_visible_without_new_request'] = revoked.get('failureKind') == 'missing-access' and len(requests()) == 1
+                retried_revoked = retry()
+                checks['retry_after_revocation_sends_no_request'] = retried_revoked.get('failureKind') == 'missing-access' and len(requests()) == 1
                 checks['explicit_retry_is_available'] = panel.evaluate("!document.querySelector('#retry').hidden")
                 evidence['passed'] = all(checks.values())
         except Exception as error:

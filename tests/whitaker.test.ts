@@ -60,7 +60,7 @@ test('array annotations and entries retain boundaries; malformed shapes are tech
   raw.RDF.Annotation.Body.rest.entry = [raw.RDF.Annotation.Body.rest.entry, {}];
   raw.RDF.Annotation = [raw.RDF.Annotation];
   assert.equal(normalizeWhitaker(raw).candidates.length, 2);
-  for (const malformed of [null, {}, { RDF: {} }, { RDF: { Annotation: {} } }, { RDF: { Annotation: { Body: 'wrong' } } }]) {
+  for (const malformed of [null, {}, { RDF: {} }, { RDF: { Annotation: {} } }, { RDF: { Annotation: { about: 'error' } } }, { RDF: { Annotation: { Body: 'wrong' } } }]) {
     assert.throws(() => normalizeWhitaker(malformed), error => error instanceof RequestFailure && error.kind === 'format');
   }
 });

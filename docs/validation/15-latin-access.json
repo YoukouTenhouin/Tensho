@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T15:58:57Z",
+  "observed_at_utc": "2026-10-04T16:01:54Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "isolated Xvfb",
   "unmodified_production_build": true,
@@ -10,11 +10,13 @@
     "denial_visible_without_request": true,
     "grant_does_not_automatically_lookup": true,
     "exact_default_provider_origins": true,
+    "explicit_retry_after_grant_completes": true,
     "live_latin_importo_analysis": true,
     "live_attribution_visible": true,
     "english_short_meanings_visible": true,
     "one_explicit_latin_request": true,
     "revocation_visible_without_new_request": true,
+    "retry_after_revocation_sends_no_request": true,
     "explicit_retry_is_available": true
   },
   "granted_origins": [
@@ -23,10 +25,10 @@
   ],
   "live_state": {
     "identity": {
-      "tabId": 325656219,
+      "tabId": 911983093,
       "frameId": 0,
-      "documentId": "64F4F1EA23B7752BBA8C89472FD5D106",
-      "topDocumentId": "64F4F1EA23B7752BBA8C89472FD5D106",
+      "documentId": "08E6236E5D5FC33ECBEB1BBFDC9D176C",
+      "topDocumentId": "08E6236E5D5FC33ECBEB1BBFDC9D176C",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "whitaker-latin-en-1"
@@ -103,14 +105,14 @@
           },
           "provenance": {
             "provider": "alpheios-whitakerLat",
-            "bodyReference": "urn:uuid:idm140253766876128",
+            "bodyReference": "urn:uuid:idm139936311828328",
             "annotationIndex": 0,
             "bodyIndex": 0,
             "entryIndex": 0
           },
           "missing": [],
           "interpretations": [
-            "term: lang: lat, stem: import, suff: ant, pofs: verb, conj: 1st, var: 1st, tense: present, voice: active, mood: indicative, pers: 3rd, num: plural"
+            "Form: Language: lat, Stem: import, Ending: ant, Part of speech: verb, Conjugation: 1st, Variant: 1st, Tense: present, Voice: active, Mood: indicative, Person: 3rd, Number: plural"
           ]
         }
       ],

@@ -59,7 +59,10 @@ export function normalizeWhitaker(raw: unknown): LatinAnalysis {
       if (credit && !result.attribution.includes(credit)) result.attribution.push(credit);
     }
     const bodies = many(annotation.Body, 'body');
-    if (!bodies.length && (annotation.hasBody !== undefined || (!text(annotation.about) && !record(annotation.hasTarget)))) {
+    const target = record(annotation.hasTarget) && record(annotation.hasTarget.Description) ? annotation.hasTarget.Description : undefined;
+    const annotationReference = text(annotation.about);
+    const knownEmptyEnvelope = annotationReference?.startsWith('urn:TuftsMorphologyService:') && annotationReference.endsWith(':whitakerLat') && text(target?.about)?.startsWith('urn:word:');
+    if (!bodies.length && (annotation.hasBody !== undefined || !knownEmptyEnvelope)) {
       throw new RequestFailure('format', 'Provider response does not establish a valid empty analysis.');
     }
     for (const [bodyIndex, body] of bodies.entries()) {
@@ -97,12 +100,18 @@ export function normalizeWhitaker(raw: unknown): LatinAnalysis {
 
 export const latinProviderOrigins = ['https://morph.alpheios.net/*', 'https://repos1.alpheios.net/*'] as const;
 
+const grammarLabels: Record<string, string> = {
+  term: 'Form', lang: 'Language', stem: 'Stem', suff: 'Ending', pofs: 'Part of speech',
+  conj: 'Conjugation', decl: 'Declension', var: 'Variant', tense: 'Tense', voice: 'Voice',
+  mood: 'Mood', pers: 'Person', num: 'Number', gend: 'Gender', case: 'Case', comp: 'Comparison',
+};
 function describeGrammar(value: RecordValue): string {
   // Label supplied fields without filling gaps or inferring grammatical values.
   return Object.entries(value).flatMap(([name, supplied]) => {
+    const label = grammarLabels[name] ?? name;
     const simple = text(supplied);
-    if (simple) return [`${name}: ${simple}`];
-    if (record(supplied)) return [`${name}: ${describeGrammar(supplied)}`];
+    if (simple) return [`${label}: ${simple}`];
+    if (record(supplied)) return [`${label}: ${describeGrammar(supplied)}`];
     return [];
   }).join(', ');
 }
