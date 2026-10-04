@@ -127,11 +127,12 @@ function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?:
 async function capture(tabId: number, request: LookupRequest): Promise<void> {
   try {
     // activeTab only authorizes its native scope. Cross-origin frames still need grants.
-    await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
+    const injected = await chrome.scripting.executeScript({ target: { tabId, allFrames: true }, files: ['page.js'] });
+    const accessibleDocuments = new Set(injected.map(result => result.documentId));
     const frames = await chrome.webNavigation.getAllFrames({ tabId }) ?? [];
     const captures: { frameId: number; documentId: string; text: string; focused: boolean; lastFocused: number; origin: string; expectedOrigin: string | undefined; hasFocusedChild: boolean; focusedChildIndex: number; parentIndex: number }[] = [];
     for (const frame of frames) {
-      if (!readingOrigin(frame.url)) continue;
+      if (!readingOrigin(frame.url) || !accessibleDocuments.has(frame.documentId)) continue;
       try {
         const value = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: frame.documentId });
         if (typeof value?.text === 'string') captures.push({ ...value, frameId: frame.frameId, documentId: frame.documentId, expectedOrigin: readingOrigin(frame.url) });
@@ -333,7 +334,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       ? coordinator.prepareWordChoice(message.tabId, message.passageId, message.wordIndex) : undefined;
     void panelAction(message, request, startWord).then(reply, error => reply({ error: String(error) })); return true;
   }
-  if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
+  if (message.type === 'automatic-lookup' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     if (!sender.origin || sender.origin !== readingOrigin(sender.url ?? '')) return;
     const tabId = sender.tab.id, frameId = sender.frameId ?? 0;
     // The native gesture must reach sidePanel.open before asynchronous API calls.
@@ -348,7 +349,10 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       if (!top || !frame || frame.documentId !== sender.documentId || !automaticAllowed(top.url, frame.url, enabled)) return;
       if (!await chrome.permissions.contains({ origins: [permissionPattern(top.url), permissionPattern(frame.url)] })) return;
       if (!await opening) return;
-      await lookup(tabId, frameId, message.text, request, sender.documentId);
+      if (!request.current()) return;
+      const selected = await chrome.tabs.sendMessage(tabId, { type: 'capture' }, { documentId: sender.documentId });
+      if (typeof selected?.text !== 'string' || !selected.text || selected.origin !== sender.origin) return;
+      await lookup(tabId, frameId, selected.text, request, sender.documentId);
     })().then(() => reply({ ok: true }), error => reply({ error: String(error) })); return true;
   }
 });

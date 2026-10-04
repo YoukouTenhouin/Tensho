@@ -44,7 +44,8 @@
     if (!event.isTrusted || globalThis.origin === 'null') return;
     const target = event.composedPath().find(item => item instanceof HTMLElement);
     if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input,textarea,select,[role="textbox"]'))) return;
-    const text = capture();
-    if (text) void chrome.runtime.sendMessage({ type: 'automatic-lookup', text }).catch(() => {});
+    // Previously injected scripts survive permission removal. Send only the
+    // gesture; the worker must authorize this document before asking for text.
+    void chrome.runtime.sendMessage({ type: 'automatic-lookup' }).catch(() => {});
   });
 })();
