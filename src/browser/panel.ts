@@ -66,6 +66,7 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') { ev
 void chrome.windows.getCurrent().then(async current => {
   windowId = current.id!;
   const port = chrome.runtime.connect({ name: 'panel' });
+  port.postMessage({ type: 'ready', windowId });
   port.onMessage.addListener(() => { void refresh().catch(report); });
   await refresh();
 }).catch(report);

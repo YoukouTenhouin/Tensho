@@ -4,6 +4,7 @@ import { controlledAnalyzer } from '../core/controlled.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 
 const ports = new Set<chrome.runtime.Port>();
+const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
 const coordinator = new LookupCoordinator(controlledAnalyzer, () => notify());
@@ -44,11 +45,11 @@ async function restoreFocus(tabId: number): Promise<void> {
     try { await chrome.tabs.update(tabId, { active: true }); } catch { /* Source tab was closed. */ }
   }
 }
-function open(tabId: number, focus: boolean, request?: LookupRequest): Promise<boolean> {
+function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?: number): Promise<boolean> {
+  if (!focus && windowId !== undefined && [...panelWindows.values()].includes(windowId)) return Promise.resolve(true);
   if (focus) focusRequests.set(tabId, (focusRequests.get(tabId) ?? 0) + 1);
   return chrome.sidePanel.open({ tabId }).then(async () => {
     notify();
-    if (!focus) await restoreFocus(tabId);
     return true;
   }).catch(error => {
     (request ?? { notice: coordinator.notice.bind(coordinator) }).notice(coordinator.get(tabId)?.identity ?? manualIdentity(tabId), '',
@@ -107,7 +108,7 @@ chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id || tab.incognito || info.menuItemId !== 'lookup') return;
   const request = coordinator.begin(tab.id, info.frameId ?? 0);
-  open(tab.id, false, request);
+  open(tab.id, false, request, tab.windowId);
   void lookup(tab.id, info.frameId ?? 0, info.selectionText ?? '', request);
   // Remember source focus where temporary access permits; lookup itself needs no DOM injection.
   void chrome.scripting.executeScript({ target: { tabId: tab.id, frameIds: [info.frameId ?? 0] }, files: ['page.js'] })
@@ -128,7 +129,11 @@ chrome.tabs.onRemoved.addListener(tabId => { coordinator.clear(tabId); focusRequ
 chrome.tabs.onActivated.addListener(notify);
 chrome.runtime.onConnect.addListener(port => {
   if (port.name !== 'panel' || port.sender?.url !== chrome.runtime.getURL('panel.html')) return;
-  ports.add(port); port.onDisconnect.addListener(() => ports.delete(port));
+  ports.add(port);
+  port.onMessage.addListener(message => {
+    if (message?.type === 'ready' && Number.isInteger(message.windowId)) panelWindows.set(port, message.windowId);
+  });
+  port.onDisconnect.addListener(() => { ports.delete(port); panelWindows.delete(port); });
 });
 async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   const [tab] = await chrome.tabs.query({ windowId, active: true });
@@ -161,8 +166,8 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     }
   }
   if (message.type === 'close') {
-    await restoreFocus(tabId);
     await chrome.sidePanel.close({ windowId: message.windowId });
+    await restoreFocus(tabId);
   }
   return { ok: true };
 }
@@ -179,7 +184,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
     // Only already enabled/granted origins qualify; revocation invalidates this cache.
     if (!automaticAllowed(sender.tab.url ?? '', sender.url ?? '', automaticOrigins)) return;
     const request = coordinator.begin(tabId, frameId);
-    const opening = open(tabId, false, request);
+    const opening = open(tabId, false, request, sender.tab.windowId);
     void (async () => {
       const [top, frame, enabled] = await Promise.all([
         chrome.webNavigation.getFrame({ tabId, frameId: 0 }), chrome.webNavigation.getFrame({ tabId, frameId }), enabledOrigins(),

@@ -2,7 +2,7 @@
 
 Tensho is a personal-use Microsoft Edge reading extension for openSUSE Tumbleweed and KDE Plasma. This development build implements the first native interaction slice from [ticket 14](https://github.com/YoukouTenhouin/Tensho/issues/14). Responses are explicitly controlled fixtures, not real Latin analysis. It makes no provider requests.
 
-The slice is not accepted for release: opening Edge's native sidebar after double-click moves keyboard focus off the reading page. The approved specification requires page-focus preservation or an explicit design revision. See [native acceptance evidence](docs/validation/14-native-acceptance.md).
+The slice remains in development while native acceptance is completed. The user-approved focus policy allows Edge to move keyboard focus into the sidebar when opening it; updates to an already-open panel preserve page focus, and Close/Escape restores it. See [native acceptance evidence](docs/validation/14-native-acceptance.md).
 
 ## Build and load
 
@@ -24,7 +24,7 @@ The UI starts with Latin lookup and English explanations. This slice stores expl
 - Use **Look up selection with Tensho** in the selection context menu, including explicitly selected editable text, or enter a word in the panel.
 - In **Reading-site access**, enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
 - To enable an embedded reading origin, enter it explicitly in the site-access form. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.
-- **Close lookup** or Escape inside the panel closes the native sidebar and returns focus to the source. Clicking the page leaves results open. Opening on double-click currently has the focus limitation described above.
+- **Close lookup** or Escape inside the panel closes the native sidebar and returns focus to the source. Clicking the page leaves results open. Opening on double-click may transfer focus into the sidebar under the accepted native-focus policy.
 
 Sites are identified by scheme, hostname, and effective port. Disabling an origin removes its local enablement and native grant. Ordinary HTTP/HTTPS documents in regular windows are the supported reading surfaces. Inaccessible selections offer manual input. Private browsing, browser-internal content, local files, PDF/EPUB/OCR, and opaque or sandbox-restricted frames are outside the delivery scope.
 
@@ -38,4 +38,4 @@ python3 tests/native/reading_workflow.py
 python3 tests/native/reading_workflow.py --desktop
 ```
 
-The last command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. Its nonzero exit currently records the failing double-click focus requirement, rather than treating that failure as an accepted exception.
+The last command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. The runner returns nonzero if its current native acceptance checks fail. Historical evidence of the superseded opening-focus requirement is retained separately.

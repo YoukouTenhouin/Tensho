@@ -128,23 +128,13 @@ def run(desktop):
                 evidence['panel_after_double_click'] = panel.evaluate('({focus:document.hasFocus(),active:document.activeElement.id,target:document.querySelector("#target").textContent})')
                 checks = evidence['checks']
                 checks['double_click_result'] = evidence['panel_after_double_click']['target'] == 'puella'
-                checks['double_click_preserves_page_focus'] = evidence['after_double_click']['focus']
+                checks['double_click_native_focus_allowed'] = evidence['after_double_click']['focus'] or evidence['panel_after_double_click']['focus']
                 checks['double_click_preserves_scroll'] = evidence['before']['scroll'] == evidence['after_double_click']['scroll']
                 snapshot = "(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'snapshot',windowId:w.id})})()"
+                double_click('#second')
+                wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='legi' && document.querySelector('#status').textContent==='Controlled development response'"))
+                checks['already_open_panel_lookup_preserves_page_focus'] = reading.evaluate('document.hasFocus()')
                 initial = panel.evaluate(snapshot)
-                # Supported focus APIs attempted individually, without debugger focus privileges.
-                attempts = {}
-                for name, action in [
-                    ('source_focus', "await chrome.tabs.sendMessage(t.id,{type:'restore-focus'},{frameId:0})"),
-                    ('activate_tab', 'await chrome.tabs.update(t.id,{active:true})'),
-                    ('highlight_tab', 'await chrome.tabs.highlight({windowId:t.windowId,tabs:[t.index]})'),
-                    ('activate_window', 'await chrome.windows.update(t.windowId,{focused:true})'),
-                ]:
-                    panel.call('Runtime.evaluate', expression="(async()=>{const [t]=await chrome.tabs.query({active:true,currentWindow:true});await chrome.sidePanel.open({tabId:t.id})})()", userGesture=True, awaitPromise=True)
-                    before = reading.evaluate('document.hasFocus()')
-                    panel.evaluate('(async()=>{const [t]=await chrome.tabs.query({active:true,currentWindow:true});' + action + ';return true})()')
-                    attempts[name] = {'before': before, 'after': reading.evaluate('document.hasFocus()')}
-                evidence['restore_attempts_page_has_focus'] = attempts
                 # Dragging ordinary text produces no replacement lookup.
                 reading.call('Input.dispatchMouseEvent', type='mousePressed', x=40, y=242, button='left', clickCount=1)
                 reading.call('Input.dispatchMouseEvent', type='mouseMoved', x=180, y=242, buttons=1)

@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T05:16:14Z",
+  "observed_at_utc": "2026-10-04T05:14:55Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -7,9 +7,8 @@
   "checks": {
     "both_shortcuts_registered": true,
     "double_click_result": true,
-    "double_click_native_focus_allowed": true,
+    "double_click_preserves_page_focus": false,
     "double_click_preserves_scroll": true,
-    "already_open_panel_lookup_preserves_page_focus": true,
     "drag_does_not_lookup": true,
     "editable_double_click_does_not_lookup": true,
     "page_click_keeps_panel_open": true,
@@ -52,11 +51,29 @@
     "active": "",
     "target": "puella"
   },
+  "restore_attempts_page_has_focus": {
+    "source_focus": {
+      "before": false,
+      "after": false
+    },
+    "activate_tab": {
+      "before": false,
+      "after": false
+    },
+    "highlight_tab": {
+      "before": false,
+      "after": false
+    },
+    "activate_window": {
+      "before": false,
+      "after": false
+    }
+  },
   "loading_announcements": [
     {
       "role": "status",
       "blocked": false
     }
   ],
-  "passed": true
+  "passed": false
 }
