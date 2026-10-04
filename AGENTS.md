@@ -21,3 +21,7 @@ Apply this workflow to each feature implementation ticket. Documentation-only up
 3. Once implementation is complete and the required tests pass, create `<ticket>-reflow` from the dev branch. Preserve the dev branch while reorganizing the reflow branch's commits into a clean, logical history of small increments.
 4. Verify that the final tips of the dev and reflow branches have identical Git trees: `git rev-parse <ticket>-dev^{tree} <ticket>-reflow^{tree}` must print the same tree ID twice.
 5. Push the reflow branch and create a pull request from `<ticket>-reflow` to `master`.
+
+## Desktop testing
+
+The user reserves `HDMI-A-1` for test windows throughout the implementation goal. Place shared-desktop test windows on that monitor and verify their placement before sending native input. Use isolated displays when a shared-desktop test is unnecessary, keeping the other monitors available for the user's work.
