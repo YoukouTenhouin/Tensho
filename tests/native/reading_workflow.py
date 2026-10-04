@@ -1,6 +1,6 @@
 """Exercise the built extension in disposable, visible Microsoft Edge.
 
-Run `npm run build`, then `python3 tests/native/reading_workflow.py [--desktop]`.
+Run `npm run build:controlled`, then `python3 tests/native/reading_workflow.py [--desktop]`.
 Default: isolated Xvfb. --desktop: existing DISPLAY, e.g. KDE's Xwayland.
 Requires Edge, Python websocket-client, and Xvfb for the isolated mode.
 A test-only copy pregrants exactly the ephemeral loopback fixture origin;
@@ -68,7 +68,7 @@ def run(desktop, restart=False, idle=False):
         origin = f'http://127.0.0.1:{server.server_port}'
         url = origin + '/index.html'
         extension = root / 'extension'
-        shutil.copytree(repo / 'dist', extension)
+        shutil.copytree(repo / 'dist-controlled', extension)
         manifest = json.loads((extension / 'manifest.json').read_text())
         manifest['host_permissions'] = [origin + '/*', frame_origin + '/*']
         (extension / 'manifest.json').write_text(json.dumps(manifest))
