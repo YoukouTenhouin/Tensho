@@ -40,6 +40,9 @@ One possible grammatical reading of the selected word associated with a candidat
 **Dictionary lookup**:
 The retrieval of dictionary entries for a candidate lemma identified by analysis.
 
+**Dictionary resolution**:
+The identification of possible dictionary entries for a candidate lemma, before a chosen entry is retrieved; identifying an alternative does not establish its correspondence with that lemma.
+
 **Short meaning**:
 A brief gloss accompanying an analysis, distinct from a full dictionary entry.
 
