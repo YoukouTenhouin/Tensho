@@ -6,7 +6,7 @@ export class RequestFailure extends Error {
   constructor(kind: RequestFailureKind, message: string) { super(message); this.kind = kind; this.name = 'RequestFailure'; }
 }
 
-export const requestLimits = { concurrent: 2, requestMs: 15_000, actionMs: 30_000, analysisBytes: 1024 * 1024 } as const;
+export const requestLimits = { concurrent: 2, requestMs: 15_000, actionMs: 30_000, analysisBytes: 1024 * 1024, articleBytes: 1024 * 1024, indexBytes: 8 * 1024 * 1024 } as const;
 interface Pending { start(): void; }
 
 /** One shared instance owns all provider slots, including requests ignoring abort. */
@@ -68,8 +68,8 @@ export class RequestExecutor {
   }
 }
 
-/** Fetch bodies are decoded by the browser before streaming; bound before JSON.parse. */
-export async function readBoundedJson(response: Response, signal: AbortSignal, maxBytes: number = requestLimits.analysisBytes): Promise<unknown> {
+/** Fetch bodies are decoded by the browser before streaming; bound before parsing. */
+export async function readBoundedText(response: Response, signal: AbortSignal, maxBytes: number): Promise<string> {
   if (!response.ok) throw new RequestFailure('http', `Provider returned HTTP ${response.status}.`);
   if (!response.body) throw new RequestFailure('format', 'Provider returned no response body.');
   const reader = response.body.getReader();
@@ -84,14 +84,14 @@ export async function readBoundedJson(response: Response, signal: AbortSignal, m
       signal.throwIfAborted();
       if (next.done) break;
       length += next.value.byteLength;
-      if (length > maxBytes) { cancel(); throw new RequestFailure('size', 'Provider analysis exceeds the 1 MiB decoded response limit.'); }
+      if (length > maxBytes) { cancel(); throw new RequestFailure('size', `Provider response exceeds the ${maxBytes / (1024 * 1024)} MiB decoded response limit.`); }
       chunks.push(next.value);
     }
     const body = new Uint8Array(length);
     let offset = 0;
     for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
-    try { return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(body)); }
-    catch { throw new RequestFailure('format', 'Provider returned invalid UTF-8 or JSON.'); }
+    try { return new TextDecoder('utf-8', { fatal: true }).decode(body); }
+    catch { throw new RequestFailure('format', 'Provider returned invalid UTF-8.'); }
   } catch (error) {
     signal.throwIfAborted();
     if (error instanceof RequestFailure) throw error;
@@ -100,4 +100,10 @@ export async function readBoundedJson(response: Response, signal: AbortSignal, m
     signal.removeEventListener('abort', cancel);
     reader.releaseLock();
   }
+}
+
+export async function readBoundedJson(response: Response, signal: AbortSignal, maxBytes: number = requestLimits.analysisBytes): Promise<unknown> {
+  const text = await readBoundedText(response, signal, maxBytes);
+  try { return JSON.parse(text); }
+  catch { throw new RequestFailure('format', 'Provider returned invalid JSON.'); }
 }

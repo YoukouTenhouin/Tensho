@@ -1,0 +1,25 @@
+{
+  "source": "https://repos1.alpheios.net/lexdata/ls/dat/lat-ls-ids.dat",
+  "observedAt": "2026-10-04T04:17:11.690160+00:00",
+  "sourceRowCount": 59859,
+  "rows": [
+    "@lego1|n26185",
+    "@lego2|n26186",
+    "@lego|n26185",
+    "@malum1|n27773",
+    "@malum2|n27774",
+    "@malum|n27773",
+    "@malus1|n27776",
+    "@malus2|n27777",
+    "@malus3|n27778",
+    "@malus|n27776",
+    "amo|n2280",
+    "importo|n21985",
+    "lego|@",
+    "lex|n26431",
+    "mala|n27674",
+    "malum|@",
+    "malus|@",
+    "puella|n39421"
+  ]
+}
