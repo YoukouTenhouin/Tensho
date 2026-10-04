@@ -27,7 +27,7 @@ async function refresh(): Promise<void> {
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') {
     const result = state.analysis;
-    status.textContent = result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
+    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
       : result.outcome === 'missing-information' ? 'The provider supplied no usable Latin analysis information.'
       : `Latin analysis — ${result.provider}`;
     for (const candidate of result.candidates) {

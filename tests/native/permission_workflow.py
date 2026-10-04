@@ -1,6 +1,6 @@
-"""Interactive native UI acceptance against the unmodified production build.
+"""Interactive native UI acceptance against the controlled reading-test build.
 
-Run after npm run build: python3 tests/native/permission_workflow.py --output /tmp/tensho-access
+Run after npm run build:controlled: python3 tests/native/permission_workflow.py --output /tmp/tensho-access
 The runner pauses for screen coordinates only after saving each native menu or
 permission prompt. Inspect that image before supplying X Y on stdin. It runs on
 an isolated Xvfb display, never the user's browser profile or desktop.
@@ -30,7 +30,7 @@ def run(output, idle=False):
     evidence = {'browser': version(['microsoft-edge', '--version']),
                 'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                 'mode': 'isolated Xvfb / native XTest commands and inspected native prompts',
-                'unmodified_production_build': True, 'checks': {}}
+                'unmodified_production_build': False, 'controlled_analysis': True, 'checks': {}}
     checks = evidence['checks']
     with tempfile.TemporaryDirectory(prefix='tensho-access-') as temp:
         root = Path(temp)
@@ -55,7 +55,7 @@ def run(output, idle=False):
                 env = {**os.environ, 'DISPLAY': display}; env.pop('WAYLAND_DISPLAY', None)
                 def launch():
                     return subprocess.Popen(['microsoft-edge','--ozone-platform=x11',f'--user-data-dir={root}/profile',
-                        '--no-first-run','--no-default-browser-check',f'--disable-extensions-except={repo}/dist',f'--load-extension={repo}/dist',
+                        '--no-first-run','--no-default-browser-check',f'--disable-extensions-except={repo}/dist-controlled',f'--load-extension={repo}/dist-controlled',
                         '--remote-debugging-port=0','--window-size=1300,900','--window-position=0,0',url],env=env,stdout=log,stderr=log)
                 browser = launch()
                 port_file = root/'profile/DevToolsActivePort'; wait_for(port_file.exists)
