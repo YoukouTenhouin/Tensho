@@ -1,10 +1,10 @@
 import { LookupCoordinator, sameIdentity } from '../core/lookup.ts';
 import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { RequestExecutor } from '../core/requests.ts';
-import { createWhitakerAnalyzer, latinProviderOrigins } from '../providers/whitaker.ts';
+import { latinProviderOrigins } from '../providers/whitaker.ts';
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 import { DictionaryCoordinator } from '../core/dictionary.ts';
-import { createLatinDictionary } from '../providers/latin-dictionary.ts';
+import { createIntegratedProviders } from '../providers/integrated.ts';
 import { ConfigurationStore, lookupRoutes } from '../core/configuration.ts';
 import type { Settings } from '../core/configuration.ts';
 import { providerCatalog } from '../providers/catalog.ts';
@@ -23,14 +23,13 @@ function configurationIdentity(settings: Settings) {
     explanationLanguage: settings.languages[settings.lookupLanguage]!.explanationLanguage };
 }
 const executor = new RequestExecutor();
-const analyzer = createWhitakerAnalyzer({ executor, permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis) });
 async function sourceIsCurrent(identity: Identity): Promise<boolean> {
   if (identity.configuration !== (await configuration.get()).revision) return false;
   if (identity.documentId === 'manual') return true;
   const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
   return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
 }
-const dictionary = createLatinDictionary({ executor,
+const integrated = createIntegratedProviders({ executor,
   permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis),
   storage: {
     read: async () => { await settingsReady; return (await chrome.storage.local.get('latinDictionaryIndex')).latinDictionaryIndex; },
@@ -38,7 +37,8 @@ const dictionary = createLatinDictionary({ executor,
   },
 });
 const router = new ProviderRouter({ catalog: providerCatalog, settings: () => configuration.get(),
-  analyzers: { 'alpheios-whitakerLat': analyzer }, dictionaries: { 'alpheios-ls': dictionary } });
+  permitted: origins => chrome.permissions.contains({ origins: [...origins] }),
+  ...integrated });
 const coordinator = new LookupCoordinator(router, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
 const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), notify, sourceIsCurrent);
 function notify(): void { void chrome.runtime.sendMessage({ type: 'changed' }).catch(() => {}); }
@@ -246,7 +246,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     }
     if (message.type === 'dictionary-resolve') void dictionaries.resolve(tabId, message.generation, message.candidateIndex, message.retry === true);
     else if (message.type === 'dictionary-collapse') dictionaries.collapse(tabId, message.generation, message.candidateIndex);
-    else if (typeof message.entryId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true);
+    else if (typeof message.entryId === 'string' && typeof message.providerId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true, message.providerId);
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
     if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');

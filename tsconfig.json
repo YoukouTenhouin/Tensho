@@ -6,5 +6,5 @@
     "verbatimModuleSyntax": true, "skipLibCheck": true,
     "types": ["chrome", "node"], "noEmit": true
   },
-  "include": ["src", "tests/*.ts"]
+  "include": ["src", "tests"]
 }

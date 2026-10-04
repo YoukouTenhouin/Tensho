@@ -1,6 +1,7 @@
 import { latinProviderOrigins } from '../providers/whitaker.ts';
 import type { State } from '../core/lookup.ts';
 import { permissionPattern, readingOrigin } from '../core/origins.ts';
+import { providerFeedback } from './provider-feedback.ts';
 import { renderDictionary } from './dictionary-view.ts';
 import { SettingsView, languageName, explanationName } from './settings-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
@@ -63,8 +64,9 @@ async function refresh(): Promise<void> {
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') {
     const result = state.analysis;
+    const recovery = providerFeedback(result.providerIssues, result.provider); if (recovery) analysis.append(recovery);
     if (result.explanationNotice) { const note = document.createElement('p'); note.textContent = result.explanationNotice; analysis.append(note); }
-    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
+    status.textContent = result.controlled && !result.outcome ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
       : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
       : `${language} analysis — ${result.provider}`;
     for (const [candidateIndex, candidate] of result.candidates.entries()) {
@@ -83,6 +85,9 @@ async function refresh(): Promise<void> {
     }
     if (result.excludedForeignRecords) { const note = document.createElement('p'); note.textContent = 'Records explicitly labelled as another lookup language were excluded.'; analysis.append(note); }
     for (const credit of result.attribution ?? []) { const attribution = document.createElement('p'); attribution.textContent = credit; analysis.append(attribution); }
+  }
+  if (state && state.status !== 'complete' && state.status !== 'loading') {
+    const recovery = providerFeedback(state.providerIssues); if (recovery) analysis.append(recovery);
   }
   if (focusId && document.activeElement === document.body) {
     (document.getElementById(focusId) ?? document.getElementById(`${focusId}-region`))?.focus({ preventScroll: true });

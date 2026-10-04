@@ -1,3 +1,4 @@
+import type { ProviderIssueObserver } from '../core/requests.ts';
 import type { Analysis, Identity } from '../core/lookup.ts';
 import { RequestExecutor, RequestFailure, readBoundedText, requestLimits, requireProviderAccess } from '../core/requests.ts';
 import { LatinIndexCache, latinDictionary, resolveLatinCandidate } from './latin-index.ts';
@@ -7,8 +8,9 @@ import type { DictionaryArticle } from './latin-article.ts';
 import type { ProviderOptionValue } from '../core/configuration.ts';
 
 export interface DictionaryProvider {
-  resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryResolution>;
-  retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>): Promise<DictionaryArticle>;
+  supportsCandidate?(candidate: Analysis['candidates'][number], identity: Identity): boolean;
+  resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>, observe?: ProviderIssueObserver): Promise<DictionaryResolution>;
+  retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number, options?: Record<string, ProviderOptionValue>, observe?: ProviderIssueObserver): Promise<DictionaryArticle>;
 }
 export function createLatinDictionary(dependencies: {
   executor: RequestExecutor;
