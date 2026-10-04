@@ -5,18 +5,31 @@ import { createWhitakerAnalyzer, latinProviderOrigins } from '../providers/whita
 import { automaticAllowed, permissionPattern, readingOrigin } from '../core/origins.ts';
 import { DictionaryCoordinator } from '../core/dictionary.ts';
 import { createLatinDictionary } from '../providers/latin-dictionary.ts';
+import { ConfigurationStore, lookupRoutes } from '../core/configuration.ts';
+import type { Settings } from '../core/configuration.ts';
+import { providerCatalog } from '../providers/catalog.ts';
+import { ProviderRouter } from '../core/provider-router.ts';
 
 const panelWindows = new Map<chrome.runtime.Port, number>();
 let automaticOrigins: string[] = [];
 const focusRequests = new Map<number, number>();
+const settingsReady = chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
+const configuration = new ConfigurationStore(providerCatalog, {
+  read: async () => { await settingsReady; return (await chrome.storage.local.get('lookupSettings')).lookupSettings; },
+  write: async value => { await settingsReady; await chrome.storage.local.set({ lookupSettings: value }); },
+});
+function configurationIdentity(settings: Settings) {
+  return { configuration: settings.revision, lookupLanguage: settings.lookupLanguage,
+    explanationLanguage: settings.languages[settings.lookupLanguage]!.explanationLanguage };
+}
 const executor = new RequestExecutor();
 const analyzer = createWhitakerAnalyzer({ executor, permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis) });
 async function sourceIsCurrent(identity: Identity): Promise<boolean> {
+  if (identity.configuration !== (await configuration.get()).revision) return false;
   if (identity.documentId === 'manual') return true;
   const current = await source(identity.tabId, identity.frameId).catch(() => undefined);
   return current?.documentId === identity.documentId && current.topDocumentId === identity.topDocumentId;
 }
-const coordinator = new LookupCoordinator(analyzer, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
 const dictionary = createLatinDictionary({ executor,
   permitted: origins => chrome.permissions.contains({ origins: [...origins] }), fetch: globalThis.fetch.bind(globalThis),
   storage: {
@@ -24,9 +37,11 @@ const dictionary = createLatinDictionary({ executor,
     write: async value => { await settingsReady; await chrome.storage.local.set({ latinDictionaryIndex: value }); },
   },
 });
-const dictionaries = new DictionaryCoordinator(dictionary, tabId => coordinator.get(tabId), notify, sourceIsCurrent);
+const router = new ProviderRouter({ catalog: providerCatalog, settings: () => configuration.get(),
+  analyzers: { 'alpheios-whitakerLat': analyzer }, dictionaries: { 'alpheios-ls': dictionary } });
+const coordinator = new LookupCoordinator(router, () => notify(), sourceIsCurrent, tabId => dictionaries.invalidate(tabId));
+const dictionaries = new DictionaryCoordinator(router, tabId => coordinator.get(tabId), notify, sourceIsCurrent);
 function notify(): void { void chrome.runtime.sendMessage({ type: 'changed' }).catch(() => {}); }
-const settingsReady = chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
 async function enabledOrigins(): Promise<string[]> {
   await settingsReady;
   const { enabledOrigins: origins } = await chrome.storage.local.get('enabledOrigins');
@@ -40,17 +55,17 @@ async function source(tabId: number, frameId = 0): Promise<Identity> {
     throw new Error('Selection is unavailable on this surface. Use an ordinary HTTP/HTTPS page, or enter a word manually.');
   }
   return { tabId, frameId, documentId: frame.documentId, topDocumentId: top.documentId,
-    lookupLanguage: 'lat', explanationLanguage: 'en', configuration: 'whitaker-latin-en-1' };
+    ...configurationIdentity(await configuration.get()) };
 }
-function manualIdentity(tabId: number): Identity {
-  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', configuration: 'whitaker-latin-en-1', lookupLanguage: 'lat', explanationLanguage: 'en' };
+async function manualIdentity(tabId: number): Promise<Identity> {
+  return { tabId, frameId: 0, documentId: 'manual', topDocumentId: 'manual', ...configurationIdentity(await configuration.get()) };
 }
 async function lookup(tabId: number, frameId: number, text: string, request: LookupRequest, documentId?: string): Promise<void> {
   try {
     const identity = await source(tabId, frameId);
     if (documentId && identity.documentId !== documentId) return;
     void request.lookup(identity, text);
-  } catch (error) { request.notice(manualIdentity(tabId), '', String(error)); }
+  } catch (error) { request.notice(await manualIdentity(tabId), '', String(error)); }
 }
 async function restoreFocus(tabId: number): Promise<void> {
   const identity = coordinator.get(tabId)?.identity;
@@ -87,8 +102,8 @@ function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?:
   return chrome.sidePanel.open({ tabId }).then(async () => {
     notify();
     return true;
-  }).catch(error => {
-    (request ?? { notice: coordinator.notice.bind(coordinator) }).notice(coordinator.get(tabId)?.identity ?? manualIdentity(tabId), '',
+  }).catch(async error => {
+    (request ?? { notice: coordinator.notice.bind(coordinator) }).notice(coordinator.get(tabId)?.identity ?? await manualIdentity(tabId), '',
       `The native panel could not open: ${String(error)}. Open Tensho from the toolbar.`);
     return false;
   });
@@ -128,7 +143,7 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
       : withText.length === 1 ? withText[0] : undefined;
     if (!selected?.text || selected.origin !== selected.expectedOrigin) throw new Error('No unambiguous accessible selection. Select text on the page, use its context menu, or enter a word here.');
     await lookup(tabId, selected.frameId, selected.text, request, selected.documentId);
-  } catch { request.notice(manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.'); }
+  } catch { request.notice(await manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.'); }
 }
 async function syncScripts(): Promise<void> {
   const origins = await enabledOrigins();
@@ -205,9 +220,24 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
     const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
     const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
-    return { tabId, state: coordinator.get(tabId), dictionaries: dictionaries.get(tabId), providerAccess,
+    const settings = await configuration.get();
+    const state = coordinator.get(tabId);
+    const current = state?.identity.configuration === settings.revision;
+    return { settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), tabId, state: current ? state : undefined, dictionaries: current ? dictionaries.get(tabId) : {}, providerAccess,
       providerAccessDecision: latinAccessDecision ?? 'never', origin: top ? readingOrigin(top.url) : undefined,
       enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
+  }
+  if (message.type === 'save-settings') {
+    if (message.tabId !== tabId || typeof message.expectedRevision !== 'string') throw new Error('The reading tab changed. Reload settings before saving.');
+    const windows = new Set(panelWindows.values());
+    const visible = await chrome.tabs.query({ active: true });
+    const previous = await configuration.get();
+    const saved = await configuration.save(message.settings, message.expectedRevision);
+    if (saved.revision !== previous.revision) {
+      coordinator.reconfigure(configurationIdentity(saved), visible.filter(item => windows.has(item.windowId) && item.id !== undefined).map(item => item.id!));
+      notify();
+    }
+    return { ok: true };
   }
   if (message.type === 'dictionary-resolve' || message.type === 'dictionary-retrieve' || message.type === 'dictionary-collapse') {
     if (message.tabId !== tabId || typeof message.generation !== 'number' || typeof message.candidateIndex !== 'number') {
@@ -227,7 +257,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     if (message.tabId !== tabId || !previous?.passage || previous.passage.id !== message.passageId || typeof message.wordIndex !== 'number') {
       throw new Error('The passage changed. Choose a word from the current passage.');
     }
-    const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
+    const identity = previous.identity.documentId === 'manual' ? await manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
     if (!sameIdentity(identity, previous.identity)) throw new Error('The passage source changed. Select the passage again.');
     const wordRequest = startWord?.();
     if (!wordRequest) return { ok: true };
@@ -243,7 +273,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     if (message.tabId !== tabId || !previous || previous.status !== 'error' || previous.generation !== message.generation) {
       throw new Error('The lookup changed. Select the word again.');
     }
-    const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
+    const identity = previous.identity.documentId === 'manual' ? await manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
     if (coordinator.get(tabId) !== previous || identity.documentId !== previous.identity.documentId) throw new Error('The reading source changed. Select the word again.');
     if (previous.passage?.selectedIndex !== undefined) {
       void coordinator.begin(tabId, identity.frameId).selectWord(identity, previous.passage.id, previous.passage.selectedIndex);

@@ -132,3 +132,46 @@ test('new configuration identity rejects old provider completion through product
   if (state.status === 'complete') assert.equal(state.analysis.provider, 'current');
   assert.equal(state.identity.configuration, 'two'); assert.equal(state.identity.explanationLanguage, 'fr');
 });
+
+test('saving settings refreshes visible chosen passage words, retains unchosen passages, and invalidates inactive output', async () => {
+  const app = setup();
+  const original = identity(app.settings());
+  await app.lookup.lookup(original, 'important mālum');
+  const passageId = app.lookup.get(1)!.passage!.id;
+  await app.lookup.selectWord(1, passageId, 1);
+  await app.lookup.lookup({ ...original, tabId: 2 }, 'important');
+  await app.lookup.lookup({ ...original, tabId: 3 }, 'cano mālum');
+  const callsBefore = app.calls.length;
+  const changed = structuredClone(app.settings()); changed.revision = 'two'; changed.languages.lat!.explanationLanguage = 'fr'; app.replace(changed);
+  app.lookup.reconfigure(identity(changed), [1, 3]);
+  assert.equal(app.lookup.get(1)?.status, 'loading');
+  assert.equal(app.lookup.get(2)?.status, 'notice');
+  assert.equal(app.lookup.get(3)?.status, 'notice');
+  await turn();
+  assert.deepEqual(app.calls.slice(callsBefore).map(call => [call.id, call.text]), [['latin-fr', 'mālum']]);
+  const selected = app.lookup.get(1)!;
+  assert.equal(selected.status, 'complete');
+  assert.equal(selected.identity.configuration, 'two');
+  assert.deepEqual(selected.passage, { id: passageId, original: 'important mālum',
+    words: [{ text: 'important', start: 0, end: 9 }, { text: 'mālum', start: 10, end: 15 }], selectedIndex: 1 });
+  assert.equal(app.lookup.get(2)?.identity.explanationLanguage, 'fr');
+  assert.equal(app.lookup.get(3)?.passage?.original, 'cano mālum');
+});
+
+test('configuration refresh cancels pending capture and late analysis without replacing the refreshed result', async () => {
+  const pending: ((result: Analysis) => void)[] = [];
+  const app = setup({ analyze: () => new Promise(resolve => pending.push(resolve)) });
+  const old = app.lookup.lookup(identity(app.settings()), 'important'); await turn();
+  const capture = app.lookup.begin(2);
+  const changed = structuredClone(app.settings()); changed.revision = 'two'; changed.languages.lat!.explanationLanguage = 'fr'; app.replace(changed);
+  app.lookup.reconfigure(identity(changed), [1]); await turn();
+  assert.equal(capture.current(), false);
+  await capture.lookup({ ...identity(changed), tabId: 2 }, 'cano');
+  assert.equal(app.lookup.get(2), undefined);
+  pending[1]!({ ...analysis, provider: 'fresh' }); await turn();
+  pending[0]!({ ...analysis, provider: 'obsolete' }); await old;
+  const result = app.lookup.get(1)!;
+  assert.equal(result.status, 'complete');
+  if (result.status === 'complete') assert.equal(result.analysis.provider, 'fresh');
+  assert.equal(result.identity.configuration, 'two');
+});

@@ -66,6 +66,25 @@ export class LookupCoordinator {
     this.#invalidate = invalidate;
   }
   get(tabId: number): State | undefined { return this.#states.get(tabId); }
+  /** Replace configuration identity before any refreshed request can publish.
+   * Inactive tabs retain their input, but never display obsolete provider output. */
+  reconfigure(configuration: Pick<Identity, 'configuration' | 'lookupLanguage' | 'explanationLanguage'>, visibleTabs: readonly number[]): void {
+    const previous = [...this.#states.values()];
+    for (const tabId of new Set([...this.#requests.keys(), ...this.#states.keys()])) this.begin(tabId);
+    for (const state of previous) {
+      const identity = { ...state.identity, configuration: configuration.configuration,
+        lookupLanguage: configuration.lookupLanguage, explanationLanguage: configuration.explanationLanguage };
+      const passage = state.passage;
+      this.#set({ identity, text: state.text, passage, generation: ++this.#generation, status: 'notice',
+        message: passage && passage.selectedIndex === undefined
+          ? 'Passage retained. Choose one word to look up; nothing has been sent.'
+          : 'Settings changed. Look up the selection again to refresh this result.' });
+      if (!visibleTabs.includes(identity.tabId) || !state.text || (passage && passage.selectedIndex === undefined)) continue;
+      const request = this.begin(identity.tabId, identity.frameId);
+      if (passage?.selectedIndex !== undefined) void request.selectWord(identity, passage.id, passage.selectedIndex);
+      else void request.lookup(identity, state.text);
+    }
+  }
   clear(tabId: number): void {
     this.#invalidate(tabId);
     this.#requests.delete(tabId);
