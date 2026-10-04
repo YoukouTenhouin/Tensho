@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Tensho — Latin reading",
+  "description": "Native reading workflow with clearly marked controlled analysis for development.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "154",
+  "permissions": ["activeTab", "scripting", "storage", "contextMenus", "sidePanel", "webNavigation"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": {"service_worker": "worker.js"},
+  "action": {"default_title": "Open Tensho"},
+  "side_panel": {"default_path": "panel.html"},
+  "commands": {
+    "lookup-selection": {"suggested_key": {"default": "Alt+Shift+L"}, "description": "Look up selection"},
+    "focus-results": {"suggested_key": {"default": "Alt+Shift+K"}, "description": "Toggle existing results"}
+  },
+  "incognito": "not_allowed"
+}
