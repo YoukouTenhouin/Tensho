@@ -36,6 +36,9 @@ Sites are identified by scheme, hostname, and effective port. Disabling an origi
 python3 tests/native/permission_scope.py
 python3 tests/native/reading_workflow.py
 python3 tests/native/reading_workflow.py --desktop
+python3 tests/native/permission_workflow.py --output /tmp/tensho-access
 ```
 
-The last command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. The runner returns nonzero if its current native acceptance checks fail. Historical evidence of the superseded opening-focus requirement is retained separately.
+The `--desktop` command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. The runner returns nonzero if its current native acceptance checks fail. Historical evidence of the superseded opening-focus requirement is retained separately.
+
+The optional-access runner uses the unmodified production build on isolated Xvfb. It enables Developer mode through Edge settings, then pauses with screenshots for native context-menu and permission-prompt coordinates; inspect each image before entering its X Y coordinates. It verifies denial, exact-origin granting, browser restart, revocation, and native Escape.
