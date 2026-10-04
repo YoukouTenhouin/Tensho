@@ -23,7 +23,7 @@ from permission_scope import CDP, QuietHandler
 from reading_workflow import wait_for, version
 
 
-def run(output, consistency=False):
+def run(output, consistency=False, accessibility=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -100,7 +100,10 @@ def run(output, consistency=False):
                     for connection in connections: connection.ws.close()
                     connections.clear()
 
-                if consistency:
+                if accessibility:
+                    from accessibility_workflow import exercise_accessibility
+                    exercise_accessibility(evidence, panel, worker, page, snapshot, display, target)
+                elif consistency:
                     from consistency_workflow import exercise_consistency
                     exercise_consistency(evidence, lambda: panel, worker, page, snapshot, submit, reopen, connect, target, url)
                 else:
@@ -205,6 +208,7 @@ def run(output, consistency=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--consistency', action='store_true')
+    parser.add_argument('--accessibility', action='store_true')
     args = parser.parse_args()
-    result = run(args.output, args.consistency); print(json.dumps(result, indent=2, ensure_ascii=False))
+    result = run(args.output, args.consistency, args.accessibility); print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)

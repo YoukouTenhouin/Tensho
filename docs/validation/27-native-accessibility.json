@@ -1,0 +1,359 @@
+{
+  "observed_at_utc": "2026-10-04T19:41:25Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_providers": true,
+  "production_session_coordination_and_ui": true,
+  "checks": {
+    "results_landmark_has_accessible_name": true,
+    "manual_input_has_accessible_label": true,
+    "close_has_accessible_name": true,
+    "keyboard_focus_is_visible": true,
+    "analysis_loading_has_live_status": true,
+    "keyboard_submit_focuses_results": true,
+    "dictionary_toggle_exposes_expansion": true,
+    "article_replacement_keeps_keyboard_position": true,
+    "keyboard_can_open_multiple_full_articles": true,
+    "keyboard_can_leave_results_without_trap": true,
+    "passage_word_has_specific_accessible_name": true,
+    "keyboard_selects_passage_word": true,
+    "analysis_error_has_live_status_and_named_retry": true,
+    "keyboard_retry_recovers": true,
+    "keyboard_escape_closes_without_page_scroll": true
+  },
+  "fixture_permission": "test-only exact-origin manifest pregrant for content-script privacy and site-setting persistence",
+  "accessibility_scope": "Native X11 keyboard and Edge accessibility tree; separate KDE/Orca acceptance required",
+  "keyboard_traversal": [
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "close",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "enable-providers",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "word",
+      "tag": "TEXTAREA",
+      "focus": true
+    },
+    {
+      "id": "dictionary-0",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "article-0-n1",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "focus": true
+    },
+    {
+      "id": "article-0-n2",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "close",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "enable-providers",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "word",
+      "tag": "TEXTAREA",
+      "focus": true
+    },
+    {
+      "id": "passage-word-0",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "passage-word-1",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "dictionary-0",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "focus": false
+    },
+    {
+      "id": "close",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "",
+      "tag": "SUMMARY",
+      "focus": true
+    },
+    {
+      "id": "enable-providers",
+      "tag": "BUTTON",
+      "focus": true
+    },
+    {
+      "id": "word",
+      "tag": "TEXTAREA",
+      "focus": true
+    },
+    {
+      "id": "retry",
+      "tag": "BUTTON",
+      "focus": true
+    }
+  ],
+  "passed": true
+}
