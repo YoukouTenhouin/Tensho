@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import select
+import shutil
 import subprocess
 import tempfile
 import threading
@@ -31,11 +32,20 @@ def run(output):
     checks = evidence['checks']; connections = []; browser = xvfb = server = None
     with tempfile.TemporaryDirectory(prefix='tensho-session-') as temporary:
         root = Path(temporary)
+        # Match the documented unpacked-extension setup. Without Developer mode,
+        # Edge can mark a command-line extension unsupported on the next launch.
+        (root / 'profile/Default').mkdir(parents=True)
+        (root / 'profile/Default/Preferences').write_text(json.dumps({'extensions': {'ui': {'developer_mode': True}}}))
         (root / 'reading.html').write_text('<!doctype html><title>Session reading</title><body style="height:4000px"><p>malum puella</p></body>')
         try:
             server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(QuietHandler, directory=root))
             threading.Thread(target=server.serve_forever, daemon=True).start()
             url = f'http://127.0.0.1:{server.server_port}/reading.html'
+            origin = f'http://127.0.0.1:{server.server_port}'
+            extension = root / 'extension'; shutil.copytree(repo / 'dist-recovery', extension)
+            manifest = json.loads((extension / 'manifest.json').read_text()); manifest['host_permissions'] = [origin + '/*']
+            (extension / 'manifest.json').write_text(json.dumps(manifest))
+            evidence['fixture_permission'] = 'test-only exact-origin manifest pregrant for content-script privacy and site-setting persistence'
             with (output / 'browser.log').open('w') as log:
                 reader, writer = os.pipe()
                 xvfb = subprocess.Popen(['Xvfb', '-displayfd', str(writer), '-screen', '0', '1400x1000x24', '-nolisten', 'tcp'], pass_fds=(writer,), stdout=log, stderr=log)
@@ -44,7 +54,7 @@ def run(output):
                 display = ':' + os.read(reader, 50).decode().strip(); os.close(reader)
                 env = {**os.environ, 'DISPLAY': display}; env.pop('WAYLAND_DISPLAY', None)
                 command = ['microsoft-edge', '--ozone-platform=x11', f'--user-data-dir={root}/profile', '--no-first-run', '--no-default-browser-check',
-                           f'--disable-extensions-except={repo}/dist-recovery', f'--load-extension={repo}/dist-recovery', '--remote-debugging-port=0',
+                           f'--disable-extensions-except={extension}', f'--load-extension={extension}', '--remote-debugging-port=0',
                            '--window-size=1300,900', '--window-position=0,0', url]
                 port_file = root / 'profile/DevToolsActivePort'
                 port = None
@@ -58,8 +68,10 @@ def run(output):
                     port_file.unlink(missing_ok=True)
                     browser = subprocess.Popen(command, env=env, stdout=log, stderr=log)
                     wait_for(port_file.exists); port = int(port_file.read_text().splitlines()[0])
-                    worker = connect('/worker.js'); page = connect('/reading.html')
+                    page_target = wait_for(lambda: next((item for item in targets() if item['type'] == 'page' and item['url'].startswith(origin)), None))
+                    page = CDP(page_target['webSocketDebuggerUrl']); connections.append(page)
                     time.sleep(.3); key(display, 'Alt_L', 'Shift_L', 'k')
+                    worker = connect('/worker.js')
                     panel = connect('/panel.html')
                     wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
                     return worker, panel, page
@@ -99,9 +111,11 @@ def run(output):
                 checks['source_page_position_unchanged'] = page.evaluate('window.scrollY') == 800
                 checks['session_contains_complete_reading_only'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "].value.state.text==='malum')")
                 checks['local_storage_has_no_selected_text'] = panel.evaluate("chrome.storage.local.get(null).then(v=>!JSON.stringify(v).includes('malum'))")
+                checks['content_script_cannot_read_session_collection'] = panel.evaluate("chrome.scripting.executeScript({target:{tabId:" + str(first_tab) + "},func:async()=>{try{await chrome.storage.session.get('readingResults');return false}catch{return true}}}).then(r=>r.length===1&&r[0].result===true)")
                 choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
                 wait_for(lambda: panel.evaluate('window.scrollY') == 900)
                 checks['native_close_reopen_restores_content_scroll_without_requests'] = candidate() == first_dictionary and calls() == before_calls and snapshot()['state'] == first
+                checks['close_reopen_preserves_source_page_position'] = page.evaluate('window.scrollY') == 800
                 choose('#dictionary-0'); wait_for(lambda: candidate().get('expanded') is False)
                 choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
                 checks['collapsed_state_survives_native_reopen'] = candidate().get('expanded') is False and calls() == before_calls
@@ -137,14 +151,35 @@ def run(output):
                 wait_for(lambda: snapshot()['tabId'] == first_tab)
                 page.call('Page.reload'); wait_for(lambda: snapshot().get('state') is None)
                 checks['reload_clears_reading_state'] = snapshot().get('dictionaries') == {}
+                submit('legi')
+                page.call('Page.navigate', url=url + '?different-document'); wait_for(lambda: snapshot().get('state') is None)
+                checks['different_document_clears_reading_state'] = snapshot().get('dictionaries') == {}
+                panel.evaluate("document.querySelector('#word').value='sessionpending';document.querySelector('#lookup').requestSubmit()")
+                wait_for(lambda: snapshot().get('state', {}).get('status') == 'loading')
+                choose('#close'); wait_for(lambda: target('/panel.html') is None)
+                wait_for(lambda: worker.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "]?.value.state.status==='complete')"))
+                checks['pending_completion_does_not_reopen_sidebar'] = target('/panel.html') is None
+                before_calls = calls(); reopen()
+                checks['reopen_uses_completion_retained_while_closed'] = snapshot()['state']['text'] == 'sessionpending' and snapshot()['state']['status'] == 'complete' and calls() == before_calls
+                panel.evaluate("(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'save-origin',windowId:w.id,origin:" + json.dumps(origin) + ",enabled:true})})()")
+                wait_for(lambda: origin in snapshot()['enabledOrigins'])
                 before_settings = snapshot()['settings']
                 close_browser(); worker, panel, page = launch()
                 checks['browser_restart_clears_session_reading'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>!Object.values(v.readingResults?.tabs??{}).some(t=>t.status==='retained'))") and snapshot().get('state') is None
                 checks['browser_restart_preserves_local_settings'] = snapshot()['settings'] == before_settings
+                checks['browser_restart_preserves_site_enablement'] = origin in snapshot()['enabledOrigins']
                 checks['browser_restart_sends_no_lookup'] = calls() == []
                 evidence['passed'] = all(checks.values())
         except Exception as error:
             evidence['failure'] = str(error); evidence['traceback'] = traceback.format_exc(); evidence['passed'] = False
+            evidence['browser_exit'] = browser.poll() if browser else None
+            try: evidence['targets'] = [{'type': item['type'], 'url': item['url']} for item in targets()]
+            except Exception: pass
+            for filename in ['Preferences', 'Secure Preferences']:
+                try:
+                    settings = json.loads((root / 'profile/Default' / filename).read_text()).get('extensions', {}).get('settings', {})
+                    evidence[filename] = {id: {k: v.get(k) for k in ['state', 'disable_reasons', 'path', 'location']} for id, v in settings.items() if v.get('path') == str(extension)}
+                except Exception: pass
             try:
                 evidence['failure_snapshot'] = snapshot(); evidence['failure_body'] = panel.evaluate('document.body.innerText')
                 evidence['failure_scroll'] = panel.evaluate('({y:window.scrollY,height:document.body.scrollHeight,viewport:innerHeight})')
