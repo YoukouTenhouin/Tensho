@@ -1,3 +1,4 @@
+import { RequestFailure, requestLimits } from './requests.ts';
 export interface Identity {
   tabId: number;
   frameId: number;
@@ -10,14 +11,20 @@ export interface Identity {
 export interface Analysis {
   provider: string;
   controlled: boolean;
-  candidates: { lemma: string; interpretations: string[]; meanings: string[]; stableId: string | null }[];
+  outcome?: 'usable' | 'no-match' | 'missing-information';
+  attribution?: string[];
+  excludedForeignRecords?: number;
+  candidates: { lemma: string | null; interpretations: string[]; meanings: string[]; stableId: string | null;
+    grammar?: Record<string, unknown>[]; lemmaFeatures?: Record<string, unknown>;
+    provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
+    missing?: string[] }[];
 }
 export type State = { generation: number; identity: Identity; text: string } & (
   { status: 'loading' } | { status: 'complete'; analysis: Analysis } |
-  { status: 'notice' | 'error'; message: string }
+  { status: 'notice' | 'error'; message: string; failureKind?: RequestFailure['kind'] }
 );
 export interface Analyzer {
-  analyze(text: string, identity: Identity, signal: AbortSignal): Promise<Analysis>;
+  analyze(text: string, identity: Identity, signal: AbortSignal, deadline: number): Promise<Analysis>;
 }
 export interface LookupRequest {
   current(): boolean;
@@ -56,6 +63,7 @@ export class LookupCoordinator {
   begin(tabId: number, frameId?: number): LookupRequest {
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
+    const deadline = performance.now() + requestLimits.actionMs;
     const token = Symbol();
     const scope = { token, frameId };
     this.#requests.set(tabId, scope);
@@ -66,7 +74,7 @@ export class LookupCoordinator {
         if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
         if (current()) {
           scope.frameId = identity.frameId;
-          await this.#lookup(identity, input, request);
+          await this.#lookup(identity, input, request, deadline);
         }
       },
       notice: (identity, text, message) => {
@@ -90,28 +98,28 @@ export class LookupCoordinator {
     this.#states.set(state.identity.tabId, state);
     this.#publish(state, state.identity.tabId);
   }
-  async #lookup(identity: Identity, input: string, request: LookupRequest): Promise<void> {
+  async #lookup(identity: Identity, input: string, request: LookupRequest, deadline: number): Promise<void> {
     const text = input.trim();
     if (!text) return request.notice(identity, '', 'Select text on an ordinary webpage or enter a word here.');
     if ([...text].length > 4096) return request.notice(identity, '', 'Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent.');
-    if (!/[\p{L}\p{N}]/u.test(text)) return request.notice(identity, text, 'Enter a word containing letters or numbers. Nothing was sent.');
-    if (/\s/u.test(text)) return request.notice(identity, text, 'Passage retained. Individual-word study arrives in the passage slice; no analysis was requested.');
-    if ([...text].length > 256) return request.notice(identity, text, 'A word must be at most 256 Unicode code points. Nothing was sent.');
+    if (!/[\p{L}\p{N}]/u.test(text)) return request.notice(identity, input, 'Enter a word containing letters or numbers. Nothing was sent.');
+    if (/\s/u.test(text)) return request.notice(identity, input, 'Passage retained. Individual-word study arrives in the passage slice; no analysis was requested.');
+    if ([...text].length > 256) return request.notice(identity, input, 'A word must be at most 256 Unicode code points. Nothing was sent.');
     this.#pending.get(identity.tabId)?.abort();
     const abort = new AbortController();
     this.#pending.set(identity.tabId, abort);
-    const base = { identity: { ...identity }, text, generation: ++this.#generation };
+    const base = { identity: { ...identity }, text: input, generation: ++this.#generation };
     this.#set({ ...base, status: 'loading' });
     const current = () => request.current() && this.#states.get(identity.tabId)?.generation === base.generation && !abort.signal.aborted;
     try {
-      const analysis = await this.#analyzer.analyze(text, base.identity, abort.signal);
+      const analysis = await this.#analyzer.analyze(text, base.identity, abort.signal, deadline);
       if (!current()) return;
       const validSource = await this.#sourceIsCurrent(base.identity);
       if (!current()) return;
       if (validSource) this.#set({ ...base, status: 'complete', analysis });
       else this.clear(identity.tabId);
     } catch (error) {
-      if (current()) this.#set({ ...base, status: 'error', message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
+      if (current()) this.#set({ ...base, status: 'error', failureKind: error instanceof RequestFailure ? error.kind : undefined, message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
     } finally {
       if (this.#pending.get(identity.tabId) === abort) this.#pending.delete(identity.tabId);
     }
