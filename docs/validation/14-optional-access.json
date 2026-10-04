@@ -1,0 +1,110 @@
+{
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "observed_at_utc": "2026-10-04T06:02:29Z",
+  "mode": "isolated Xvfb / native XTest commands and inspected native prompts",
+  "unmodified_production_build": true,
+  "checks": {
+    "native_developer_mode_installation": true,
+    "native_lookup_shortcut_with_temporary_access": true,
+    "keyboard_lookup_focuses_results": true,
+    "temporary_lookup_does_not_grant_site": true,
+    "native_focus_shortcut_does_not_lookup": true,
+    "native_focus_shortcut_focuses_results": true,
+    "native_context_menu_editable_lookup": true,
+    "native_frame_context_menu_routes_source": true,
+    "frame_context_menu_does_not_grant_site": true,
+    "frame_context_menu_does_not_imply_dom_access": true,
+    "native_denial_keeps_origin_ungranted": true,
+    "native_denial_keeps_automatic_lookup_disabled": true,
+    "native_grant_is_exact_origin": true,
+    "site_enablement_survives_browser_restart": true,
+    "automatic_lookup_after_browser_restart": true,
+    "native_revocation_stops_automatic_lookup": true,
+    "native_revocation_preserves_result": true,
+    "native_escape_closes_and_restores_focus": true
+  },
+  "worker_present_after_idle": false,
+  "editable_context_snapshot": {
+    "tabId": 751811924,
+    "state": {
+      "identity": {
+        "tabId": 751811924,
+        "frameId": 0,
+        "documentId": "0BF0D85A6E2CD7D3A4AFDA6A3A603550",
+        "topDocumentId": "0BF0D85A6E2CD7D3A4AFDA6A3A603550",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "configuration": "controlled-latin-en-1"
+      },
+      "text": "puellae",
+      "generation": 1,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "puellae",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "origin": "http://127.0.0.1:37679",
+    "enabledOrigins": [],
+    "focusRequest": 0
+  },
+  "editable_context_ui": "puellae",
+  "frame_context_snapshot": {
+    "tabId": 751811924,
+    "state": {
+      "identity": {
+        "tabId": 751811924,
+        "frameId": 9,
+        "documentId": "D1CD63F9BA1E052BE9CF659B3B2DDB61",
+        "topDocumentId": "0BF0D85A6E2CD7D3A4AFDA6A3A603550",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "configuration": "controlled-latin-en-1"
+      },
+      "text": "agricola",
+      "generation": 1,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "agricola",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "origin": "http://127.0.0.1:37679",
+    "enabledOrigins": [],
+    "focusRequest": 0
+  },
+  "granted": {
+    "origins": [
+      "http://127.0.0.1:37679/*"
+    ],
+    "permissions": [
+      "activeTab",
+      "contextMenus",
+      "storage",
+      "webNavigation",
+      "scripting",
+      "sidePanel"
+    ]
+  },
+  "passed": true
+}

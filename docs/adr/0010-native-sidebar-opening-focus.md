@@ -1,0 +1,3 @@
+# Accept native sidebar focus when opening
+
+Keep Edge's native sidebar and accept its transfer of keyboard focus when double-click opens it, as the user explicitly approved on 2026-10-04 after production testing on Edge 154 and KDE showed that the tested focus APIs could not preserve page focus while opening. This narrowly revises the earlier page-focus requirement: updating an already-open panel must not deliberately take page focus, and Close/Escape must still restore source focus without deliberate scrolling. Retaining the native result surface avoids an architectural replacement while preserving the learner's reading position and explicit return path.

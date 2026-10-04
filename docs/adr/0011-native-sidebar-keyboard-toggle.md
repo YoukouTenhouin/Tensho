@@ -1,0 +1,3 @@
+# Toggle the native sidebar to focus retained results
+
+After native Edge 154/KDE testing showed that the tested one-press focus paths cannot focus an already-open sidebar, the user accepted Alt+Shift+K as a toggle on 2026-10-04: one press opens and focuses a closed panel, or two presses close and reopen an already-open panel with focus. Reopening retains the result without another lookup; this also provides the focus path after keyboard lookup updates an already-open panel. This deliberately revises the earlier single-command focus promise while retaining the native sidebar and Close/Escape source-focus restoration.

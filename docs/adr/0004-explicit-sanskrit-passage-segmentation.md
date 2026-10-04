@@ -1,0 +1,5 @@
+# Explicit Sanskrit passage segmentation
+
+The Sanskrit follow-on targets Devanāgarī reading on Sanskrit Wikipedia and Wikisource, where isolated-word analysis alone would leave joined passages unresolved. Subject to backend feasibility, an explicit “Analyze passage” action extends issue #7's individual-word workflow with sandhi segmentation of only the learner's selected short passage: the learner sees alternative word divisions and can choose a constituent word for analysis and dictionary entries. This retains learner control over the requested text and ambiguity instead of silently collecting context or choosing one division.
+
+Provider-supplied compound analyses are welcome, but complete compound interpretation and sentence translation are not requirements; incomplete or ambiguous results must be visible. This is planned Sanskrit scope after working Latin delivery, not implemented support. These decisions were agreed during [issue #8](https://github.com/YoukouTenhouin/Tensho/issues/8)'s design interview.
