@@ -23,7 +23,7 @@ from permission_scope import CDP, QuietHandler
 from reading_workflow import wait_for, version
 
 
-def run(output):
+def run(output, consistency=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -100,76 +100,80 @@ def run(output):
                     for connection in connections: connection.ws.close()
                     connections.clear()
 
-                page.evaluate('window.scrollTo(0,800)')
-                worker.evaluate("globalThis.__tenshoRecoveryScenario='session-long'")
-                first = submit('malum'); first_tab = snapshot()['tabId']
-                choose('#dictionary-0'); wait_for(lambda: candidate().get('resolution', {}).get('status') == 'complete')
-                choose('#article-0-n1'); wait_for(lambda: candidate().get('articles', {}).get('n1', {}).get('status') == 'complete')
-                wait_for(lambda: panel.evaluate("Array.from(document.querySelectorAll('.dictionary-article p')).some(p=>p.textContent.startsWith('100. Complete'))"))
-                scroll_panel(900)
-                before_calls = calls(); first_dictionary = candidate()
-                checks['source_page_position_unchanged'] = page.evaluate('window.scrollY') == 800
-                checks['session_contains_complete_reading_only'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "].value.state.text==='malum')")
-                checks['local_storage_has_no_selected_text'] = panel.evaluate("chrome.storage.local.get(null).then(v=>!JSON.stringify(v).includes('malum'))")
-                checks['content_script_cannot_read_session_collection'] = panel.evaluate("chrome.scripting.executeScript({target:{tabId:" + str(first_tab) + "},func:async()=>{try{await chrome.storage.session.get('readingResults');return false}catch{return true}}}).then(r=>r.length===1&&r[0].result===true)")
-                choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
-                wait_for(lambda: panel.evaluate('window.scrollY') == 900)
-                checks['native_close_reopen_restores_content_scroll_without_requests'] = candidate() == first_dictionary and calls() == before_calls and snapshot()['state'] == first
-                checks['close_reopen_preserves_source_page_position'] = page.evaluate('window.scrollY') == 800
-                choose('#dictionary-0'); wait_for(lambda: candidate().get('expanded') is False)
-                choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
-                checks['collapsed_state_survives_native_reopen'] = candidate().get('expanded') is False and calls() == before_calls
-                choose('#dictionary-0'); wait_for(lambda: candidate().get('expanded') is True)
-                scroll_panel(700)
+                if consistency:
+                    from consistency_workflow import exercise_consistency
+                    exercise_consistency(evidence, lambda: panel, worker, page, snapshot, submit, reopen, connect, target, url)
+                else:
+                    page.evaluate('window.scrollTo(0,800)')
+                    worker.evaluate("globalThis.__tenshoRecoveryScenario='session-long'")
+                    first = submit('malum'); first_tab = snapshot()['tabId']
+                    choose('#dictionary-0'); wait_for(lambda: candidate().get('resolution', {}).get('status') == 'complete')
+                    choose('#article-0-n1'); wait_for(lambda: candidate().get('articles', {}).get('n1', {}).get('status') == 'complete')
+                    wait_for(lambda: panel.evaluate("Array.from(document.querySelectorAll('.dictionary-article p')).some(p=>p.textContent.startsWith('100. Complete'))"))
+                    scroll_panel(900)
+                    before_calls = calls(); first_dictionary = candidate()
+                    checks['source_page_position_unchanged'] = page.evaluate('window.scrollY') == 800
+                    checks['session_contains_complete_reading_only'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "].value.state.text==='malum')")
+                    checks['local_storage_has_no_selected_text'] = panel.evaluate("chrome.storage.local.get(null).then(v=>!JSON.stringify(v).includes('malum'))")
+                    checks['content_script_cannot_read_session_collection'] = panel.evaluate("chrome.scripting.executeScript({target:{tabId:" + str(first_tab) + "},func:async()=>{try{await chrome.storage.session.get('readingResults');return false}catch{return true}}}).then(r=>r.length===1&&r[0].result===true)")
+                    choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
+                    wait_for(lambda: panel.evaluate('window.scrollY') == 900)
+                    checks['native_close_reopen_restores_content_scroll_without_requests'] = candidate() == first_dictionary and calls() == before_calls and snapshot()['state'] == first
+                    checks['close_reopen_preserves_source_page_position'] = page.evaluate('window.scrollY') == 800
+                    choose('#dictionary-0'); wait_for(lambda: candidate().get('expanded') is False)
+                    choose('#close'); wait_for(lambda: target('/panel.html') is None); reopen()
+                    checks['collapsed_state_survives_native_reopen'] = candidate().get('expanded') is False and calls() == before_calls
+                    choose('#dictionary-0'); wait_for(lambda: candidate().get('expanded') is True)
+                    scroll_panel(700)
 
-                second_tab = panel.evaluate('chrome.tabs.create({url:' + json.dumps(url + '?second') + ',active:true}).then(t=>t.id)')
-                reopen(); wait_for(lambda: snapshot()['tabId'] == second_tab)
-                checks['new_tab_never_shows_first_result'] = snapshot().get('state') is None
-                second = submit('puella')
-                panel.evaluate('chrome.tabs.update(' + str(first_tab) + ',{active:true})'); reopen()
-                wait_for(lambda: snapshot()['tabId'] == first_tab)
-                checks['switch_back_restores_first_result'] = snapshot()['state'] == first and candidate()['articles']['n1']['status'] == 'complete'
-                before_calls = calls()
-                worker.ws.close()
-                page.call('ServiceWorker.enable'); page.call('ServiceWorker.stopAllWorkers')
-                wait_for(lambda: target('/worker.js') is None)
-                # A new extension message wakes a genuinely stopped worker.
-                restored = snapshot(); worker = connect('/worker.js')
-                checks['worker_restart_restores_completed_state_without_requests'] = restored['state'] == first and restored['dictionaries']['0']['articles']['n1']['status'] == 'complete' and calls() == []
-                checks['worker_restart_restores_panel_position'] = restored['scroll']['y'] == 700
-                page.evaluate("history.pushState({},'',location.pathname+'#same-document')")
-                checks['same_document_navigation_retains_result'] = snapshot()['state'] == first and calls() == []
-                worker.evaluate("globalThis.__tenshoRecoveryScenario='session-overflow'")
-                choose('#article-0-n2'); wait_for(lambda: candidate().get('articles', {}).get('n2', {}).get('status') == 'not-retained')
-                checks['oversized_article_preserves_completed_article'] = candidate()['articles']['n1']['status'] == 'complete'
-                checks['oversized_article_offers_validated_source'] = panel.evaluate("Array.from(document.querySelectorAll('a')).some(a=>a.textContent==='Read complete article at source' && a.href==='https://fixture.invalid/d-first/n2' && a.rel==='noopener noreferrer')")
-                checks['actual_serialized_session_within_six_mib'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>new TextEncoder().encode(JSON.stringify(v)).byteLength<=6*1024*1024)")
-                panel.evaluate('chrome.tabs.update(' + str(second_tab) + ',{active:true})'); reopen()
-                wait_for(lambda: snapshot()['tabId'] == second_tab)
-                checks['oversized_article_preserves_other_tab'] = snapshot()['state'] == second
-                panel.evaluate('chrome.tabs.update(' + str(first_tab) + ',{active:true})'); reopen()
-                wait_for(lambda: snapshot()['tabId'] == first_tab)
-                page.call('Page.reload'); wait_for(lambda: snapshot().get('state') is None)
-                checks['reload_clears_reading_state'] = snapshot().get('dictionaries') == {}
-                submit('legi')
-                page.call('Page.navigate', url=url + '?different-document'); wait_for(lambda: snapshot().get('state') is None)
-                checks['different_document_clears_reading_state'] = snapshot().get('dictionaries') == {}
-                panel.evaluate("document.querySelector('#word').value='sessionpending';document.querySelector('#lookup').requestSubmit()")
-                wait_for(lambda: snapshot().get('state', {}).get('status') == 'loading')
-                choose('#close'); wait_for(lambda: target('/panel.html') is None)
-                wait_for(lambda: worker.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "]?.value.state.status==='complete')"))
-                checks['pending_completion_does_not_reopen_sidebar'] = target('/panel.html') is None
-                before_calls = calls(); reopen()
-                checks['reopen_uses_completion_retained_while_closed'] = snapshot()['state']['text'] == 'sessionpending' and snapshot()['state']['status'] == 'complete' and calls() == before_calls
-                panel.evaluate("(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'save-origin',windowId:w.id,origin:" + json.dumps(origin) + ",enabled:true})})()")
-                wait_for(lambda: origin in snapshot()['enabledOrigins'])
-                before_settings = snapshot()['settings']
-                close_browser(); worker, panel, page = launch()
-                checks['browser_restart_clears_session_reading'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>!Object.values(v.readingResults?.tabs??{}).some(t=>t.status==='retained'))") and snapshot().get('state') is None
-                checks['browser_restart_preserves_local_settings'] = snapshot()['settings'] == before_settings
-                checks['browser_restart_preserves_site_enablement'] = origin in snapshot()['enabledOrigins']
-                checks['browser_restart_sends_no_lookup'] = calls() == []
-                evidence['passed'] = all(checks.values())
+                    second_tab = panel.evaluate('chrome.tabs.create({url:' + json.dumps(url + '?second') + ',active:true}).then(t=>t.id)')
+                    reopen(); wait_for(lambda: snapshot()['tabId'] == second_tab)
+                    checks['new_tab_never_shows_first_result'] = snapshot().get('state') is None
+                    second = submit('puella')
+                    panel.evaluate('chrome.tabs.update(' + str(first_tab) + ',{active:true})'); reopen()
+                    wait_for(lambda: snapshot()['tabId'] == first_tab)
+                    checks['switch_back_restores_first_result'] = snapshot()['state'] == first and candidate()['articles']['n1']['status'] == 'complete'
+                    before_calls = calls()
+                    worker.ws.close()
+                    page.call('ServiceWorker.enable'); page.call('ServiceWorker.stopAllWorkers')
+                    wait_for(lambda: target('/worker.js') is None)
+                    # A new extension message wakes a genuinely stopped worker.
+                    restored = snapshot(); worker = connect('/worker.js')
+                    checks['worker_restart_restores_completed_state_without_requests'] = restored['state'] == first and restored['dictionaries']['0']['articles']['n1']['status'] == 'complete' and calls() == []
+                    checks['worker_restart_restores_panel_position'] = restored['scroll']['y'] == 700
+                    page.evaluate("history.pushState({},'',location.pathname+'#same-document')")
+                    checks['same_document_navigation_retains_result'] = snapshot()['state'] == first and calls() == []
+                    worker.evaluate("globalThis.__tenshoRecoveryScenario='session-overflow'")
+                    choose('#article-0-n2'); wait_for(lambda: candidate().get('articles', {}).get('n2', {}).get('status') == 'not-retained')
+                    checks['oversized_article_preserves_completed_article'] = candidate()['articles']['n1']['status'] == 'complete'
+                    checks['oversized_article_offers_validated_source'] = panel.evaluate("Array.from(document.querySelectorAll('a')).some(a=>a.textContent==='Read complete article at source' && a.href==='https://fixture.invalid/d-first/n2' && a.rel==='noopener noreferrer')")
+                    checks['actual_serialized_session_within_six_mib'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>new TextEncoder().encode(JSON.stringify(v)).byteLength<=6*1024*1024)")
+                    panel.evaluate('chrome.tabs.update(' + str(second_tab) + ',{active:true})'); reopen()
+                    wait_for(lambda: snapshot()['tabId'] == second_tab)
+                    checks['oversized_article_preserves_other_tab'] = snapshot()['state'] == second
+                    panel.evaluate('chrome.tabs.update(' + str(first_tab) + ',{active:true})'); reopen()
+                    wait_for(lambda: snapshot()['tabId'] == first_tab)
+                    page.call('Page.reload'); wait_for(lambda: snapshot().get('state') is None)
+                    checks['reload_clears_reading_state'] = snapshot().get('dictionaries') == {}
+                    submit('legi')
+                    page.call('Page.navigate', url=url + '?different-document'); wait_for(lambda: snapshot().get('state') is None)
+                    checks['different_document_clears_reading_state'] = snapshot().get('dictionaries') == {}
+                    panel.evaluate("document.querySelector('#word').value='sessionpending';document.querySelector('#lookup').requestSubmit()")
+                    wait_for(lambda: snapshot().get('state', {}).get('status') == 'loading')
+                    choose('#close'); wait_for(lambda: target('/panel.html') is None)
+                    wait_for(lambda: worker.evaluate("chrome.storage.session.get('readingResults').then(v=>v.readingResults.tabs[" + str(first_tab) + "]?.value.state.status==='complete')"))
+                    checks['pending_completion_does_not_reopen_sidebar'] = target('/panel.html') is None
+                    before_calls = calls(); reopen()
+                    checks['reopen_uses_completion_retained_while_closed'] = snapshot()['state']['text'] == 'sessionpending' and snapshot()['state']['status'] == 'complete' and calls() == before_calls
+                    panel.evaluate("(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'save-origin',windowId:w.id,origin:" + json.dumps(origin) + ",enabled:true})})()")
+                    wait_for(lambda: origin in snapshot()['enabledOrigins'])
+                    before_settings = snapshot()['settings']
+                    close_browser(); worker, panel, page = launch()
+                    checks['browser_restart_clears_session_reading'] = panel.evaluate("chrome.storage.session.get('readingResults').then(v=>!Object.values(v.readingResults?.tabs??{}).some(t=>t.status==='retained'))") and snapshot().get('state') is None
+                    checks['browser_restart_preserves_local_settings'] = snapshot()['settings'] == before_settings
+                    checks['browser_restart_preserves_site_enablement'] = origin in snapshot()['enabledOrigins']
+                    checks['browser_restart_sends_no_lookup'] = calls() == []
+                    evidence['passed'] = all(checks.values())
         except Exception as error:
             evidence['failure'] = str(error); evidence['traceback'] = traceback.format_exc(); evidence['passed'] = False
             evidence['browser_exit'] = browser.poll() if browser else None
@@ -200,5 +204,7 @@ def run(output):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path, required=True)
-    result = run(parser.parse_args().output); print(json.dumps(result, indent=2, ensure_ascii=False))
+    parser.add_argument('--consistency', action='store_true')
+    args = parser.parse_args()
+    result = run(args.output, args.consistency); print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)
