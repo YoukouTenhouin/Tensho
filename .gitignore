@@ -2,3 +2,5 @@ node_modules/
 dist/
 dist-controlled/
 __pycache__/
+
+dist-recovery/

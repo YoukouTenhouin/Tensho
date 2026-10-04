@@ -1,4 +1,5 @@
 """Live dictionary continuation using the production Latin runner's isolated Edge."""
+import json
 from reading_workflow import wait_for
 
 
@@ -37,7 +38,9 @@ def exercise_dictionary(panel, snapshot, requests, evidence):
     checks['reopening_keeps_article_without_request'] = candidate()['articles']['n21985']['status'] == 'complete' and len(requests()) == 3
     local = panel.evaluate('chrome.storage.local.get(null)')
     cache = local.get('latinDictionaryIndex', {})
-    checks['persistent_cache_contains_index_only'] = sorted(cache) == ['key', 'storedAt', 'text'] and all(key in ['latinDictionaryIndex', 'latinAccessDecision', 'enabledOrigins'] for key in local)
+    checks['persistent_cache_contains_index_only'] = sorted(cache) == ['key', 'storedAt', 'text'] and all(key in ['latinDictionaryIndex', 'latinAccessDecision', 'enabledOrigins', 'lookupSettings'] for key in local)
+    settings = local.get('lookupSettings', {})
+    checks['persistent_settings_do_not_contain_reading_results'] = sorted(settings) == ['languages', 'lookupLanguage', 'revision', 'schema'] and 'important' not in json.dumps(settings)
     # Revoke just dictionary access; a new explicit analysis still works. The fresh
     # persisted index must not bypass the permission guard for new resolution.
     panel.evaluate("chrome.permissions.remove({origins:['https://repos1.alpheios.net/*']})")
