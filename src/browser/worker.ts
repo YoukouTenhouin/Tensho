@@ -247,7 +247,7 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     }
     if (message.type === 'dictionary-resolve') void dictionaries.resolve(tabId, message.generation, message.candidateIndex, message.retry === true);
     else if (message.type === 'dictionary-collapse') dictionaries.collapse(tabId, message.generation, message.candidateIndex);
-    else if (typeof message.entryId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true);
+    else if (typeof message.entryId === 'string' && typeof message.providerId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true, message.providerId);
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
     if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');

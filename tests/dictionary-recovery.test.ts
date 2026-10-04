@@ -97,3 +97,120 @@ test('exhausted dictionary chains retry locally and keep same-spelling analysis 
     'first:resolve:candidate-2', 'second:resolve:candidate-2', 'third:resolve:candidate-2']);
   assert.equal(app.lookup.get(1), app.state); assert.equal(app.analyses(), 1);
 });
+
+test('a first article failure advances to later alternatives without silently selecting a same-id article', async () => {
+  const app = await setup({ first: { retrieve: async () => { throw new RequestFailure('identity-mismatch', 'Wrong article identity'); } } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1', false, 'first');
+  const candidate = app.dictionaries.get(1)[0]!;
+  assert.equal(candidate.resolution.status, 'complete'); if (candidate.resolution.status !== 'complete') assert.fail();
+  assert.equal(candidate.resolution.value.providerId, 'second'); assert.equal(candidate.resolution.value.stableLemmaId, 'candidate-1');
+  assert.equal(candidate.resolution.value.automaticSelection, null); assert.deepEqual(candidate.articles, {});
+  assert.deepEqual(candidate.resolution.value.providerIssues?.map(issue => [issue.providerId, issue.operation, issue.kind]), [['first', 'article', 'identity-mismatch']]);
+  const before = [...app.calls];
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1', false, 'first');
+  assert.deepEqual(app.calls, before, 'a stale button cannot select an identically named alternative from another provider');
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1', false, 'second');
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'second:resolve:candidate-1', 'second:article:n1']);
+  assert.equal(candidate.articles.n1?.status, 'complete'); assert.equal(app.lookup.get(1), app.state); assert.equal(app.analyses(), 1);
+});
+
+test('once one article succeeds later failure and retry stay local without filling gaps from another dictionary', async () => {
+  let failure = true;
+  const app = await setup({ first: { retrieve: async (_resolution, entryId) => {
+    if (entryId === 'n2' && failure) throw new RequestFailure('network', 'Second article offline');
+    return article('first', entryId);
+  } } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  const preserved = app.dictionaries.get(1)[0]!.articles.n1;
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n2');
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n1, preserved);
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n2?.status, 'error');
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'first:article:n2']);
+  failure = false;
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n2', true);
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n2?.status, 'complete');
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n1, preserved);
+  assert.equal(app.calls.filter(call => call.startsWith('second:')).length, 0); assert.equal(app.lookup.get(1), app.state);
+});
+
+test('queued article choices cannot mix providers when an earlier choice starts fallback', async () => {
+  let release!: () => void;
+  const app = await setup({ first: { retrieve: async () => { await new Promise<void>(resolve => { release = resolve; }); throw new RequestFailure('network', 'First article failed'); } } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  const first = app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  const queued = app.dictionaries.retrieve(1, app.state.generation, 0, 'n2');
+  await new Promise<void>(resolve => setImmediate(resolve));
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1']);
+  release(); await Promise.all([first, queued]);
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'second:resolve:candidate-1']);
+  assert.deepEqual(app.dictionaries.get(1)[0]!.articles, {});
+});
+
+test('a concurrent first success is retained before a queued failure and prevents fallback', async () => {
+  let release!: () => void;
+  const app = await setup({ first: { retrieve: async (_resolution, entryId) => {
+    if (entryId === 'n2') throw new RequestFailure('network', 'Later article failed');
+    await new Promise<void>(resolve => { release = resolve; }); return article('first', entryId);
+  } } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  const first = app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  const later = app.dictionaries.retrieve(1, app.state.generation, 0, 'n2');
+  await new Promise<void>(resolve => setImmediate(resolve)); release(); await Promise.all([first, later]);
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n1?.status, 'complete');
+  assert.equal(app.dictionaries.get(1)[0]!.articles.n2?.status, 'error');
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'first:article:n2']);
+});
+
+test('article failure followed by exhausted resolution preserves both operation failures and offers local retry', async () => {
+  const fail = async () => { throw new RequestFailure('http', 'Dictionary unavailable'); };
+  const app = await setup({ first: { retrieve: fail }, second: { resolve: fail }, third: { resolve: fail } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  const work = app.dictionaries.get(1)[0]!.resolution; assert.equal(work.status, 'error');
+  if (work.status === 'error') assert.deepEqual(work.providerIssues?.map(issue => [issue.providerId, issue.operation]),
+    [['first', 'article'], ['second', 'resolution'], ['third', 'resolution']]);
+  await app.dictionaries.resolve(1, app.state.generation, 0, true);
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'second:resolve:candidate-1', 'third:resolve:candidate-1', 'first:resolve:candidate-1']);
+  assert.equal(app.lookup.get(1), app.state);
+});
+
+test('outer dictionary action deadline retains prior reasons and rejects stalled fallback completion', async context => {
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  let release!: (value: DictionaryResolution) => void;
+  const app = await setup({ first: { retrieve: async () => { throw new RequestFailure('network', 'First article failed'); } },
+    second: { resolve: () => new Promise(resolve => { release = resolve; }) } });
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  const work = app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  await new Promise<void>(resolve => setImmediate(resolve));
+  context.mock.timers.tick(30_001); await work;
+  const failed = app.dictionaries.get(1)[0]!.resolution; assert.equal(failed.status, 'error');
+  if (failed.status === 'error') { assert.equal(failed.failureKind, 'action-deadline'); assert.deepEqual(failed.providerIssues?.map(issue => issue.providerId), ['first']); }
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'second:resolve:candidate-1']);
+  release(resolution(analysis.candidates[0]!, 'second')); await new Promise<void>(resolve => setImmediate(resolve));
+  assert.equal(app.dictionaries.get(1)[0]!.resolution, failed); assert.equal(app.lookup.get(1), app.state);
+});
+
+test('a previously failed resolver does not turn later missing article access into a technical failure', async () => {
+  const denied: string[] = [];
+  const app = await setup({ first: { resolve: async () => { throw new RequestFailure('network', 'First resolver offline'); } } }, denied);
+  await app.dictionaries.resolve(1, app.state.generation, 0);
+  denied.push('second');
+  await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+  const work = app.dictionaries.get(1)[0]!.articles.n1; assert.equal(work?.status, 'error');
+  if (work?.status === 'error') { assert.equal(work.failureKind, 'missing-access'); assert.deepEqual(work.providerIssues?.map(issue => issue.kind), ['network', 'missing-access']); }
+  assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'second:resolve:candidate-1']);
+});
+
+test('article recovery stops at confirmed absence or unresolved mapping without querying another dictionary', async () => {
+  for (const status of ['confirmed-absence', 'unresolved-mapping'] as const) {
+    const app = await setup({ first: { retrieve: async () => { throw new RequestFailure('network', 'First article failed'); } },
+      second: { resolve: async candidate => ({ ...resolution(candidate, 'second'), status, alternatives: [], evidence: 'Controlled absence evidence' }) } });
+    await app.dictionaries.resolve(1, app.state.generation, 0);
+    await app.dictionaries.retrieve(1, app.state.generation, 0, 'n1');
+    const work = app.dictionaries.get(1)[0]!.resolution; assert.equal(work.status, 'complete');
+    if (work.status === 'complete') { assert.equal(work.value.status, status); assert.equal(work.value.providerIssues?.length, 1); }
+    assert.deepEqual(app.calls, ['first:resolve:candidate-1', 'first:article:n1', 'second:resolve:candidate-1']);
+  }
+});

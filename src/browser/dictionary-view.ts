@@ -76,14 +76,14 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
       const article = candidate.articles[alternative.entryId];
       const id = `article-${index}-${alternative.entryId}`;
       item.id = `${id}-region`; item.tabIndex = -1; item.setAttribute('aria-label', label);
-      if (!article) item.append(button('Read full article', id, () => action('dictionary-retrieve', { entryId: alternative.entryId })));
+      if (!article) item.append(button('Read full article', id, () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId })));
       else if (article.status === 'complete') item.append(renderArticle(article.value));
       else {
         const message = paragraph(article.status === 'loading' ? 'Loading full article…' : article.message);
         message.setAttribute('role', 'status'); item.append(message);
         if (article.status !== 'loading') { const feedback = providerFeedback(article.providerIssues); if (feedback) item.append(feedback); }
         if (article.status === 'error') item.append(button('Retry this article', id,
-          () => action('dictionary-retrieve', { entryId: alternative.entryId, retry: true })));
+          () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId, retry: true })));
       }
       content.append(item);
     }

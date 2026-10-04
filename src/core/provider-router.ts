@@ -1,8 +1,9 @@
 import type { Analysis, Analyzer, Identity } from './lookup.ts';
-import type { ProviderCatalog, Settings } from './configuration.ts';
+import type { EligibleProvider, ProviderCatalog, ProviderOptionValue, Settings } from './configuration.ts';
 import { lookupRoutes } from './configuration.ts';
+import type { ProviderIssue, ProviderIssueObserver } from './requests.ts';
 import { RequestFailure } from './requests.ts';
-import { runProviderChain } from './provider-chain.ts';
+import { runProviderChain, technicalFailure } from './provider-chain.ts';
 import type { DictionaryProvider } from '../providers/latin-dictionary.ts';
 import type { DictionaryResolution } from '../providers/latin-index.ts';
 import type { DictionaryArticle } from '../providers/latin-article.ts';
@@ -49,10 +50,13 @@ export class ProviderRouter implements Analyzer, DictionaryProvider {
       explanationNotice: `Short meanings are unavailable for explanation preference ${identity.explanationLanguage}. Lemmas and grammatical interpretations are retained.`,
       candidates: result.candidates.map(candidate => ({ ...candidate, meanings: [] })) };
   }
-  async resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryResolution> {
+  async resolve(candidate: Analysis['candidates'][number], identity: Identity, signal: AbortSignal, deadline: number, _options?: Record<string, ProviderOptionValue>, observe?: ProviderIssueObserver): Promise<DictionaryResolution> {
     const routes = await this.#routes(identity, signal);
     if (!routes.dictionary.length) throw new RequestFailure('unsupported-explanation', 'Dictionary entries are unavailable for the selected explanation preference and enabled providers.');
-    const recovered = await runProviderChain({ providers: routes.dictionary, operation: 'resolution', signal, deadline,
+    return this.#resolveFrom(candidate, routes.dictionary, identity, signal, deadline, [], observe);
+  }
+  async #resolveFrom(candidate: Analysis['candidates'][number], providers: readonly EligibleProvider[], identity: Identity, signal: AbortSignal, deadline: number, priorIssues: readonly ProviderIssue[], observe?: ProviderIssueObserver): Promise<DictionaryResolution> {
+    const recovered = await runProviderChain({ providers, operation: 'resolution', signal, deadline, priorIssues, observe,
       permitted: this.#permitted, current: active => this.#routes(identity, active),
       supports: selected => this.#dictionaries[selected.declaration.id]?.supportsCandidate?.(candidate, identity) ?? true,
       execute: (selected, active) => {
@@ -64,15 +68,26 @@ export class ProviderRouter implements Analyzer, DictionaryProvider {
       ...(recovered.issues.length ? { providerIssues: recovered.issues } : {}) };
   }
 
-  async retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number): Promise<DictionaryArticle> {
+  async retrieve(resolution: DictionaryResolution, entryId: string, identity: Identity, signal: AbortSignal, deadline: number, _options?: Record<string, ProviderOptionValue>, observe?: ProviderIssueObserver): Promise<DictionaryArticle> {
     const routes = await this.#routes(identity, signal);
     const selected = routes.dictionary.find(provider => provider.declaration.id === resolution.providerId);
     const dictionary = selected && this.#dictionaries[selected.declaration.id];
     if (!selected || !dictionary) throw new RequestFailure('unsupported-explanation', 'This dictionary alternative is unavailable under the current settings.');
     const recovered = await runProviderChain({ providers: [selected], operation: 'article', signal, deadline,
       permitted: this.#permitted, current: active => this.#routes(identity, active), supports: () => true,
-      priorIssues: resolution.providerIssues,
+      priorIssues: resolution.providerIssues, observe,
       execute: (_selected, active) => dictionary.retrieve(resolution, entryId, identity, active, deadline, { ...selected.configuration.options }) });
     return recovered.issues.length ? { ...recovered.value, providerIssues: recovered.issues } : recovered.value;
   }
+  /** Article failure advances only to later dictionary alternatives. Selection
+   * remains with the learner; candidate-local success policy belongs to the coordinator. */
+  async recover(candidate: Analysis['candidates'][number], previous: DictionaryResolution, failure: RequestFailure,
+    identity: Identity, signal: AbortSignal, deadline: number, observe?: ProviderIssueObserver): Promise<DictionaryResolution | undefined> {
+    if (!technicalFailure(failure)) return;
+    const routes = await this.#routes(identity, signal);
+    const index = routes.dictionary.findIndex(provider => provider.declaration.id === previous.providerId);
+    if (index < 0 || index + 1 === routes.dictionary.length) return;
+    return this.#resolveFrom(candidate, routes.dictionary.slice(index + 1), identity, signal, deadline, failure.issues, observe);
+  }
+
 }

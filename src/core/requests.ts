@@ -7,6 +7,7 @@ export interface ProviderIssue {
   providerId: string; providerName: string; operation: 'analysis' | 'resolution' | 'article';
   kind: RequestFailureKind; message: string; attempted: boolean;
 }
+export type ProviderIssueObserver = (issues: readonly ProviderIssue[]) => void;
 export class RequestFailure extends Error {
   readonly kind: RequestFailureKind;
   readonly issues: ProviderIssue[];

@@ -1,6 +1,6 @@
 import type { EligibleProvider } from './configuration.ts';
 import { RequestFailure } from './requests.ts';
-import type { ProviderIssue, RequestFailureKind } from './requests.ts';
+import type { ProviderIssue, ProviderIssueObserver, RequestFailureKind } from './requests.ts';
 
 const technical = new Set<RequestFailureKind>(['network', 'http', 'format', 'size', 'identity-mismatch', 'request-timeout']);
 export function technicalFailure(error: unknown): error is RequestFailure {
@@ -19,8 +19,10 @@ export async function runProviderChain<T>(options: {
   supports(provider: EligibleProvider): boolean;
   execute(provider: EligibleProvider, signal: AbortSignal): Promise<T>;
   priorIssues?: readonly ProviderIssue[];
+  observe?: ProviderIssueObserver;
 }): Promise<{ value: T; provider: EligibleProvider; issues: ProviderIssue[] }> {
   const issues = [...(options.priorIssues ?? [])];
+  options.observe?.(issues);
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
   let rejectAbort: (error: RequestFailure) => void = () => {};
@@ -38,6 +40,7 @@ export async function runProviderChain<T>(options: {
   const record = (provider: EligibleProvider, failure: RequestFailure, attempted: boolean) => {
     issues.push({ providerId: provider.declaration.id, providerName: provider.declaration.name,
       operation: options.operation, kind: failure.kind, message: failure.message, attempted });
+    options.observe?.(issues);
   };
   const run = async () => {
     for (const provider of options.providers) {
@@ -65,8 +68,9 @@ export async function runProviderChain<T>(options: {
         record(provider, error, true);
       }
     }
-    const failed = issues.filter(issue => technical.has(issue.kind));
-    const kind = failed.at(-1)?.kind ?? (issues.some(issue => issue.kind === 'missing-access') ? 'missing-access' : 'unsupported-input');
+    const currentIssues = issues.slice(options.priorIssues?.length ?? 0);
+    const failed = currentIssues.filter(issue => technical.has(issue.kind));
+    const kind = failed.at(-1)?.kind ?? (currentIssues.some(issue => issue.kind === 'missing-access') ? 'missing-access' : 'unsupported-input');
     throw new RequestFailure(kind, failed.length
       ? 'Eligible providers failed technically. Retry explicitly under the current settings.'
       : kind === 'missing-access' ? 'Provider access is missing. Enable access explicitly before retrying.'
