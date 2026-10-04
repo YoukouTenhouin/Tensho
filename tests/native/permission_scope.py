@@ -58,8 +58,9 @@ def run():
                    functools.partial(QuietHandler, directory=root)) for _ in range(2)]
         for server in servers:
             threading.Thread(target=server.serve_forever, daemon=True).start()
-        urls = [f'http://127.0.0.1:{server.server_port}/index.html' for server in servers]
-        pattern = f'http://127.0.0.1:{servers[0].server_port}/*'
+        urls = [f'http://reading.test:{server.server_port}/index.html' for server in servers]
+        urls.extend(f'http://{host}:{servers[0].server_port}/index.html' for host in ['child.reading.test', 'other.test'])
+        pattern = f'http://reading.test:{servers[0].server_port}/*'
         extension = root / 'extension'
         extension.mkdir()
         (extension / 'manifest.json').write_text(json.dumps({
@@ -77,6 +78,7 @@ def run():
                 browser = subprocess.Popen([
                     binary, '--headless=new', f'--user-data-dir={root / "profile"}',
                     '--no-first-run', '--no-default-browser-check',
+                    '--host-resolver-rules=MAP *.test 127.0.0.1', '--no-proxy-server',
                     f'--disable-extensions-except={extension}', f'--load-extension={extension}',
                     '--remote-debugging-port=0', 'about:blank'], stdout=log, stderr=log)
                 deadline = time.monotonic() + 20
@@ -119,7 +121,9 @@ def run():
                     results.push({origin,contains:await chrome.permissions.contains({origins:[origin+'/*']}),injection});
                     await chrome.tabs.remove(tab.id);
                   }
-                  return {manifest:chrome.runtime.getManifest(),granted:await chrome.permissions.getAll(),results};
+                  const changedScheme=urls[0].replace('http:', 'https:');
+                  const httpsGranted=await chrome.permissions.contains({origins:[new URL(changedScheme).origin+'/*']});
+                  return {manifest:chrome.runtime.getManifest(),granted:await chrome.permissions.getAll(),results,httpsGranted};
                 })()'''.replace('URLS', json.dumps(urls))
                 result = cdp.evaluate(expression)
                 assert result['manifest']['name'] == 'Tensho native permission acceptance'
@@ -131,7 +135,11 @@ def run():
                     isinstance(result['results'][0]['injection'], list)
                     and isinstance(result['results'][1]['injection'], dict)
                     and not result['results'][1]['contains'])
+                result['exact_hostname_isolation'] = all(isinstance(item['injection'], dict) and not item['contains'] for item in result['results'][2:])
+                result['scheme_not_expanded'] = not result['httpsGranted']
+                result['passed'] = result['exact_port_isolation'] and result['exact_hostname_isolation'] and result['scheme_not_expanded']
                 print(json.dumps(result, indent=2))
+                if not result['passed']: raise RuntimeError('Native permission isolation failed')
         finally:
             if cdp:
                 cdp.ws.close()
