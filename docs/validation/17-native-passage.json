@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-04T16:47:28Z",
+  "observed_at_utc": "2026-10-04T16:53:07Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "isolated Xvfb / X11",
   "controlled_analysis": true,
@@ -50,6 +50,7 @@
     "rapid_native_choices_keep_latest_word_and_passage": true,
     "failure_preserves_original_passage_and_controls": true,
     "native_retry_preserves_passage_and_retries_one_word": true,
+    "stale_passage_message_does_not_cancel_newer_lookup": true,
     "invalid_passages_send_nothing_and_explain_limits": true,
     "lookup_language_remains_visible_on_error": true,
     "replacement_selection_clears_passage_controls": true
@@ -87,7 +88,7 @@
   },
   "native_contexts": [
     {
-      "contextId": "ebc42cec-55c9-42d2-b633-b109d7214117",
+      "contextId": "54e3a93b-c1f7-4db6-bae2-f1fc16e41f3b",
       "contextType": "BACKGROUND",
       "frameId": -1,
       "incognito": false,
@@ -95,11 +96,11 @@
       "windowId": -1
     },
     {
-      "contextId": "1251945e-3ee5-4215-900c-40eeee5413e9",
+      "contextId": "822c27af-6894-431f-ae76-9d8f13e8f4ae",
       "contextType": "SIDE_PANEL",
-      "documentId": "87F086AE487C12DD1C69D54ADD846224",
-      "documentOrigin": "chrome-extension://djehdphijkgcaikngmapkgplpjagmoka",
-      "documentUrl": "chrome-extension://djehdphijkgcaikngmapkgplpjagmoka/panel.html",
+      "documentId": "50F30050C28D180E5D55C72DCACD1AF7",
+      "documentOrigin": "chrome-extension://kfhgngcagcbdblgnpabjonooihbnllnf",
+      "documentUrl": "chrome-extension://kfhgngcagcbdblgnpabjonooihbnllnf/panel.html",
       "frameId": 0,
       "incognito": false,
       "tabId": -1,
@@ -184,19 +185,19 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 420234909,
+      "tabId": 629134728,
       "frameId": 12,
-      "documentId": "A101E667834A6A8E51EC2E867013767E",
-      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "documentId": "9DF38E16E6A91B6197CD9EFB504AD17B",
+      "topDocumentId": "4397A8E79658C86EE510D1431A55407C",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "whitaker-latin-en-1"
     },
     "separate_origin": {
-      "tabId": 420234909,
+      "tabId": 629134728,
       "frameId": 13,
-      "documentId": "C0E3538302F115F6306083BBD6A42D8F",
-      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "documentId": "7E6EF84F2F52648DF3E3E8EFC0EAAB62",
+      "topDocumentId": "4397A8E79658C86EE510D1431A55407C",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "whitaker-latin-en-1"
@@ -204,10 +205,10 @@
   },
   "keyboard_frame": {
     "identity": {
-      "tabId": 420234909,
+      "tabId": 629134728,
       "frameId": 13,
-      "documentId": "C0E3538302F115F6306083BBD6A42D8F",
-      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "documentId": "7E6EF84F2F52648DF3E3E8EFC0EAAB62",
+      "topDocumentId": "4397A8E79658C86EE510D1431A55407C",
       "lookupLanguage": "lat",
       "explanationLanguage": "en",
       "configuration": "whitaker-latin-en-1"
@@ -232,7 +233,7 @@
   },
   "ungranted_keyboard": {
     "identity": {
-      "tabId": 420234909,
+      "tabId": 629134728,
       "frameId": 0,
       "documentId": "manual",
       "topDocumentId": "manual",
@@ -247,7 +248,7 @@
   },
   "opaque_keyboard": {
     "identity": {
-      "tabId": 420234909,
+      "tabId": 629134728,
       "frameId": 0,
       "documentId": "manual",
       "topDocumentId": "manual",
@@ -316,13 +317,13 @@
     "active": "word"
   },
   "focus_return_lookup": {
-    "tabId": 420234909,
+    "tabId": 629134728,
     "state": {
       "identity": {
-        "tabId": 420234909,
+        "tabId": 629134728,
         "frameId": 0,
-        "documentId": "488C6F715E89439FD253B24DF04B08E8",
-        "topDocumentId": "488C6F715E89439FD253B24DF04B08E8",
+        "documentId": "3D625FE832B08ECA510A14B022F335C2",
+        "topDocumentId": "3D625FE832B08ECA510A14B022F335C2",
         "lookupLanguage": "lat",
         "explanationLanguage": "en",
         "configuration": "whitaker-latin-en-1"
@@ -351,10 +352,10 @@
       false
     ],
     "providerAccessDecision": "never",
-    "origin": "http://127.0.0.1:46179",
+    "origin": "http://127.0.0.1:41793",
     "enabledOrigins": [
-      "http://127.0.0.1:46179",
-      "http://127.0.0.1:46565"
+      "http://127.0.0.1:41793",
+      "http://127.0.0.1:33793"
     ],
     "focusRequest": 14
   },
@@ -376,7 +377,8 @@
       "virumque",
       "mālum",
       "controlled-failure",
-      "controlled-failure"
+      "controlled-failure",
+      "cano"
     ],
     "native_keyboard": true
   },

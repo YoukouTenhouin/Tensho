@@ -1,4 +1,4 @@
-import { LookupCoordinator } from '../core/lookup.ts';
+import { LookupCoordinator, sameIdentity } from '../core/lookup.ts';
 import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { RequestExecutor } from '../core/requests.ts';
 import { createWhitakerAnalyzer, latinProviderOrigins } from '../providers/whitaker.ts';
@@ -198,7 +198,7 @@ async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   if (!tab?.id || tab.incognito) throw new Error('No regular reading tab is available.');
   return tab;
 }
-async function panelAction(message: Record<string, unknown>, request?: LookupRequest): Promise<unknown> {
+async function panelAction(message: Record<string, unknown>, request?: LookupRequest, startWord?: () => LookupRequest | undefined): Promise<unknown> {
   if (typeof message.windowId !== 'number') throw new Error('Missing reading window');
   const tab = await activeTab(message.windowId), tabId = tab.id!;
   if (message.type === 'snapshot') {
@@ -224,12 +224,14 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   }
   if (message.type === 'passage-word') {
     const previous = coordinator.get(tabId);
-    if (message.tabId !== tabId || !request || !previous?.passage || previous.passage.id !== message.passageId || typeof message.wordIndex !== 'number') {
+    if (message.tabId !== tabId || !previous?.passage || previous.passage.id !== message.passageId || typeof message.wordIndex !== 'number') {
       throw new Error('The passage changed. Choose a word from the current passage.');
     }
     const identity = previous.identity.documentId === 'manual' ? manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
-    if (!request.current()) return { ok: true };
-    void request.selectWord(identity, previous.passage.id, message.wordIndex);
+    if (!sameIdentity(identity, previous.identity)) throw new Error('The passage source changed. Select the passage again.');
+    const wordRequest = startWord?.();
+    if (!wordRequest) return { ok: true };
+    void wordRequest.selectWord(identity, previous.passage.id, message.wordIndex);
   }
   if (message.type === 'provider-access-result') {
     const granted = await chrome.permissions.contains({ origins: [...latinProviderOrigins] });
@@ -267,9 +269,11 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (!message || typeof message !== 'object') return;
   if (sender.url === chrome.runtime.getURL('panel.html')) {
-    const request = (message.type === 'manual-lookup' || message.type === 'passage-word') && Number.isInteger(message.tabId) && message.tabId >= 0
+    const request = message.type === 'manual-lookup' && Number.isInteger(message.tabId) && message.tabId >= 0
       ? coordinator.begin(message.tabId, 0) : undefined;
-    void panelAction(message, request).then(reply, error => reply({ error: String(error) })); return true;
+    const startWord = message.type === 'passage-word' && Number.isInteger(message.tabId) && Number.isInteger(message.passageId) && Number.isInteger(message.wordIndex)
+      ? coordinator.prepareWordChoice(message.tabId, message.passageId, message.wordIndex) : undefined;
+    void panelAction(message, request, startWord).then(reply, error => reply({ error: String(error) })); return true;
   }
   if (message.type === 'automatic-lookup' && typeof message.text === 'string' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     if (!sender.origin || sender.origin !== readingOrigin(sender.url ?? '')) return;

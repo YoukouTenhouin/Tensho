@@ -53,6 +53,12 @@ def exercise_passage(reading, native_key, connect, target, snapshot, url, eviden
     prior = len(calls()); native_key('Tab'); native_key('Return')
     wait_for(lambda: len(calls()) > prior)
     checks['native_retry_preserves_passage_and_retries_one_word'] = calls()[prior:] == ['controlled-failure'] and state()['passage']['id'] == passage_id
+    # Send a stale extension message while a newer lookup is actively loading.
+    panel.evaluate("document.querySelector('#word').value='cano';document.querySelector('#lookup').requestSubmit()")
+    wait_for(lambda: state()['text'] == 'cano' and state()['status'] == 'loading')
+    panel.evaluate("(async()=>{const s=await "+snapshot+";const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'passage-word',tabId:s.tabId,windowId:w.id,passageId:"+str(passage_id)+",wordIndex:0})})()")
+    wait_for(lambda: state()['text'] == 'cano' and state()['status'] == 'complete')
+    checks['stale_passage_message_does_not_cancel_newer_lookup'] = state()['text'] == 'cano' and not state().get('passage')
     # A fresh explicit selection replaces controls; its whole-input validation
     # rejects oversized offered words/counts before the controlled adapter runs.
     def manual(text):

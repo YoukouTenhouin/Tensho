@@ -10,6 +10,11 @@ export interface Identity {
   lookupLanguage: string;
   explanationLanguage: string;
 }
+export function sameIdentity(left: Identity, right: Identity): boolean {
+  return left.tabId === right.tabId && left.frameId === right.frameId && left.documentId === right.documentId &&
+    left.topDocumentId === right.topDocumentId && left.configuration === right.configuration &&
+    left.lookupLanguage === right.lookupLanguage && left.explanationLanguage === right.explanationLanguage;
+}
 export interface Analysis {
   provider: string;
   controlled: boolean;
@@ -41,6 +46,7 @@ export class LookupCoordinator {
   #pending = new Map<number, AbortController>();
   #generation = 0;
   #requests = new Map<number, { token: symbol; frameId: number | undefined }>();
+  #wordChoices = new Map<number, symbol>();
   #analyzer: Analyzer;
   #publish: (state: State | undefined, tabId: number) => void;
   #sourceIsCurrent: (identity: Identity) => Promise<boolean>;
@@ -57,6 +63,7 @@ export class LookupCoordinator {
   clear(tabId: number): void {
     this.#invalidate(tabId);
     this.#requests.delete(tabId);
+    this.#wordChoices.delete(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
     this.#states.delete(tabId);
@@ -69,6 +76,7 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    this.#wordChoices.delete(tabId);
     this.#invalidate(tabId);
     this.#pending.get(tabId)?.abort();
     this.#pending.delete(tabId);
@@ -92,7 +100,7 @@ export class LookupCoordinator {
         const passage = previous?.passage;
         if (!current() || !passage || passage.id !== passageId || !Number.isInteger(wordIndex)) return;
         const word = passage.words[wordIndex];
-        if (!word || !previous || Object.keys(identity).some(key => identity[key as keyof Identity] !== previous.identity[key as keyof Identity])) return;
+        if (!word || !previous || !sameIdentity(identity, previous.identity)) return;
         scope.frameId = identity.frameId;
         await this.#lookup(identity, word.text, request, deadline, { ...passage, selectedIndex: wordIndex });
       },
@@ -115,8 +123,21 @@ export class LookupCoordinator {
   }
   selectWord(tabId: number, passageId: number, wordIndex: number): Promise<void> {
     const state = this.#states.get(tabId);
-    if (!state?.passage || state.passage.id !== passageId || !Number.isInteger(wordIndex) || !state.passage.words[wordIndex]) return Promise.resolve();
-    return this.begin(tabId, state.identity.frameId).selectWord(state.identity, passageId, wordIndex);
+    const request = this.prepareWordChoice(tabId, passageId, wordIndex)?.();
+    return state && request ? request.selectWord(state.identity, passageId, wordIndex) : Promise.resolve();
+  }
+  /** Reserve ordering without cancelling useful work while the browser validates
+   * the active tab. Only a still-current, valid choice may start a new request. */
+  prepareWordChoice(tabId: number, passageId: number, wordIndex: number): (() => LookupRequest | undefined) | undefined {
+    const state = this.#states.get(tabId);
+    if (!state?.passage || state.passage.id !== passageId || !Number.isInteger(wordIndex) || !state.passage.words[wordIndex]) return;
+    const sourceToken = this.#requests.get(tabId)?.token;
+    const choiceToken = Symbol();
+    this.#wordChoices.set(tabId, choiceToken);
+    return () => {
+      if (this.#wordChoices.get(tabId) !== choiceToken || this.#requests.get(tabId)?.token !== sourceToken) return;
+      return this.begin(tabId, state.identity.frameId);
+    };
   }
   #set(state: State): void {
     this.#states.set(state.identity.tabId, state);

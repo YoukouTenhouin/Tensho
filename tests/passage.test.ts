@@ -134,3 +134,22 @@ test('production coordination enforces every passage bound before any word is re
   const lookup = coordinator.selectWord(1, passage.id, 255);
   assert.equal([...calls[0]!.text].length, 15); calls[0]!.resolve(result); await lookup;
 });
+
+test('deferred browser validation cannot let stale or reordered passage actions cancel newer work', async () => {
+  const { coordinator, calls } = fixture();
+  await coordinator.lookup(identity, 'arma virumque'); const id = coordinator.get(1)!.passage!.id;
+  const first = coordinator.prepareWordChoice(1, id, 0)!;
+  const second = coordinator.prepareWordChoice(1, id, 1)!;
+  assert.equal(first(), undefined);
+  const request = second()!;
+  const pending = request.selectWord(identity, id, 1);
+  const invalid = coordinator.prepareWordChoice(1, id, 9);
+  assert.equal(invalid, undefined); assert.equal(calls[0]!.signal.aborted, false);
+  const delayed = coordinator.prepareWordChoice(1, id, 0)!;
+  const newer = coordinator.lookup(identity, 'cano');
+  assert.equal(delayed(), undefined);
+  assert.equal(coordinator.prepareWordChoice(1, id, 0), undefined);
+  assert.equal(calls[1]!.signal.aborted, false);
+  calls[0]!.resolve(result); calls[1]!.resolve(result); await Promise.all([pending, newer]);
+  assert.equal(coordinator.get(1)?.status, 'complete'); assert.equal(coordinator.get(1)?.text, 'cano');
+});
