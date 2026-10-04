@@ -1,0 +1,1 @@
+{"RDF": {"Annotation": {"about": "urn:TuftsMorphologyService:zzqxx:whitakerLat", "creator": {"Agent": {"about": "net.alpheios:tools:wordsxml.v1"}}, "created": {"$": "2026-10-04T03:57:36.833167"}, "rights": {"$": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."}, "hasTarget": {"Description": {"about": "urn:word:zzqxx"}}, "title": {}}}}
