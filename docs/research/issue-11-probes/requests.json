@@ -1,0 +1,286 @@
+[
+  {
+    "case": "utf8",
+    "url": "https://sanskrit.inria.fr/DICO/utf82VH.js"
+  },
+  {
+    "case": "util",
+    "url": "https://sanskrit.inria.fr/DICO/util.js"
+  },
+  {
+    "case": "manual",
+    "url": "https://sanskrit.inria.fr/manual.html"
+  },
+  {
+    "case": "xml",
+    "url": "https://sanskrit.inria.fr/xml.html"
+  },
+  {
+    "case": "api_source",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/sanskrit_parser/rest_api/api_v1.py"
+  },
+  {
+    "case": "base_source",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/sanskrit_parser/base/sanskrit_base.py"
+  },
+  {
+    "case": "parser_readme",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/README.md"
+  },
+  {
+    "case": "data_license",
+    "url": "https://raw.githubusercontent.com/sanskrit-lexicon/csl-orig/master/LICENSE"
+  },
+  {
+    "case": "h_deva",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t"
+  },
+  {
+    "case": "h_iast",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=RN&text=dharmak%E1%B9%A3etre&mode=t"
+  },
+  {
+    "case": "h_ascii",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=VH&text=dharmak.setre&mode=t"
+  },
+  {
+    "case": "h_ambig",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83&mode=t"
+  },
+  {
+    "case": "h_joined",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83+%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5&mode=t"
+  },
+  {
+    "case": "h_unknown",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D&mode=t"
+  },
+  {
+    "case": "h_bad",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=RN&text=hello%F0%9F%99%82&mode=t"
+  },
+  {
+    "case": "h_punct",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87+%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87+%E0%A5%A4&mode=t"
+  },
+  {
+    "case": "p_tags_inflected",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "p_splits_inflected",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "p_tags_ambig",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83"
+  },
+  {
+    "case": "p_splits_ambig",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83"
+  },
+  {
+    "case": "p_tags_joined",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83%20%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5"
+  },
+  {
+    "case": "p_splits_joined",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83%20%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5"
+  },
+  {
+    "case": "p_tags_compound",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "p_splits_compound",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "p_tags_unknown",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D"
+  },
+  {
+    "case": "p_splits_unknown",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D"
+  },
+  {
+    "case": "p_tags_iast",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmak%E1%B9%A3etre"
+  },
+  {
+    "case": "p_splits_iast",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmak%E1%B9%A3etre"
+  },
+  {
+    "case": "p_tags_ascii",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmakSetre"
+  },
+  {
+    "case": "p_splits_ascii",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmakSetre"
+  },
+  {
+    "case": "p_tags_bad",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/hello%F0%9F%99%82"
+  },
+  {
+    "case": "p_splits_bad",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/hello%F0%9F%99%82"
+  },
+  {
+    "case": "p_tags_punct",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4"
+  },
+  {
+    "case": "p_splits_punct",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4"
+  },
+  {
+    "case": "c_getword_agni",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=roman"
+  },
+  {
+    "case": "c_getword_xml_agni",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=agni&input=slp1&output=roman"
+  },
+  {
+    "case": "c_getword_deva",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0&input=deva&output=roman"
+  },
+  {
+    "case": "c_getword_xml_deva",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0&input=deva&output=roman"
+  },
+  {
+    "case": "c_getword_iast",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=dharmak%E1%B9%A3etra&input=roman&output=roman"
+  },
+  {
+    "case": "c_getword_xml_iast",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=dharmak%E1%B9%A3etra&input=roman&output=roman"
+  },
+  {
+    "case": "c_getword_iast_alias",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=dharmak%E1%B9%A3etra&input=iast&output=roman"
+  },
+  {
+    "case": "c_getword_xml_iast_alias",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=dharmak%E1%B9%A3etra&input=iast&output=roman"
+  },
+  {
+    "case": "c_getword_homograph",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=mA&input=slp1&output=roman"
+  },
+  {
+    "case": "c_getword_xml_homograph",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=roman"
+  },
+  {
+    "case": "c_getword_unknown",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=zzzzzzzz&input=slp1&output=roman"
+  },
+  {
+    "case": "c_getword_xml_unknown",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=zzzzzzzz&input=slp1&output=roman"
+  },
+  {
+    "case": "q_tags_wiki",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D"
+  },
+  {
+    "case": "q_splits_wiki",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D"
+  },
+  {
+    "case": "q_tags_verb",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%89%E0%A4%B5%E0%A4%BE%E0%A4%9A"
+  },
+  {
+    "case": "q_splits_verb",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%89%E0%A4%B5%E0%A4%BE%E0%A4%9A"
+  },
+  {
+    "case": "q_tags_constituent",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%8D"
+  },
+  {
+    "case": "q_splits_constituent",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%8D"
+  },
+  {
+    "case": "q_tags_ma",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AE%E0%A4%BE"
+  },
+  {
+    "case": "q_splits_ma",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE"
+  },
+  {
+    "case": "q_tags_nodanda",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "q_splits_nodanda",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87"
+  },
+  {
+    "case": "q_tags_nfd",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmaks%CC%A3etre"
+  },
+  {
+    "case": "q_splits_nfd",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmaks%CC%A3etre"
+  },
+  {
+    "case": "q_xml_ma_slp",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=slp1"
+  },
+  {
+    "case": "q_xml_dh_slp",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=slp1"
+  },
+  {
+    "case": "q_xml_record",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=slp1&lnum=161686"
+  },
+  {
+    "case": "q_xml_bad_dict",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=bogus&key=agni&input=slp1&output=slp1"
+  },
+  {
+    "case": "robots_h",
+    "url": "https://sanskrit.inria.fr/robots.txt"
+  },
+  {
+    "case": "robots_p",
+    "url": "https://sanskrit-parser.appspot.com/robots.txt"
+  },
+  {
+    "case": "robots_c",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/robots.txt"
+  },
+  {
+    "case": "parser_license",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/LICENSE"
+  },
+  {
+    "case": "parser_setup",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/setup.py"
+  },
+  {
+    "case": "her_lic",
+    "url": "https://sanskrit.inria.fr/DATA/XML/LGPLLR.pdf"
+  },
+  {
+    "case": "wiki",
+    "url": "https://sa.wikipedia.org/wiki/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D"
+  },
+  {
+    "case": "wikisource",
+    "url": "https://sa.wikisource.org/wiki/%E0%A4%AD%E0%A4%97%E0%A4%B5%E0%A4%A6%E0%A5%8D%E0%A4%97%E0%A5%80%E0%A4%A4%E0%A4%BE/%E0%A4%85%E0%A4%B0%E0%A5%8D%E0%A4%9C%E0%A5%81%E0%A4%A8%E0%A4%B5%E0%A4%BF%E0%A4%B7%E0%A4%BE%E0%A4%A6%E0%A4%AF%E0%A5%8B%E0%A4%97%E0%A4%83"
+  },
+  {
+    "case": "legacy",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1"
+  }
+]

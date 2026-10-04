@@ -1,0 +1,300 @@
+{
+  "observed_at_utc": "2026-10-04T04:42:46Z",
+  "browser_version": "Microsoft Edge 154.0.4258.37",
+  "mode": "headless=new; disposable actual Edge MV3 service worker",
+  "granted_then_revoked": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "host_permissions": [
+        "https://sanskrit.inria.fr/*",
+        "https://sanskrit-parser.appspot.com/*",
+        "https://www.sanskrit-lexicon.uni-koeln.de/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [
+          "https://sanskrit-parser.appspot.com/*",
+          "https://sanskrit.inria.fr/*",
+          "https://www.sanskrit-lexicon.uni-koeln.de/*"
+        ],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 4,
+      "results": [
+        {
+          "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "finalUrl": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "granted": true,
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "characters": 2423,
+          "sha256": "2ac507609e423cff698cac95674c88be4bebe4ecff3c53c2ecbfe0f352ebb79f",
+          "jsonShape": null,
+          "anubis": true,
+          "excerpt": "<!doctype html><html lang=\"zh-CN\"><head><title>哎呀糟糕了！</title><link rel=\"stylesheet\" href=\"/.within.website/x/xess/xess.min.css?cachebuster=1.25.0\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"robots\" content=\"noindex,nofollow\"><style>\n        body,\n        html {\n            height: 100%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            margin-left: auto;\n            margin-right: auto;\n        }\n\n  "
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "granted": true,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 2218,
+          "sha256": "924ad2c1baa6c4d736a371a262b600a01d935e00307c3da0e31816d222b8fdc6",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "tags"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": [\n        [\n            \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\",\n            [\n                \"\\u090f\\u0915\\u0935\\u091a\\u0928\\u092e\\u094d\",\n                \"\\u0928\\u092a\\u0941\\u0902\\u0938\\u0915\\u0932\\u093f\\u0919\\u094d\\u0917\\u092e\\u094d\",\n                \"\\u0938\\u092a\\u094d"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "granted": true,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 1172,
+          "sha256": "1995c2226d7c12882bb734ef37b0847c99395f06eb393a42e93dd6a0951f3f4f",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "splits"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"devanagari\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"splits\": [\n        [\n            \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\\u092e\",\n            \"\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u0906\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n     "
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "finalUrl": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "granted": true,
+          "status": 500,
+          "contentType": null,
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "jsonShape": null,
+          "anubis": false,
+          "excerpt": ""
+        }
+      ]
+    },
+    "revoked_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "revoked_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 4,
+      "results": [
+        {
+          "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "granted": false,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 2218,
+          "sha256": "924ad2c1baa6c4d736a371a262b600a01d935e00307c3da0e31816d222b8fdc6",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "tags"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": [\n        [\n            \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\",\n            [\n                \"\\u090f\\u0915\\u0935\\u091a\\u0928\\u092e\\u094d\",\n                \"\\u0928\\u092a\\u0941\\u0902\\u0938\\u0915\\u0932\\u093f\\u0919\\u094d\\u0917\\u092e\\u094d\",\n                \"\\u0938\\u092a\\u094d"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "granted": false,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 1172,
+          "sha256": "1995c2226d7c12882bb734ef37b0847c99395f06eb393a42e93dd6a0951f3f4f",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "splits"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"devanagari\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"splits\": [\n        [\n            \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\\u092e\",\n            \"\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u0906\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n     "
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        }
+      ]
+    }
+  },
+  "optional_never_granted": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "optional_host_permissions": [
+        "https://sanskrit.inria.fr/*",
+        "https://sanskrit-parser.appspot.com/*",
+        "https://www.sanskrit-lexicon.uni-koeln.de/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "missing_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 4,
+      "results": [
+        {
+          "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+          "granted": false,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 2218,
+          "sha256": "924ad2c1baa6c4d736a371a262b600a01d935e00307c3da0e31816d222b8fdc6",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "tags"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": [\n        [\n            \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\",\n            [\n                \"\\u090f\\u0915\\u0935\\u091a\\u0928\\u092e\\u094d\",\n                \"\\u0928\\u092a\\u0941\\u0902\\u0938\\u0915\\u0932\\u093f\\u0919\\u094d\\u0917\\u092e\\u094d\",\n                \"\\u0938\\u092a\\u094d"
+        },
+        {
+          "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "finalUrl": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83",
+          "granted": false,
+          "status": 200,
+          "contentType": "application/json",
+          "characters": 1172,
+          "sha256": "1995c2226d7c12882bb734ef37b0847c99395f06eb393a42e93dd6a0951f3f4f",
+          "jsonShape": {
+            "type": "object",
+            "keys": [
+              "input",
+              "devanagari",
+              "splits"
+            ]
+          },
+          "anubis": false,
+          "excerpt": "{\n    \"input\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"devanagari\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903\",\n    \"splits\": [\n        [\n            \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\\u092e\",\n            \"\\u0915\\u093e\\u0938\\u094d\"\n        ],\n        [\n            \"\\u092e\\u093e\",\n            \"\\u0906\\u092e\\u0915\\u093e\\u0938\\u094d\"\n        ],\n     "
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=deva",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        }
+      ]
+    }
+  }
+}

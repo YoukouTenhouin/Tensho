@@ -1,0 +1,2362 @@
+[
+  {
+    "case": "utf8",
+    "url": "https://sanskrit.inria.fr/DICO/utf82VH.js",
+    "status": 200,
+    "seconds": 0.11,
+    "bytes": 5071,
+    "sha256": "c2d5e006b0c5e6675263fb6a9925dee78e1be495a2fcdbe08b11eb61b80367b8",
+    "excerpt": "function unique(query,num_seg) {\n\tvar loc=query;\n\tvar total=parseInt(num_seg)+1;\n\tfor (var i=1;i<total;i++){\n\t\tvar radios=document.getElementsByName(i.toString());\n\t\tif((radios!=nu",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "content-type": "text/javascript",
+      "date": "Sun, 04 Oct 2026 04:42:56 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "util",
+    "url": "https://sanskrit.inria.fr/DICO/util.js",
+    "status": 200,
+    "seconds": 0.09,
+    "bytes": 813,
+    "sha256": "1a51ee6f59e99ecc9d93e6c321602a45fc9e6bbb8b30af8e154439467d68a7eb",
+    "excerpt": "/**************************************************************************/\n/*                                                                        */\n/*                     The",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "content-type": "text/javascript",
+      "date": "Sun, 04 Oct 2026 04:42:56 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "manual",
+    "url": "https://sanskrit.inria.fr/manual.html",
+    "status": 200,
+    "seconds": 0.12,
+    "bytes": 57223,
+    "sha256": "eb7e4980debf90b50118d003bf673e87dbb8ecf4e0d5f04360cb3c1bf46cff32",
+    "excerpt": "<!doctype html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n\n<title>The Sanskrit Heritage Engine Reference Manual</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:dat",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:56 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "xml",
+    "url": "https://sanskrit.inria.fr/xml.html",
+    "status": 200,
+    "seconds": 0.1,
+    "bytes": 8336,
+    "sha256": "f2102014682bfff30de877a50bc690f48801eff2f59e456a7f813a036fb8cf3f",
+    "excerpt": "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n\n<title>Sanskrit Linguistic Resources</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" co",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:57 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "api_source",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/sanskrit_parser/rest_api/api_v1.py",
+    "status": 200,
+    "seconds": 0.32,
+    "bytes": 4949,
+    "sha256": "66bb681d2cf0124f815c8e94b603bf0b8287e15f3f52627346537bba6e8ffcfa",
+    "excerpt": "from flask import Blueprint\nimport flask_restx\nfrom flask_restx import Resource\nfrom flask import request\n# import subprocess\n# from os import path\n# from flask import redirect\nfro",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:42:57 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "base_source",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/sanskrit_parser/base/sanskrit_base.py",
+    "status": 200,
+    "seconds": 0.29,
+    "bytes": 6721,
+    "sha256": "d28c0f867debdae0e33a540708495a1f0d4e14c17357263d6ededdbfa776e885",
+    "excerpt": "#!/usr/bin/env python\nfrom __future__ import print_function\nfrom indic_transliteration import sanscript\nfrom indic_transliteration import detect\nfrom sanskrit_parser.util import no",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:42:57 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "parser_readme",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/README.md",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 7274,
+    "sha256": "16e080fcbdcd1507436a5434bc2f215498ac486509232c55fcc45340d030b853",
+    "excerpt": "# sanskrit_parser\nParsers for Sanskrit / संस्कृतम्\n\n![example workflow](https://github.com/kmadathil/sanskrit_parser/actions/workflows/build_and_test.yml/badge.svg)\n\n**NOTE:** This",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:42:57 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "data_license",
+    "url": "https://raw.githubusercontent.com/sanskrit-lexicon/csl-orig/master/LICENSE",
+    "status": 200,
+    "seconds": 0.26,
+    "bytes": 20140,
+    "sha256": "0b7fc2608b6d990314e908569407a6058b4a29175167c6d91ca0070c946661be",
+    "excerpt": "Attribution-ShareAlike 4.0 International\n\n=======================================================================\n\nCreative Commons Corporation (\"Creative Commons\") is not a law fi",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:42:58 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "h_deva",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87&mode=t",
+    "status": 200,
+    "seconds": 0.38,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:58 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_iast",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=RN&text=dharmak%E1%B9%A3etre&mode=t",
+    "status": 200,
+    "seconds": 0.37,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:58 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_ascii",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=VH&text=dharmak.setre&mode=t",
+    "status": 200,
+    "seconds": 0.53,
+    "bytes": 4896,
+    "sha256": "ded368e7153d59fedfd862f8e372efe00e90fd22eeba71339dffe49567f297ef",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n  &#x2713;  Show Summary of Solutions\n \nInput:\n dharmak&#7779;etre  \n \nSentence: \n &#x0927;&#x0930;&#x094D;&#x092E;&#x0915;&#x094D;&#x0937;&#x0947;&#x0924;&#x094D;&#x0930;&#x0947;  \nmay be analysed as:  \n \n Solution 1 :  &#x2713;   \n[   dharma   \n     \n   [  dharma  ]{iic.}         &lang;&rang;]\n \n[   k&#7779;etre   \n     \n   [  k&#7779;etra  ]{n. du. acc. | n. du. nom. | n. sg. loc.}         &lang;&rang;]\n \n \n \n Solution 2 :  &#x2713;   \n[   dharma   \n     \n   [  dharma  ]{iic.}         &lang;&rang;]\n \n[   k&#7779;etre   \n     \n   [  k&#7779;etra  ]{m. sg. loc. | f. du. acc. | f. du. nom.}         &lang;&rang;]\n \n \n \n Solution 3 :  &#x2713;   \n[   dharma   \n     \n   [  dharma  ]{iic.}         &lang;&rang;]\n \n[   k&#7779;etre   \n     \n   [  k&#7779;etra  ]{n. du. voc.}         &lang;&rang;]\n \n \n \n \n \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:58 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_ambig",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83&mode=t",
+    "status": 200,
+    "seconds": 0.37,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:59 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_joined",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83+%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5&mode=t",
+    "status": 200,
+    "seconds": 0.38,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:42:59 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_unknown",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D&mode=t",
+    "status": 200,
+    "seconds": 0.37,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:43:00 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_bad",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=RN&text=hello%F0%9F%99%82&mode=t",
+    "status": 200,
+    "seconds": 0.38,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:43:00 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "h_punct",
+    "url": "https://sanskrit.inria.fr/cgi-bin/SKT/sktreader.cgi?lex=SH&st=f&us=f&font=roma&t=DN&text=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87+%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87+%E0%A5%A4&mode=t",
+    "status": 200,
+    "seconds": 0.37,
+    "bytes": 1973,
+    "sha256": "47e363d213e986dbeabd56f00fa9736def632c6626504bf0eadcd6543dc31e2a",
+    "excerpt": "\n<!DOCTYPE html>\n<html><head>\n<meta charset=\"utf-8\">\n<title>Sanskrit Reader Companion</title>\n<meta name=\"author\" content=\"Gérard Huet\">\n<meta property=\"dc:datecopyrighted\" content",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_text": "\n \n  \n \n Sanskrit Reader Companion \n \n \n \n \n \n \n  \n  \n \n \n  \n The Sanskrit Reader Companion \n \n  \n \n   Fatal error   Unknown transliteration scheme \n   \n \n   \n \n     \n \n   \n   \n  \n \n  \n  Top   | \n  Index   | \n  Grammar   | \n  Sandhi   | \n  Reader   | \n  Corpus  \n    \n© Gérard Huet 1994-2026     \n   \n     \n \n \n",
+    "headers": {
+      "content-type": "text/html",
+      "date": "Sun, 04 Oct 2026 04:43:00 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "p_tags_inflected",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 2218,
+    "sha256": "924ad2c1baa6c4d736a371a262b600a01d935e00307c3da0e31816d222b8fdc6",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे",
+      "tags": [
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "द्वितीयाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्",
+            "संबोधनविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "सप्तमीविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "प्रथमाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:01 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_inflected",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.25,
+    "bytes": 1686,
+    "sha256": "8c97b7f5e0aa9f84a7d2d334de8c7edc41ff186f8bfde7ac46e0e41794f9a828",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्",
+          "रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अ",
+          "त्रे"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:01 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_ambig",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 4412,
+    "sha256": "2dce9488dd3bf099911b9fafd27388d1c13a9bcf72b85c52e4e14257549d5047",
+    "excerpt": "{\n    \"input\": \"\\u0938\\u0947\\u0928\\u092f\\u094b\\u0903\",\n    \"devanagari\": \"\\u0938\\u0947\\u0928\\u092f\\u094b\\u0938\\u094d\",\n    \"tags\": [\n        [\n            \"\\u0938\\u0947\\u0928\\u093e",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "सेनयोः",
+      "devanagari": "सेनयोस्",
+      "tags": [
+        [
+          "सेना",
+          [
+            "षष्ठीविभक्तिः",
+            "द्विवचनम्",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "स्त्रीलिङ्गम्",
+            "द्विवचनम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "स्त्रीलिङ्गम्",
+            "षष्ठीविभक्तिः",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "सप्तमीविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "षष्ठीविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "षष्ठीविभक्तिः",
+            "द्विवचनम्",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "सप्तमीविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "स्त्रीलिङ्गम्",
+            "सप्तमीविभक्तिः",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "स्त्रीलिङ्गम्",
+            "षष्ठीविभक्तिः",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "सप्तमीविभक्तिः",
+            "द्विवचनम्",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "षष्ठीविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:01 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_ambig",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83",
+    "status": 200,
+    "seconds": 0.21,
+    "bytes": 1172,
+    "sha256": "02b4fcbc73ce1083390d5ecbae85ebc5ef3ee4c1783e3e1ec0619f460148437d",
+    "excerpt": "{\n    \"input\": \"\\u0938\\u0947\\u0928\\u092f\\u094b\\u0903\",\n    \"devanagari\": \"\\u0938\\u0947\\u0928\\u092f\\u094b\\u0903\",\n    \"splits\": [\n        [\n            \"\\u0938\\u0947\\u0928\\u092f\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "सेनयोः",
+      "devanagari": "सेनयोः",
+      "splits": [
+        [
+          "सेनयोस्"
+        ],
+        [
+          "सेन",
+          "योस्"
+        ],
+        [
+          "से",
+          "नयोस्"
+        ],
+        [
+          "सा",
+          "इनयोस्"
+        ],
+        [
+          "स",
+          "इनयोस्"
+        ],
+        [
+          "से",
+          "अनयोस्"
+        ],
+        [
+          "स",
+          "ई",
+          "नयोस्"
+        ],
+        [
+          "स",
+          "ईन्",
+          "अयोस्"
+        ],
+        [
+          "सा",
+          "ई",
+          "नयोस्"
+        ],
+        [
+          "सा",
+          "ईन्",
+          "अयोस्"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:02 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_joined",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83%20%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 276,
+    "sha256": "65aa72555e69fe6dd5a9b9eccf1eb273fdf9456473899d7bdfe084d9dd9a82b0",
+    "excerpt": "{\n    \"input\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903 \\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0936\\u094d\\u091a\\u0948\\u0935\",\n    \"devanagari\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "मामकाः पाण्डवाश्चैव",
+      "devanagari": "मामकाः पाण्डवाश्चैव",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:02 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_joined",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83%20%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5",
+    "status": 200,
+    "seconds": 0.3,
+    "bytes": 2388,
+    "sha256": "43f2f88a3e0e826a7d6d546ba5bb637000cbb1c140cf8929a00cf4e3cf635576",
+    "excerpt": "{\n    \"input\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0903 \\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0936\\u094d\\u091a\\u0948\\u0935\",\n    \"devanagari\": \"\\u092e\\u093e\\u092e\\u0915\\u093e\\u0",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "मामकाः पाण्डवाश्चैव",
+      "devanagari": "मामकाः पाण्डवाश्चैव",
+      "splits": [
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "चा",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "च",
+          "ऐव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "चा",
+          "ऐव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "अस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "आस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवा",
+          "अस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवा",
+          "आस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "अस्",
+          "चा",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डो",
+          "आस्",
+          "च",
+          "एव"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:02 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_compound",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 2218,
+    "sha256": "924ad2c1baa6c4d736a371a262b600a01d935e00307c3da0e31816d222b8fdc6",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे",
+      "tags": [
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "द्वितीयाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्",
+            "संबोधनविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "सप्तमीविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "प्रथमाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:02 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_compound",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 1686,
+    "sha256": "8c97b7f5e0aa9f84a7d2d334de8c7edc41ff186f8bfde7ac46e0e41794f9a828",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्",
+          "रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अ",
+          "त्रे"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:02 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_unknown",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 166,
+    "sha256": "96e91ac6712f4bffe8e5e790ea22276d29c7ead6a311a2ae9d22c81d1dd8709b",
+    "excerpt": "{\n    \"input\": \"\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\",\n    \"devanagari\": \"\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\",\n    \"tags\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "झ्झ्झ्झ्झ",
+      "devanagari": "झ्झ्झ्झ्झ",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_unknown",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 168,
+    "sha256": "96a98feac42fc3092097e7f3571768e6189b75aaeed20c1e267b6e1f1480e330",
+    "excerpt": "{\n    \"input\": \"\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\",\n    \"devanagari\": \"\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\\u094d\\u091d\",\n    \"splits\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "झ्झ्झ्झ्झ",
+      "devanagari": "झ्झ्झ्झ्झ",
+      "splits": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_iast",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmak%E1%B9%A3etre",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 2163,
+    "sha256": "88ac6ffeb55702958f0991b0d206a8293c588869c3d40755a1fe96c3664199b3",
+    "excerpt": "{\n    \"input\": \"dharmak\\u1e63etre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": [\n        [\n            \"\\u0927\\u0930\\",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्षेत्रे",
+      "tags": [
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "द्वितीयाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्",
+            "संबोधनविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "सप्तमीविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "प्रथमाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_iast",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmak%E1%B9%A3etre",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 1631,
+    "sha256": "460675ff95efc876fd086a03f5b003e2fde8d30a34a34d1a5b77f58013441a3b",
+    "excerpt": "{\n    \"input\": \"dharmak\\u1e63etre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"splits\": [\n        [\n            \"\\u0927\\u093",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्",
+          "रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अ",
+          "त्रे"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_ascii",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmakSetre",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 2158,
+    "sha256": "00d462a39c5525d38c7a19cb8db93571c5b420e10934e22c1289c395de8f4963",
+    "excerpt": "{\n    \"input\": \"dharmakSetre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": [\n        [\n            \"\\u0927\\u0930\\u094d",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "dharmakSetre",
+      "devanagari": "धर्मक्षेत्रे",
+      "tags": [
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "द्वितीयाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्",
+            "संबोधनविभक्तिः"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "एकवचनम्",
+            "सप्तमीविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "धर्मक्षेत्र",
+          [
+            "प्रथमाविभक्तिः",
+            "नपुंसकलिङ्गम्",
+            "द्विवचनम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_ascii",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmakSetre",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 1626,
+    "sha256": "e933d8ff0652beb7b776efa42d57b7341d7d4748a25abdcaee04721901387df7",
+    "excerpt": "{\n    \"input\": \"dharmakSetre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"splits\": [\n        [\n            \"\\u0927\\u0930\\u09",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "dharmakSetre",
+      "devanagari": "धर्मक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्",
+          "रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अ",
+          "त्रे"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:03 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_bad",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/hello%F0%9F%99%82",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 123,
+    "sha256": "c9fc7be09f4b5ee93c97cfefc1c70e31ce6148cf6b961a9ca3af563057dcdb85",
+    "excerpt": "{\n    \"input\": \"hello\\ud83d\\ude42\",\n    \"devanagari\": \"\\u0939\\u0947\\u0932\\u094d\\u0932\\u094b\\ud83d\\ude42\",\n    \"tags\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "hello🙂",
+      "devanagari": "हेल्लो🙂",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:04 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_bad",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/hello%F0%9F%99%82",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 125,
+    "sha256": "87e5e17098b7337eb413f5b8e1cf05588ccfc1b7e8d3427764dd1125276efbb2",
+    "excerpt": "{\n    \"input\": \"hello\\ud83d\\ude42\",\n    \"devanagari\": \"\\u0939\\u0947\\u0932\\u094d\\u0932\\u094b\\ud83d\\ude42\",\n    \"splits\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "hello🙂",
+      "devanagari": "हेल्लो🙂",
+      "splits": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:04 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_tags_punct",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 356,
+    "sha256": "5ea5562823a869a6965dbea1251c823c39e45d0c81cd7483fd3af0278eab8a24",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0915\\u0941\\u0930\\u0941\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0964\",\n    \"deva",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे ",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:04 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "p_splits_punct",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 364,
+    "sha256": "b2b6333290bce6ae139da8e480728c6122e36d6ab019963e771723265306cfcc",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0915\\u0941\\u0930\\u0941\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0964\",\n    \"deva",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "splits": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:04 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "c_getword_agni",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=agni&input=slp1&output=roman",
+    "status": 200,
+    "seconds": 0.27,
+    "bytes": 5432,
+    "sha256": "a115206c78259b8ef220e1c03d95a82883189c2a882f9f4aafc86024b9cd21f1",
+    "excerpt": "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel='stylesheet' type='text/css' href='css/basic.css' />\n</head>\n<body><div id='CologneBasic'>\n<h1>&nbsp;<span class='sda",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:04 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_xml_agni",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=agni&input=slp1&output=roman",
+    "status": 200,
+    "seconds": 0.27,
+    "bytes": 5634,
+    "sha256": "7c92e92a7fb01970d173c37564c28777ed649671277fba66c133ee2698ef5be2",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"slp1\",\"output\":\"roman\",\"key\":\"agni\",\"accent\":\"no\",\"xml\":[\"<H1><h><key1>agni<\\/key1><key2>agni\\u0301<\\/key2><\\/h><body>agni\\u0301   <lex>m.<\\/lex> (\\u221a ag,",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 200,
+      "key": "agni",
+      "records": [
+        {
+          "id": "890",
+          "element": "H1",
+          "hom": null
+        },
+        {
+          "id": "891",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "892",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "893",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "894",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "895",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "896",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "897",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "897.05",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "897.1",
+          "element": "H1E",
+          "hom": null
+        }
+      ]
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:05 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_deva",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0&input=deva&output=roman",
+    "status": 200,
+    "seconds": 0.21,
+    "bytes": 2697,
+    "sha256": "94892adcb99c1c6391f9a668414c0a319cc39ef2e851f0e25d25b2f618f100eb",
+    "excerpt": "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel='stylesheet' type='text/css' href='css/basic.css' />\n</head>\n<body><div id='CologneBasic'>\n<h1>&nbsp;<span class='sda",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:05 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_xml_deva",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0&input=deva&output=roman",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 2440,
+    "sha256": "884c1527b85c18840e5cc2cde62d9c738daf34d55abfb13d9e1eede6d6e8ecde",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"deva\",\"output\":\"roman\",\"key\":\"Darmakzetra\",\"accent\":\"no\",\"xml\":[\"<H3><h><key1>dharmak\\u1e63etra<\\/key1><key2>dharma\\u2014k\\u1e63etra<\\/key2><\\/h><body>dharma",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 200,
+      "key": "Darmakzetra",
+      "records": [
+        {
+          "id": "99972",
+          "element": "H3",
+          "hom": null
+        },
+        {
+          "id": "99973",
+          "element": "H3B",
+          "hom": null
+        },
+        {
+          "id": "99974",
+          "element": "H3B",
+          "hom": null
+        }
+      ]
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:05 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_iast",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=dharmak%E1%B9%A3etra&input=roman&output=roman",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 2697,
+    "sha256": "94892adcb99c1c6391f9a668414c0a319cc39ef2e851f0e25d25b2f618f100eb",
+    "excerpt": "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel='stylesheet' type='text/css' href='css/basic.css' />\n</head>\n<body><div id='CologneBasic'>\n<h1>&nbsp;<span class='sda",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:05 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_xml_iast",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=dharmak%E1%B9%A3etra&input=roman&output=roman",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 2441,
+    "sha256": "fec62be2eb19fb660a4e4b2ccbbf51863ce5eb60fca20bf1e744b82279feddfa",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"roman\",\"output\":\"roman\",\"key\":\"Darmakzetra\",\"accent\":\"no\",\"xml\":[\"<H3><h><key1>dharmak\\u1e63etra<\\/key1><key2>dharma\\u2014k\\u1e63etra<\\/key2><\\/h><body>dharm",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 200,
+      "key": "Darmakzetra",
+      "records": [
+        {
+          "id": "99972",
+          "element": "H3",
+          "hom": null
+        },
+        {
+          "id": "99973",
+          "element": "H3B",
+          "hom": null
+        },
+        {
+          "id": "99974",
+          "element": "H3B",
+          "hom": null
+        }
+      ]
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:06 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_iast_alias",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=dharmak%E1%B9%A3etra&input=iast&output=roman",
+    "status": 403,
+    "seconds": 0.13,
+    "bytes": 93,
+    "sha256": "0d3e98ca727fc1201b436170af5a63f23348aaf146a3ac6234f6c4da283e8b34",
+    "excerpt": "<html><body><h1>403 Forbidden</h1>\nRequest forbidden by administrative rules.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "c_getword_xml_iast_alias",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=dharmak%E1%B9%A3etra&input=iast&output=roman",
+    "status": 404,
+    "seconds": 0.16,
+    "bytes": 118,
+    "sha256": "eb19864cc7f2a931b4f2f5908d469000bfc5768b94999e35638d19fb3f558243",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"slp1\",\"output\":\"roman\",\"key\":\"dharmak\\u1e63etra\",\"accent\":\"no\",\"xml\":[],\"html\":[],\"status\":404}",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 404,
+      "key": "dharmakṣetra",
+      "records": []
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:06 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_homograph",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=mA&input=slp1&output=roman",
+    "status": 403,
+    "seconds": 0.14,
+    "bytes": 93,
+    "sha256": "0d3e98ca727fc1201b436170af5a63f23348aaf146a3ac6234f6c4da283e8b34",
+    "excerpt": "<html><body><h1>403 Forbidden</h1>\nRequest forbidden by administrative rules.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "c_getword_xml_homograph",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=roman",
+    "status": 200,
+    "seconds": 1.1,
+    "bytes": 52109,
+    "sha256": "98615edf4321b06e845f0fa0e67bb4030ebefbeff7dce84d75026abb8feb8399",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"slp1\",\"output\":\"roman\",\"key\":\"mA\",\"accent\":\"no\",\"xml\":[\"<H1B><h><key1>m\\u0101<\\/key1><key2>m\\u0101<\\/key2><\\/h><body>m\\u0101   <lex>f.<\\/lex> a mother, <ls>L",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 200,
+      "key": "mA",
+      "records": [
+        {
+          "id": "153882",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153883",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153884",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153885",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153886",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153887",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153888",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "153889",
+          "element": "H1B",
+          "hom": null
+        },
+        {
+          "id": "161686",
+          "element": "H1",
+          "hom": "1"
+        },
+        {
+          "id": "161686.05",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.10",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.15",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.20",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.25",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.30",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.35",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.40",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.45",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161686.50",
+          "element": "H1A",
+          "hom": null
+        },
+        {
+          "id": "161693",
+          "element": "H1",
+          "hom": "2"
+        },
+        {
+          "id": "161697",
+          "element": "H1",
+          "hom": "3"
+        },
+        {
+          "id": "161697.1",
+          "element": "H1E",
+          "hom": null
+        },
+        {
+          "id": "161698",
+          "element": "H2",
+          "hom": "4"
+        }
+      ]
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:06 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "c_getword_unknown",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=zzzzzzzz&input=slp1&output=roman",
+    "status": 403,
+    "seconds": 0.12,
+    "bytes": 93,
+    "sha256": "0d3e98ca727fc1201b436170af5a63f23348aaf146a3ac6234f6c4da283e8b34",
+    "excerpt": "<html><body><h1>403 Forbidden</h1>\nRequest forbidden by administrative rules.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "c_getword_xml_unknown",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=zzzzzzzz&input=slp1&output=roman",
+    "status": 404,
+    "seconds": 0.12,
+    "bytes": 109,
+    "sha256": "83ed5f74c7801c9a818649071963efb19cd151cb764a85b751bdfd9c4e24edb4",
+    "excerpt": " {\"dict\":\"mw\",\"input\":\"slp1\",\"output\":\"roman\",\"key\":\"zzzzzzzz\",\"accent\":\"no\",\"xml\":[],\"html\":[],\"status\":404}",
+    "observed_at": "2026-10-04T04:43:07.926080+00:00",
+    "response_summary": {
+      "keys": [
+        "dict",
+        "input",
+        "output",
+        "key",
+        "accent",
+        "xml",
+        "html",
+        "status"
+      ],
+      "status": 404,
+      "key": "zzzzzzzz",
+      "records": []
+    },
+    "headers": {
+      "Date": "Sun, 04 Oct 2026 04:43:07 GMT",
+      "Server": "Apache/2.4",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "case": "q_tags_wiki",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 1298,
+    "sha256": "d75142c4ae0a6ab6762499d8d4a59f170c296184d2711aecfce3dcb8e0615615",
+    "excerpt": "{\n    \"input\": \"\\u0938\\u0902\\u0938\\u094d\\u0915\\u0943\\u0924\\u092e\\u094d\",\n    \"devanagari\": \"\\u0938\\u0902\\u0938\\u094d\\u0915\\u0943\\u0924\\u092e\\u094d\",\n    \"tags\": [\n        [\n       ",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "संस्कृतम्",
+      "devanagari": "संस्कृतम्",
+      "tags": [
+        [
+          "संस्कृत",
+          [
+            "प्रथमाविभक्तिः",
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "संस्कृत",
+          [
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "संस्कृत",
+          [
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:38 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_wiki",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D",
+    "status": 200,
+    "seconds": 0.2,
+    "bytes": 262,
+    "sha256": "7347aa0173bcbafc66e5bc315152fb9f44ec62696b3cb9a42b77b3b3827cf32a",
+    "excerpt": "{\n    \"input\": \"\\u0938\\u0902\\u0938\\u094d\\u0915\\u0943\\u0924\\u092e\\u094d\",\n    \"devanagari\": \"\\u0938\\u0902\\u0938\\u094d\\u0915\\u0943\\u0924\\u092e\\u094d\",\n    \"splits\": [\n        [\n     ",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "संस्कृतम्",
+      "devanagari": "संस्कृतम्",
+      "splits": [
+        [
+          "संस्कृतम्"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:38 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_tags_verb",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%89%E0%A4%B5%E0%A4%BE%E0%A4%9A",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 966,
+    "sha256": "46ae158d59790a05f8ce22a9da6fcbd34e07acb8f97594078960a6389b2b1186",
+    "excerpt": "{\n    \"input\": \"\\u0909\\u0935\\u093e\\u091a\",\n    \"devanagari\": \"\\u0909\\u0935\\u093e\\u091a\",\n    \"tags\": [\n        [\n            \"\\u0935\\u091a\\u094d\",\n            [\n                \"\\u",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "उवाच",
+      "devanagari": "उवाच",
+      "tags": [
+        [
+          "वच्",
+          [
+            "प्राथमिकः",
+            "लिट्",
+            "एकवचनम्",
+            "परस्मैपदम्",
+            "उत्तमपुरुषः"
+          ]
+        ],
+        [
+          "वच्",
+          [
+            "प्राथमिकः",
+            "प्रथमपुरुषः",
+            "लिट्",
+            "एकवचनम्",
+            "परस्मैपदम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:38 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_verb",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%89%E0%A4%B5%E0%A4%BE%E0%A4%9A",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 966,
+    "sha256": "b082bdd8aa39447eb36c82fc1ad06449b4f0f885f85411b3e0b66a1e94726b38",
+    "excerpt": "{\n    \"input\": \"\\u0909\\u0935\\u093e\\u091a\",\n    \"devanagari\": \"\\u0909\\u0935\\u093e\\u091a\",\n    \"splits\": [\n        [\n            \"\\u0909\\u0935\\u093e\\u091a\"\n        ],\n        [\n     ",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "उवाच",
+      "devanagari": "उवाच",
+      "splits": [
+        [
+          "उवाच"
+        ],
+        [
+          "उ",
+          "वाच"
+        ],
+        [
+          "उवा",
+          "च"
+        ],
+        [
+          "उवा",
+          "अच"
+        ],
+        [
+          "उवा",
+          "आच"
+        ],
+        [
+          "उ",
+          "वा",
+          "च"
+        ],
+        [
+          "उ",
+          "वा",
+          "अच"
+        ],
+        [
+          "उवा",
+          "अ",
+          "च"
+        ],
+        [
+          "उ",
+          "वा",
+          "आच"
+        ],
+        [
+          "उ",
+          "व",
+          "अच"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:38 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_tags_constituent",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%8D",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 2020,
+    "sha256": "3dd44ac3a8061f131aa8571690be6f30f4516bcac563a4efad1c0f84d0209f45",
+    "excerpt": "{\n    \"input\": \"\\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0938\\u094d\",\n    \"devanagari\": \"\\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0938\\u094d\",\n    \"tags\": [\n        [\n       ",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "पाण्डवास्",
+      "devanagari": "पाण्डवास्",
+      "tags": [
+        [
+          "पाण्डव",
+          [
+            "बहुवचनम्",
+            "पुंल्लिङ्गम्",
+            "संबोधनविभक्तिः"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "बहुवचनम्",
+            "स्त्रीलिङ्गम्",
+            "प्रथमाविभक्तिः"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "बहुवचनम्",
+            "प्रथमाविभक्तिः",
+            "पुंल्लिङ्गम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "द्वितीयाविभक्तिः",
+            "बहुवचनम्",
+            "स्त्रीलिङ्गम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "बहुवचनम्",
+            "स्त्रीलिङ्गम्",
+            "संबोधनविभक्तिः"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:38 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_constituent",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%8D",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 168,
+    "sha256": "8df82e8949136a4f2a78e83119169cec1628e33f8c23a0c83b8a9566e02427da",
+    "excerpt": "{\n    \"input\": \"\\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0938\\u094d\",\n    \"devanagari\": \"\\u092a\\u093e\\u0923\\u094d\\u0921\\u0935\\u093e\\u0938\\u094d\",\n    \"splits\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "पाण्डवास्",
+      "devanagari": "पाण्डवास्",
+      "splits": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:39 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_tags_ma",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AE%E0%A4%BE",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 1777,
+    "sha256": "b30c760b63350f45e9f6eee0f364f6a82be4f3e6842c83bbe73349a2e9f7703e",
+    "excerpt": "{\n    \"input\": \"\\u092e\\u093e\",\n    \"devanagari\": \"\\u092e\\u093e\",\n    \"tags\": [\n        [\n            \"\\u0905\\u0938\\u094d\\u092e\\u0926\\u094d\",\n            [\n                \"\\u0926\\u",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "मा",
+      "devanagari": "मा",
+      "tags": [
+        [
+          "अस्मद्",
+          [
+            "द्वितीयाविभक्तिः",
+            "त्रिलिङ्गम्",
+            "एकवचनम्"
+          ]
+        ],
+        [
+          "अस्मद्",
+          [
+            "द्वितीयाविभक्तिः",
+            "सङ्ख्या",
+            "एकवचनम्"
+          ]
+        ],
+        [
+          "मा#२",
+          [
+            "अव्ययम्",
+            "निपातम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "स्त्रीलिङ्गम्",
+            "समासपूर्वपदनामपदम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "स्त्रीलिङ्गम्",
+            "प्रथमाविभक्तिः",
+            "एकवचनम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "अव्ययम्"
+          ]
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:39 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_ma",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 136,
+    "sha256": "35f00a36664d6e03e6a2ff645364ad637337741c6e08a3ee7fd65dcd9cf10ba8",
+    "excerpt": "{\n    \"input\": \"\\u092e\\u093e\",\n    \"devanagari\": \"\\u092e\\u093e\",\n    \"splits\": [\n        [\n            \"\\u092e\\u093e\"\n        ]\n    ]\n}\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "मा",
+      "devanagari": "मा",
+      "splits": [
+        [
+          "मा"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:39 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_tags_nodanda",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.17,
+    "bytes": 348,
+    "sha256": "28565ab6bedf0b8774992d6a4d52c339a007e663fcf158ea88b8734e48c0170f",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0915\\u0941\\u0930\\u0941\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\"",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:39 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_nodanda",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87",
+    "status": 200,
+    "seconds": 0.19,
+    "bytes": 2588,
+    "sha256": "f191d6e79f42f342cafc5dffe9849f5bc50282bd708d295b2b04d4feaab6b66f",
+    "excerpt": "{\n    \"input\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947 \\u0915\\u0941\\u0930\\u0941\\u0915\\u094d\\u0937\\u0947\\u0924\\u094d\\u0930\\u0947\",\n    \"devanagari\"",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे",
+          "कुरु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कु",
+          "रु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कु",
+          "रुक्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षे",
+          "अत्रे"
+        ]
+      ]
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:39 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_tags_nfd",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/dharmaks%CC%A3etre",
+    "status": 200,
+    "seconds": 0.18,
+    "bytes": 160,
+    "sha256": "5271021fcd861b6117373eb735d942841ed94c7142a41b55130f2e744d361123",
+    "excerpt": "{\n    \"input\": \"dharmaks\\u0323etre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0938\\u094d\\u0323\\u090f\\u0924\\u094d\\u0930\\u0947\",\n    \"tags\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्स्̣एत्रे",
+      "tags": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:40 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_splits_nfd",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmaks%CC%A3etre",
+    "status": 200,
+    "seconds": 0.2,
+    "bytes": 162,
+    "sha256": "becdb0beacf4453eee01d81720d4e743abf9cee465a7d81d832d48540969f323",
+    "excerpt": "{\n    \"input\": \"dharmaks\\u0323etre\",\n    \"devanagari\": \"\\u0927\\u0930\\u094d\\u092e\\u0915\\u094d\\u0938\\u094d\\u0323\\u090f\\u0924\\u094d\\u0930\\u0947\",\n    \"splits\": []\n}\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "response": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्स्̣एत्रे",
+      "splits": []
+    },
+    "headers": {
+      "content-type": "application/json",
+      "date": "Sun, 04 Oct 2026 04:43:40 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "q_xml_ma_slp",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=slp1",
+    "status": 429,
+    "seconds": 0.12,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "q_xml_dh_slp",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=slp1",
+    "status": 429,
+    "seconds": 0.14,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "q_xml_record",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=slp1&lnum=161686",
+    "status": 429,
+    "seconds": 0.1,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "q_xml_bad_dict",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=bogus&key=agni&input=slp1&output=slp1",
+    "status": 429,
+    "seconds": 0.13,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "robots_h",
+    "url": "https://sanskrit.inria.fr/robots.txt",
+    "status": 200,
+    "seconds": 0.08,
+    "bytes": 556,
+    "sha256": "a5e60194164fa7363549367f9d78dcdd08e4a713cf3e6f9b7b4a6ceb1b48c3fc",
+    "excerpt": "# AI crawlers\nUser-agent: Amazonbot\nUser-agent: anthropic-ai\nUser-agent: Applebot-Extended\nUser-agent: bingbot\nUser-agent: Bytespider\nUser-agent: CCBot\nUser-agent: ChatGPT-User\nUse",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "content-type": "text/plain",
+      "date": "Sun, 04 Oct 2026 04:43:40 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "robots_p",
+    "url": "https://sanskrit-parser.appspot.com/robots.txt",
+    "status": 404,
+    "seconds": 0.18,
+    "bytes": 207,
+    "sha256": "e9639e3c4681ce85f852fbac48e2eeee5ba51296dbfec57c200d59b76237ab80",
+    "excerpt": "<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your s",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "date": "Sun, 04 Oct 2026 04:43:40 GMT",
+      "server": "Google Frontend"
+    }
+  },
+  {
+    "case": "robots_c",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/robots.txt",
+    "status": 429,
+    "seconds": 0.12,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  },
+  {
+    "case": "parser_license",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/LICENSE",
+    "status": 200,
+    "seconds": 0.23,
+    "bytes": 1077,
+    "sha256": "5a1c0e2c6f8daadd81e2ac455f79fc488b19350455a56da7dcfbd3ac441fb740",
+    "excerpt": "MIT License\n\nCopyright (c) 2017 Karthikeyan Madathil\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation fil",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:43:41 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "parser_setup",
+    "url": "https://raw.githubusercontent.com/kmadathil/sanskrit_parser/master/setup.py",
+    "status": 200,
+    "seconds": 0.22,
+    "bytes": 5107,
+    "sha256": "49da11b85a96fcbbbfb3a5f511eac59df56f414199976946be2c1f08ce14d621",
+    "excerpt": "\"\"\"A setuptools based setup module.\n\nSee:\nhttps://packaging.python.org/en/latest/distributing.html\nhttps://github.com/pypa/sampleproject\n\"\"\"\n\n# Always prefer setuptools over distut",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Frame-Options": "deny",
+      "Date": "Sun, 04 Oct 2026 04:43:41 GMT",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  {
+    "case": "her_lic",
+    "url": "https://sanskrit.inria.fr/DATA/XML/LGPLLR.pdf",
+    "status": 200,
+    "seconds": 0.12,
+    "bytes": 48076,
+    "sha256": "3e8bec0f1043a6382601342362c0e7d0fef86114510bf5806f7629ee04338996",
+    "excerpt": "%PDF-1.4\n3 0 obj <<\n/Length 3074      \n/Filter /FlateDecode\n>>\nstream\nxڕZKo�H\u0012�ϯ0|�\u0000[��c���f�I�ċ�`���D�D(Q ��x��o}U��\u0016E\u0007��Ů�����w���O?�\r��0Y�I\u0016]���� [Ea�]�Q�\n�4����w����[��y�xW\u001d�\u0019.",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "content-type": "application/pdf",
+      "date": "Sun, 04 Oct 2026 04:43:41 GMT",
+      "server": "Apache/2.4.52 (Ubuntu)",
+      "x-frame-options": "SAMEORIGIN"
+    }
+  },
+  {
+    "case": "wiki",
+    "url": "https://sa.wikipedia.org/wiki/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D",
+    "status": 403,
+    "seconds": 0.14,
+    "bytes": 126,
+    "sha256": "165da4d5af47d0a2008597750d184a3cef870aff9d0a5005b71d6bd17a75672e",
+    "excerpt": "Please set a user-agent and respect our robot policy https://w.wiki/4wJS. See also https://phabricator.wikimedia.org/T400119.\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "content-type": "text/plain",
+      "server": "HAProxy"
+    }
+  },
+  {
+    "case": "wikisource",
+    "url": "https://sa.wikisource.org/wiki/%E0%A4%AD%E0%A4%97%E0%A4%B5%E0%A4%A6%E0%A5%8D%E0%A4%97%E0%A5%80%E0%A4%A4%E0%A4%BE/%E0%A4%85%E0%A4%B0%E0%A5%8D%E0%A4%9C%E0%A5%81%E0%A4%A8%E0%A4%B5%E0%A4%BF%E0%A4%B7%E0%A4%BE%E0%A4%A6%E0%A4%AF%E0%A5%8B%E0%A4%97%E0%A4%83",
+    "status": 403,
+    "seconds": 0.12,
+    "bytes": 126,
+    "sha256": "165da4d5af47d0a2008597750d184a3cef870aff9d0a5005b71d6bd17a75672e",
+    "excerpt": "Please set a user-agent and respect our robot policy https://w.wiki/4wJS. See also https://phabricator.wikimedia.org/T400119.\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "content-type": "text/plain",
+      "server": "HAProxy"
+    }
+  },
+  {
+    "case": "legacy",
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+    "status": 429,
+    "seconds": 0.12,
+    "bytes": 117,
+    "sha256": "ae138caf8767f7be2fe6f47f1663b0e2e28d903264707aa9b6f73bb7b223902c",
+    "excerpt": "<html><body><h1>429 Too Many Requests</h1>\nYou have sent too many requests in a given amount of time.\n</body></html>\n",
+    "observed_at": "2026-10-04T04:43:42.135065+00:00",
+    "headers": {
+      "Content-Type": "text/html"
+    }
+  }
+]

@@ -1,0 +1,192 @@
+{
+  "observed_at_utc": "2026-10-04T04:43:37Z",
+  "browser_version": "Microsoft Edge 154.0.4258.37",
+  "mode": "headless=new; disposable actual Edge MV3 service worker",
+  "granted_then_revoked": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "host_permissions": [
+        "https://www.sanskrit-lexicon.uni-koeln.de/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [
+          "https://www.sanskrit-lexicon.uni-koeln.de/*"
+        ],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "finalUrl": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": true,
+          "status": 500,
+          "contentType": null,
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "jsonShape": null,
+          "anubis": false,
+          "excerpt": ""
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "finalUrl": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": true,
+          "status": 500,
+          "contentType": null,
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "jsonShape": null,
+          "anubis": false,
+          "excerpt": ""
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "finalUrl": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "granted": true,
+          "status": 500,
+          "contentType": null,
+          "characters": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "jsonShape": null,
+          "anubis": false,
+          "excerpt": ""
+        }
+      ]
+    },
+    "revoked_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "revoked_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        }
+      ]
+    }
+  },
+  "optional_never_granted": {
+    "manifest": {
+      "manifest_version": 3,
+      "name": "Tensho issue 10 research probe",
+      "version": "0.0.1",
+      "background": {
+        "service_worker": "worker.js"
+      },
+      "permissions": [
+        "storage"
+      ],
+      "optional_host_permissions": [
+        "https://www.sanskrit-lexicon.uni-koeln.de/*"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "initial_guarded": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 0,
+      "results": [
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "state": "access-not-granted"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "granted": false,
+          "state": "access-not-granted"
+        }
+      ]
+    },
+    "missing_raw": {
+      "permissions": {
+        "origins": [],
+        "permissions": [
+          "storage"
+        ]
+      },
+      "fetches": 3,
+      "results": [
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword.php?dict=mw&key=Darmakzetra&input=slp1&output=roman",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        },
+        {
+          "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/MWScan/2020/web/webtc/getword.php?key=Darmakzetra&filter=roman&transLit=slp1",
+          "granted": false,
+          "error": "TypeError: Failed to fetch"
+        }
+      ]
+    }
+  }
+}

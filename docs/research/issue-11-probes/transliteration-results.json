@@ -1,0 +1,94 @@
+{
+  "observedAtUTC": "2026-10-04T04:44:12.881Z",
+  "node": "v24.18.1",
+  "package": "@indic-transliteration/sanscript",
+  "version": "1.3.3",
+  "results": [
+    {
+      "original": "धर्मक्षेत्र",
+      "slp1": "Darmakzetra",
+      "iast": "dharmakṣetra",
+      "roundTrip": true
+    },
+    {
+      "original": "धर्मक्षेत्रे",
+      "slp1": "Darmakzetre",
+      "iast": "dharmakṣetre",
+      "roundTrip": true
+    },
+    {
+      "original": "सेन",
+      "slp1": "sena",
+      "iast": "sena",
+      "roundTrip": true
+    },
+    {
+      "original": "सेना",
+      "slp1": "senA",
+      "iast": "senā",
+      "roundTrip": true
+    },
+    {
+      "original": "मा",
+      "slp1": "mA",
+      "iast": "mā",
+      "roundTrip": true
+    },
+    {
+      "original": "मामकास्",
+      "slp1": "mAmakAs",
+      "iast": "māmakās",
+      "roundTrip": true
+    },
+    {
+      "original": "पाण्डवास्",
+      "slp1": "pARqavAs",
+      "iast": "pāṇḍavās",
+      "roundTrip": true
+    },
+    {
+      "original": "च",
+      "slp1": "ca",
+      "iast": "ca",
+      "roundTrip": true
+    },
+    {
+      "original": "एव",
+      "slp1": "eva",
+      "iast": "eva",
+      "roundTrip": true
+    }
+  ],
+  "distinctControlledHomographs": [
+    {
+      "provider": "controlled-fixture",
+      "original": "मा",
+      "homograph": 1,
+      "display": "mā"
+    },
+    {
+      "provider": "controlled-fixture",
+      "original": "मा",
+      "homograph": 2,
+      "display": "mā"
+    },
+    {
+      "provider": "controlled-fixture",
+      "original": "मा",
+      "homograph": 3,
+      "display": "mā"
+    },
+    {
+      "provider": "controlled-fixture",
+      "original": "मा",
+      "homograph": 4,
+      "display": "mā"
+    }
+  ],
+  "normalization": {
+    "original": "dharmakṣetre",
+    "direct": "धर्मक्षेत्रे",
+    "nfc": "धर्मक्षेत्रे"
+  },
+  "scope": "Node runtime conversion only; no source identity resolution or Edge rendering verified"
+}
