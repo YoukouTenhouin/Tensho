@@ -15,14 +15,14 @@ const index = JSON.parse(fixture('lewis-short/index-rows.json')).rows.join('\n')
 const turn = () => new Promise<void>(resolve => setImmediate(resolve));
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
 
-function setup(options: { executor?: RequestExecutor; article?: (id: string) => Promise<Response> } = {}) {
+function setup(options: { executor?: RequestExecutor; article?: (id: string) => Promise<Response>; index?: () => Promise<Response> } = {}) {
   const calls: { url: string; options?: RequestInit }[] = [];
   let permitted = true, saved: unknown, sourceCurrent = true;
   const executor = options.executor ?? new RequestExecutor();
   const fetcher: typeof fetch = async (input, init) => {
     const url = new URL(String(input)); calls.push({ url: url.href, options: init });
     if (url.hostname === 'morph.alpheios.net') return new Response(fixture(`whitaker/${url.searchParams.get('word')}.json`));
-    if (url.href === latinDictionary.indexUrl) return new Response(index);
+    if (url.href === latinDictionary.indexUrl) return options.index ? options.index() : new Response(index);
     const entryId = url.searchParams.get('n')!;
     return options.article ? options.article(entryId) : new Response(fixture(`lewis-short/${entryId}.html`));
   };
@@ -160,4 +160,93 @@ test('identity mismatch remains a local technical failure and explicit retry can
   if (result?.status === 'error') assert.equal(result.failureKind, 'format');
   wrong = false; await app.dictionary.retrieve(1, app.generation(), 0, 'n21985', true);
   assert.equal(app.dictionary.get(1)[0]!.articles.n21985?.status, 'complete');
+});
+
+test('restarted dictionary resolution waits for explicit retry and checks current access before refreshing the index', async () => {
+  const held = deferred<Response>();
+  const old = setup({ index: () => held.promise });
+  await old.lookup.lookup(identity, 'legi');
+  const pending = old.dictionary.resolve(1, old.generation(), 0);
+  await turn();
+  const state = structuredClone(old.lookup.get(1)!);
+  const saved = structuredClone(old.dictionary.get(1));
+  assert.equal(saved[0]?.resolution.status, 'loading');
+  old.dictionary.suspend(1);
+  const restarted = setup();
+  restarted.permit(false);
+  assert.equal(restarted.lookup.restore(state), true);
+  assert.equal(restarted.dictionary.restore(1, state.generation, saved), true);
+  const result = restarted.dictionary.get(1)[0]!;
+  assert.equal(result.resolution.status, 'error');
+  if (result.resolution.status === 'error') assert.equal(result.resolution.failureKind, 'interrupted');
+  await restarted.dictionary.resolve(1, state.generation, 0);
+  assert.equal(restarted.calls.length, 0, 'opening interrupted work does not replay it');
+  await restarted.dictionary.resolve(1, state.generation, 0, true);
+  assert.equal(result.resolution.status, 'error');
+  if (result.resolution.status === 'error') assert.equal(result.resolution.failureKind, 'missing-access');
+  assert.equal(restarted.calls.length, 0, 'retry cannot refresh without current access');
+  held.resolve(new Response(index)); await pending; await turn();
+  assert.equal(result.resolution.status, 'error', 'old completion cannot change restarted state');
+  restarted.permit(true);
+  await restarted.dictionary.resolve(1, state.generation, 0, true);
+  assert.equal(result.resolution.status, 'complete');
+  assert.equal(restarted.calls.length, 1, 'only explicit authorized retry refreshes');
+  assert.deepEqual(restarted.lookup.get(1), state);
+});
+
+test('restarted article retry preserves completed siblings and does not replay analysis or index resolution', async () => {
+  const held = deferred<Response>();
+  const old = setup({ article: async id => id === 'n26186' ? held.promise : new Response(fixture(`lewis-short/${id}.html`)) });
+  await old.lookup.lookup(identity, 'legi');
+  await old.dictionary.resolve(1, old.generation(), 0);
+  await old.dictionary.retrieve(1, old.generation(), 0, 'n26185');
+  const pending = old.dictionary.retrieve(1, old.generation(), 0, 'n26186');
+  await turn();
+  const state = structuredClone(old.lookup.get(1)!);
+  const saved = structuredClone(old.dictionary.get(1));
+  old.dictionary.suspend(1);
+  const restarted = setup(); restarted.permit(false);
+  restarted.lookup.restore(state); restarted.dictionary.restore(1, state.generation, saved);
+  const candidate = restarted.dictionary.get(1)[0]!;
+  const retained = structuredClone(candidate.articles.n26185);
+  assert.equal(candidate.articles.n26186?.status, 'error');
+  await restarted.dictionary.retrieve(1, state.generation, 0, 'n26186');
+  assert.equal(restarted.calls.length, 0);
+  await restarted.dictionary.retrieve(1, state.generation, 0, 'n26186', true);
+  assert.equal(restarted.calls.length, 0);
+  const denied = candidate.articles.n26186;
+  assert.equal(denied?.status, 'error');
+  if (denied?.status === 'error') assert.equal(denied.failureKind, 'missing-access');
+  held.resolve(new Response(fixture('lewis-short/n26186.html'))); await pending; await turn();
+  assert.deepEqual(candidate.articles.n26185, retained);
+  assert.deepEqual(candidate.articles.n26186, denied);
+  restarted.permit(true);
+  await restarted.dictionary.retrieve(1, state.generation, 0, 'n26186', true);
+  assert.equal(candidate.articles.n26186?.status, 'complete');
+  assert.deepEqual(candidate.articles.n26185, retained);
+  assert.equal(restarted.calls.length, 1);
+  assert.equal(new URL(restarted.calls[0]!.url).searchParams.get('n'), 'n26186');
+  assert.deepEqual(restarted.lookup.get(1), state);
+});
+
+test('revocation between dictionary choices retains completed content and blocks the next article and retry', async () => {
+  const app = setup();
+  await app.lookup.lookup(identity, 'legi');
+  await app.dictionary.resolve(1, app.generation(), 0);
+  await app.dictionary.retrieve(1, app.generation(), 0, 'n26185');
+  const candidate = app.dictionary.get(1)[0]!;
+  const retained = structuredClone(candidate.articles.n26185);
+  const count = app.calls.length;
+  app.permit(false); app.executor.revokeAccess(latinDictionary.origins);
+  await app.dictionary.retrieve(1, app.generation(), 0, 'n26186');
+  await app.dictionary.retrieve(1, app.generation(), 0, 'n26186', true);
+  assert.equal(app.calls.length, count);
+  assert.deepEqual(candidate.articles.n26185, retained);
+  assert.equal(candidate.resolution.status, 'complete');
+  assert.equal(app.lookup.get(1)?.status, 'complete');
+  app.permit(true);
+  await app.dictionary.retrieve(1, app.generation(), 0, 'n26186', true);
+  assert.equal(app.calls.length, count + 1);
+  assert.equal(candidate.articles.n26186?.status, 'complete');
+  assert.deepEqual(candidate.articles.n26185, retained);
 });
