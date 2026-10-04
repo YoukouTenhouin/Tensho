@@ -193,3 +193,43 @@ test('refusing a replacement leaves an interrupted prior analysis retryable inst
   release(); await first;
   assert.equal(app.lookup.get(1)?.text, 'amo'); assert.equal(app.lookup.get(1)?.status, 'error');
 });
+
+test('deferred settings refresh survives worker reconstruction without replaying hidden tabs or retaining old articles', async () => {
+  const app = application();
+  await article(app, 1, 'malum'); await article(app, 2, 'puella');
+  app.lookup.reconfigure({ configuration: 'new-settings', lookupLanguage: 'lat', explanationLanguage: 'en' }, []);
+  await app.session.settled();
+  assert.equal(app.calls(), 6);
+  const saved = await app.storage.get(2);
+  assert.equal(saved?.status, 'retained');
+  if (saved?.status !== 'retained') assert.fail();
+  assert.deepEqual(saved.value.dictionaries, {});
+  assert.equal(saved.value.state.status, 'notice');
+  const restarted = application(app.durable, async value => value.configuration === 'new-settings');
+  await restarted.session.settled(); assert.equal(restarted.calls(), 0);
+  await restarted.lookup.view(2); await restarted.session.settled();
+  assert.equal(restarted.calls(), 1);
+  assert.equal(restarted.lookup.get(2)?.status, 'complete');
+  assert.equal(restarted.lookup.get(1)?.status, 'notice');
+  const current = await restarted.storage.get(2);
+  assert.equal(current?.status === 'retained' && current.value.state.identity.configuration, 'new-settings');
+  assert.deepEqual(restarted.dictionaries.get(2), {});
+});
+
+test('eviction of deferred settings work survives restart as a notice without implicit recreation', async () => {
+  const app = application(); await article(app, 1, 'malum'); await article(app, 2, 'puella');
+  app.lookup.reconfigure({ configuration: 'new-settings', lookupLanguage: 'lat', explanationLanguage: 'en' }, []);
+  await app.session.settled();
+  app.active([2]); app.durable.quota(app.durable.bytes() + 100);
+  await app.lookup.view(2); await app.session.settled();
+  // A sufficiently larger active result must evict the inactive deferred tab.
+  app.articleSize(500);
+  const generation = app.lookup.get(2)!.generation;
+  await app.dictionaries.resolve(2, generation, 0);
+  await app.dictionaries.retrieve(2, generation, 0, 'n1'); await app.session.settled();
+  assert.equal(app.lookup.get(1), undefined);
+  const restarted = application(app.durable); await restarted.session.settled();
+  await restarted.lookup.view(1);
+  assert.equal(restarted.calls(), 0);
+  assert.equal(restarted.session.information(1).retentionNotice, 'Previous result cleared to free space');
+});
