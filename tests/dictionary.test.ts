@@ -250,3 +250,30 @@ test('revocation between dictionary choices retains completed content and blocks
   assert.equal(candidate.articles.n26186?.status, 'complete');
   assert.deepEqual(candidate.articles.n26185, retained);
 });
+
+test('settings changes invalidate delayed resolution and article completions across hidden tabs', async () => {
+  for (const operation of ['index', 'article']) {
+    const held = deferred<Response>();
+    const app = setup(operation === 'index' ? { index: () => held.promise } : { article: () => held.promise });
+    await app.lookup.lookup(identity, 'important');
+    const oldGeneration = app.generation();
+    const pending = operation === 'index' ? app.dictionary.resolve(1, oldGeneration, 0) : (async () => {
+      await app.dictionary.resolve(1, oldGeneration, 0);
+      await app.dictionary.retrieve(1, oldGeneration, 0, 'n21985');
+    })();
+    await turn();
+    const count = app.calls.length;
+    app.lookup.reconfigure({ configuration: 'next', lookupLanguage: 'lat', explanationLanguage: 'en' }, []);
+    held.resolve(new Response(operation === 'index' ? index : fixture('lewis-short/n21985.html')));
+    await pending; await turn();
+    assert.equal(app.calls.length, count, 'hidden invalidation does not query');
+    assert.deepEqual(app.dictionary.get(1), {});
+    assert.equal(app.lookup.get(1)?.status, 'notice');
+    await app.lookup.view(1);
+    assert.equal(app.calls.length, count + 1, 'view refreshes only analysis');
+    assert.equal(app.lookup.get(1)?.identity.configuration, 'next');
+    assert.deepEqual(app.dictionary.get(1), {});
+    await app.dictionary.retrieve(1, oldGeneration, 0, 'n21985');
+    assert.equal(app.calls.length, count + 1, 'old panel action cannot revive a dictionary generation');
+  }
+});
