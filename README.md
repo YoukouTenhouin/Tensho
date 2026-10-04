@@ -20,6 +20,7 @@ The UI starts with Latin lookup and English explanations. Reading-site access an
 ## Read and look up words
 
 - Enable Latin providers, then select a word or enter it manually. Results preserve supplied candidate boundaries, grammar, English short meanings, and attribution. Missing access, no Latin match, missing information, and technical failure remain distinct. A failed lookup offers **Retry Latin analysis**; there are no automatic retries.
+- Select a passage with the context menu or **Alt+Shift+L**, or enter it manually. The original selection and word buttons stay visible while you study a chosen word. Opening a passage sends no analysis; each word choice sends only that word. Limits are 4,096 Unicode code points per selection, 256 per offered word, and 256 offered words. Oversized input is rejected without truncation. Internal apostrophes, hyphens, diacritics, and enclitics remain intact. In the manual field, Enter submits and Shift+Enter inserts a newline.
 - Open **dictionary alternatives** beneath a candidate to resolve possible Lewis & Short entries. Labels show the actual index keys and entry identifiers; correspondence remains unverified, including a singleton. Choose **Read full article** to retrieve an entry. Multiple articles can remain visible, with complete readable text, attribution, and safe source links. Dictionary failures offer local retry without rerunning analysis. An unresolved mapping does not establish that the dictionary has no entry.
 - Press **Alt+Shift+L** to look up accessible selected text. Opening the sidebar focuses results; if it is already open, use the toggle below to move focus into it. Temporary native page access does not enable automatic lookup.
 - Press **Alt+Shift+K** to toggle existing results without another lookup. When closed, one press opens and focuses them; when already open, press twice to close and reopen with focus. Dismiss Edge’s floating text-selection menu with Escape if it intercepts a shortcut. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
@@ -38,10 +39,12 @@ Sites are identified by scheme, hostname, and effective port. Disabling an origi
 python3 tests/native/permission_scope.py
 npm run build:controlled
 python3 tests/native/reading_workflow.py
+python3 tests/native/reading_workflow.py --passage
 python3 tests/native/reading_workflow.py --desktop
 python3 tests/native/reading_workflow.py --desktop --idle
 python3 tests/native/permission_workflow.py --output /tmp/tensho-access
 python3 tests/native/latin_workflow.py --output /tmp/tensho-latin
+python3 tests/native/latin_workflow.py --passage --output /tmp/tensho-passage
 python3 tests/native/latin_workflow.py --dictionary --output /tmp/tensho-dictionary
 python3 tests/native/dictionary_render.py --output /tmp/tensho-dictionary-render
 ```
@@ -53,3 +56,5 @@ The reading-site optional-access runner uses `dist-controlled` on isolated Xvfb.
 The Latin runner uses the unmodified live `dist` build on isolated Xvfb and prompts for inspected native Deny/Allow button coordinates. It verifies zero guarded requests before access, after denial, and after revocation, plus one explicit live `important` lookup and retry behavior. See [recorded live evidence](docs/validation/15-latin-access.json). Retained seven-form fixtures are dated provider observations, not a claim of general linguistic accuracy.
 
 The Latin runner’s `--dictionary` continuation verifies the live analysis → alternatives → chosen article path and dictionary-only permission revocation. The rendering runner bundles the production dictionary modules separately and feeds retained/hostile responses through them in headless Edge; it does not modify `dist` or call providers. [Dictionary acceptance](docs/validation/16-dictionary-acceptance.md) distinguishes live evidence from controlled response coverage.
+
+The reading runner’s `--passage` continuation verifies real selection capture and native Tab/Enter word choices, failure/retry, bounds, and stale passage messages using controlled analysis. The Latin runner’s corresponding option confirms that a chosen passage word uses the live provider and retains controls after access is revoked. See [passage acceptance](docs/validation/17-passage-acceptance.md).
