@@ -1,3 +1,4 @@
+import type { ProviderIssue } from '../core/requests.ts';
 import type { Analysis } from '../core/lookup.ts';
 import { RequestFailure, requestLimits } from '../core/requests.ts';
 
@@ -16,6 +17,8 @@ export interface DictionaryAlternative {
 }
 interface ResolutionDetails {
   providerId?: string;
+  providerName?: string;
+  providerIssues?: ProviderIssue[];
   originalHeadword: string | null;
   provenance: Analysis['candidates'][number]['provenance'];
   stableLemmaId: string | null;
