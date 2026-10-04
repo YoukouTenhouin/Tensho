@@ -34,7 +34,7 @@ export interface Analysis {
 export interface Passage { id: number; original: string; words: OfferedWord[]; selectedIndex?: number; }
 export type State = { generation: number; identity: Identity; text: string; passage?: Passage } & (
   { status: 'loading' } | { status: 'complete'; analysis: Analysis } |
-  { status: 'notice' | 'error' | 'unavailable'; message: string; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] }
+  { status: 'notice' | 'error' | 'unavailable'; message: string; refreshOnView?: true; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] }
 );
 export interface AnalysisInvocation { explanationMode: 'explanations' | 'structural-only'; options: Record<string, ProviderOptionValue>; }
 export interface Analyzer {
@@ -105,15 +105,26 @@ export class LookupCoordinator {
       const identity = { ...state.identity, configuration: configuration.configuration,
         lookupLanguage: configuration.lookupLanguage, explanationLanguage: configuration.explanationLanguage };
       const passage = state.passage;
+      const refresh = !!state.text && (!passage || passage.selectedIndex !== undefined);
       this.#set({ identity, text: state.text, passage, generation: ++this.#generation, status: 'notice',
+        ...(refresh ? { refreshOnView: true as const } : {}),
         message: passage && passage.selectedIndex === undefined
           ? 'Passage retained. Choose one word to look up; nothing has been sent.'
-          : 'Settings changed. Look up the selection again to refresh this result.' });
-      if (!visibleTabs.includes(identity.tabId) || !state.text || (passage && passage.selectedIndex === undefined)) continue;
-      const request = this.begin(identity.tabId, identity.frameId);
-      if (passage?.selectedIndex !== undefined) void request.selectWord(identity, passage.id, passage.selectedIndex);
-      else void request.lookup(identity, state.text);
+          : 'Settings changed. This selection will refresh when viewed.' });
+      if (visibleTabs.includes(identity.tabId)) void this.view(identity.tabId);
     }
+  }
+  /** Consume only settings-deferred work. Eviction, interruption and an unchosen
+   * passage never acquire an implicit request merely because a panel is viewed. */
+  async view(tabId: number): Promise<void> {
+    const state = this.#states.get(tabId);
+    if (state?.status !== 'notice' || !state.refreshOnView) return;
+    const request = this.begin(tabId, state.identity.frameId);
+    const valid = await this.#sourceIsCurrent(state.identity).catch(() => false);
+    if (!request.current()) return;
+    if (!valid) { this.clear(tabId); return; }
+    if (state.passage?.selectedIndex !== undefined) await request.selectWord(state.identity, state.passage.id, state.passage.selectedIndex);
+    else await request.lookup(state.identity, state.text);
   }
   clear(tabId: number): void {
     this.#restorationClosed.add(tabId);
@@ -132,6 +143,11 @@ export class LookupCoordinator {
   }
   /** Reserve order before asynchronous browser identity or selection capture. */
   begin(tabId: number, frameId?: number): LookupRequest {
+    const deferred = this.#states.get(tabId);
+    if (deferred?.status === 'notice' && deferred.refreshOnView) {
+      const { refreshOnView: _refresh, ...retained } = deferred;
+      this.#set(retained);
+    }
     this.#restorationClosed.add(tabId);
     this.#wordChoices.delete(tabId);
     this.#invalidate(tabId, !!this.#prepareLookup);

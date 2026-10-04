@@ -144,7 +144,7 @@ test('saving settings refreshes visible chosen passage words, retains unchosen p
   const callsBefore = app.calls.length;
   const changed = structuredClone(app.settings()); changed.revision = 'two'; changed.languages.lat!.explanationLanguage = 'fr'; app.replace(changed);
   app.lookup.reconfigure(identity(changed), [1, 3]);
-  assert.equal(app.lookup.get(1)?.status, 'loading');
+  assert.equal(app.lookup.get(1)?.status, 'notice');
   assert.equal(app.lookup.get(2)?.status, 'notice');
   assert.equal(app.lookup.get(3)?.status, 'notice');
   await turn();
@@ -174,4 +174,39 @@ test('configuration refresh cancels pending capture and late analysis without re
   assert.equal(result.status, 'complete');
   if (result.status === 'complete') assert.equal(result.analysis.provider, 'fresh');
   assert.equal(result.identity.configuration, 'two');
+});
+
+
+test('viewing settings-invalidated tabs refreshes once with the latest configuration and preserves chosen passage context', async () => {
+  const app = setup();
+  await app.lookup.lookup(identity(app.settings()), 'important mālum');
+  await app.lookup.selectWord(1, app.lookup.get(1)!.passage!.id, 1);
+  const passage = app.lookup.get(1)!.passage;
+  await app.lookup.lookup({ ...identity(app.settings()), tabId: 2 }, 'important');
+  const changed = structuredClone(app.settings()); changed.revision = 'two'; changed.languages.lat!.explanationLanguage = 'fr'; app.replace(changed);
+  app.lookup.reconfigure(identity(changed), []);
+  assert.equal(app.calls.length, 2, 'hidden tabs make no requests');
+  await Promise.all([app.lookup.view(1), app.lookup.view(1)]);
+  assert.deepEqual(app.calls.map(call => call.id), ['latin-en', 'latin-en', 'latin-fr']);
+  assert.equal(app.calls[2]!.text, 'mālum');
+  assert.deepEqual(app.lookup.get(1)!.passage, passage);
+  await app.lookup.view(1); assert.equal(app.calls.length, 3, 'completed current state is reused');
+  await app.lookup.view(2); assert.equal(app.calls.length, 4);
+  assert.equal(app.calls[3]!.identity.configuration, 'two');
+});
+
+test('deferred settings work survives hydration but cannot replay after eviction or superseding capture', async () => {
+  const app = setup();
+  await app.lookup.lookup(identity(app.settings()), 'important');
+  const changed = structuredClone(app.settings()); changed.revision = 'two'; app.replace(changed);
+  app.lookup.reconfigure(identity(changed), []);
+  const saved = structuredClone(app.lookup.get(1)!);
+  const restored = setup({ settings: changed }); restored.lookup.restore(saved);
+  assert.equal(restored.calls.length, 0);
+  await restored.lookup.view(1); assert.equal(restored.calls.length, 1);
+  app.lookup.clear(1); await app.lookup.view(1); assert.equal(app.calls.length, 1);
+  const superseded = setup({ settings: changed }); superseded.lookup.restore(saved);
+  const capture = superseded.lookup.begin(1);
+  await superseded.lookup.view(1); assert.equal(superseded.calls.length, 0);
+  await capture.lookup(identity(changed), 'cano'); assert.equal(superseded.calls[0]!.text, 'cano');
 });
