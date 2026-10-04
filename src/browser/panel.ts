@@ -111,6 +111,11 @@ element('lookup').addEventListener('submit', event => {
   event.preventDefault(); feedback.textContent = '';
   void send({ type: 'manual-lookup', text: word.value }).then(() => { results.focus({ preventScroll: true }); }).catch(report);
 });
+word.addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+    event.preventDefault(); element<HTMLFormElement>('lookup').requestSubmit();
+  }
+});
 element('enable-providers').onclick = () => {
   // Native permission prompting is only initiated by this explicit learner action.
   void chrome.permissions.request({ origins: [...latinProviderOrigins] }).then(async granted => {

@@ -118,3 +118,19 @@ test('single punctuated words retain their original selection while only the off
   assert.equal(calls[0]!.text, 'mālum'); assert.equal(coordinator.get(1)?.text, ' “mālum!” ');
   calls[0]!.resolve(result); await pending;
 });
+
+test('production coordination enforces every passage bound before any word is requested', async () => {
+  const { coordinator, calls } = fixture();
+  for (const input of [Array(257).fill('a').join(' '), 'arma ' + '𐌀'.repeat(257), 'a'.repeat(4097)]) {
+    await coordinator.lookup(identity, input);
+    const state = coordinator.get(1)!;
+    assert.equal(state.status, 'notice'); assert.equal(state.text, input);
+    assert.equal(state.passage, undefined); assert.equal(calls.length, 0);
+  }
+  const original = Array(256).fill('𐌀'.repeat(15)).join(' ') + ' ';
+  await coordinator.lookup(identity, original);
+  const passage = coordinator.get(1)!.passage!;
+  assert.equal(passage.words.length, 256); assert.equal(passage.original, original); assert.equal(calls.length, 0);
+  const lookup = coordinator.selectWord(1, passage.id, 255);
+  assert.equal([...calls[0]!.text].length, 15); calls[0]!.resolve(result); await lookup;
+});

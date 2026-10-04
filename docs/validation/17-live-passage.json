@@ -1,0 +1,165 @@
+{
+  "observed_at_utc": "2026-10-04T16:46:36Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb",
+  "unmodified_production_build": true,
+  "live_provider_word": "important",
+  "checks": {
+    "setup_sends_no_provider_requests": true,
+    "missing_access_visible_without_request": true,
+    "denial_visible_without_request": true,
+    "grant_does_not_automatically_lookup": true,
+    "exact_default_provider_origins": true,
+    "explicit_retry_after_grant_completes": true,
+    "live_latin_importo_analysis": true,
+    "live_attribution_visible": true,
+    "english_short_meanings_visible": true,
+    "one_explicit_latin_request": true,
+    "live_passage_sends_no_automatic_request": true,
+    "passage_choice_uses_live_latin_analysis": true,
+    "live_passage_sends_only_selected_word": true,
+    "passage_error_keeps_controls_without_access": true,
+    "live_passage_retry_preserves_original_without_request": true,
+    "revocation_visible_without_new_request": true,
+    "retry_after_revocation_sends_no_request": true,
+    "explicit_retry_is_available": true
+  },
+  "granted_origins": [
+    "https://morph.alpheios.net/*",
+    "https://repos1.alpheios.net/*"
+  ],
+  "live_state": {
+    "identity": {
+      "tabId": 680281539,
+      "frameId": 0,
+      "documentId": "2F527038436E5C72AE3DF7752DB1068A",
+      "topDocumentId": "2F527038436E5C72AE3DF7752DB1068A",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "whitaker-latin-en-1"
+    },
+    "text": "important",
+    "generation": 3,
+    "status": "complete",
+    "analysis": {
+      "provider": "Whitaker via Alpheios",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "outcome": "usable",
+      "candidates": [
+        {
+          "lemma": "importo, importare, importavi, importatus",
+          "stableId": null,
+          "meanings": [
+            "bring in, convey; import; bring about, cause;"
+          ],
+          "grammar": [
+            {
+              "term": {
+                "lang": "lat",
+                "stem": {
+                  "$": "import"
+                },
+                "suff": {
+                  "$": "ant"
+                }
+              },
+              "pofs": {
+                "order": 3,
+                "$": "verb"
+              },
+              "conj": {
+                "$": "1st"
+              },
+              "var": {
+                "$": "1st"
+              },
+              "tense": {
+                "$": "present"
+              },
+              "voice": {
+                "$": "active"
+              },
+              "mood": {
+                "$": "indicative"
+              },
+              "pers": {
+                "$": "3rd"
+              },
+              "num": {
+                "$": "plural"
+              }
+            }
+          ],
+          "lemmaFeatures": {
+            "hdwd": {
+              "lang": "lat",
+              "$": "importo, importare, importavi, importatus"
+            },
+            "pofs": {
+              "order": 3,
+              "$": "verb"
+            },
+            "conj": {
+              "$": "1st"
+            },
+            "freq": {
+              "order": 3,
+              "$": "lesser"
+            }
+          },
+          "provenance": {
+            "provider": "alpheios-whitakerLat",
+            "bodyReference": "urn:uuid:idm140253766876128",
+            "annotationIndex": 0,
+            "bodyIndex": 0,
+            "entryIndex": 0
+          },
+          "missing": [],
+          "interpretations": [
+            "Form: Language: lat, Stem: import, Ending: ant, Part of speech: verb, Conjugation: 1st, Variant: 1st, Tense: present, Voice: active, Mood: indicative, Person: 3rd, Number: plural"
+          ]
+        }
+      ],
+      "attribution": [
+        "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+      ],
+      "excludedForeignRecords": 0,
+      "controlled": false
+    }
+  },
+  "provider_requests": [
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "application/json",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "url": "https://morph.alpheios.net/api/v1/analysis/word?word=important&engine=whitakerLat&lang=lat&clientId=tensho",
+      "method": "GET",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+        "Accept": "application/json",
+        "Referer": ""
+      },
+      "initialPriority": "High",
+      "referrerPolicy": "no-referrer"
+    }
+  ],
+  "live_passage": {
+    "original": "  “important,” mālum  ",
+    "offered_words": [
+      "important",
+      "mālum"
+    ],
+    "selected_word": "important",
+    "provider": "Whitaker via Alpheios"
+  },
+  "passed": true
+}

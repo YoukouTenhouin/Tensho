@@ -1,0 +1,384 @@
+{
+  "observed_at_utc": "2026-10-04T16:47:28Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_analysis": true,
+  "fixture_permission": "test-only exact-origin manifest pregrant; optional prompting tested separately",
+  "checks": {
+    "both_shortcuts_registered": true,
+    "double_click_result": true,
+    "double_click_native_focus_allowed": true,
+    "double_click_preserves_scroll": true,
+    "already_open_panel_lookup_preserves_page_focus": true,
+    "native_toggle_restores_focus_without_lookup": true,
+    "drag_does_not_lookup": true,
+    "editable_double_click_does_not_lookup": true,
+    "page_click_keeps_panel_open": true,
+    "manual_lookup_through_production_interface": true,
+    "loading_status_can_be_announced": true,
+    "close_restores_page_focus": true,
+    "closed_panel_stays_closed_after_completion": true,
+    "embedded_origin_requires_explicit_enablement": true,
+    "same_origin_frame_routes_identity": true,
+    "separately_enabled_frame_routes_identity": true,
+    "opaque_sandbox_frame_does_not_lookup": true,
+    "embedded_frame_requires_containing_site_enablement": true,
+    "keyboard_open_preserves_selected_frame": true,
+    "navigated_frame_not_confused_with_original_url_sibling": true,
+    "removed_frame_cannot_publish_result": true,
+    "ungranted_keyboard_offers_manual_recovery": true,
+    "opaque_keyboard_offers_manual_recovery": true,
+    "keyboard_reaches_named_manual_input": true,
+    "keyboard_focus_is_visible": true,
+    "native_keyboard_manual_submission": true,
+    "keyboard_can_leave_panel": true,
+    "panel_was_scrolled_before_lookup": true,
+    "new_lookup_resets_scroll_while_loading": true,
+    "rapid_lookup_keeps_latest_result": true,
+    "navigation_rejects_pending_browser_result": true,
+    "restricted_surface_explains_manual_recovery": true,
+    "restricted_surface_manual_lookup_works": true,
+    "focus_return_source_lookup": true,
+    "removed_source_falls_back_without_scroll": true,
+    "native_escape_returns_focus_without_scroll": true,
+    "passage_original_and_spelling_retained": true,
+    "passage_opens_with_zero_analysis_calls": true,
+    "passage_button_has_native_focus_and_meaningful_name": true,
+    "passage_controls_remain_during_loading": true,
+    "native_choice_issues_only_chosen_word": true,
+    "native_choice_retains_keyboard_focus": true,
+    "rapid_native_choices_keep_latest_word_and_passage": true,
+    "failure_preserves_original_passage_and_controls": true,
+    "native_retry_preserves_passage_and_retries_one_word": true,
+    "invalid_passages_send_nothing_and_explain_limits": true,
+    "lookup_language_remains_visible_on_error": true,
+    "replacement_selection_clears_passage_controls": true
+  },
+  "commands": [
+    {
+      "description": "",
+      "name": "_execute_action",
+      "shortcut": ""
+    },
+    {
+      "description": "Toggle existing results",
+      "name": "focus-results",
+      "shortcut": "Alt+Shift+K"
+    },
+    {
+      "description": "Look up selection",
+      "name": "lookup-selection",
+      "shortcut": "Alt+Shift+L"
+    }
+  ],
+  "before": {
+    "focus": true,
+    "scroll": 0
+  },
+  "after_double_click": {
+    "focus": false,
+    "active": "word",
+    "scroll": 0
+  },
+  "panel_after_double_click": {
+    "focus": true,
+    "active": "",
+    "target": "puella"
+  },
+  "native_contexts": [
+    {
+      "contextId": "ebc42cec-55c9-42d2-b633-b109d7214117",
+      "contextType": "BACKGROUND",
+      "frameId": -1,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    },
+    {
+      "contextId": "1251945e-3ee5-4215-900c-40eeee5413e9",
+      "contextType": "SIDE_PANEL",
+      "documentId": "87F086AE487C12DD1C69D54ADD846224",
+      "documentOrigin": "chrome-extension://djehdphijkgcaikngmapkgplpjagmoka",
+      "documentUrl": "chrome-extension://djehdphijkgcaikngmapkgplpjagmoka/panel.html",
+      "frameId": 0,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    }
+  ],
+  "native_pointer_trace": [
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 222.15625,
+        "innerHeight": 816,
+        "outerHeight": 900,
+        "scale": 1,
+        "screenX": 10,
+        "screenY": 10
+      },
+      "geometry": null,
+      "received": {
+        "testPointer": "top",
+        "x": 58,
+        "y": 234
+      }
+    },
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 222.15625,
+        "innerHeight": 816,
+        "outerHeight": 900,
+        "scale": 1,
+        "screenX": 10,
+        "screenY": 10
+      },
+      "geometry": null,
+      "received": {
+        "testPointer": "top",
+        "x": 58,
+        "y": 234
+      }
+    },
+    {
+      "selector": "#word",
+      "box": {
+        "x": 38,
+        "y": 394.15625,
+        "innerHeight": 816,
+        "outerHeight": 900,
+        "scale": 1,
+        "screenX": 10,
+        "screenY": 10
+      },
+      "geometry": null,
+      "received": {
+        "testPointer": "top",
+        "x": 58,
+        "y": 406
+      }
+    }
+  ],
+  "native_toggle_attempts": [
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    },
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    }
+  ],
+  "loading_announcements": [
+    {
+      "role": "status",
+      "blocked": false
+    }
+  ],
+  "frame_identities": {
+    "same_origin": {
+      "tabId": 420234909,
+      "frameId": 12,
+      "documentId": "A101E667834A6A8E51EC2E867013767E",
+      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "whitaker-latin-en-1"
+    },
+    "separate_origin": {
+      "tabId": 420234909,
+      "frameId": 13,
+      "documentId": "C0E3538302F115F6306083BBD6A42D8F",
+      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "whitaker-latin-en-1"
+    }
+  },
+  "keyboard_frame": {
+    "identity": {
+      "tabId": 420234909,
+      "frameId": 13,
+      "documentId": "C0E3538302F115F6306083BBD6A42D8F",
+      "topDocumentId": "B996DDDECFF8687A8871F0759E83D14D",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "whitaker-latin-en-1"
+    },
+    "text": "servus",
+    "generation": 8,
+    "status": "complete",
+    "analysis": {
+      "provider": "Controlled development response",
+      "controlled": true,
+      "candidates": [
+        {
+          "lemma": "servus",
+          "stableId": null,
+          "interpretations": [
+            "No linguistic analysis: this is an interaction fixture."
+          ],
+          "meanings": []
+        }
+      ]
+    }
+  },
+  "ungranted_keyboard": {
+    "identity": {
+      "tabId": 420234909,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "whitaker-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 11,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "opaque_keyboard": {
+    "identity": {
+      "tabId": 420234909,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "whitaker-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 12,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "keyboard_traversal": [
+    {
+      "focused": true,
+      "element": "SUMMARY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    }
+  ],
+  "focus_return_selection": {
+    "text": "puella",
+    "focus": true,
+    "active": "word"
+  },
+  "focus_return_lookup": {
+    "tabId": 420234909,
+    "state": {
+      "identity": {
+        "tabId": 420234909,
+        "frameId": 0,
+        "documentId": "488C6F715E89439FD253B24DF04B08E8",
+        "topDocumentId": "488C6F715E89439FD253B24DF04B08E8",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "configuration": "whitaker-latin-en-1"
+      },
+      "text": "puella",
+      "generation": 19,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "puella",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "dictionaries": {},
+    "providerAccess": [
+      false,
+      false
+    ],
+    "providerAccessDecision": "never",
+    "origin": "http://127.0.0.1:46179",
+    "enabledOrigins": [
+      "http://127.0.0.1:46179",
+      "http://127.0.0.1:46565"
+    ],
+    "focusRequest": 14
+  },
+  "passage": {
+    "fixture_text": "  “Arma,”\nvirumque; mālum mālum l’amour ab-cd 𐌀𐌁 controlled-failure.  ",
+    "original": "“Arma,” virumque; mālum mālum l’amour ab-cd 𐌀𐌁 controlled-failure.",
+    "offered_words": [
+      "Arma",
+      "virumque",
+      "mālum",
+      "mālum",
+      "l’amour",
+      "ab-cd",
+      "𐌀𐌁",
+      "controlled-failure"
+    ],
+    "analysis_calls": [
+      "Arma",
+      "virumque",
+      "mālum",
+      "controlled-failure",
+      "controlled-failure"
+    ],
+    "native_keyboard": true
+  },
+  "passed": true
+}
