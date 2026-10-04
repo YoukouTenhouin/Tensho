@@ -1,0 +1,3 @@
+# Extension-owned lookup coordination
+
+The Edge Manifest V3 extension separates a small page script for selection and focus, a background worker for permissions and provider requests, and an extension-owned side panel for presentation. Provider adapters translate external responses into shared analysis and dictionary contracts; lookup rules remain independent of browser APIs, and page scripts neither select provider URLs nor parse provider responses. This keeps page access separate from provider access and presentation while accepting the lifecycle coordination required by a suspendable worker; the boundary was agreed in [issue #9](https://github.com/YoukouTenhouin/Tensho/issues/9)'s design interview.

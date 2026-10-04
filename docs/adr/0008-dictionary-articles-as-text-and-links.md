@@ -1,0 +1,3 @@
+# Dictionary articles as text and links
+
+Latin v1 presents complete readable dictionary article text, paragraph boundaries, attribution, and validated safe links using extension-owned elements, accepting the loss of provider typography. Provider markup is not inserted into the browser DOM: the production extension must implement and validate an inert extraction boundary corresponding to the bounded [research path](../research/revised-latin-dictionary-integration.md#concrete-safe-content-path). This favors the validated content boundary over a rich HTML renderer requiring separate validation; the decision was agreed in [issue #9](https://github.com/YoukouTenhouin/Tensho/issues/9)'s design interview.
