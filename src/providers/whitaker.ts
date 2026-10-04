@@ -1,4 +1,5 @@
-import { RequestFailure } from '../core/requests.ts';
+import { RequestFailure, RequestExecutor, readBoundedJson } from '../core/requests.ts';
+import type { Analyzer } from '../core/lookup.ts';
 
 export const whitaker = {
   id: 'alpheios-whitakerLat', name: 'Whitaker via Alpheios',
@@ -92,4 +93,51 @@ export function normalizeWhitaker(raw: unknown): LatinAnalysis {
   result.outcome = result.candidates.some(candidate => candidate.lemma || candidate.grammar.length || candidate.meanings.length)
     ? 'usable' : suppliedBodies ? 'missing-information' : 'no-match';
   return result;
+}
+
+export const latinProviderOrigins = ['https://morph.alpheios.net/*', 'https://repos1.alpheios.net/*'] as const;
+
+function describeGrammar(value: RecordValue): string {
+  // Label supplied fields without filling gaps or inferring grammatical values.
+  return Object.entries(value).flatMap(([name, supplied]) => {
+    const simple = text(supplied);
+    if (simple) return [`${name}: ${simple}`];
+    if (record(supplied)) return [`${name}: ${describeGrammar(supplied)}`];
+    return [];
+  }).join(', ');
+}
+
+export function createWhitakerAnalyzer(dependencies: {
+  executor: RequestExecutor;
+  permitted: (origins: readonly string[]) => Promise<boolean>;
+  fetch: typeof fetch;
+}): Analyzer {
+  return { async analyze(input, identity, signal, deadline) {
+    const query = input.trim().normalize('NFC');
+    if (identity.lookupLanguage !== 'lat') throw new RequestFailure('format', 'Whitaker is configured only for Latin lookup.');
+    if (!query || !/[\p{L}\p{N}]/u.test(query) || /\s/u.test(query) || [...input.trim()].length > 256) {
+      throw new RequestFailure('format', 'Select a single word of at most 256 Unicode code points.');
+    }
+    return dependencies.executor.run(async requestSignal => {
+      // This guard is inside the queue slot, immediately before the actual fetch.
+      const allowed = await dependencies.permitted(whitaker.origins);
+      requestSignal.throwIfAborted();
+      if (performance.now() >= deadline) throw new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.');
+      if (!allowed) throw new RequestFailure('missing-access', 'Latin analysis access is missing. Enable Latin providers to continue.');
+      const url = new URL(whitaker.endpoint);
+      url.search = new URLSearchParams({ word: query, engine: 'whitakerLat', lang: 'lat', clientId: 'tensho' }).toString();
+      let response: Response;
+      try {
+        response = await dependencies.fetch(url, { headers: { Accept: 'application/json' }, signal: requestSignal,
+          credentials: 'omit', referrerPolicy: 'no-referrer', redirect: 'error', cache: 'no-store' });
+      } catch (error) {
+        requestSignal.throwIfAborted();
+        throw new RequestFailure('network', `Latin provider request failed: ${error instanceof Error ? error.message : 'network error'}`);
+      }
+      const normalized = normalizeWhitaker(await readBoundedJson(response, requestSignal));
+      return { ...normalized, controlled: false, candidates: normalized.candidates.map(candidate => ({
+        ...candidate, interpretations: candidate.grammar.map(describeGrammar),
+      })) };
+    }, { signal, deadline });
+  } };
 }

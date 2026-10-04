@@ -38,6 +38,7 @@ export class RequestExecutor {
       const pending: Pending = { start: () => {
         if (performance.now() >= options.deadline) { finish({ error: new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.') }); return; }
         this.#active++;
+        const requestDeadline = performance.now() + this.#limits.requestMs;
         requestTimer = setTimeout(() => finish({ error: new RequestFailure('request-timeout', 'Provider request exceeded 15 seconds.') }), this.#limits.requestMs);
         // Never release a slot just because the caller stopped waiting. A provider
         // that ignores abort remains active until its operation actually settles.
@@ -45,7 +46,11 @@ export class RequestExecutor {
           controller.signal.throwIfAborted();
           if (performance.now() >= options.deadline) throw new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.');
           return execute(controller.signal);
-        }).then(value => finish({ value }), error => finish({ error })).finally(() => {
+        }).then(value => {
+          if (performance.now() >= options.deadline) finish({ error: new RequestFailure('action-deadline', 'Lookup exceeded its 30-second deadline.') });
+          else if (performance.now() >= requestDeadline) finish({ error: new RequestFailure('request-timeout', 'Provider request exceeded 15 seconds.') });
+          else finish({ value });
+        }, error => finish({ error })).finally(() => {
           this.#active--; this.#pump();
         });
       } };
@@ -87,6 +92,10 @@ export async function readBoundedJson(response: Response, signal: AbortSignal, m
     for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
     try { return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(body)); }
     catch { throw new RequestFailure('format', 'Provider returned invalid UTF-8 or JSON.'); }
+  } catch (error) {
+    signal.throwIfAborted();
+    if (error instanceof RequestFailure) throw error;
+    throw new RequestFailure('network', 'Provider response could not be read.');
   } finally {
     signal.removeEventListener('abort', cancel);
     reader.releaseLock();
