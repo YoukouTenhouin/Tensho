@@ -146,7 +146,7 @@ test('permission removal during article retrieval prevents publishing the return
   held.resolve(new Response(fixture('lewis-short/n21985.html'))); await pending;
   const result = app.dictionary.get(1)[0]!.articles.n21985;
   assert.equal(result?.status, 'error');
-  if (result?.status === 'error') assert.equal(result.failureKind, 'missing-access');
+  if (result?.status === 'error') assert.equal(result.failureKind, 'revoked-access');
   assert.equal(app.lookup.get(1), original);
 });
 

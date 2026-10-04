@@ -20,12 +20,13 @@ export function createLatinDictionary(dependencies: {
   now?: () => number;
 }): DictionaryProvider {
   const cache = new LatinIndexCache(dependencies.storage, dependencies.now);
-  async function guard(identity: Identity, signal: AbortSignal, deadline: number): Promise<void> {
+  async function guard(identity: Identity, signal: AbortSignal, deadline: number, afterRead = false): Promise<void> {
     if (identity.lookupLanguage !== 'lat' || identity.explanationLanguage !== 'en') {
       throw new RequestFailure('format', 'Lewis & Short supports Latin lookup with English explanations.');
     }
     await requireProviderAccess(dependencies.permitted, latinDictionary.origins, signal, deadline,
-      'Dictionary access is missing. Enable Latin providers and retry this dictionary action.');
+      afterRead ? 'Dictionary access was revoked. Enable Latin providers before retrying.' : 'Dictionary access is missing. Enable Latin providers and retry this dictionary action.',
+      afterRead ? 'revoked-access' : 'missing-access');
   }
   async function fetchText(url: string, accept: string, limit: number, signal: AbortSignal): Promise<string> {
     let response: Response;
@@ -47,9 +48,9 @@ export function createLatinDictionary(dependencies: {
           await guard(identity, requestSignal, deadline);
           return fetchText(latinDictionary.indexUrl, 'text/plain', requestLimits.indexBytes, requestSignal);
         }, requestSignal);
-        await guard(identity, requestSignal, deadline);
+        await guard(identity, requestSignal, deadline, true);
         return resolveLatinCandidate(rows, candidate);
-      }, { signal, deadline });
+      }, { signal, deadline, origins: latinDictionary.origins });
     },
     retrieve(resolution, entryId, identity, signal, deadline) {
       if (!resolution.alternatives.some(item => item.entryId === entryId)) {
@@ -59,9 +60,9 @@ export function createLatinDictionary(dependencies: {
         await guard(identity, requestSignal, deadline);
         const url = latinArticleUrl(entryId);
         const html = await fetchText(url, 'text/html', requestLimits.articleBytes, requestSignal);
-        await guard(identity, requestSignal, deadline);
+        await guard(identity, requestSignal, deadline, true);
         return extractLatinArticle(html, entryId, url);
-      }, { signal, deadline });
+      }, { signal, deadline, origins: latinDictionary.origins });
     },
   };
 }

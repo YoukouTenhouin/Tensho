@@ -189,7 +189,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 chrome.runtime.onStartup.addListener(queueSync);
 chrome.permissions.onAdded.addListener(() => { queueSync(); notify(); });
-chrome.permissions.onRemoved.addListener(() => { automaticOrigins = []; queueSync(); notify(); });
+chrome.permissions.onRemoved.addListener(removed => {
+  executor.revokeAccess(removed.origins ?? []); automaticOrigins = []; queueSync(); notify();
+});
 chrome.storage.onChanged.addListener((changes, area) => { if (area === 'local' && changes.enabledOrigins) { automaticOrigins = []; queueSync(); notify(); } });
 chrome.action.onClicked.addListener(tab => { if (tab.id) open(tab.id, true); });
 chrome.contextMenus.onClicked.addListener((info, tab) => {

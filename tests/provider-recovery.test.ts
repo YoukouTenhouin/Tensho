@@ -57,7 +57,7 @@ test('language, explanations, enablement, input support and existing access excl
   app.settings.languages.lat!.analysis[0]!.enabled = false;
   await app.lookup.lookup(app.identity, 'important');
   assert.deepEqual(calls, ['second']);
-  assert.deepEqual(permissionChecks, ['https://denied.invalid/*', 'https://second.invalid/*']);
+  assert.deepEqual(permissionChecks, ['https://denied.invalid/*', 'https://second.invalid/*', 'https://second.invalid/*']);
   const state = app.lookup.get(1)!; assert.equal(state.status, 'complete');
   if (state.status === 'complete') assert.deepEqual(state.analysis.providerIssues?.map(issue => [issue.providerId, issue.kind, issue.attempted]),
     [['denied', 'missing-access', false], ['unsupported', 'unsupported-input', false]]);
@@ -86,6 +86,31 @@ test('missing access stays explicit with zero provider calls, and action deadlin
   await timed.lookup.lookup(timed.identity, 'important');
   assert.equal(calls, 1); const state = timed.lookup.get(1)!;
   assert.equal(state.status, 'error'); if (state.status === 'error') assert.equal(state.failureKind, 'action-deadline');
+});
+
+test('revocation before retaining a returned result is visible and never advances to another provider', async () => {
+  let allowed = true; const calls: string[] = [];
+  const app = setup({ first: { analyze: async () => { calls.push('first'); allowed = false; return result; } },
+    second: { analyze: async () => { calls.push('second'); return result; } } }, catalog, async () => allowed);
+  await app.lookup.lookup(app.identity, 'important');
+  const state = app.lookup.get(1)!; assert.equal(state.status, 'error');
+  if (state.status === 'error') {
+    assert.equal(state.failureKind, 'revoked-access');
+    assert.equal(state.providerIssues?.[0]?.kind, 'revoked-access');
+  }
+  assert.deepEqual(calls, ['first']);
+});
+
+test('revocation rejects an abort-ignoring operation even if access is granted again before its late response', async () => {
+  const executor = new RequestExecutor(); let finish!: (value: Analysis) => void; let later = 0;
+  const app = setup({ first: { analyze: async (_text, _identity, signal, deadline) => executor.run(
+    () => new Promise<Analysis>(resolve => { finish = resolve; }), { signal, deadline, origins: ['https://first.invalid/*'] }) },
+    second: { analyze: async () => { later++; return result; } } });
+  const lookup = app.lookup.lookup(app.identity, 'important'); await turn();
+  executor.revokeAccess(['https://first.invalid/*']); await lookup;
+  const state = app.lookup.get(1)!; assert.equal(state.status, 'error');
+  if (state.status === 'error') assert.equal(state.failureKind, 'revoked-access');
+  finish(result); await turn(); assert.equal(app.lookup.get(1), state); assert.equal(later, 0);
 });
 
 test('the action deadline bounds a stalled later provider and does not claim untouched providers failed', async () => {

@@ -55,12 +55,17 @@ export async function runProviderChain<T>(options: {
       try {
         const value = await options.execute(provider, controller.signal);
         check(); await options.current(controller.signal); check();
+        const stillAllowed = await options.permitted(provider.declaration.origins); check();
+        if (!stillAllowed) throw new RequestFailure('revoked-access', 'Provider access was revoked before the result could be retained. Enable access explicitly before retrying.');
         return { value, provider, issues };
       } catch (error) {
         check();
         // Revocation after the eligibility check is still missing access, never
         // an instruction to request permission or retry the same provider.
         if (error instanceof RequestFailure && error.kind === 'missing-access') { record(provider, error, true); continue; }
+        if (error instanceof RequestFailure && error.kind === 'revoked-access') {
+          record(provider, error, true); throw new RequestFailure(error.kind, error.message, issues);
+        }
         if (!technicalFailure(error)) {
           if (error instanceof RequestFailure) throw new RequestFailure(error.kind, error.kind === 'action-deadline'
             ? 'Lookup exceeded its 30-second deadline; remaining providers were not attempted.' : error.message, issues);
