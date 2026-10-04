@@ -40,7 +40,7 @@ class ObservedCDP(CDP):
                 return reply['result']
 
 
-def run(output, dictionary=False):
+def run(output, dictionary=False, passage=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -121,6 +121,9 @@ def run(output, dictionary=False):
                 if dictionary:
                     from dictionary_workflow import exercise_dictionary
                     exercise_dictionary(panel, snapshot, requests, evidence)
+                if passage:
+                    from passage_workflow import exercise_live_passage
+                    exercise_live_passage(panel, snapshot, requests, evidence)
                 request_count = len(requests())
                 panel.evaluate("chrome.permissions.remove({origins:['https://morph.alpheios.net/*','https://repos1.alpheios.net/*']})")
                 wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
@@ -147,5 +150,6 @@ def run(output, dictionary=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--dictionary', action='store_true')
-    args = parser.parse_args(); result = run(args.output, args.dictionary); print(json.dumps(result, indent=2, ensure_ascii=False))
+    parser.add_argument('--passage', action='store_true')
+    args = parser.parse_args(); result = run(args.output, args.dictionary, args.passage); print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)

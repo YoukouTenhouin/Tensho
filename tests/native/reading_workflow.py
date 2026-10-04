@@ -40,7 +40,7 @@ def version(command):
     return subprocess.check_output(command, text=True, stderr=subprocess.STDOUT).strip()
 
 
-def run(desktop, restart=False, idle=False):
+def run(desktop, restart=False, idle=False, passage=False):
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                 'browser': version(['microsoft-edge', '--version']),
@@ -427,8 +427,9 @@ def run(desktop, restart=False, idle=False):
                 native_key('Escape')
                 wait_for(lambda: target('/panel.html') is None)
                 checks['native_escape_returns_focus_without_scroll'] = reading.evaluate('document.hasFocus()') and reading.evaluate('scrollY') == before_scroll
-
-
+                if passage:
+                    from passage_workflow import exercise_passage
+                    exercise_passage(reading, native_key, connect, target, snapshot, url, evidence)
                 evidence['passed'] = all(checks.values())
                 return evidence
         except Exception as error:
@@ -467,7 +468,8 @@ if __name__ == '__main__':
     parser.add_argument('--desktop', action='store_true')
     parser.add_argument('--restart', action='store_true', help='Restart the disposable profile before its first lookup')
     parser.add_argument('--idle', action='store_true', help='Verify toggling after real worker suspension')
+    parser.add_argument('--passage', action='store_true', help='Exercise retained passage choices with native keyboard input')
     args = parser.parse_args()
-    result = run(args.desktop, args.restart, args.idle)
+    result = run(args.desktop, args.restart, args.idle, args.passage)
     print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)
