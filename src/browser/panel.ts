@@ -2,6 +2,7 @@ import { latinProviderOrigins } from '../providers/whitaker.ts';
 import type { State } from '../core/lookup.ts';
 import { permissionPattern, readingOrigin } from '../core/origins.ts';
 import { renderDictionary } from './dictionary-view.ts';
+import { SettingsView, languageName, explanationName } from './settings-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 const results = element('results'), status = element('status'), target = element('target'), analysis = element('analysis');
 const word = element<HTMLTextAreaElement>('word'), feedback = element('feedback');
@@ -13,12 +14,25 @@ async function send(message: Record<string, unknown>): Promise<any> {
   if (reply?.error) throw new Error(reply.error);
   return reply;
 }
+const settingsView = new SettingsView(element('settings-editor'), async (settings, expectedRevision) => {
+  const saved = await send({ type: 'save-settings', settings, expectedRevision }); await refresh();
+  return saved.settings;
+});
 function report(error: unknown): void { feedback.textContent = String(error); }
 async function refresh(): Promise<void> {
   const current = ++revision;
   const snapshot = await send({ type: 'snapshot' });
   if (current !== revision) return;
   tabId = snapshot.tabId; origin = snapshot.origin;
+  const language = languageName(snapshot.settings.lookupLanguage, snapshot.catalog);
+  const explanation = snapshot.settings.languages[snapshot.settings.lookupLanguage].explanationLanguage;
+  const explanationLabel = explanationName(explanation);
+  element('active-settings').textContent = `Lookup: ${language} · Explanations: ${explanationLabel}${snapshot.routes.preferenceAvailable ? '' : ' (unavailable)'}`;
+  settingsView.update(snapshot.settings, snapshot.catalog);
+  element('configuration-status').textContent = !snapshot.routes.analysis.length
+    ? `${language} analysis is unavailable with the current providers.`
+    : !snapshot.routes.dictionary.length ? `Dictionary entries are unavailable for ${explanationLabel} with the current providers.`
+    : snapshot.routes.analysisMode === 'structural-only' ? `Short meanings are unavailable for ${explanationLabel}; lemmas and grammar remain available.` : '';
   const state: State | undefined = snapshot.state;
   const key = `${tabId}:${state?.generation ?? 'none'}`;
   const focusId = key === displayed && document.activeElement instanceof HTMLElement ? document.activeElement.id : '';
@@ -45,13 +59,14 @@ async function refresh(): Promise<void> {
   }
   target.textContent = passage && passage.selectedIndex === undefined ? 'Choose a word' : state?.text || 'Ready to read';
   analysis.replaceChildren();
-  status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? 'Loading Latin analysis…' : state.status === 'complete' ? state.analysis.provider : state.message;
+  status.textContent = !state ? 'Select a word or enter one above.' : state.status === 'loading' ? `Loading ${language} analysis…` : state.status === 'complete' ? state.analysis.provider : state.message;
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   if (state?.status === 'complete') {
     const result = state.analysis;
-    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? 'No Latin match from Whitaker.'
-      : result.outcome === 'missing-information' ? 'The provider supplied no usable Latin analysis information.'
-      : `Latin analysis — ${result.provider}`;
+    if (result.explanationNotice) { const note = document.createElement('p'); note.textContent = result.explanationNotice; analysis.append(note); }
+    status.textContent = result.controlled ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
+      : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
+      : `${language} analysis — ${result.provider}`;
     for (const [candidateIndex, candidate] of result.candidates.entries()) {
       const section = document.createElement('section');
       const heading = document.createElement('h3'); heading.textContent = candidate.lemma ?? 'Headword unavailable';
@@ -74,6 +89,7 @@ async function refresh(): Promise<void> {
   }
   const retry = element<HTMLButtonElement>('retry');
   retry.hidden = state?.status !== 'error';
+  retry.textContent = `Retry ${language} analysis`;
   retry.onclick = () => { void send({ type: 'retry', generation: state?.generation }).then(refresh).catch(report); };
   const [analysisAccess, dictionaryAccess] = snapshot.providerAccess as boolean[];
   const completeAccess = analysisAccess && dictionaryAccess;

@@ -1,5 +1,7 @@
 export type RequestFailureKind = 'missing-access' | 'network' | 'http' | 'format' | 'size' |
-  'request-timeout' | 'action-deadline' | 'cancelled';
+  'request-timeout' | 'action-deadline' | 'cancelled' | 'unconfigured' | 'unsupported-explanation';
+
+export const capabilityUnavailable = (kind: RequestFailureKind | undefined) => kind === 'unconfigured' || kind === 'unsupported-explanation';
 
 export class RequestFailure extends Error {
   readonly kind: RequestFailureKind;
