@@ -1,6 +1,6 @@
 # Tensho Latin reading extension
 
-Tensho is a personal-use Microsoft Edge reading extension for openSUSE Tumbleweed and KDE Plasma. It looks up selected or manually entered words through Alpheios-hosted Whitaker after explicit provider access. It also resolves uncertain Lewis & Short alternatives and retrieves full articles on request. Session restoration follows in later tickets.
+Tensho is a personal-use Microsoft Edge reading extension for openSUSE Tumbleweed and KDE Plasma. It looks up selected or manually entered words through Alpheios-hosted Whitaker after explicit provider access. It also resolves uncertain Lewis & Short alternatives and retrieves full articles on request. Completed reading results are retained per tab for the browser session.
 
 The native reading workflow follows the accepted sidebar focus contract. The user-approved focus policy allows Edge to move keyboard focus into the sidebar when opening it; updates to an already-open panel preserve page focus, and Close/Escape restores it. See [native acceptance evidence](docs/validation/14-native-acceptance.md).
 
@@ -15,7 +15,7 @@ npm run check
 
 In Microsoft Edge 154 or newer, open `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select this repository's `dist` directory. To update, rerun `npm run check` and click **Reload** for Tensho on that page. Reload reading pages so their content scripts use the new build.
 
-The UI starts with Latin lookup and English explanations. Reading-site access and Latin provider access are separate. Use **Enable Latin providers** to request the two default Alpheios origins; granting access does not send a lookup. Reading state currently resides in worker memory. Bounded session restoration and interruption recovery are subsequent tickets.
+The UI starts with Latin lookup and English explanations. Reading-site access and Latin provider access are separate. Use **Enable Latin providers** to request the two default Alpheios origins; granting access does not send a lookup. Completed reading state, expansion, selection context, and panel scroll survive sidebar closure and worker restart in browser-session storage. Reload, a different document, or browser restart clears reading results; settings and site enablement remain local.
 
 ## Read and look up words
 
@@ -27,6 +27,7 @@ The UI starts with Latin lookup and English explanations. Reading-site access an
 - Use **Look up selection with Tensho** in the selection context menu, including explicitly selected editable text, or enter a word in the panel.
 - In **Reading-site access**, enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
 - To enable an embedded reading origin, enter it explicitly in the site-access form. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.
+- Retained results share a 6 MiB serialized storage budget. The least recently viewed inactive results are cleared first; revisiting one shows **Previous result cleared to free space** without a request. An article that cannot fit leaves existing content intact and offers its source link. If Edge does not restore sidebar visibility after switching tabs, reopen it explicitly.
 - **Close lookup** or Escape inside the panel closes the native sidebar and returns focus to the source. Clicking the page leaves results open. Opening on double-click may transfer focus into the sidebar under the accepted native-focus policy.
 
 Sites are identified by scheme, hostname, and effective port. Disabling an origin removes its local enablement and native grant. Ordinary HTTP/HTTPS documents in regular windows are the supported reading surfaces. Inaccessible selections offer manual input. Private browsing, browser-internal content, local files, PDF/EPUB/OCR, and opaque or sandbox-restricted frames are outside the delivery scope.
@@ -47,6 +48,8 @@ python3 tests/native/latin_workflow.py --output /tmp/tensho-latin
 python3 tests/native/latin_workflow.py --passage --output /tmp/tensho-passage
 python3 tests/native/latin_workflow.py --dictionary --output /tmp/tensho-dictionary
 python3 tests/native/dictionary_render.py --output /tmp/tensho-dictionary-render
+node scripts/build.mjs --recovery
+python3 tests/native/session_workflow.py --output /tmp/tensho-session
 ```
 
 The `--desktop` command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness uses `dist-controlled`, a separate build with a controlled adapter substituted at build time, and adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. The runner returns nonzero if its current native acceptance checks fail. Historical evidence of the superseded opening-focus requirement is retained separately.
@@ -58,3 +61,5 @@ The Latin runner uses the unmodified live `dist` build on isolated Xvfb and prom
 The Latin runner’s `--dictionary` continuation verifies the live analysis → alternatives → chosen article path and dictionary-only permission revocation. The rendering runner bundles the production dictionary modules separately and feeds retained/hostile responses through them in headless Edge; it does not modify `dist` or call providers. [Dictionary acceptance](docs/validation/16-dictionary-acceptance.md) distinguishes live evidence from controlled response coverage.
 
 The reading runner’s `--passage` continuation verifies real selection capture and native Tab/Enter word choices, failure/retry, bounds, and stale passage messages using controlled analysis. The Latin runner’s corresponding option confirms that a chosen passage word uses the live provider and retains controls after access is revoked. See [passage acceptance](docs/validation/17-passage-acceptance.md).
+
+The session runner uses controlled provider payloads with production session storage, coordination, and sidebar UI. Its disposable profile enables Developer mode for unpacked-extension restart testing and pregrants only its temporary reading origin. It verifies actual worker termination, browser restart, retained articles and scroll, source-page position, content-script isolation, navigation clearing, and pending completion while closed. [Session acceptance](docs/validation/24-session-acceptance.md) separates this evidence from live provider checks and storage-race tests.
