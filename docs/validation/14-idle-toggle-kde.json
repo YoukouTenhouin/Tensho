@@ -1,0 +1,132 @@
+{
+  "observed_at_utc": "2026-10-04T15:37:57Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "KDE desktop / Xwayland",
+  "controlled_analysis": true,
+  "fixture_permission": "test-only exact-origin manifest pregrant; optional prompting tested separately",
+  "checks": {
+    "both_shortcuts_registered": true,
+    "double_click_result": true,
+    "double_click_native_focus_allowed": true,
+    "double_click_preserves_scroll": true,
+    "already_open_panel_lookup_preserves_page_focus": true,
+    "native_toggle_restores_focus_without_lookup": true,
+    "worker_suspends_before_idle_toggle": true,
+    "first_idle_toggle_closes_panel": true,
+    "second_idle_toggle_opens_with_focus": true
+  },
+  "desktop": "plasmashell 6.7.5",
+  "window_manager": "kwin 6.7.5",
+  "session_type": "wayland",
+  "commands": [
+    {
+      "description": "",
+      "name": "_execute_action",
+      "shortcut": ""
+    },
+    {
+      "description": "Toggle existing results",
+      "name": "focus-results",
+      "shortcut": "Alt+Shift+K"
+    },
+    {
+      "description": "Look up selection",
+      "name": "lookup-selection",
+      "shortcut": "Alt+Shift+L"
+    }
+  ],
+  "before": {
+    "focus": true,
+    "scroll": 0
+  },
+  "after_double_click": {
+    "focus": false,
+    "active": "word",
+    "scroll": 0
+  },
+  "panel_after_double_click": {
+    "focus": true,
+    "active": "",
+    "target": "puella"
+  },
+  "native_contexts": [
+    {
+      "contextId": "0499069c-ff52-4934-9130-ab8832f15066",
+      "contextType": "BACKGROUND",
+      "frameId": -1,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    },
+    {
+      "contextId": "26a068c9-ad34-4692-b0c2-3b4b0e1ff367",
+      "contextType": "SIDE_PANEL",
+      "documentId": "EE2524E1F542F894E6DEE83FCFF92BF6",
+      "documentOrigin": "chrome-extension://hgcokjaclkoifeeoeabjnfdpmcleabck",
+      "documentUrl": "chrome-extension://hgcokjaclkoifeeoeabjnfdpmcleabck/panel.html",
+      "frameId": 0,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    }
+  ],
+  "native_pointer_trace": [
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 265.7692565917969
+      }
+    }
+  ],
+  "native_toggle_attempts": [
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    },
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    }
+  ],
+  "passed": true
+}

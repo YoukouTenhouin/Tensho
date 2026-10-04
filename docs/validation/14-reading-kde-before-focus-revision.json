@@ -1,0 +1,79 @@
+{
+  "observed_at_utc": "2026-10-04T05:14:55Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "KDE desktop / Xwayland",
+  "controlled_analysis": true,
+  "fixture_permission": "test-only exact-origin manifest pregrant; optional prompting tested separately",
+  "checks": {
+    "both_shortcuts_registered": true,
+    "double_click_result": true,
+    "double_click_preserves_page_focus": false,
+    "double_click_preserves_scroll": true,
+    "drag_does_not_lookup": true,
+    "editable_double_click_does_not_lookup": true,
+    "page_click_keeps_panel_open": true,
+    "manual_lookup_through_production_interface": true,
+    "loading_status_can_be_announced": true,
+    "close_restores_page_focus": true,
+    "closed_panel_stays_closed_after_completion": true
+  },
+  "desktop": "plasmashell 6.7.5",
+  "window_manager": "kwin 6.7.5",
+  "session_type": "wayland",
+  "commands": [
+    {
+      "description": "",
+      "name": "_execute_action",
+      "shortcut": ""
+    },
+    {
+      "description": "Focus existing results",
+      "name": "focus-results",
+      "shortcut": "Alt+Shift+K"
+    },
+    {
+      "description": "Look up selection and focus results",
+      "name": "lookup-selection",
+      "shortcut": "Alt+Shift+L"
+    }
+  ],
+  "before": {
+    "focus": true,
+    "scroll": 0
+  },
+  "after_double_click": {
+    "focus": false,
+    "active": "word",
+    "scroll": 0
+  },
+  "panel_after_double_click": {
+    "focus": true,
+    "active": "",
+    "target": "puella"
+  },
+  "restore_attempts_page_has_focus": {
+    "source_focus": {
+      "before": false,
+      "after": false
+    },
+    "activate_tab": {
+      "before": false,
+      "after": false
+    },
+    "highlight_tab": {
+      "before": false,
+      "after": false
+    },
+    "activate_window": {
+      "before": false,
+      "after": false
+    }
+  },
+  "loading_announcements": [
+    {
+      "role": "status",
+      "blocked": false
+    }
+  ],
+  "passed": false
+}

@@ -1,0 +1,350 @@
+{
+  "observed_at_utc": "2026-10-04T15:40:04Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "KDE desktop / Xwayland",
+  "controlled_analysis": true,
+  "fixture_permission": "test-only exact-origin manifest pregrant; optional prompting tested separately",
+  "checks": {
+    "both_shortcuts_registered": true,
+    "double_click_result": true,
+    "double_click_native_focus_allowed": true,
+    "double_click_preserves_scroll": true,
+    "already_open_panel_lookup_preserves_page_focus": true,
+    "native_toggle_restores_focus_without_lookup": true,
+    "drag_does_not_lookup": true,
+    "editable_double_click_does_not_lookup": true,
+    "page_click_keeps_panel_open": true,
+    "manual_lookup_through_production_interface": true,
+    "loading_status_can_be_announced": true,
+    "close_restores_page_focus": true,
+    "closed_panel_stays_closed_after_completion": true,
+    "embedded_origin_requires_explicit_enablement": true,
+    "same_origin_frame_routes_identity": true,
+    "separately_enabled_frame_routes_identity": true,
+    "opaque_sandbox_frame_does_not_lookup": true,
+    "embedded_frame_requires_containing_site_enablement": true,
+    "keyboard_open_preserves_selected_frame": true,
+    "navigated_frame_not_confused_with_original_url_sibling": true,
+    "removed_frame_cannot_publish_result": true,
+    "ungranted_keyboard_offers_manual_recovery": true,
+    "opaque_keyboard_offers_manual_recovery": true,
+    "keyboard_reaches_named_manual_input": true,
+    "keyboard_focus_is_visible": true,
+    "native_keyboard_manual_submission": true,
+    "keyboard_can_leave_panel": true,
+    "panel_was_scrolled_before_lookup": true,
+    "new_lookup_resets_scroll_while_loading": true,
+    "rapid_lookup_keeps_latest_result": true,
+    "navigation_rejects_pending_browser_result": true,
+    "restricted_surface_explains_manual_recovery": true,
+    "restricted_surface_manual_lookup_works": true,
+    "focus_return_source_lookup": true,
+    "removed_source_falls_back_without_scroll": true,
+    "native_escape_returns_focus_without_scroll": true
+  },
+  "desktop": "plasmashell 6.7.5",
+  "window_manager": "kwin 6.7.5",
+  "session_type": "wayland",
+  "commands": [
+    {
+      "description": "",
+      "name": "_execute_action",
+      "shortcut": ""
+    },
+    {
+      "description": "Toggle existing results",
+      "name": "focus-results",
+      "shortcut": "Alt+Shift+K"
+    },
+    {
+      "description": "Look up selection",
+      "name": "lookup-selection",
+      "shortcut": "Alt+Shift+L"
+    }
+  ],
+  "before": {
+    "focus": true,
+    "scroll": 0
+  },
+  "after_double_click": {
+    "focus": false,
+    "active": "word",
+    "scroll": 0
+  },
+  "panel_after_double_click": {
+    "focus": true,
+    "active": "",
+    "target": "puella"
+  },
+  "native_contexts": [
+    {
+      "contextId": "136fe93e-b7e8-4d54-9b7a-9870a0fa3eae",
+      "contextType": "BACKGROUND",
+      "frameId": -1,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    },
+    {
+      "contextId": "0a7e4fef-d506-44e8-b72f-02d6c1650178",
+      "contextType": "SIDE_PANEL",
+      "documentId": "8DE6B12DAB357BE3603EA04478D379F0",
+      "documentOrigin": "chrome-extension://alnofaegaaechlpcdaadmfacbbkngajg",
+      "documentUrl": "chrome-extension://alnofaegaaechlpcdaadmfacbbkngajg/panel.html",
+      "frameId": 0,
+      "incognito": false,
+      "tabId": -1,
+      "windowId": -1
+    }
+  ],
+  "native_pointer_trace": [
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#second",
+      "box": {
+        "x": 38,
+        "y": 223.23077392578125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    },
+    {
+      "selector": "#word",
+      "box": {
+        "x": 38,
+        "y": 372.923095703125,
+        "innerHeight": 773,
+        "outerHeight": 902,
+        "scale": 1.625,
+        "screenX": 1096,
+        "screenY": 1338
+      },
+      "geometry": {
+        "x": 1782,
+        "y": 2175,
+        "width": 2114,
+        "height": 1464
+      },
+      "received": null
+    }
+  ],
+  "native_toggle_attempts": [
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    },
+    {
+      "closed_and_restored_focus": true,
+      "reopened_with_focus": true,
+      "same_generation": true,
+      "same_text": true
+    }
+  ],
+  "loading_announcements": [
+    {
+      "role": "status",
+      "blocked": false
+    }
+  ],
+  "frame_identities": {
+    "same_origin": {
+      "tabId": 1756104168,
+      "frameId": 12,
+      "documentId": "6D3FDFE6001247903FD12F91CB7579FC",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    },
+    "separate_origin": {
+      "tabId": 1756104168,
+      "frameId": 13,
+      "documentId": "07B23B9F5E67A23AC409176D4FA5528E",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    }
+  },
+  "keyboard_frame": {
+    "identity": {
+      "tabId": 1756104168,
+      "frameId": 13,
+      "documentId": "07B23B9F5E67A23AC409176D4FA5528E",
+      "topDocumentId": "9F67EC2FECE2C8907F50430BF82B19FC",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en",
+      "configuration": "controlled-latin-en-1"
+    },
+    "text": "servus",
+    "generation": 8,
+    "status": "complete",
+    "analysis": {
+      "provider": "Controlled development response",
+      "controlled": true,
+      "candidates": [
+        {
+          "lemma": "servus",
+          "stableId": null,
+          "interpretations": [
+            "No linguistic analysis: this is an interaction fixture."
+          ],
+          "meanings": []
+        }
+      ]
+    }
+  },
+  "ungranted_keyboard": {
+    "identity": {
+      "tabId": 1756104168,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "controlled-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 11,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "opaque_keyboard": {
+    "identity": {
+      "tabId": 1756104168,
+      "frameId": 0,
+      "documentId": "manual",
+      "topDocumentId": "manual",
+      "configuration": "controlled-latin-en-1",
+      "lookupLanguage": "lat",
+      "explanationLanguage": "en"
+    },
+    "text": "",
+    "generation": 12,
+    "status": "notice",
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "keyboard_traversal": [
+    {
+      "focused": true,
+      "element": "SUMMARY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    },
+    {
+      "focused": false,
+      "element": "BODY"
+    }
+  ],
+  "focus_return_selection": {
+    "text": "puella",
+    "focus": false,
+    "active": ""
+  },
+  "focus_return_lookup": {
+    "tabId": 1756104168,
+    "state": {
+      "identity": {
+        "tabId": 1756104168,
+        "frameId": 0,
+        "documentId": "00A4D38342C609307DD34AEF71151154",
+        "topDocumentId": "00A4D38342C609307DD34AEF71151154",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "configuration": "controlled-latin-en-1"
+      },
+      "text": "puella",
+      "generation": 19,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "puella",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "origin": "http://127.0.0.1:37857",
+    "enabledOrigins": [
+      "http://127.0.0.1:37857",
+      "http://127.0.0.1:35427"
+    ],
+    "focusRequest": 14
+  },
+  "passed": true
+}
