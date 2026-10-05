@@ -1,0 +1,45 @@
+{
+  "attribution": "Monier-Williams Sanskrit-English Dictionary (1899), Cologne Digital Sanskrit Dictionaries",
+  "source": "https://www.sanskrit-lexicon.uni-koeln.de/",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "license_source": "https://github.com/sanskrit-lexicon/csl-orig/blob/55e8addbd96e8d9001b8789026b026763f4049c1/LICENSE",
+  "transformations": "Response files unchanged; extractor output separates records and paragraphs and removes markup. Article grouping remains unverified.",
+  "responses": [
+    {
+      "file": "c_getword_xml_agni.json",
+      "case": "c_getword_xml_agni",
+      "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=agni&input=slp1&output=roman",
+      "status": 200,
+      "bytes": 5634,
+      "sha256": "7c92e92a7fb01970d173c37564c28777ed649671277fba66c133ee2698ef5be2",
+      "observed_at": "2026-10-04T04:43:07.926080+00:00",
+      "provenance": "https://github.com/YoukouTenhouin/Tensho/blob/5edfa389d9eed6fefe88184648355a709aae7f68/docs/research/issue-11-probes/provider-results.json",
+      "recovered": "2026-10-05",
+      "note": "Original historical response bytes recovered locally and verified against committed length and SHA-256; not a fresh request."
+    },
+    {
+      "file": "c_getword_xml_homograph.json",
+      "case": "c_getword_xml_homograph",
+      "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=mA&input=slp1&output=roman",
+      "status": 200,
+      "bytes": 52109,
+      "sha256": "98615edf4321b06e845f0fa0e67bb4030ebefbeff7dce84d75026abb8feb8399",
+      "observed_at": "2026-10-04T04:43:07.926080+00:00",
+      "provenance": "https://github.com/YoukouTenhouin/Tensho/blob/5edfa389d9eed6fefe88184648355a709aae7f68/docs/research/issue-11-probes/provider-results.json",
+      "recovered": "2026-10-05",
+      "note": "Original historical response bytes recovered locally and verified against committed length and SHA-256; not a fresh request."
+    },
+    {
+      "file": "c_getword_xml_deva.json",
+      "case": "c_getword_xml_deva",
+      "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0&input=deva&output=roman",
+      "status": 200,
+      "bytes": 2440,
+      "sha256": "884c1527b85c18840e5cc2cde62d9c738daf34d55abfb13d9e1eede6d6e8ecde",
+      "observed_at": "2026-10-04T04:43:07.926080+00:00",
+      "provenance": "https://github.com/YoukouTenhouin/Tensho/blob/5edfa389d9eed6fefe88184648355a709aae7f68/docs/research/issue-11-probes/provider-results.json",
+      "recovered": "2026-10-05",
+      "note": "Original historical response bytes recovered locally and verified against committed length and SHA-256; not a fresh request."
+    }
+  ]
+}

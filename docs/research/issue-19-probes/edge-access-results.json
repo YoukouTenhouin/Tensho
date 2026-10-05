@@ -1,0 +1,50 @@
+{
+  "observed_at_utc": "2026-10-05T02:35:19Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "headless=new actual Edge MV3 service worker; disposable profile",
+  "limits": {
+    "requests": 1,
+    "timeoutMs": 15000,
+    "responseBytes": 1048576,
+    "retries": 0,
+    "credentials": "omit",
+    "redirect": "error"
+  },
+  "provider_quota": null,
+  "manifest": {
+    "manifest_version": 3,
+    "name": "Tensho issue 19 research",
+    "version": "0.0.1",
+    "host_permissions": [
+      "https://www.sanskrit-lexicon.uni-koeln.de/*"
+    ],
+    "background": {
+      "service_worker": "worker.js"
+    }
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+  "granted": {
+    "url": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&key=agni&input=slp1&output=roman",
+    "granted": true,
+    "fetches": 1,
+    "start": "2026-10-05T02:35:20.113Z",
+    "status": 500,
+    "headers": {
+      "content-length": "0",
+      "date": "Mon, 05 Oct 2026 02:35:20 GMT",
+      "server": "Varnish",
+      "strict-transport-security": "max-age=31536000"
+    },
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation": {
+      "valid": false
+    },
+    "body": ""
+  },
+  "revoked": {
+    "granted": false,
+    "fetches": 0,
+    "state": "access-not-granted"
+  }
+}

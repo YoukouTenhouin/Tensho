@@ -1,0 +1,1024 @@
+{
+  "attribution": "Monier-Williams Sanskrit-English Dictionary (1899), Cologne Digital Sanskrit Dictionaries",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "transformations": "Response files unchanged; extractor output separates records and paragraphs and removes markup. Article grouping remains unverified.",
+  "cases": [
+    {
+      "case": "c_getword_xml_agni",
+      "canonicalKey": "agni",
+      "records": [
+        {
+          "recordId": "890",
+          "hierarchy": "H1",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "agní m. (√ ag, Uṇ.) fire, sacrificial fire (of three kinds, Gārhapatya, Āhavanīya, and Dakṣiṇa)"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "m"
+              }
+            },
+            {
+              "tag": "listinfo",
+              "attributes": {
+                "n": "sup"
+              },
+              "uninterpreted": true
+            }
+          ],
+          "unknownTags": [
+            "listinfo"
+          ],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=890&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "891",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "the number three, Sūryas."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=891&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "892",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "the god of fire, the fire of the stomach, digestive faculty, gastric fluid"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=892&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "893",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "bile, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=893&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "894",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "gold, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=894&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "895",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "N. of various plants Semecarpus Anacardium, Suśr., Plumbago Zeylanica and Rosea, Citrus Acida"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=895&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "896",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "mystical substitute for the letter r"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=896&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "897",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agní",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "in the Kātantra grammar N. of noun-stems ending in i and u"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=897&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "897.05",
+          "hierarchy": "H1A",
+          "key1": "agni",
+          "key2": "agni",
+          "homograph": null,
+          "pageColumn": "1309,1",
+          "paragraphs": [
+            "(also) = next [agni-kṣetra the place for the fire-altar], ĀpŚr."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "n": "sup"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=897.05&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "897.1",
+          "hierarchy": "H1E",
+          "key1": "agni",
+          "key2": "agni",
+          "homograph": null,
+          "pageColumn": "5,1",
+          "paragraphs": [
+            "agni [cf. Lat. ignì-s; Lith. ugni-s; Slav. ognj]."
+          ],
+          "annotations": [],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=897.1&input=slp1&output=roman",
+          "completeArticleVerified": false
+        }
+      ]
+    },
+    {
+      "case": "c_getword_xml_homograph",
+      "canonicalKey": "mA",
+      "records": [
+        {
+          "recordId": "153882",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "mā f. a mother, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "f"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "hui": "a"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153882&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153883",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "measure, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153883&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153884",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "authority (-tva n.), Nyāyam."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "phwchild": "153891.1"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153884&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153885",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "light, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153885&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153886",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "knowledge, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153886&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153887",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "binding, fettering, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153887&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153888",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "death, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153888&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "153889",
+          "hierarchy": "H1B",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "771,2",
+          "paragraphs": [
+            "a woman's waist, L."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=153889&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686",
+          "hierarchy": "H1",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": "1",
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "1. mā́ ind. (causing a following ch to be changed to cch, Pāṇ. vi, 1, 74) not, that not, lest, would that not, RV. &c. &c."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "ind"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "hui": "1"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.05",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "a particle of prohibition or negation = Gk. μή, most commonly joined with the Subjunctive i.e. the augmentless form of a past tense (esp. of the aor., e.g. mā́ no vadhīr indra, do not slay us, O Indra, RV.; mā bhaiṣīḥ or mā bhaiḥ, do not be afraid, MBh.; tapovana-vāsinām uparodho mā bhūt, let there not be any disturbance of the inhabitants of the sacred grove, Śak.; often also with sma, e.g. mā sma gamaḥ, do not go, Bhag. cf. Pāṇ. iii, 3, 175; 176; in the sense of ‘that not, lest’ also yathā mā, e.g. yathā mā vo mṛtyuḥ pari-vyatkā iti, that death may not disturb you, PraśnaUp.; or mā yathā, e.g. mā bhūt kālātyayo yathā, lest there be any loss of time, R.; mā na with aor. Subj. = Ind. without a negative, e.g. mā dviṣo na vadhīr mama, do slay my enemies, Bhaṭṭ. cf. Vām. v, 1, 9; rarely with the augmentless impf. with or without sma, e.g. mainam abhibhāṣathāḥ, do not speak to him, R.; mā sma karot, let him not do it, Pāṇ. vi, 4, 74, Sch.; exceptionally also with the Ind. of the aor., e.g., mā kālas tvām aty-agāt, may not the season pass by thee, MBh.; cf. Pāṇ. vi, 4, 75, Sch.)"
+          ],
+          "annotations": [
+            {
+              "tag": "gk",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            }
+          ],
+          "unknownTags": [
+            "gk",
+            "srś"
+          ],
+          "strictXmlValid": false,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.05&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.10",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "or with the Impv. (in RV. only viii, 103, 6, mā no hṛṇītām [SV. hṛṇītās] agníḥ, may Agni not be angry with us; but very often in later language, e.g. mā kranda do not cry, MBh.; gaccha vā mā vā, you can go or not go, ib.; ripur ayam mā jāyatām, may not this foe arise, Śāntiś.; also with sma, e.g. mā sma kiṃ cid vaco vada do not speak a word, MBh.)"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.10&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.15",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "or with the Pot. (e.g. mā yamam paśyeyam, may I not see Yama; esp. mābhujema in RV.)"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.15&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.20",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "or with the Prec. (only once in mā bhūyāt, may it not be, R. [B.] ii, 75, 45)"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.20&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.25",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "or sometimes with the fut. (= that not, lest, e.g. mā tvāṃ śapsye, lest I curse thee, MBh. cf. Vop. xxv, 27)"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.25&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.30",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "or with a participle (e.g. mā jīvanyo duḥkhadagdho jīvati, he ought not to live who lives consumed by pain, Pañcat.; gataḥ sa mā, he cannot have gone, Kathās.; maīvamprārthyam, it must not be so requested, BhP.)"
+          ],
+          "annotations": [
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [
+            "srś"
+          ],
+          "strictXmlValid": false,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.30&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.35",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,1",
+          "paragraphs": [
+            "sometimes for the simple negative na (e.g. katham mā bhūt, how may it not be, Kathās.; mā gantum arhasi, thou oughtest not to go, R.; mā bhūd āgataḥ, can he not i.e. surely he must have arrived, Amar.)"
+          ],
+          "annotations": [
+            {
+              "tag": "pb",
+              "attributes": {
+                "n": "804,2"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.35&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.40",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "occasionally without a verb (e. g. mā śabdaḥ or śabdam, do not make a noise, Hariv.; mā nāma rakṣiṇaḥ, may it not be the watchmen, Mṛcch.; mā bhavantam analaḥ pavano vā, may not fire or wind harm thee, Vām. v, 1, 14; esp. = not so, e.g. mā prātṛda, not so, O Pr˚, ŚBr.; in this meaning also mā mā, mā maivam, mā tāvat)"
+          ],
+          "annotations": [
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [
+            "srś"
+          ],
+          "strictXmlValid": false,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.40&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.45",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "in the Veda often with u (mó) = and not, nor (e.g. mā́ maghónaḥ pári khyatam mó asmā́kam ṛ́ṣṇām, do not forget the rich lords nor us the poets, RV. v, 65, 6; and then usually followed by ṣú = sú, e.g. mo ṣú ṇaḥ nírṛtir vadhīt, let not N˚ on any account destroy us, i, 38, 6)"
+          ],
+          "annotations": [
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "srś",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [
+            "srś"
+          ],
+          "strictXmlValid": false,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.45&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161686.50",
+          "hierarchy": "H1A",
+          "key1": "mā",
+          "key2": "mā́",
+          "homograph": null,
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "in ŚBr. sma mā — mó sma = neither — nor (in a prohibitive sense)."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161686.50&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161693",
+          "hierarchy": "H1",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": "2",
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "2. mā cl. 3. P. mímāti (accord. to Dhātup. xxv, 6 Ā. mimīte; SV. mimeti; Pot. mimīyat, Kāṭh.; pf., mimāya; aor. ámīmet Subj. mīmayat; inf. mā́tavaí),",
+            "to sound, bellow, roar, bleat (esp. said of cows, calves, goats &c.), RV.; AV.; Br. :",
+            "Intens., only pr. p. mémyat, bleating (as a goat), RV. i, 162, 2."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "westergaard": "mAN,25.6,03.0009"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "whitneyroots": "mA3,119"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "verb": "genuineroot",
+                "cp": "3P,3Ā"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "hui": "2"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161693&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161697",
+          "hierarchy": "H1",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": "3",
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "3. mā cl. 2. P. (Dhātup. xxiv, 54) māti;",
+            "cl. 3. Ā. (xxv, 6) mímīte;",
+            "cl. 4. Ā. (xxvi, 33) māyate (Ved. and ep. also mimāti, Pot. mimīyāt, Impv., mimīhi; Pot. mimet, Br.; pf. mamaú, mame, mamiré, RV.; aor. ámāsi, Subj. mā́sātai, AV.; amāsīt Gr.; Prec. māsīṣṭa, meyāt, ib.; fut. mātā; māsyati, māsyate, ib.; inf. -mé, -maí, RV.; mātum, Br.; ind.p. mitvā́, -mā́ya, RV. &c. &c.),",
+            "to measure, mete out, mark off, RV. &c. &c.;",
+            "to measure across = traverse, RV.;",
+            "to measure (by any standard), compare with (instr.), Kum.;",
+            "(māti) to correspond in measure (either with gen., ‘to be large or long enough for’, BhP.; or with loc., ‘to find room or be contained in’, Inscr.; Kāv.; or with na and instr., ‘to be beside one's self with’, Vcar.; Kathās.);",
+            "to measure out, apportion, grant, RV.;",
+            "to help any one (acc.) to anything (dat.), ib., i, 120, 9;",
+            "to prepare, arrange, fashion, form, build, make, RV.;",
+            "to show, display, exhibit (amimīta, ‘he displayed or developed himself’, iii, 29, 11), ib.;",
+            "(in phil.) to infer, conclude;",
+            "to pray (yācñā-karmaṇi), Naigh. iii, 19 :",
+            "Pass. mīyáte (aor. amāyi);",
+            "to be measured &c., RV.; &c.",
+            "Caus., māpayati, ˚te (aor. amīmapat, Pāṇ. vii, 4, 93, Vārtt. 2 Pat.),",
+            "to cause to be measured or built, measure, build, erect, Up.; GṛS.; MBh. &c.:",
+            "Desid. mitsati, ˚te, Pāṇ. vii, 4, 54; 58 (cf. nir-√ mā) :",
+            "Intens. memīyate, Pāṇ. vi, 4, 66."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "westergaard": "mA,24.54,02.0065"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "whitneyroots": "mA1,119;mA2,119"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "verb": "genuineroot",
+                "cp": "2P,3Ā,4Ā"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "hui": "3"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161697&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161697.1",
+          "hierarchy": "H1E",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": null,
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "mā [cf. Zd. mā; Gk. μέτρον, μετρέω; Lat. mētior, mensus, mensura; Slav. měra; Lith. mėrà.]"
+          ],
+          "annotations": [
+            {
+              "tag": "gk",
+              "attributes": {},
+              "uninterpreted": true
+            },
+            {
+              "tag": "gk",
+              "attributes": {},
+              "uninterpreted": true
+            }
+          ],
+          "unknownTags": [
+            "gk"
+          ],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161697.1&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "161698",
+          "hierarchy": "H2",
+          "key1": "mā",
+          "key2": "mā",
+          "homograph": "4",
+          "pageColumn": "804,2",
+          "paragraphs": [
+            "4. mā f. See under 4. ma, p. 771, col. 2."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "n": "rev",
+                "pc": "1331,2"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "f"
+              }
+            },
+            {
+              "tag": "info",
+              "attributes": {
+                "hui": "4"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=161698&input=slp1&output=roman",
+          "completeArticleVerified": false
+        }
+      ]
+    },
+    {
+      "case": "c_getword_xml_deva",
+      "canonicalKey": "Darmakzetra",
+      "records": [
+        {
+          "recordId": "99972",
+          "hierarchy": "H3",
+          "key1": "dharmakṣetra",
+          "key2": "dharma—kṣetra",
+          "homograph": null,
+          "pageColumn": "510,3",
+          "paragraphs": [
+            "dharma—kṣetra n. ‘law-field’ = kuru-kṣetra, q.v., Bhag. i, 1"
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "n"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=99972&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "99973",
+          "hierarchy": "H3B",
+          "key1": "dharmakṣetra",
+          "key2": "dharma—kṣetra",
+          "homograph": null,
+          "pageColumn": "511,1",
+          "paragraphs": [
+            "dharma—kṣetra m. a man of piety and virtue, W."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "m"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=99973&input=slp1&output=roman",
+          "completeArticleVerified": false
+        },
+        {
+          "recordId": "99974",
+          "hierarchy": "H3B",
+          "key1": "dharmakṣetra",
+          "key2": "dharma—kṣetra",
+          "homograph": null,
+          "pageColumn": "511,1",
+          "paragraphs": [
+            "N. of a man, VP."
+          ],
+          "annotations": [
+            {
+              "tag": "info",
+              "attributes": {
+                "lex": "inh"
+              }
+            }
+          ],
+          "unknownTags": [],
+          "strictXmlValid": true,
+          "sourceLink": "https://www.sanskrit-lexicon.uni-koeln.de/scans/awork/apidev/getword_xml.php?dict=mw&lnum=99974&input=slp1&output=roman",
+          "completeArticleVerified": false
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "responseHashesVerified": 3,
+    "recordsRetained": 36,
+    "strictXmlInvalidIds": [
+      "161686.05",
+      "161686.30",
+      "161686.40",
+      "161686.45"
+    ],
+    "inertAttackControl": "passed",
+    "decimalIdentityControl": "passed",
+    "fullArticleBoundaryValidation": "unresolved",
+    "networkRequests": 0
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "observed_at_utc": "2026-10-05T02:38:07Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "headless actual Edge, offline research text renderer",
+  "live_provider_requests": 0,
+  "production_implementation": false,
+  "render": {
+    "records": 36,
+    "exactParagraphs": true,
+    "credits": true,
+    "safeLinks": true,
+    "tags": [
+      "A",
+      "FOOTER",
+      "P",
+      "SECTION"
+    ],
+    "activeAttributes": 0,
+    "rejectedLinks": true
+  },
+  "checks": {
+    "all_records_rendered": true,
+    "all_extracted_paragraphs_exact": true,
+    "attribution_retained": true,
+    "safe_source_links_only": true,
+    "owned_elements_only": true,
+    "active_content_positive_control": true,
+    "no_provider_code_execution": true,
+    "markup_in_text_remains_literal": true
+  },
+  "passed": true
+}

@@ -1,0 +1,96 @@
+{
+  "status": "Research grouping hypotheses, not complete-article resolver or verified lexical identity",
+  "cases": [
+    {
+      "key": "agni",
+      "groups": [
+        {
+          "recordIds": [
+            "890",
+            "891",
+            "892",
+            "893",
+            "894",
+            "895",
+            "896",
+            "897",
+            "897.05",
+            "897.1"
+          ],
+          "basis": "H1 head followed by H1A senses and H1E etymology in the response"
+        }
+      ]
+    },
+    {
+      "key": "mA",
+      "groups": [
+        {
+          "recordIds": [
+            "153882",
+            "153883",
+            "153884",
+            "153885",
+            "153886",
+            "153887",
+            "153888",
+            "153889"
+          ],
+          "homograph": null,
+          "basis": "Leading H1B fragment with absent preceding parent"
+        },
+        {
+          "recordIds": [
+            "161686",
+            "161686.05",
+            "161686.10",
+            "161686.15",
+            "161686.20",
+            "161686.25",
+            "161686.30",
+            "161686.35",
+            "161686.40",
+            "161686.45",
+            "161686.50"
+          ],
+          "homograph": "1",
+          "basis": "Explicit numbered head plus following same-level continuation/etymology in this response"
+        },
+        {
+          "recordIds": [
+            "161693"
+          ],
+          "homograph": "2",
+          "basis": "Explicit numbered head plus following same-level continuation/etymology in this response"
+        },
+        {
+          "recordIds": [
+            "161697",
+            "161697.1"
+          ],
+          "homograph": "3",
+          "basis": "Explicit numbered head plus following same-level continuation/etymology in this response"
+        },
+        {
+          "recordIds": [
+            "161698"
+          ],
+          "homograph": "4",
+          "basis": "Explicit numbered head plus following same-level continuation/etymology in this response"
+        }
+      ]
+    },
+    {
+      "key": "Darmakzetra",
+      "groups": [
+        {
+          "recordIds": [
+            "99972",
+            "99973",
+            "99974"
+          ],
+          "basis": "H3 compound followed by H3B variants, crosses printed page boundary; parent Dharma not present"
+        }
+      ]
+    }
+  ]
+}
