@@ -25,3 +25,5 @@ Apply this workflow to each feature implementation ticket. Documentation-only up
 ## Desktop testing
 
 The user reserves `HDMI-A-1` for test windows throughout the implementation goal. Place shared-desktop test windows on that monitor and verify their placement before sending native input. Use isolated displays when a shared-desktop test is unnecessary, keeping the other monitors available for the user's work.
+
+Run speech tests through `python3 tests/native/silent_speech.py -- <command>` so their private speech dispatcher uses a temporary silent output. Keep test speech off the user's headphones and preserve the user's audio routing and volume settings.
