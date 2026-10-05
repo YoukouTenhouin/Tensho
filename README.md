@@ -50,9 +50,12 @@ python3 tests/native/latin_workflow.py --dictionary --output /tmp/tensho-diction
 python3 tests/native/dictionary_render.py --output /tmp/tensho-dictionary-render
 node scripts/build.mjs --recovery
 python3 tests/native/session_workflow.py --output /tmp/tensho-session
+python3 tests/native/session_workflow.py --accessibility --output /tmp/tensho-accessibility
 ```
 
 The `--desktop` command uses the current X display (KDE Xwayland in the recorded run) with a disposable Edge profile. Scripts use local fixture servers and never use the user's browser profile. The reading harness uses `dist-controlled`, a separate build with a controlled adapter substituted at build time, and adds a test-only exact-origin manifest grant; it does not establish optional-prompt behavior. The runner returns nonzero if its current native acceptance checks fail. Historical evidence of the superseded opening-focus requirement is retained separately.
+
+Shared-desktop windows are restricted to the reserved HDMI-A-1 monitor. The runner verifies their actual Xwayland bounds before input and refuses to continue if the monitor is unavailable. The default isolated Xvfb mode keeps tests off the working desktop.
 
 The reading-site optional-access runner uses `dist-controlled` on isolated Xvfb. It enables Developer mode through Edge settings, then pauses with screenshots for native context-menu and permission-prompt coordinates; inspect each image before entering its X Y coordinates. It verifies denial, exact-origin granting, browser restart, revocation, and native Escape.
 

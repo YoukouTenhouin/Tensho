@@ -3,10 +3,14 @@ import type { State } from '../core/lookup.ts';
 import { permissionPattern, readingOrigin } from '../core/origins.ts';
 import { providerFeedback } from './provider-feedback.ts';
 import { renderDictionary } from './dictionary-view.ts';
+import { DictionaryAnnouncements } from './dictionary-announcements.ts';
+import { LiveStatus } from './live-status.ts';
 import { SettingsView, languageName, explanationName } from './settings-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 const results = element('results'), status = element('status'), target = element('target'), analysis = element('analysis');
 const word = element<HTMLTextAreaElement>('word'), feedback = element('feedback');
+const dictionaryAnnouncements = new DictionaryAnnouncements(element('dictionary-status'));
+const analysisStatus = new LiveStatus(status);
 let windowId: number;
 let origin: string | undefined;
 let revision = 0, displayed = '', viewport = '', renderedPassage = '', focused = '', sitesKey = '', tabId = -1;
@@ -65,16 +69,23 @@ async function refresh(): Promise<void> {
   }
   target.textContent = passage && passage.selectedIndex === undefined ? 'Choose a word' : state?.text || 'Ready to read';
   analysis.replaceChildren();
-  status.textContent = !state ? snapshot.retentionNotice ?? 'Select a word or enter one above.' : state.status === 'loading' ? `Loading ${language} analysis…` : state.status === 'complete' ? state.analysis.provider : state.message;
+  const statusMessage = (() => {
+    if (!state) return snapshot.retentionNotice ?? 'Select a word or enter one above.';
+    if (state.status === 'loading') return `Loading ${language} analysis…`;
+    if (state.status !== 'complete') return state.message;
+    const result = state.analysis;
+    return result.controlled && !result.outcome ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
+      : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
+      : `${language} analysis — ${result.provider}`;
+  })();
+  analysisStatus.update(statusMessage);
   if (state && snapshot.retentionNotice) { const notice = document.createElement('p'); notice.textContent = snapshot.retentionNotice; analysis.append(notice); }
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
+  dictionaryAnnouncements.update(key, state?.status === 'complete' ? state.analysis.candidates : [], snapshot.dictionaries ?? {});
   if (state?.status === 'complete') {
     const result = state.analysis;
     const recovery = providerFeedback(result.providerIssues, result.provider); if (recovery) analysis.append(recovery);
     if (result.explanationNotice) { const note = document.createElement('p'); note.textContent = result.explanationNotice; analysis.append(note); }
-    status.textContent = result.controlled && !result.outcome ? result.provider : result.outcome === 'no-match' ? `No ${language} match from ${result.provider}.`
-      : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
-      : `${language} analysis — ${result.provider}`;
     for (const [candidateIndex, candidate] of result.candidates.entries()) {
       const section = document.createElement('section');
       const heading = document.createElement('h3'); heading.textContent = candidate.lemma ?? 'Headword unavailable';
@@ -173,7 +184,8 @@ chrome.tabs.onActivated.addListener(active => {
   flushScroll(); ++revision; tabId = active.tabId;
   displayedGeneration = undefined; displayed = ''; viewport = ''; renderedPassage = ''; restoringScroll = true;
   analysis.replaceChildren(); element('passage').hidden = true; element('retry').hidden = true;
-  target.textContent = 'Ready to read'; status.textContent = 'Loading retained result…';
+  dictionaryAnnouncements.update(`${tabId}:none`, [], {});
+  target.textContent = 'Ready to read'; analysisStatus.update('Loading retained result…');
   void refresh().catch(report);
 });
 function close(): void { flushScroll(); void send({ type: 'close' }).catch(report); }

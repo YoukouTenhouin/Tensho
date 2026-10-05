@@ -1,0 +1,226 @@
+{
+  "observed_at_utc": "2026-10-05T01:32:36Z",
+  "mode": "isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run",
+  "initial_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "checks": {
+    "dictionary_resolution_spoken": true,
+    "article_n1_spoken": true,
+    "article_n2_spoken": true,
+    "analysis_error_spoken": true,
+    "settings_draft_spoken": true,
+    "settings_saved_spoken": true,
+    "orca_remains_running": true,
+    "test_browser_speech_observed": true
+  },
+  "actions": [
+    "manual sessionpending",
+    "resolve and read two articles",
+    "manual malum puella",
+    "choose passage word",
+    "manual malum",
+    "failure and explicit retry"
+  ],
+  "explicit_accessibility_bus": true,
+  "orca_exit_after_start": null,
+  "atspi_test_app_found": true,
+  "atspi_nodes": 337,
+  "atspi_manual_input_found": true,
+  "dictionary_focus": {
+    "focus": true,
+    "scroll": 0,
+    "status": {
+      "x": 16,
+      "y": 524.9375,
+      "width": 335,
+      "height": 0,
+      "top": 524.9375,
+      "right": 351,
+      "bottom": 524.9375,
+      "left": 16
+    },
+    "height": 771
+  },
+  "speech_utterances": 53,
+  "orca_exit_after_workflow": null,
+  "scope": "Controlled reading and settings sequence driven through CDP, with actual Orca speech API output and native AT-SPI events; not keyboard-only, physical audibility, or shared KDE acceptance",
+  "passed": true,
+  "restored_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "speech": [
+    {
+      "text": "Tensho Orca acceptance - Microsoft Edge"
+    },
+    {
+      "text": "malum puella malum puella."
+    },
+    {
+      "text": "Browse mode"
+    },
+    {
+      "text": "\u4fa7\u7a97\u683c Tensho \u2014 Latin reading"
+    },
+    {
+      "text": "Tensho lookup"
+    },
+    {
+      "text": "document web"
+    },
+    {
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "text": "Word or passage to look up"
+    },
+    {
+      "text": "entry required."
+    },
+    {
+      "text": "Enter to look up; Shift+Enter for a new line."
+    },
+    {
+      "text": "Focus mode"
+    },
+    {
+      "text": "main content"
+    },
+    {
+      "text": "Lookup results."
+    },
+    {
+      "text": "Browse mode"
+    },
+    {
+      "text": "Loading Latin analysis\u2026"
+    },
+    {
+      "text": "Tensho speech recorder positive control"
+    },
+    {
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "text": "Dictionary for malum: 2 alternatives available. Correspondence is unverified. Choose an entry to read."
+    },
+    {
+      "text": "Dictionary for malum, article n1: Full article from d-first is ready."
+    },
+    {
+      "text": "Dictionary for malum, article n2: Full article from d-first is ready."
+    },
+    {
+      "text": "Choose a passage word"
+    },
+    {
+      "text": "panel"
+    },
+    {
+      "text": "Look up puella (word 2 of 2)"
+    },
+    {
+      "text": "toggle button pressed."
+    },
+    {
+      "text": "Eligible providers failed technically. Retry explicitly under the current settings."
+    },
+    {
+      "text": "Retry Latin analysis"
+    },
+    {
+      "text": "button."
+    },
+    {
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "text": "leaving main content."
+    },
+    {
+      "text": "Edit lookup settings"
+    },
+    {
+      "text": "panel"
+    },
+    {
+      "text": "List with 4 items"
+    },
+    {
+      "text": "a-disabled"
+    },
+    {
+      "text": "check box not checked."
+    },
+    {
+      "text": "leaving list."
+    },
+    {
+      "text": "Lookup"
+    },
+    {
+      "text": "combo box collapsed"
+    },
+    {
+      "text": "Latin."
+    },
+    {
+      "text": "Focus mode"
+    },
+    {
+      "text": "Explanations"
+    },
+    {
+      "text": "combo box collapsed"
+    },
+    {
+      "text": "English."
+    },
+    {
+      "text": "Unsaved changes. Results continue to use the saved settings shown above until you save."
+    },
+    {
+      "text": "Lookup"
+    },
+    {
+      "text": "combo box collapsed"
+    },
+    {
+      "text": "Latin."
+    },
+    {
+      "text": "Settings saved. The visible selection uses the new settings."
+    },
+    {
+      "text": "Tensho sidebar polite status positive control"
+    },
+    {
+      "text": "Tensho sidebar alert positive control"
+    },
+    {
+      "text": "leaving panel."
+    },
+    {
+      "text": "leaving form."
+    },
+    {
+      "text": "malum puella malum puella."
+    },
+    {
+      "text": "Browse mode"
+    },
+    {
+      "text": "Screen reader off."
+    }
+  ],
+  "versions": {
+    "orca": "50.3",
+    "atspi": "2.60.7",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "os": "openSUSE Tumbleweed 20260923"
+  },
+  "audio": "Private dispatcher and temporary silent sink; default audio unchanged",
+  "command": "python3 tests/native/silent_speech.py -- python3 tests/native/orca_workflow.py --runtime /tmp/tensho-orca-runtime/usr --output /tmp/tensho-27-orca-final"
+}

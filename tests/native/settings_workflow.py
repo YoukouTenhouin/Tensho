@@ -29,6 +29,8 @@ def run(output):
     browser = xvfb = None
     with tempfile.TemporaryDirectory(prefix='tensho-settings-') as temporary:
         root = Path(temporary)
+        (root / 'profile/Default').mkdir(parents=True)
+        (root / 'profile/Default/Preferences').write_text(json.dumps({'extensions': {'ui': {'developer_mode': True}}}))
         try:
             with (output / 'browser.log').open('w') as log:
                 reader, writer = os.pipe()
@@ -84,6 +86,7 @@ def run(output):
                 checks['important_uses_latin_identity'] = latin['identity']['lookupLanguage'] == 'lat' and calls() == ['important']
                 panel.evaluate("document.querySelector('#settings').open=true")
                 select_value('#lookup-language', 'san')
+                wait_for(lambda: panel.evaluate("document.querySelector('#settings-message').textContent.includes('Unsaved changes')"))
                 checks['draft_does_not_relabel_result'] = panel.evaluate("document.querySelector('#active-settings').textContent.includes('Lookup: Latin') && document.querySelector('#settings-message').textContent.includes('Unsaved changes')") and state()['identity']['lookupLanguage'] == 'lat'
                 saved_sanskrit = save(); unavailable = settled('unavailable')
                 checks['language_save_refreshes_visible_selection'] = unavailable['text'] == 'important' and unavailable['identity']['lookupLanguage'] == 'san' and unavailable['identity']['configuration'] == saved_sanskrit['revision']
@@ -125,6 +128,8 @@ def run(output):
                 checks['one_provider_order_controls_present'] = panel.evaluate("Array.from(document.querySelectorAll('#settings-editor button[aria-label^=Move]')).length===4 && Array.from(document.querySelectorAll('#settings-editor button[aria-label^=Move]')).every(button=>button.disabled)")
                 evidence['passed'] = all(checks.values())
         except Exception as error:
+            import traceback
+            evidence['failure_trace'] = traceback.format_exc()
             evidence['failure'] = str(error); evidence['passed'] = False
             try:
                 evidence['failure_snapshot'] = snapshot()
