@@ -1,0 +1,117 @@
+{
+  "observed_at_utc": "2026-10-05T01:34:39Z",
+  "browser": "Microsoft Edge 154.0.4258.37",
+  "mode": "isolated Xvfb / X11",
+  "controlled_analysis": true,
+  "production_configuration_and_routing": true,
+  "checks": {
+    "fresh_latin_english": true,
+    "separate_labelled_controls": true,
+    "important_uses_latin_identity": true,
+    "draft_does_not_relabel_result": true,
+    "language_save_refreshes_visible_selection": true,
+    "unconfigured_sanskrit_sends_no_call": true,
+    "unavailable_language_visible": true,
+    "no_planned_sanskrit_providers": true,
+    "switch_back_reruns_same_selection": true,
+    "all_disabled_retains_preference_and_makes_no_call": true,
+    "unavailable_preference_is_not_substituted": true,
+    "analysis_only_refresh_preserves_dictionary_disabled": true,
+    "dictionary_capability_unavailable_visible": true,
+    "lookup_language_persists_across_tabs": true,
+    "empty_state_language_visible": true,
+    "browser_restart_restores_exact_settings": true,
+    "browser_restart_does_not_lookup": true,
+    "restart_retains_visible_sanskrit_preference": true,
+    "per_language_provider_preferences_restored": true,
+    "one_provider_order_controls_present": true
+  },
+  "initial_settings": {
+    "schema": 1,
+    "revision": "4b5abe1b-15be-45ff-9425-025a3e38837d",
+    "lookupLanguage": "lat",
+    "languages": {
+      "lat": {
+        "explanationLanguage": "en",
+        "analysis": [
+          {
+            "id": "alpheios-whitakerLat",
+            "enabled": true,
+            "options": {}
+          }
+        ],
+        "dictionary": [
+          {
+            "id": "alpheios-ls",
+            "enabled": true,
+            "options": {}
+          }
+        ]
+      },
+      "san": {
+        "explanationLanguage": "en",
+        "analysis": [],
+        "dictionary": []
+      }
+    }
+  },
+  "settings_before_restart": {
+    "schema": 1,
+    "revision": "59728094-28d9-4253-9cdb-838bb11527ef",
+    "lookupLanguage": "san",
+    "languages": {
+      "lat": {
+        "explanationLanguage": "en",
+        "analysis": [
+          {
+            "id": "alpheios-whitakerLat",
+            "enabled": true,
+            "options": {}
+          }
+        ],
+        "dictionary": [
+          {
+            "id": "alpheios-ls",
+            "enabled": false,
+            "options": {}
+          }
+        ]
+      },
+      "san": {
+        "explanationLanguage": "en",
+        "analysis": [],
+        "dictionary": []
+      }
+    }
+  },
+  "settings_after_restart": {
+    "schema": 1,
+    "revision": "59728094-28d9-4253-9cdb-838bb11527ef",
+    "lookupLanguage": "san",
+    "languages": {
+      "lat": {
+        "explanationLanguage": "en",
+        "analysis": [
+          {
+            "id": "alpheios-whitakerLat",
+            "enabled": true,
+            "options": {}
+          }
+        ],
+        "dictionary": [
+          {
+            "id": "alpheios-ls",
+            "enabled": false,
+            "options": {}
+          }
+        ]
+      },
+      "san": {
+        "explanationLanguage": "en",
+        "analysis": [],
+        "dictionary": []
+      }
+    }
+  },
+  "passed": true
+}

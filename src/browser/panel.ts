@@ -4,11 +4,13 @@ import { permissionPattern, readingOrigin } from '../core/origins.ts';
 import { providerFeedback } from './provider-feedback.ts';
 import { renderDictionary } from './dictionary-view.ts';
 import { DictionaryAnnouncements } from './dictionary-announcements.ts';
+import { LiveStatus } from './live-status.ts';
 import { SettingsView, languageName, explanationName } from './settings-view.ts';
 function element<T extends HTMLElement>(id: string): T { return document.getElementById(id) as T; }
 const results = element('results'), status = element('status'), target = element('target'), analysis = element('analysis');
 const word = element<HTMLTextAreaElement>('word'), feedback = element('feedback');
 const dictionaryAnnouncements = new DictionaryAnnouncements(element('dictionary-status'));
+const analysisStatus = new LiveStatus(status);
 let windowId: number;
 let origin: string | undefined;
 let revision = 0, displayed = '', viewport = '', renderedPassage = '', focused = '', sitesKey = '', tabId = -1;
@@ -76,7 +78,7 @@ async function refresh(): Promise<void> {
       : result.outcome === 'missing-information' ? `The provider supplied no usable ${language} analysis information.`
       : `${language} analysis — ${result.provider}`;
   })();
-  if (status.textContent !== statusMessage) status.textContent = statusMessage;
+  analysisStatus.update(statusMessage);
   if (state && snapshot.retentionNotice) { const notice = document.createElement('p'); notice.textContent = snapshot.retentionNotice; analysis.append(notice); }
   analysis.setAttribute('aria-busy', String(state?.status === 'loading'));
   dictionaryAnnouncements.update(key, state?.status === 'complete' ? state.analysis.candidates : [], snapshot.dictionaries ?? {});
@@ -183,7 +185,7 @@ chrome.tabs.onActivated.addListener(active => {
   displayedGeneration = undefined; displayed = ''; viewport = ''; renderedPassage = ''; restoringScroll = true;
   analysis.replaceChildren(); element('passage').hidden = true; element('retry').hidden = true;
   dictionaryAnnouncements.update(`${tabId}:none`, [], {});
-  target.textContent = 'Ready to read'; status.textContent = 'Loading retained result…';
+  target.textContent = 'Ready to read'; analysisStatus.update('Loading retained result…');
   void refresh().catch(report);
 });
 function close(): void { flushScroll(); void send({ type: 'close' }).catch(report); }

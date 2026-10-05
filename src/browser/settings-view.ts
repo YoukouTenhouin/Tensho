@@ -1,3 +1,4 @@
+import { LiveStatus } from './live-status.ts';
 import { lookupRoutes, providerCapability } from '../core/configuration.ts';
 import type { ProviderCatalog, ProviderRole, Settings, SettingsDraft } from '../core/configuration.ts';
 
@@ -23,6 +24,7 @@ export class SettingsView {
   #saving = false;
   #baseRevision = '';
   #message = node('p');
+  #announcement = new LiveStatus(this.#message);
   #fields = node('fieldset');
   #lookup = node('select');
   #explanations = node('select');
@@ -56,19 +58,19 @@ export class SettingsView {
     this.#catalog = catalog; this.#saved = saved;
     if (!this.#draft || (!this.#dirty && this.#baseRevision !== saved.revision)) this.#reset();
     else if (this.#dirty && this.#baseRevision !== saved.revision && !this.#saving) {
-      this.#message.textContent = 'Settings changed in another panel. Reload saved settings before editing again.';
+      this.#announcement.update('Settings changed in another panel. Reload saved settings before editing again.');
     }
   }
   #changed(): void {
     this.#dirty = true; this.#apply.disabled = false;
-    this.#message.textContent = 'Unsaved changes. Results continue to use the saved settings shown above until you save.';
+    this.#announcement.update('Unsaved changes. Results continue to use the saved settings shown above until you save.');
   }
   #reset(): void {
     if (!this.#saved) return;
     this.#baseRevision = this.#saved.revision; this.#draft = structuredClone(this.#saved);
     this.#lookup.replaceChildren(...this.#catalog.languages.map(language => option(language.id, language.name)));
     this.#lookup.value = this.#draft.lookupLanguage;
-    this.#apply.disabled = true; this.#message.textContent = 'Changes apply when saved and refresh the visible selection.';
+    this.#apply.disabled = true; this.#announcement.update('Changes apply when saved and refresh the visible selection.');
     this.#profile();
   }
   #explanationChoices(): void {
@@ -128,11 +130,11 @@ export class SettingsView {
   }
   async #submit(): Promise<void> {
     if (!this.#draft || this.#saving) return;
-    this.#saving = true; this.#fields.disabled = true; this.#message.textContent = 'Saving settings…';
+    this.#saving = true; this.#fields.disabled = true; this.#announcement.update('Saving settings…');
     try {
       this.#saved = await this.#save(structuredClone(this.#draft), this.#baseRevision);
-      this.#dirty = false; this.#reset(); this.#message.textContent = 'Settings saved. The visible selection uses the new settings.';
-    } catch (error) { this.#message.textContent = error instanceof Error ? error.message : String(error); }
+      this.#dirty = false; this.#reset(); this.#announcement.update('Settings saved. The visible selection uses the new settings.');
+    } catch (error) { this.#announcement.update(error instanceof Error ? error.message : String(error)); }
     finally { this.#saving = false; this.#fields.disabled = false; }
   }
 }

@@ -3,12 +3,12 @@ import type { Analysis } from '../core/lookup.ts';
 
 /** Keep live updates outside the dictionary subtree that rendering replaces. */
 export class DictionaryAnnouncements {
-  #region: HTMLElement;
+  #region: Pick<HTMLElement, 'textContent'>;
   #identity = '';
   #previous = new Map<string, string>();
   #pending = new Map<string, string>();
   #timer: ReturnType<typeof setTimeout> | undefined;
-  constructor(region: HTMLElement) { this.#region = region; }
+  constructor(region: Pick<HTMLElement, 'textContent'>) { this.#region = region; }
 
   update(identity: string, candidates: Analysis['candidates'], dictionaries: Record<number, CandidateDictionary>): void {
     const messages = new Map<string, string>();
@@ -34,15 +34,16 @@ export class DictionaryAnnouncements {
     }
     const changed = [...messages].filter(([key, message]) => this.#previous.get(key) !== message);
     this.#previous = messages;
+    for (const key of this.#pending.keys()) if (!messages.has(key)) this.#pending.delete(key);
+    clearTimeout(this.#timer);
     for (const [key, message] of changed) this.#pending.set(key, message);
     if (this.#pending.size) {
       // Orca filters text events within 100 ms of other application text changes.
       // Announce after rendering settles, retaining the latest state per operation.
-      clearTimeout(this.#timer);
       this.#timer = setTimeout(() => {
         this.#region.textContent = [...this.#pending.values()].join(' ');
         this.#pending.clear();
-      }, 150);
+      }, 300);
     }
   }
 }
