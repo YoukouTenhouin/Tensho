@@ -1,0 +1,745 @@
+[
+  {
+    "case": "version",
+    "operation": "version/",
+    "original": null,
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/version/",
+    "startedAtUTC": "2026-10-05T02:17:40.298771+00:00",
+    "status": 200,
+    "bytes": 27,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "1aeb69560d6f5df8540b1df36d79d760;o=1",
+      "date": "Mon, 05 Oct 2026 02:17:44 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "27",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "55552d22fc726e872a5858d8a151026d3d44a3ea5b4a5aeb04b2b47985b9d1c5",
+    "json": {
+      "version": "0.2.6"
+    },
+    "seconds": 3.863
+  },
+  {
+    "case": "wikipedia",
+    "operation": "tags",
+    "original": "संस्कृतम्",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A5%8D%E0%A4%95%E0%A5%83%E0%A4%A4%E0%A4%AE%E0%A5%8D",
+    "startedAtUTC": "2026-10-05T02:17:45.162225+00:00",
+    "status": 200,
+    "bytes": 1298,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "573451c629d3db67916a0da535953ec7",
+      "date": "Mon, 05 Oct 2026 02:17:45 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "1298",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "0d5ae0c4b40f9d4fd4776af5b8d2d1ecb565bdfddaa844f78a63847e8dc04346",
+    "json": {
+      "input": "संस्कृतम्",
+      "devanagari": "संस्कृतम्",
+      "tags": [
+        [
+          "संस्कृत",
+          [
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "संस्कृत",
+          [
+            "प्रथमाविभक्तिः",
+            "एकवचनम्",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "संस्कृत",
+          [
+            "पुंल्लिङ्गम्",
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्"
+          ]
+        ]
+      ]
+    },
+    "seconds": 0.251
+  },
+  {
+    "case": "passage",
+    "operation": "splits",
+    "original": "मामकाः पाण्डवाश्चैव",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%AE%E0%A4%BE%E0%A4%AE%E0%A4%95%E0%A4%BE%E0%A4%83%20%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B6%E0%A5%8D%E0%A4%9A%E0%A5%88%E0%A4%B5",
+    "startedAtUTC": "2026-10-05T02:17:46.413956+00:00",
+    "status": 200,
+    "bytes": 2388,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "72707ebd32ae53a1975b91e2f43a17d2",
+      "date": "Mon, 05 Oct 2026 02:17:46 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "2388",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "43f2f88a3e0e826a7d6d546ba5bb637000cbb1c140cf8929a00cf4e3cf635576",
+    "json": {
+      "input": "मामकाः पाण्डवाश्चैव",
+      "devanagari": "मामकाः पाण्डवाश्चैव",
+      "splits": [
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "चा",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "च",
+          "ऐव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवास्",
+          "चा",
+          "ऐव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "अस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "आस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवा",
+          "अस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डवा",
+          "आस्",
+          "च",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डव",
+          "अस्",
+          "चा",
+          "एव"
+        ],
+        [
+          "मामकास्",
+          "पाण्डो",
+          "आस्",
+          "च",
+          "एव"
+        ]
+      ]
+    },
+    "seconds": 0.37
+  },
+  {
+    "case": "constituent",
+    "operation": "tags",
+    "original": "पाण्डवास्",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AA%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%B8%E0%A5%8D",
+    "startedAtUTC": "2026-10-05T02:17:47.784761+00:00",
+    "status": 200,
+    "bytes": 2020,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "b0bfcdc47dc8b2ff484154e9325df468",
+      "date": "Mon, 05 Oct 2026 02:17:47 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "2020",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "d80cc31bb3839da187c194ba459cab1c53dd6f2b738e509d6a073f81c4170813",
+    "json": {
+      "input": "पाण्डवास्",
+      "devanagari": "पाण्डवास्",
+      "tags": [
+        [
+          "पाण्डव",
+          [
+            "पुंल्लिङ्गम्",
+            "प्रथमाविभक्तिः",
+            "बहुवचनम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "पुंल्लिङ्गम्",
+            "संबोधनविभक्तिः",
+            "बहुवचनम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "स्त्रीलिङ्गम्",
+            "संबोधनविभक्तिः",
+            "बहुवचनम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "स्त्रीलिङ्गम्",
+            "प्रथमाविभक्तिः",
+            "बहुवचनम्"
+          ]
+        ],
+        [
+          "पाण्डव",
+          [
+            "स्त्रीलिङ्गम्",
+            "द्वितीयाविभक्तिः",
+            "बहुवचनम्"
+          ]
+        ]
+      ]
+    },
+    "seconds": 0.249
+  },
+  {
+    "case": "finite",
+    "operation": "tags",
+    "original": "उवाच",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%89%E0%A4%B5%E0%A4%BE%E0%A4%9A",
+    "startedAtUTC": "2026-10-05T02:17:49.034294+00:00",
+    "status": 200,
+    "bytes": 966,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "a1d84337cf676ab7e56f1550dbdd1a1c",
+      "date": "Mon, 05 Oct 2026 02:17:49 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "966",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "98f7d307854372db2407336993e488fd9e337f7ec20ae58d0eae005b049f02a3",
+    "json": {
+      "input": "उवाच",
+      "devanagari": "उवाच",
+      "tags": [
+        [
+          "वच्",
+          [
+            "लिट्",
+            "एकवचनम्",
+            "परस्मैपदम्",
+            "प्राथमिकः",
+            "उत्तमपुरुषः"
+          ]
+        ],
+        [
+          "वच्",
+          [
+            "लिट्",
+            "एकवचनम्",
+            "परस्मैपदम्",
+            "प्राथमिकः",
+            "प्रथमपुरुषः"
+          ]
+        ]
+      ]
+    },
+    "seconds": 0.255
+  },
+  {
+    "case": "ambiguity",
+    "operation": "tags",
+    "original": "सेनयोः",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%B8%E0%A5%87%E0%A4%A8%E0%A4%AF%E0%A5%8B%E0%A4%83",
+    "startedAtUTC": "2026-10-05T02:17:50.289868+00:00",
+    "status": 200,
+    "bytes": 4412,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "63024fe99367bea12df785130e54646b",
+      "date": "Mon, 05 Oct 2026 02:17:50 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "4412",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "725b2df693d03ecbe7ebbdfc0807a2496c13d36de8c61da75fe54ad01df1f1a1",
+    "json": {
+      "input": "सेनयोः",
+      "devanagari": "सेनयोस्",
+      "tags": [
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "नपुंसकलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "पुंल्लिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "स्त्रीलिङ्गम्",
+            "षष्ठीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "षष्ठीविभक्तिः",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "पुंल्लिङ्गम्",
+            "षष्ठीविभक्तिः"
+          ]
+        ],
+        [
+          "सेना",
+          [
+            "द्विवचनम्",
+            "स्त्रीलिङ्गम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "द्विवचनम्",
+            "सप्तमीविभक्तिः",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "पुंल्लिङ्गम्",
+            "द्विवचनम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "स्त्रीलिङ्गम्",
+            "द्विवचनम्",
+            "षष्ठीविभक्तिः"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "द्विवचनम्",
+            "षष्ठीविभक्तिः",
+            "नपुंसकलिङ्गम्"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "पुंल्लिङ्गम्",
+            "द्विवचनम्",
+            "षष्ठीविभक्तिः"
+          ]
+        ],
+        [
+          "सेन",
+          [
+            "स्त्रीलिङ्गम्",
+            "द्विवचनम्",
+            "सप्तमीविभक्तिः"
+          ]
+        ]
+      ]
+    },
+    "seconds": 0.184
+  },
+  {
+    "case": "suffix",
+    "operation": "tags",
+    "original": "मा",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/%E0%A4%AE%E0%A4%BE",
+    "startedAtUTC": "2026-10-05T02:17:51.474053+00:00",
+    "status": 200,
+    "bytes": 1777,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "f69b175f5042a3f95432e5d8c1621073;o=1",
+      "date": "Mon, 05 Oct 2026 02:17:51 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "1777",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "051b6ac435e7921fe45c78dd10cd8d3e789ca3de7ed8ca9ccc03bbf02bb4d4dc",
+    "json": {
+      "input": "मा",
+      "devanagari": "मा",
+      "tags": [
+        [
+          "अस्मद्",
+          [
+            "सङ्ख्या",
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्"
+          ]
+        ],
+        [
+          "अस्मद्",
+          [
+            "द्वितीयाविभक्तिः",
+            "एकवचनम्",
+            "त्रिलिङ्गम्"
+          ]
+        ],
+        [
+          "मा#२",
+          [
+            "अव्ययम्",
+            "निपातम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "अव्ययम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "स्त्रीलिङ्गम्",
+            "प्रथमाविभक्तिः",
+            "एकवचनम्"
+          ]
+        ],
+        [
+          "मा",
+          [
+            "स्त्रीलिङ्गम्",
+            "समासपूर्वपदनामपदम्"
+          ]
+        ]
+      ]
+    },
+    "seconds": 0.19
+  },
+  {
+    "case": "unknown",
+    "operation": "splits",
+    "original": "झ्झ्झ्झ्झ",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D%E0%A5%8D%E0%A4%9D",
+    "startedAtUTC": "2026-10-05T02:17:52.664489+00:00",
+    "status": 200,
+    "bytes": 168,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "16efc18f4e5ba57e514170dfb57cc3f9",
+      "date": "Mon, 05 Oct 2026 02:17:52 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "168",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "96a98feac42fc3092097e7f3571768e6189b75aaeed20c1e267b6e1f1480e330",
+    "json": {
+      "input": "झ्झ्झ्झ्झ",
+      "devanagari": "झ्झ्झ्झ्झ",
+      "splits": []
+    },
+    "seconds": 0.17
+  },
+  {
+    "case": "punctuation",
+    "operation": "splits",
+    "original": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4",
+    "startedAtUTC": "2026-10-05T02:17:53.834873+00:00",
+    "status": 200,
+    "bytes": 364,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "ff6c258d96e0c608314ca72e3ac7f44a",
+      "date": "Mon, 05 Oct 2026 02:17:54 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "364",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "b2b6333290bce6ae139da8e480728c6122e36d6ab019963e771723265306cfcc",
+    "json": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "splits": []
+    },
+    "seconds": 0.271
+  },
+  {
+    "case": "punctuation_nonstrict",
+    "operation": "splits",
+    "original": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/%E0%A4%A7%E0%A4%B0%E0%A5%8D%E0%A4%AE%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A4%95%E0%A5%81%E0%A4%B0%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B7%E0%A5%87%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%87%20%E0%A5%A4?strict=false",
+    "startedAtUTC": "2026-10-05T02:17:55.105941+00:00",
+    "status": 200,
+    "bytes": 2596,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "6e8329281d546ce664b5c5d60925df62",
+      "date": "Mon, 05 Oct 2026 02:17:55 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "2596",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "cdbf30641aeae2bdc7aaca6ca8e71893d30eeb337c889e27a4807aec25e6c30a",
+    "json": {
+      "input": "धर्मक्षेत्रे कुरुक्षेत्रे ।",
+      "devanagari": "धर्मक्षेत्रे कुरुक्षेत्रे ",
+      "splits": [
+        [
+          "धर्मक्षेत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे",
+          "कुरु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कु",
+          "रु",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे",
+          "कुरुक्षेत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कु",
+          "रुक्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्मक्षेत्रे",
+          "कुरु",
+          "क्षे",
+          "अत्रे"
+        ]
+      ]
+    },
+    "seconds": 0.506
+  },
+  {
+    "case": "nfc",
+    "operation": "splits",
+    "original": "dharmakṣetre",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmak%E1%B9%A3etre",
+    "startedAtUTC": "2026-10-05T02:17:56.612422+00:00",
+    "status": 200,
+    "bytes": 1631,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "bfa65ed27a25b8c36999996fc53f64e4",
+      "date": "Mon, 05 Oct 2026 02:17:56 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "1631",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "460675ff95efc876fd086a03f5b003e2fde8d30a34a34d1a5b77f58013441a3b",
+    "json": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्षेत्रे",
+      "splits": [
+        [
+          "धर्मक्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षेत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अत्",
+          "रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्ष",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "इ",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षा",
+          "ई",
+          "त्रे"
+        ],
+        [
+          "धर्म",
+          "क्षे",
+          "अ",
+          "त्रे"
+        ]
+      ]
+    },
+    "seconds": 0.175
+  },
+  {
+    "case": "nfd",
+    "operation": "splits",
+    "original": "dharmakṣetre",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/splits/dharmaks%CC%A3etre",
+    "startedAtUTC": "2026-10-05T02:17:57.788326+00:00",
+    "status": 200,
+    "bytes": 162,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "c0f537db1efdbf9c2892fdb392a3c897",
+      "date": "Mon, 05 Oct 2026 02:17:57 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "162",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "becdb0beacf4453eee01d81720d4e743abf9cee465a7d81d832d48540969f323",
+    "json": {
+      "input": "dharmakṣetre",
+      "devanagari": "धर्मक्स्̣एत्रे",
+      "splits": []
+    },
+    "seconds": 0.204
+  },
+  {
+    "case": "unsupported",
+    "operation": "tags",
+    "original": "hello🙂",
+    "url": "https://sanskrit-parser.appspot.com/sanskrit_parser/v1/tags/hello%F0%9F%99%82",
+    "startedAtUTC": "2026-10-05T02:17:58.993111+00:00",
+    "status": 200,
+    "bytes": 123,
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Accept-Encoding",
+      "x-cloud-trace-context": "ea873b59b6a1e639373c1fcb6152e2bb",
+      "date": "Mon, 05 Oct 2026 02:17:59 GMT",
+      "server": "Google Frontend",
+      "Content-Length": "123",
+      "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+      "Connection": "close"
+    },
+    "sha256": "c9fc7be09f4b5ee93c97cfefc1c70e31ce6148cf6b961a9ca3af563057dcdb85",
+    "json": {
+      "input": "hello🙂",
+      "devanagari": "हेल्लो🙂",
+      "tags": []
+    },
+    "seconds": 0.17
+  }
+]

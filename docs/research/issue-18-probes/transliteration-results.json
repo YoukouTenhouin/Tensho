@@ -1,0 +1,279 @@
+{
+  "observedAtUTC": "2026-10-05T02:19:41.744Z",
+  "node": "v24.18.1",
+  "package": "@indic-transliteration/sanscript",
+  "version": "1.3.3",
+  "results": [
+    {
+      "original": "धर्मक्षेत्र",
+      "slp1": "Darmakzetra",
+      "iast": "dharmakṣetra",
+      "roundTrip": true,
+      "nfdDirect": "धर्मक्षेत्र",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "धर्मक्षेत्रे",
+      "slp1": "Darmakzetre",
+      "iast": "dharmakṣetre",
+      "roundTrip": true,
+      "nfdDirect": "धर्मक्षेत्रे",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "सेन",
+      "slp1": "sena",
+      "iast": "sena",
+      "roundTrip": true,
+      "nfdDirect": "सेन",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "सेना",
+      "slp1": "senA",
+      "iast": "senā",
+      "roundTrip": true,
+      "nfdDirect": "सेन̄",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "मा",
+      "slp1": "mA",
+      "iast": "mā",
+      "roundTrip": true,
+      "nfdDirect": "म̄",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "मामकास्",
+      "slp1": "mAmakAs",
+      "iast": "māmakās",
+      "roundTrip": true,
+      "nfdDirect": "म̄मक̄स्",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "पाण्डवास्",
+      "slp1": "pARqavAs",
+      "iast": "pāṇḍavās",
+      "roundTrip": true,
+      "nfdDirect": "प̄ण्डव̄स्",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "च",
+      "slp1": "ca",
+      "iast": "ca",
+      "roundTrip": true,
+      "nfdDirect": "च",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "एव",
+      "slp1": "eva",
+      "iast": "eva",
+      "roundTrip": true,
+      "nfdDirect": "एव",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ऋ",
+      "slp1": "f",
+      "iast": "ṛ",
+      "roundTrip": true,
+      "nfdDirect": "ऋ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ॠ",
+      "slp1": "F",
+      "iast": "ṝ",
+      "roundTrip": true,
+      "nfdDirect": "ॠ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ऌ",
+      "slp1": "x",
+      "iast": "ḷ",
+      "roundTrip": true,
+      "nfdDirect": "ल्̣",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ॡ",
+      "slp1": "X",
+      "iast": "ḹ",
+      "roundTrip": true,
+      "nfdDirect": "ल्̣̄",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ङ",
+      "slp1": "Na",
+      "iast": "ṅa",
+      "roundTrip": true,
+      "nfdDirect": "ङ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ञ",
+      "slp1": "Ya",
+      "iast": "ña",
+      "roundTrip": true,
+      "nfdDirect": "ञ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ण",
+      "slp1": "Ra",
+      "iast": "ṇa",
+      "roundTrip": true,
+      "nfdDirect": "ण",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "श",
+      "slp1": "Sa",
+      "iast": "śa",
+      "roundTrip": true,
+      "nfdDirect": "स्꣡अ",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ष",
+      "slp1": "za",
+      "iast": "ṣa",
+      "roundTrip": true,
+      "nfdDirect": "ष",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "अं",
+      "slp1": "aM",
+      "iast": "aṃ",
+      "roundTrip": true,
+      "nfdDirect": "अं",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "अः",
+      "slp1": "aH",
+      "iast": "aḥ",
+      "roundTrip": true,
+      "nfdDirect": "अः",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "अँ",
+      "slp1": "a~",
+      "iast": "a~",
+      "roundTrip": true,
+      "nfdDirect": "अँ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ऽ",
+      "slp1": "'",
+      "iast": "'",
+      "roundTrip": true,
+      "nfdDirect": "ऽ",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ॐ",
+      "slp1": "AUM",
+      "iast": "oṃ",
+      "roundTrip": true,
+      "nfdDirect": "ओं",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "।",
+      "slp1": ".",
+      "iast": "|",
+      "roundTrip": true,
+      "nfdDirect": "।",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "॥",
+      "slp1": "..",
+      "iast": "||",
+      "roundTrip": true,
+      "nfdDirect": "॥",
+      "nfdDirectRoundTrip": true,
+      "nfdAfterNfcRoundTrip": true
+    },
+    {
+      "original": "ऴ",
+      "slp1": "L0a",
+      "iast": "ḻa",
+      "roundTrip": true,
+      "nfdDirect": "ल्̱अ",
+      "nfdDirectRoundTrip": false,
+      "nfdAfterNfcRoundTrip": true
+    }
+  ],
+  "uncommon": [
+    {
+      "original": "क़",
+      "iast": "ka़",
+      "slp1": "ka़"
+    },
+    {
+      "original": "क्‍ष",
+      "iast": "k‍ṣa",
+      "slp1": "k‍za"
+    },
+    {
+      "original": "अ॑",
+      "iast": "a̭",
+      "slp1": "a॑"
+    },
+    {
+      "original": "ᳵ",
+      "iast": "ᳵ",
+      "slp1": "ᳵ"
+    },
+    {
+      "original": "ᳶ",
+      "iast": "ᳶ",
+      "slp1": "ᳶ"
+    }
+  ],
+  "identity": {
+    "provider": "sanskrit_parser",
+    "original": "मा#२",
+    "base": "मा",
+    "suffix": "#२",
+    "stableLemmaId": null,
+    "iast": "mā",
+    "slp1": "mA"
+  },
+  "scope": "Offline Node spelling conversion only; uncommon pass-through is not complete IAST/SLP1 support; no lexical identity or Edge rendering proved"
+}

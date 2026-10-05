@@ -1,0 +1,68 @@
+{
+  "validatedResponses": 12,
+  "mappedObservedLabels": 21,
+  "unknownLabelPreserved": true,
+  "sameSpellingTuplesPreserved": true,
+  "cases": [
+    {
+      "case": "wikipedia",
+      "count": 3,
+      "possiblyCapped": false
+    },
+    {
+      "case": "passage",
+      "count": 10,
+      "possiblyCapped": true
+    },
+    {
+      "case": "constituent",
+      "count": 5,
+      "possiblyCapped": false
+    },
+    {
+      "case": "finite",
+      "count": 2,
+      "possiblyCapped": false
+    },
+    {
+      "case": "ambiguity",
+      "count": 12,
+      "possiblyCapped": false
+    },
+    {
+      "case": "suffix",
+      "count": 6,
+      "possiblyCapped": false
+    },
+    {
+      "case": "unknown",
+      "count": 0,
+      "possiblyCapped": false
+    },
+    {
+      "case": "punctuation",
+      "count": 0,
+      "possiblyCapped": false
+    },
+    {
+      "case": "punctuation_nonstrict",
+      "count": 10,
+      "possiblyCapped": true
+    },
+    {
+      "case": "nfc",
+      "count": 10,
+      "possiblyCapped": true
+    },
+    {
+      "case": "nfd",
+      "count": 0,
+      "possiblyCapped": false
+    },
+    {
+      "case": "unsupported",
+      "count": 0,
+      "possiblyCapped": false
+    }
+  ]
+}
