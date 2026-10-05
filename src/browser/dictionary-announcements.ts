@@ -6,6 +6,8 @@ export class DictionaryAnnouncements {
   #region: HTMLElement;
   #identity = '';
   #previous = new Map<string, string>();
+  #pending = new Map<string, string>();
+  #timer: ReturnType<typeof setTimeout> | undefined;
   constructor(region: HTMLElement) { this.#region = region; }
 
   update(identity: string, candidates: Analysis['candidates'], dictionaries: Record<number, CandidateDictionary>): void {
@@ -27,10 +29,20 @@ export class DictionaryAnnouncements {
     }
     if (identity !== this.#identity) {
       // Restored content is available for navigation; it is not a new action.
+      clearTimeout(this.#timer); this.#pending.clear();
       this.#identity = identity; this.#previous = messages; this.#region.textContent = ''; return;
     }
-    const changed = [...messages].filter(([key, message]) => this.#previous.get(key) !== message).map(([, message]) => message);
+    const changed = [...messages].filter(([key, message]) => this.#previous.get(key) !== message);
     this.#previous = messages;
-    if (changed.length) this.#region.textContent = changed.join(' ');
+    for (const [key, message] of changed) this.#pending.set(key, message);
+    if (this.#pending.size) {
+      // Orca filters text events within 100 ms of other application text changes.
+      // Announce after rendering settles, retaining the latest state per operation.
+      clearTimeout(this.#timer);
+      this.#timer = setTimeout(() => {
+        this.#region.textContent = [...this.#pending.values()].join(' ');
+        this.#pending.clear();
+      }, 150);
+    }
   }
 }

@@ -68,6 +68,7 @@ def exercise_accessibility(evidence, panel, worker, page, snapshot, display, tar
     reach('#article-0-n2'); key(display, 'Return')
     wait_for(lambda: snapshot()['dictionaries']['0'].get('articles', {}).get('n2', {}).get('status') == 'complete')
     checks['keyboard_can_open_multiple_full_articles'] = panel.evaluate("document.querySelectorAll('.dictionary-article').length===2")
+    checks['retried_article_completion_updates_live_region'] = announced('article n2: Full article')
     before_announcements = panel.evaluate('dictionaryAnnouncements.length')
     reach('#dictionary-0'); key(display, 'Return')
     wait_for(lambda: snapshot()['dictionaries']['0']['expanded'] is False)

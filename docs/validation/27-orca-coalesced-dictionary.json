@@ -1,0 +1,242 @@
+{
+  "observed_at_utc": "2026-10-05T01:27:27Z",
+  "mode": "isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run",
+  "initial_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "checks": {
+    "dictionary_resolution_spoken": true,
+    "article_n1_spoken": true,
+    "article_n2_spoken": true
+  },
+  "actions": [
+    "manual sessionpending",
+    "resolve and read two articles",
+    "manual malum puella",
+    "choose passage word",
+    "manual malum"
+  ],
+  "explicit_accessibility_bus": true,
+  "orca_exit_after_start": null,
+  "atspi_test_app_found": true,
+  "atspi_nodes": 337,
+  "atspi_manual_input_found": true,
+  "dictionary_focus": {
+    "focus": true,
+    "scroll": 0,
+    "status": {
+      "x": 16,
+      "y": 524.9375,
+      "width": 335,
+      "height": 0,
+      "top": 524.9375,
+      "right": 351,
+      "bottom": 524.9375,
+      "left": 16
+    },
+    "height": 771
+  },
+  "failure": "Timed out waiting for native browser state",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/tensho-27-orca-attempt.py\", line 162, in <module>\n    wait_for(lambda:snap().get('state',{}).get('status')=='error');wait_for(lambda:spoken('Eligible providers failed'),seconds=8);r['checks']['analysis_error_spoken']=True\n                                                                   ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/shared_data/workspace/tensho/tests/native/reading_workflow.py\", line 36, in wait_for\n    raise RuntimeError('Timed out waiting for native browser state')\nRuntimeError: Timed out waiting for native browser state\n",
+  "restored_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "acceptance_complete": false,
+  "diagnosis": "Private accessibility registry restores test-app discovery. Orca 50.3 event-manager spam filter suppresses text insertions within 100 ms of another insertion from the application. Coalescing dictionary announcements after rendering produces spoken resolution and both articles. Analysis error announcement remains suppressed and requires a separate fix.",
+  "speech": [
+    {
+      "text": "Tensho Orca acceptance - Microsoft Edge"
+    },
+    {
+      "text": "malum puella malum puella."
+    },
+    {
+      "text": "Browse mode"
+    },
+    {
+      "text": "\u4fa7\u7a97\u683c Tensho \u2014 Latin reading"
+    },
+    {
+      "text": "Tensho lookup"
+    },
+    {
+      "text": "document web"
+    },
+    {
+      "text": "Word or passage to look up"
+    },
+    {
+      "text": "entry required."
+    },
+    {
+      "text": "Enter to look up; Shift+Enter for a new line."
+    },
+    {
+      "text": "Focus mode"
+    },
+    {
+      "text": "main content"
+    },
+    {
+      "text": "Lookup results."
+    },
+    {
+      "text": "Browse mode"
+    },
+    {
+      "text": "Loading Latin analysis\u2026"
+    },
+    {
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "text": "Tensho speech recorder positive control"
+    },
+    {
+      "text": "Dictionary for malum: 2 alternatives available. Correspondence is unverified. Choose an entry to read."
+    },
+    {
+      "text": "Dictionary for malum, article n1: Full article from d-first is ready."
+    },
+    {
+      "text": "Dictionary for malum, article n2: Full article from d-first is ready."
+    },
+    {
+      "text": "Choose a passage word"
+    },
+    {
+      "text": "panel"
+    },
+    {
+      "text": "Look up puella (word 2 of 2)"
+    },
+    {
+      "text": "toggle button pressed."
+    },
+    {
+      "text": "Screen reader off."
+    }
+  ],
+  "live_events": [
+    {
+      "spam_filter": null,
+      "text": "Loading Latin analysis\u2026"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "presentable": true,
+      "different_active_document": false,
+      "text": "Loading Latin analysis\u2026"
+    },
+    {
+      "spam_filter": null,
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "spam_filter": true,
+      "text": "Using a-first. Some providers were unavailable."
+    },
+    {
+      "type": "object:text-changed:insert",
+      "presentable": true,
+      "different_active_document": false,
+      "text": "Latin analysis \u2014 a-first"
+    },
+    {
+      "spam_filter": null,
+      "text": "Using a-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Correspondence with this lemma is unverified, even for a single alternative. Choose an entry to read; these alternatives may not be exhaustive."
+    },
+    {
+      "spam_filter": null,
+      "text": "Dictionary for malum: 2 alternatives available. Correspondence is unverified. Choose an entry to read."
+    },
+    {
+      "type": "object:text-changed:insert",
+      "presentable": true,
+      "different_active_document": false,
+      "text": "Dictionary for malum: 2 alternatives available. Correspondence is unverified. Choose an entry to read."
+    },
+    {
+      "spam_filter": null,
+      "text": "Correspondence with this lemma is unverified, even for a single alternative. Choose an entry to read; these alternatives may not be exhaustive."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using a-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": null,
+      "text": "Dictionary for malum, article n1: Full article from d-first is ready."
+    },
+    {
+      "type": "object:text-changed:insert",
+      "presentable": true,
+      "different_active_document": false,
+      "text": "Dictionary for malum, article n1: Full article from d-first is ready."
+    },
+    {
+      "spam_filter": null,
+      "text": "Correspondence with this lemma is unverified, even for a single alternative. Choose an entry to read; these alternatives may not be exhaustive."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using a-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": true,
+      "text": "Using d-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": null,
+      "text": "Dictionary for malum, article n2: Full article from d-first is ready."
+    },
+    {
+      "type": "object:text-changed:insert",
+      "presentable": true,
+      "different_active_document": false,
+      "text": "Dictionary for malum, article n2: Full article from d-first is ready."
+    },
+    {
+      "spam_filter": null,
+      "text": "malum puella"
+    },
+    {
+      "spam_filter": true,
+      "text": "Using a-first. Some providers were unavailable."
+    },
+    {
+      "spam_filter": null,
+      "text": "Provider details"
+    },
+    {
+      "spam_filter": true,
+      "text": "Eligible providers failed technically. Retry explicitly under the current settings."
+    }
+  ]
+}
