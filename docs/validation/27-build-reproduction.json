@@ -1,0 +1,20 @@
+{
+  "observed_at_utc": "2026-10-05T01:38:38.641202+00:00",
+  "source_commit": "9f884858c53503dc428f0bf8fedbba0550a4666e",
+  "node": "v24.18.1",
+  "npm": "11.16.0",
+  "command": "git archive HEAD; npm ci --offline && npm run check in a fresh temporary directory",
+  "tests": 136,
+  "artifact_hashes_match": true,
+  "sha256": {
+    "dist/manifest.json": "ad46e12527afd82db2ab6e3d329f5f965b249ad0cd83f5fcc372f096081e7177",
+    "dist/page.js": "d3af9fbaf5e86d6e4865f4b33ad93abf522bfac874932be753e8c713482d0a14",
+    "dist/page.js.map": "2dc375e4df816eeb64e4dbbc8f80a1a03d8414f17a89bb32398d269fa57f9d57",
+    "dist/panel.css": "ecdeb2ecc0f0ac9c4bfaab8d0e70e28d02467ce6660091dd2a64016c09261325",
+    "dist/panel.html": "531aab7d857c7e089c6a3558c4264e3b9a880f6ff5eaac837825558339862298",
+    "dist/panel.js": "5b2b957850a7b2803f5dc0ce1390462ce2925562316f07f1eacdf60ce70a9b41",
+    "dist/panel.js.map": "55afe8c3ecb9e0c216fe0d6609c12c8f9cd08d05816a46474b8381dc9fccae69",
+    "dist/worker.js": "ba98e23905dc99a794b239dffb3fd4552fa50b5e2725c6aceebf6efb83dc47a0",
+    "dist/worker.js.map": "79359b631812423bdf320b3de599be2613148c020c96dcdeffb975cbcaca93f4"
+  }
+}
