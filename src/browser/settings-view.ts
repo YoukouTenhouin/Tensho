@@ -40,7 +40,7 @@ export class SettingsView {
     this.#apply.type = 'submit'; this.#apply.id = 'save-settings';
     const reload = node('button', 'Reload saved settings'); reload.type = 'button'; reload.id = 'reload-settings';
     reload.onclick = () => { if (this.#saved) { this.#dirty = false; this.#reset(); } };
-    this.#message.id = 'settings-message'; this.#message.setAttribute('role', 'status');
+    this.#message.id = 'settings-message'; this.#message.setAttribute('aria-live', 'polite'); this.#message.setAttribute('aria-atomic', 'true');
     this.#fields.append(this.#apply, reload); form.append(this.#fields, this.#message); root.append(form);
     this.#lookup.onchange = () => {
       if (!this.#draft) return;
