@@ -44,7 +44,7 @@ def exercise_accessibility(evidence, panel, worker, page, snapshot, display, tar
     checks['keyboard_focus_is_visible'] = panel.evaluate("document.activeElement.matches(':focus-visible') && getComputedStyle(document.activeElement).outlineStyle!=='none' && parseFloat(getComputedStyle(document.activeElement).outlineWidth)>=2")
     submit('sessionpending')
     wait_for(lambda: snapshot().get('state', {}).get('status') == 'loading')
-    checks['analysis_loading_has_live_status'] = panel.evaluate("document.querySelector('#status').textContent.includes('Loading') && document.querySelector('#status').getAttribute('role')==='status' && document.querySelector('#analysis').getAttribute('aria-busy')==='true'")
+    checks['analysis_loading_has_live_status'] = panel.evaluate("document.querySelector('#status').textContent.includes('Loading') && document.querySelector('#status').getAttribute('aria-live')==='polite' && document.querySelector('#status').getAttribute('aria-atomic')==='true' && document.querySelector('#analysis').getAttribute('aria-busy')==='true'")
     wait_for(lambda: snapshot().get('state', {}).get('status') == 'complete')
     checks['keyboard_submit_focuses_results'] = active()['id'] == 'results'
     reach('#dictionary-0'); key(display, 'Return')
@@ -68,7 +68,7 @@ def exercise_accessibility(evidence, panel, worker, page, snapshot, display, tar
     worker.evaluate("globalThis.__tenshoRecoveryScenario='analysis-exhausted'")
     submit('malum')
     wait_for(lambda: snapshot().get('state', {}).get('status') == 'error')
-    checks['analysis_error_has_live_status_and_named_retry'] = panel.evaluate("document.querySelector('#status').getAttribute('role')==='status' && document.querySelector('#status').textContent.length>0") and named('button', 'Retry Latin analysis')
+    checks['analysis_error_has_live_status_and_named_retry'] = panel.evaluate("document.querySelector('#status').getAttribute('aria-live')==='polite' && document.querySelector('#status').getAttribute('aria-atomic')==='true' && document.querySelector('#status').textContent.length>0") and named('button', 'Retry Latin analysis')
     worker.evaluate("globalThis.__tenshoRecoveryScenario=undefined")
     reach('#retry'); key(display, 'Return')
     wait_for(lambda: snapshot().get('state', {}).get('status') == 'complete')

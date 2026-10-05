@@ -23,7 +23,7 @@ import traceback
 import urllib.request
 
 from permission_scope import CDP, QuietHandler
-from native_input import key, click, window_geometry, focus_window, place_on_monitor
+from native_input import key, click, window_geometry, place_on_monitor
 
 
 def wait_for(predicate, seconds=10):
@@ -111,9 +111,10 @@ def run(desktop, restart=False, idle=False, passage=False):
                         matching = [line.split()[0] for line in windows.splitlines() if len(line.split()) > 2 and line.split()[2] == str(browser.pid)]
                         if not matching: raise RuntimeError('Disposable Edge window not found for native activation')
                         evidence['reserved_monitor_placement'] = place_on_monitor(display, int(matching[0], 16))
-                        subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
-                        focus_window(display, int(matching[0],16))
-                        time.sleep(.1)
+                        active = subprocess.check_output(['xprop', '-root', '_NET_ACTIVE_WINDOW'], env=env, text=True)
+                        if int(active.split()[-1], 16) != int(matching[0], 16):
+                            subprocess.run(['wmctrl', '-ia', matching[0]], env=env, check=True)
+                            time.sleep(.1)
 
                 def native_key(*names):
                     activate()
@@ -236,7 +237,7 @@ def run(desktop, restart=False, idle=False, passage=False):
                   const status=document.querySelector('#status');
                   new MutationObserver(()=>{
                     if(status.textContent.includes('Loading')) loadingAnnouncements.push({
-                      role:status.getAttribute('role'),blocked:!!status.closest('[aria-busy=true]')});
+                      live:status.getAttribute('aria-live'),atomic:status.getAttribute('aria-atomic'),blocked:!!status.closest('[aria-busy=true]')});
                   }).observe(status,{childList:true,subtree:true,characterData:true});
                 })()""")
                 panel.evaluate("document.querySelector('#word').value='mālum'")
@@ -245,7 +246,7 @@ def run(desktop, restart=False, idle=False, passage=False):
                 checks['manual_lookup_through_production_interface'] = True
                 announcements = panel.evaluate('loadingAnnouncements')
                 evidence['loading_announcements'] = announcements
-                checks['loading_status_can_be_announced'] = bool(announcements) and all(a['role'] == 'status' and not a['blocked'] for a in announcements)
+                checks['loading_status_can_be_announced'] = bool(announcements) and all(a['live'] == 'polite' and a['atomic'] == 'true' and not a['blocked'] for a in announcements)
                 panel.call('Runtime.evaluate', expression="document.querySelector('#close').click()", userGesture=True)
                 wait_for(lambda: target('/panel.html') is None)
                 checks['close_restores_page_focus'] = reading.evaluate('document.hasFocus()')

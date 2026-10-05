@@ -1,0 +1,198 @@
+{
+  "observed_at_utc": "2026-10-04T19:54:53Z",
+  "mode": "actual KDE Wayland; disposable Edge Xwayland on HDMI-A-1",
+  "initial_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "checks": {
+    "orca_remains_running": true,
+    "test_browser_speech_observed": true
+  },
+  "actions": [
+    "manual sessionpending",
+    "resolve and read two articles",
+    "manual malum puella",
+    "choose passage word",
+    "manual malum",
+    "failure and explicit retry"
+  ],
+  "placement": {
+    "monitor": {
+      "name": "HDMI-A-1",
+      "x": 1728,
+      "y": 0,
+      "width": 3840,
+      "height": 2160
+    },
+    "window": {
+      "x": 2938,
+      "y": 130,
+      "width": 2113,
+      "height": 1463
+    }
+  },
+  "orca_exit_after_start": null,
+  "atspi_test_app_found": true,
+  "atspi_nodes": 336,
+  "atspi_manual_input_found": true,
+  "native_key_probe": {
+    "key": null,
+    "value": "",
+    "focus": true
+  },
+  "speech_utterances": 19,
+  "orca_exit_after_workflow": null,
+  "scope": "Full controlled reading UI sequence with Orca running, driven through CDP; no claim of keyboard-only or heard speech acceptance",
+  "restored_accessibility": {
+    "IsEnabled": false,
+    "ScreenReaderEnabled": false
+  },
+  "versions": {
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "os": "openSUSE Tumbleweed 20260923",
+    "plasma": "6.7.5",
+    "kwin": "6.7.5",
+    "orca": "50.3",
+    "at_spi2": "2.60.7",
+    "speech_dispatcher": "0.12.1"
+  },
+  "announcement_events": [
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Loading Latin analysis…"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Latin analysis — a-first"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Latin analysis — a-first"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Latin analysis — a-first"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Tensho sidebar polite status positive control"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "notification",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "feedback",
+        "tag": "p",
+        "live": "assertive",
+        "xml-roles": "alert",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "assertive",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Tensho sidebar alert positive control"
+    },
+    {
+      "type": "object:text-changed:insert",
+      "role": "status bar",
+      "attributes": {
+        "container-busy": "false",
+        "atomic": "true",
+        "id": "control-status",
+        "tag": "p",
+        "live": "polite",
+        "xml-roles": "status",
+        "display": "block",
+        "container-relevant": "additions text",
+        "container-live": "polite",
+        "container-atomic": "true",
+        "relevant": "additions text",
+        "text-align": "left"
+      },
+      "text": "Tensho ordinary page live status positive control"
+    }
+  ],
+  "announcement_result": "Analysis and ordinary-page polite status changes reached AT-SPI; Orca speech was not observed for them. Sidebar alert positive control was announced in a separate recorded attempt. This remains an open integration finding, not a waived extension acceptance requirement.",
+  "recorder_scope": "Temporary Orca speech output hook and AT-SPI listeners filter by disposable browser process ID. No global desktop text logging.",
+  "runtime_warning": "QueryPointer failed: org.freedesktop.a11y.PointerLocator unavailable at /org/freedesktop/a11y/Manager"
+}
