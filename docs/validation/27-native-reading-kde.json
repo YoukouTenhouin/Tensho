@@ -1,5 +1,5 @@
 {
-  "observed_at_utc": "2026-10-05T01:00:44Z",
+  "observed_at_utc": "2026-10-05T01:38:10Z",
   "browser": "Microsoft Edge 154.0.4258.37",
   "mode": "KDE desktop / Xwayland",
   "controlled_analysis": true,
@@ -91,7 +91,7 @@
   },
   "native_contexts": [
     {
-      "contextId": "1b0cc59a-3cf7-4bb6-aa2f-3164178c6811",
+      "contextId": "68e45e3f-b3eb-4c55-b2c8-661c3f73b9bc",
       "contextType": "BACKGROUND",
       "frameId": -1,
       "incognito": false,
@@ -99,11 +99,11 @@
       "windowId": -1
     },
     {
-      "contextId": "fa95c143-df7b-45e2-a1f3-e43072bfd551",
+      "contextId": "2c9b4f75-0a9d-42d6-8c9e-49df4c8c6d42",
       "contextType": "SIDE_PANEL",
-      "documentId": "3C272ACD371EC12810377A920F95ABA1",
-      "documentOrigin": "chrome-extension://dlanoipbdkcjnhdgefolmeajcclgppfk",
-      "documentUrl": "chrome-extension://dlanoipbdkcjnhdgefolmeajcclgppfk/panel.html",
+      "documentId": "C6BEAFBAFA2282BD57388FD561151525",
+      "documentOrigin": "chrome-extension://kidncioonkdmomjoifoponmllpjkhcde",
+      "documentUrl": "chrome-extension://kidncioonkdmomjoifoponmllpjkhcde/panel.html",
       "frameId": 0,
       "incognito": false,
       "tabId": -1,
@@ -143,7 +143,11 @@
         "width": 1300,
         "height": 900
       },
-      "received": null
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 265.7692565917969
+      }
     },
     {
       "selector": "#second",
@@ -162,7 +166,11 @@
         "width": 1300,
         "height": 900
       },
-      "received": null
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 265.7692565917969
+      }
     },
     {
       "selector": "#word",
@@ -181,7 +189,11 @@
         "width": 1300,
         "height": 900
       },
-      "received": null
+      "received": {
+        "testPointer": "top",
+        "x": 41.5384635925293,
+        "y": 241.76925659179688
+      }
     }
   ],
   "native_toggle_attempts": [
@@ -207,31 +219,31 @@
   ],
   "frame_identities": {
     "same_origin": {
-      "tabId": 1054312277,
+      "tabId": 1161636618,
       "frameId": 12,
-      "documentId": "EBDECE3A26DE2BE4C5E32E3E694BCC36",
-      "topDocumentId": "B088AA1FE2146DF22F75553A05BFE699",
-      "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "documentId": "F40DF6E676FE93D2C8E431A028AB224B",
+      "topDocumentId": "24E33900FBBD04027C93B39E5702991F",
+      "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "explanationLanguage": "en"
     },
     "separate_origin": {
-      "tabId": 1054312277,
+      "tabId": 1161636618,
       "frameId": 13,
-      "documentId": "2032F8E89FBA8C15945C99968471CA7E",
-      "topDocumentId": "B088AA1FE2146DF22F75553A05BFE699",
-      "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "documentId": "2E6285A1087D40C311805B74AB8AB960",
+      "topDocumentId": "24E33900FBBD04027C93B39E5702991F",
+      "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "explanationLanguage": "en"
     }
   },
   "keyboard_frame": {
     "identity": {
-      "tabId": 1054312277,
+      "tabId": 1161636618,
       "frameId": 13,
-      "documentId": "2032F8E89FBA8C15945C99968471CA7E",
-      "topDocumentId": "B088AA1FE2146DF22F75553A05BFE699",
-      "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "documentId": "2E6285A1087D40C311805B74AB8AB960",
+      "topDocumentId": "24E33900FBBD04027C93B39E5702991F",
+      "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "explanationLanguage": "en"
     },
@@ -255,11 +267,11 @@
   },
   "ungranted_keyboard": {
     "identity": {
-      "tabId": 1054312277,
+      "tabId": 1161636618,
       "frameId": 0,
       "documentId": "manual",
-      "topDocumentId": "B088AA1FE2146DF22F75553A05BFE699",
-      "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "topDocumentId": "24E33900FBBD04027C93B39E5702991F",
+      "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "explanationLanguage": "en"
     },
@@ -270,11 +282,11 @@
   },
   "opaque_keyboard": {
     "identity": {
-      "tabId": 1054312277,
+      "tabId": 1161636618,
       "frameId": 0,
       "documentId": "manual",
-      "topDocumentId": "B088AA1FE2146DF22F75553A05BFE699",
-      "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "topDocumentId": "24E33900FBBD04027C93B39E5702991F",
+      "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "explanationLanguage": "en"
     },
@@ -335,7 +347,7 @@
   ],
   "focus_return_selection": {
     "text": "puella",
-    "focus": false,
+    "focus": true,
     "active": ""
   },
   "focus_return_lookup": {
@@ -345,7 +357,7 @@
     },
     "settings": {
       "schema": 1,
-      "revision": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+      "revision": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
       "lookupLanguage": "lat",
       "languages": {
         "lat": {
@@ -531,14 +543,14 @@
         }
       ]
     },
-    "tabId": 1054312277,
+    "tabId": 1161636618,
     "state": {
       "identity": {
-        "tabId": 1054312277,
+        "tabId": 1161636618,
         "frameId": 0,
-        "documentId": "75C9F3ADE7B8B85C6BD250DC40435E50",
-        "topDocumentId": "75C9F3ADE7B8B85C6BD250DC40435E50",
-        "configuration": "3391fed1-cbf8-437b-8dbe-937ad2ad5458",
+        "documentId": "62D778E819FA38F5E43EAB583932E4F3",
+        "topDocumentId": "62D778E819FA38F5E43EAB583932E4F3",
+        "configuration": "fa5b6bf8-8637-423e-a7f4-76075e9a7e9a",
         "lookupLanguage": "lat",
         "explanationLanguage": "en"
       },
@@ -566,10 +578,10 @@
       false
     ],
     "providerAccessDecision": "never",
-    "origin": "http://127.0.0.1:37507",
+    "origin": "http://127.0.0.1:43147",
     "enabledOrigins": [
-      "http://127.0.0.1:37507",
-      "http://127.0.0.1:37983"
+      "http://127.0.0.1:43147",
+      "http://127.0.0.1:37261"
     ],
     "focusRequest": 14
   },

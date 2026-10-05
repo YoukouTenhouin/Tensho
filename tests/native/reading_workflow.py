@@ -241,9 +241,14 @@ def run(desktop, restart=False, idle=False, passage=False):
                   }).observe(status,{childList:true,subtree:true,characterData:true});
                 })()""")
                 panel.evaluate("document.querySelector('#word').value='mālum'")
+                # Keep loading observable beyond live-region coalescing; fast completions may skip it.
+                controlled_worker = connect(wait_for(lambda: target('/worker.js')))
+                controlled_worker.evaluate('globalThis.__tenshoControlledDelay=600')
                 panel.call('Runtime.evaluate', expression="document.querySelector('#lookup').requestSubmit()", userGesture=True)
+                wait_for(lambda: (lambda state: state.get('text') == 'mālum' and state.get('status') == 'complete')(panel.evaluate(snapshot).get('state') or {}))
                 wait_for(lambda: panel.evaluate("document.querySelector('#target').textContent==='mālum' && document.querySelector('#status').textContent==='Controlled development response'"))
                 checks['manual_lookup_through_production_interface'] = True
+                controlled_worker.evaluate('globalThis.__tenshoControlledDelay=0')
                 announcements = panel.evaluate('loadingAnnouncements')
                 evidence['loading_announcements'] = announcements
                 checks['loading_status_can_be_announced'] = bool(announcements) and all(a['live'] == 'polite' and a['atomic'] == 'true' and not a['blocked'] for a in announcements)
