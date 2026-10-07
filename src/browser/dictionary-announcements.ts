@@ -1,4 +1,6 @@
 import type { CandidateDictionary } from '../core/dictionary.ts';
+import { dictionaryLabels } from './dictionary-labels.ts';
+import { dictionaryOutcome, failureText } from './result-status.ts';
 import type { Analysis } from '../core/lookup.ts';
 
 /** Keep live updates outside the dictionary subtree that rendering replaces. */
@@ -15,16 +17,17 @@ export class DictionaryAnnouncements {
     for (const [index, candidate] of Object.entries(dictionaries)) {
       const label = `Dictionary for ${candidates[Number(index)]?.lemma ?? `candidate ${Number(index) + 1}`}`;
       const work = candidate.resolution;
-      const resolution = work.status === 'loading' ? 'Resolving dictionary alternatives.'
-        : work.status !== 'complete' ? work.message
-        : work.value.status === 'confirmed-absence' ? 'The dictionary confirmed that no entry is available.'
-        : work.value.status === 'unresolved-mapping' ? 'Unresolved dictionary mapping. This does not establish that the dictionary has no entry.'
-        : `${work.value.alternatives.length} alternatives available. Correspondence is unverified. Choose an entry to read.`;
+      const resolution = work.status === 'loading' ? 'Loading entries.'
+        : work.status !== 'complete' ? failureText(work)
+        : work.value.status === 'alternatives' ? `${work.value.alternatives.length} possible entries available.`
+        : dictionaryOutcome(work.value.status);
       messages.set(`${index}:resolution`, `${label}: ${resolution}`);
+      const labels = work.status === 'complete' ? dictionaryLabels(work.value) : undefined;
       for (const [entryId, article] of Object.entries(candidate.articles)) {
-        const message = article.status === 'loading' ? 'Loading full article.'
-          : article.status === 'complete' ? `Full article from ${article.value.dictionary} is ready.` : article.message;
-        messages.set(`${index}:article:${entryId}`, `${label}, article ${entryId}: ${message}`);
+        const message = article.status === 'loading' ? 'Loading entry.'
+          : article.status === 'complete' ? `Entry from ${article.value.dictionary} is ready.` : article.status === 'not-retained' ? 'Entry too large to retain.' : failureText(article);
+        const headword = labels?.get(entryId)?.announcement ?? 'entry';
+        messages.set(`${index}:article:${entryId}`, `${label}, ${headword}: ${message}`);
       }
     }
     if (identity !== this.#identity) {
