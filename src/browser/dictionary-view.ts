@@ -1,3 +1,4 @@
+import { t } from './i18n.ts';
 import { providerFeedback } from './provider-feedback.ts';
 import type { CandidateDictionary } from '../core/dictionary.ts';
 import type { DictionaryArticle } from '../providers/latin-article.ts';
@@ -21,20 +22,20 @@ function link(value: string, label: string): HTMLAnchorElement | undefined {
 }
 
 /** Render data exclusively through extension-owned elements and textContent. */
-export function renderArticle(article: DictionaryArticle): HTMLElement {
+export function renderArticle(article: DictionaryArticle, explanationLanguage?: string): HTMLElement {
   const section = document.createElement('section'); section.className = 'dictionary-article';
   const heading = document.createElement('h5'); heading.textContent = article.dictionary;
   section.append(heading);
   const feedback = providerFeedback(article.providerIssues, article.dictionary); if (feedback) section.append(feedback);
-  for (const text of article.paragraphs) section.append(paragraph(text));
+  for (const text of article.paragraphs) { const value = paragraph(text); if (explanationLanguage) value.lang = explanationLanguage; section.append(value); }
   // Source credits are also preserved in their original position in paragraphs.
-  if (article.attribution.length) section.setAttribute('aria-label', `${article.dictionary} article with source attribution`);
-  const source = link(article.sourceUrl, 'Dictionary source');
+  if (article.attribution.length) section.setAttribute('aria-label', t('articleAttribution', { dictionary: article.dictionary }));
+  const source = link(article.sourceUrl, t('dictionarySource'));
   if (source) section.append(source);
   if (article.links.length) {
-    const list = document.createElement('ul'); list.setAttribute('aria-label', 'Dictionary references');
+    const list = document.createElement('ul'); list.setAttribute('aria-label', t('dictionaryReferences'));
     for (const [index, url] of article.links.entries()) {
-      const reference = link(url, `Reference ${index + 1}`);
+      const reference = link(url, t('reference', { index: index + 1 }));
       if (reference) { const item = document.createElement('li'); item.append(reference); list.append(item); }
     }
     section.append(list);
@@ -42,10 +43,10 @@ export function renderArticle(article: DictionaryArticle): HTMLElement {
   return section;
 }
 
-export function renderDictionary(candidate: CandidateDictionary | undefined, index: number, action: Action): HTMLElement {
+export function renderDictionary(candidate: CandidateDictionary | undefined, index: number, action: Action, explanationLanguage?: string): HTMLElement {
   const section = document.createElement('section'); section.className = 'dictionary';
   const expanded = candidate?.expanded ?? false;
-  const toggle = button(expanded ? 'Hide dictionary' : 'Dictionary', `dictionary-${index}`,
+  const toggle = button(expanded ? t('hideDictionary') : t('dictionary'), `dictionary-${index}`,
     () => action(expanded ? 'dictionary-collapse' : 'dictionary-resolve'));
   toggle.setAttribute('aria-expanded', String(expanded)); toggle.setAttribute('aria-controls', `dictionary-content-${index}`);
   section.append(toggle);
@@ -55,11 +56,11 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
   const work = candidate.resolution;
   const status = paragraph(''); status.setAttribute('role', 'status'); content.append(status);
   content.setAttribute('aria-busy', String(work.status === 'loading'));
-  if (work.status === 'loading') status.textContent = 'Loading entries…';
+  if (work.status === 'loading') status.textContent = t('loadingEntries');
   else if (work.status === 'error' || work.status === 'unavailable') {
     status.textContent = failureText(work);
     const feedback = providerFeedback(work.providerIssues); if (feedback) content.append(feedback);
-    if (work.status === 'error') content.append(button('Retry dictionary', `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
+    if (work.status === 'error') content.append(button(t('retryDictionary'), `dictionary-retry-${index}`, () => action('dictionary-resolve', { retry: true })));
   } else if (work.status === 'complete') {
     const resolution = work.value;
     const feedback = providerFeedback(resolution.providerIssues, resolution.providerName); if (feedback) content.append(feedback);
@@ -73,14 +74,14 @@ export function renderDictionary(candidate: CandidateDictionary | undefined, ind
       const article = candidate.articles[alternative.entryId];
       const id = `article-${index}-${alternative.entryId}`;
       item.id = `${id}-region`; item.tabIndex = -1; item.setAttribute('aria-label', label);
-      if (!article) item.append(button('Read entry', id, () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId })));
-      else if (article.status === 'complete') item.append(renderArticle(article.value));
+      if (!article) item.append(button(t('readEntry'), id, () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId })));
+      else if (article.status === 'complete') item.append(renderArticle(article.value, explanationLanguage));
       else {
-        const message = paragraph(article.status === 'loading' ? 'Loading entry…' : article.status === 'not-retained' ? 'Entry too large to retain.' : failureText(article));
+        const message = paragraph(article.status === 'loading' ? t('loadingEntry') : article.status === 'not-retained' ? t('entryTooLarge') : failureText(article));
         message.setAttribute('role', 'status'); item.append(message);
         if (article.status !== 'loading') { const feedback = providerFeedback(article.providerIssues); if (feedback) item.append(feedback); }
-        if (article.status === 'not-retained') { const source = link(article.sourceUrl, 'Read complete article at source'); if (source) item.append(source); }
-        if (article.status === 'error') item.append(button('Retry entry', id,
+        if (article.status === 'not-retained') { const source = link(article.sourceUrl, t('readSource')); if (source) item.append(source); }
+        if (article.status === 'error') item.append(button(t('retryEntry'), id,
           () => action('dictionary-retrieve', { entryId: alternative.entryId, providerId: resolution.providerId, retry: true })));
       }
       content.append(item);

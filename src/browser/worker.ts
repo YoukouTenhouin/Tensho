@@ -1,3 +1,5 @@
+import { errorMessage, message as uiMessage, resolveInterfaceLocale, translate, UiError } from '../i18n/messages.ts';
+import { InterfacePreference } from '../i18n/preference.ts';
 import { LookupCoordinator, sameIdentity } from '../core/lookup.ts';
 import type { Identity, LookupRequest } from '../core/lookup.ts';
 import { RequestExecutor } from '../core/requests.ts';
@@ -24,6 +26,25 @@ const configuration = new ConfigurationStore(providerCatalog, {
   read: async () => { await settingsReady; return (await chrome.storage.local.get('lookupSettings')).lookupSettings; },
   write: async value => { await settingsReady; await chrome.storage.local.set({ lookupSettings: value }); },
 });
+const interfacePreference = new InterfacePreference({
+  read: async () => { await settingsReady; return (await chrome.storage.local.get('interfaceLanguage')).interfaceLanguage; },
+  write: async value => { await settingsReady; await chrome.storage.local.set({ interfaceLanguage: value }); },
+});
+async function interfaceSnapshot() {
+  const interfaceLanguage = await interfacePreference.get();
+  return { interfaceLanguage, interfaceLocale: resolveInterfaceLocale(interfaceLanguage, chrome.i18n.getUILanguage()) };
+}
+let interfaceSync = Promise.resolve();
+function syncInterface(): void {
+  interfaceSync = interfaceSync.then(async () => {
+    const { interfaceLocale: locale } = await interfaceSnapshot();
+    const brand = translate(locale, uiMessage('brand'));
+    await chrome.action.setTitle({ title: translate(locale, uiMessage('openExtension', { brand })) });
+    const title = translate(locale, uiMessage('contextLookup', { brand }));
+    try { await chrome.contextMenus.update('lookup', { title }); }
+    catch { chrome.contextMenus.create({ id: 'lookup', title, contexts: ['selection'] }); }
+  }).catch(console.error);
+}
 function configurationIdentity(settings: Settings) {
   return { configuration: settings.revision, lookupLanguage: settings.lookupLanguage,
     explanationLanguage: settings.languages[settings.lookupLanguage]!.explanationLanguage };
@@ -66,14 +87,14 @@ async function source(tabId: number, frameId = 0): Promise<Identity> {
     chrome.tabs.get(tabId), chrome.webNavigation.getFrame({ tabId, frameId: 0 }), chrome.webNavigation.getFrame({ tabId, frameId }),
   ]);
   if (tab.incognito || !top || !frame || !readingOrigin(top.url) || !readingOrigin(frame.url) || frame.frameType === 'fenced_frame') {
-    throw new Error('Selection is unavailable on this surface. Use an ordinary HTTP/HTTPS page, or enter a word manually.');
+    throw new UiError(uiMessage('selectionUnavailable'));
   }
   return { tabId, frameId, documentId: frame.documentId, topDocumentId: top.documentId,
     ...configurationIdentity(await configuration.get()) };
 }
 async function manualIdentity(tabId: number): Promise<Identity> {
   const tab = await chrome.tabs.get(tabId);
-  if (tab.incognito) throw new Error('No regular reading tab is available.');
+  if (tab.incognito) throw new UiError(uiMessage('noReadingTab'));
   const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
   return { tabId, frameId: 0, documentId: 'manual', topDocumentId: top?.documentId ?? `restricted:${tab.url ?? ''}`,
     ...configurationIdentity(await configuration.get()) };
@@ -83,7 +104,7 @@ async function lookup(tabId: number, frameId: number, text: string, request: Loo
     const identity = await source(tabId, frameId);
     if (documentId && identity.documentId !== documentId) return;
     void request.lookup(identity, text);
-  } catch (error) { request.notice(await manualIdentity(tabId), '', String(error)); }
+  } catch (error) { request.notice(await manualIdentity(tabId), '', String(error), errorMessage(error)); }
 }
 async function restoreFocus(tabId: number): Promise<void> {
   const identity = coordinator.get(tabId)?.identity;
@@ -122,7 +143,7 @@ function open(tabId: number, focus: boolean, request?: LookupRequest, windowId?:
     return true;
   }).catch(async error => {
     (request ?? { notice: coordinator.notice.bind(coordinator) }).notice(coordinator.get(tabId)?.identity ?? await manualIdentity(tabId), '',
-      `The native panel could not open: ${String(error)}. Open Tensho from the toolbar.`);
+      `The native panel could not open: ${String(error)}. Open Tensho from the toolbar.`, uiMessage('openFailed'));
     return false;
   });
 }
@@ -172,7 +193,7 @@ async function capture(tabId: number, request: LookupRequest): Promise<void> {
       : withText.length === 1 ? withText[0] : undefined;
     if (!selected?.text || selected.origin !== selected.expectedOrigin) throw new Error('No unambiguous accessible selection. Select text on the page, use its context menu, or enter a word here.');
     await lookup(tabId, selected.frameId, selected.text, request, selected.documentId);
-  } catch { request.notice(await manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.'); }
+  } catch { request.notice(await manualIdentity(tabId), '', 'Selection is unavailable or ambiguous. Use its context menu or enter a word manually.', uiMessage('selectionAmbiguous')); }
 }
 async function syncScripts(): Promise<void> {
   const accessRevision = readingAccessRevision;
@@ -199,10 +220,11 @@ async function syncScripts(): Promise<void> {
 let scriptSync = Promise.resolve();
 function queueSync(): void { scriptSync = scriptSync.then(syncScripts, syncScripts).catch(console.error); }
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({ id: 'lookup', title: 'Look up selection with Tensho', contexts: ['selection'] });
+  syncInterface();
   queueSync();
 });
-chrome.runtime.onStartup.addListener(queueSync);
+chrome.runtime.onStartup.addListener(() => { queueSync(); syncInterface(); });
+syncInterface();
 chrome.permissions.onAdded.addListener(() => { queueSync(); notify(); });
 chrome.permissions.onRemoved.addListener(removed => {
   readingAccessRevision++;
@@ -244,24 +266,29 @@ chrome.runtime.onConnect.addListener(port => {
 });
 async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   const [tab] = await chrome.tabs.query({ windowId, active: true });
-  if (!tab?.id || tab.incognito) throw new Error('No regular reading tab is available.');
+  if (!tab?.id || tab.incognito) throw new UiError(uiMessage('noReadingTab'));
   return tab;
 }
-const globalActions = new Set(['settings-snapshot', 'save-settings', 'save-preferences', 'provider-access-result', 'save-origin']);
+const globalActions = new Set(['settings-snapshot', 'save-settings', 'save-preferences', 'save-interface-language', 'provider-access-result', 'save-origin']);
 async function settingsSnapshot() {
   const settings = await configuration.get();
   const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
   const providerGrants = Object.fromEntries(await Promise.all(providerCatalog.providers.map(async provider =>
     [provider.id, await chrome.permissions.contains({ origins: [...provider.origins] })] as const)));
   const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
-  return { settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), providerAccess, providerGrants,
+  return { ...await interfaceSnapshot(), settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), providerAccess, providerGrants,
     providerAccessDecision: latinAccessDecision ?? 'never', enabledOrigins: await enabledOrigins() };
 }
 async function globalAction(message: Record<string, unknown>): Promise<unknown> {
+  if (message.type === 'save-interface-language') {
+    const interfaceLanguage = await interfacePreference.save(message.interfaceLanguage);
+    syncInterface(); notify();
+    return { ok: true, interfaceLanguage };
+  }
   await reading!.settled();
   if (message.type === 'settings-snapshot') return settingsSnapshot();
   if (message.type === 'save-settings' || message.type === 'save-preferences') {
-    if (typeof message.expectedRevision !== 'string') throw new Error('Reload settings before saving.');
+    if (typeof message.expectedRevision !== 'string') throw new UiError(uiMessage('reloadSettings'));
     const windows = new Set(panelWindows.values());
     const visible = await chrome.tabs.query({ active: true });
     const previous = await configuration.get();
@@ -269,7 +296,7 @@ async function globalAction(message: Record<string, unknown>): Promise<unknown> 
     if (message.type === 'save-preferences') {
       if (typeof message.lookupLanguage !== 'string' || !previous.languages[message.lookupLanguage] ||
           (message.explanationLanguage !== undefined && typeof message.explanationLanguage !== 'string')) {
-        throw new Error('Choose a supported language.');
+        throw new UiError(uiMessage('chooseLanguage'));
       }
       const preferences = structuredClone(previous);
       preferences.lookupLanguage = message.lookupLanguage;
@@ -293,10 +320,10 @@ async function globalAction(message: Record<string, unknown>): Promise<unknown> 
   }
   if (message.type === 'save-origin' && typeof message.origin === 'string') {
     const origin = readingOrigin(message.origin);
-    if (!origin || origin !== message.origin) throw new Error('Enter an exact HTTP/HTTPS origin.');
+    if (!origin || origin !== message.origin) throw new UiError(uiMessage('originExact'));
     const origins = await enabledOrigins();
     if (message.enabled === true) {
-      if (!await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) throw new Error('Site access was not granted.');
+      if (!await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) throw new UiError(uiMessage('siteNotGranted'));
       await chrome.storage.local.set({ enabledOrigins: [...new Set([...origins, origin])] });
     } else {
       await chrome.storage.local.set({ enabledOrigins: origins.filter(item => item !== origin) });
@@ -333,24 +360,24 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   }
   if (message.type === 'dictionary-resolve' || message.type === 'dictionary-retrieve' || message.type === 'dictionary-collapse') {
     if (message.tabId !== tabId || typeof message.generation !== 'number' || typeof message.candidateIndex !== 'number') {
-      throw new Error('The reading result changed. Open the current candidate again.');
+      throw new UiError(uiMessage('resultChanged'));
     }
     if (message.type === 'dictionary-resolve') void dictionaries.resolve(tabId, message.generation, message.candidateIndex, message.retry === true);
     else if (message.type === 'dictionary-collapse') dictionaries.collapse(tabId, message.generation, message.candidateIndex);
     else if (typeof message.entryId === 'string' && typeof message.providerId === 'string') void dictionaries.retrieve(tabId, message.generation, message.candidateIndex, message.entryId, message.retry === true, message.providerId);
   }
   if (message.type === 'manual-lookup' && typeof message.text === 'string') {
-    if (message.tabId !== tabId || !request) throw new Error('The reading tab changed. Submit the word again for this tab.');
+    if (message.tabId !== tabId || !request) throw new UiError(uiMessage('readingTabChanged'));
     const identity = await source(tabId).catch(() => manualIdentity(tabId));
     void request.lookup(identity, message.text);
   }
   if (message.type === 'passage-word') {
     const previous = coordinator.get(tabId);
     if (message.tabId !== tabId || !previous?.passage || previous.passage.id !== message.passageId || typeof message.wordIndex !== 'number') {
-      throw new Error('The passage changed. Choose a word from the current passage.');
+      throw new UiError(uiMessage('passageChanged'));
     }
     const identity = previous.identity.documentId === 'manual' ? await manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
-    if (!sameIdentity(identity, previous.identity)) throw new Error('The passage source changed. Select the passage again.');
+    if (!sameIdentity(identity, previous.identity)) throw new UiError(uiMessage('passageSourceChanged'));
     const wordRequest = startWord?.();
     if (!wordRequest) return { ok: true };
     void wordRequest.selectWord(identity, previous.passage.id, message.wordIndex);
@@ -358,10 +385,10 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   if (message.type === 'retry') {
     const previous = coordinator.get(tabId);
     if (message.tabId !== tabId || !previous || previous.status !== 'error' || previous.generation !== message.generation) {
-      throw new Error('The lookup changed. Select the word again.');
+      throw new UiError(uiMessage('lookupChanged'));
     }
     const identity = previous.identity.documentId === 'manual' ? await manualIdentity(tabId) : await source(tabId, previous.identity.frameId);
-    if (coordinator.get(tabId) !== previous || identity.documentId !== previous.identity.documentId) throw new Error('The reading source changed. Select the word again.');
+    if (coordinator.get(tabId) !== previous || identity.documentId !== previous.identity.documentId) throw new UiError(uiMessage('sourceChanged'));
     if (previous.passage?.selectedIndex !== undefined) {
       void coordinator.begin(tabId, identity.frameId).selectWord(identity, previous.passage.id, previous.passage.selectedIndex);
     } else void coordinator.lookup(identity, previous.text);
@@ -377,14 +404,14 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
   const panelSender = senderPage === chrome.runtime.getURL('panel.html');
   const optionsSender = senderPage === chrome.runtime.getURL('options.html');
   if ((panelSender || optionsSender) && globalActions.has(message.type)) {
-    void globalAction(message).then(reply, error => reply({ error: String(error) })); return true;
+    void globalAction(message).then(reply, error => reply({ error: String(error), uiMessage: errorMessage(error) })); return true;
   }
   if (panelSender) {
     const request = message.type === 'manual-lookup' && Number.isInteger(message.tabId) && message.tabId >= 0
       ? coordinator.begin(message.tabId, 0) : undefined;
     const startWord = message.type === 'passage-word' && Number.isInteger(message.tabId) && Number.isInteger(message.passageId) && Number.isInteger(message.wordIndex)
       ? coordinator.prepareWordChoice(message.tabId, message.passageId, message.wordIndex) : undefined;
-    void panelAction(message, request, startWord).then(reply, error => reply({ error: String(error) })); return true;
+    void panelAction(message, request, startWord).then(reply, error => reply({ error: String(error), uiMessage: errorMessage(error) })); return true;
   }
   if (message.type === 'automatic-lookup' && sender.tab?.id && !sender.tab.incognito && sender.documentId) {
     if (!sender.origin || sender.origin !== readingOrigin(sender.url ?? '')) return;
@@ -409,7 +436,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
       if (!current() || typeof selected?.text !== 'string' || !selected.text || selected.origin !== sender.origin) return;
       const request = coordinator.begin(tabId, frameId);
       await lookup(tabId, frameId, selected.text, request, sender.documentId);
-    })().then(() => reply({ ok: true }), error => reply({ error: String(error) })).finally(() => {
+    })().then(() => reply({ ok: true }), error => reply({ error: String(error), uiMessage: errorMessage(error) })).finally(() => {
       if (automaticGestures.get(tabId) === gesture) automaticGestures.delete(tabId);
     }); return true;
   }

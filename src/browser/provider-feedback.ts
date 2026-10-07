@@ -1,3 +1,4 @@
+import { t } from './i18n.ts';
 import { failureText } from './result-status.ts';
 import type { ProviderIssue } from '../core/requests.ts';
 
@@ -7,12 +8,12 @@ export function providerFeedback(issues: readonly ProviderIssue[] | undefined, s
   const section = document.createElement('section'); section.className = 'provider-feedback';
   const warning = document.createElement('p'); warning.setAttribute('role', 'status');
   warning.textContent = successfulProvider
-    ? `Using ${successfulProvider}. ${issues.some(issue => issue.attempted && issue.kind !== 'missing-access') ? 'Previous provider failed.' : 'Provider unavailable.'}`
-    : 'Provider details';
+    ? t('usingProvider', { provider: successfulProvider, reason: t(issues.some(issue => issue.attempted && issue.kind !== 'missing-access') ? 'previousFailed' : 'providerUnavailable') })
+    : t('providerDetails');
   const list = document.createElement('ul');
   for (const issue of issues) {
     const item = document.createElement('li');
-    item.textContent = `${issue.providerName}: ${failureText({ failureKind: issue.kind, message: issue.message })}${issue.attempted ? '' : ' Skipped.'}`; list.append(item);
+    item.textContent = t('providerIssue', { provider: issue.providerName, reason: failureText({ failureKind: issue.kind, message: issue.message }), skipped: issue.attempted ? '' : t('skipped') }); list.append(item);
   }
   section.append(warning, list); return section;
 }

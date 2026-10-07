@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tensho settings</title><link rel="stylesheet" href="panel.css"></head>
-<body class="options-page">
-<header><a class="brand" href="#">Tensho</a><span class="muted">Settings</span></header>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title data-i18n="optionsTitle">Tensho settings</title><link rel="stylesheet" href="panel.css"></head>
+<body hidden class="options-page">
+<header><a class="brand" href="#" data-i18n="brand">Tensho</a><span class="muted" data-i18n="settings">Settings</span></header>
 <main class="settings-layout">
-<nav aria-label="Settings sections"><a href="#providers">Providers</a><a href="#reading-sites">Reading sites</a><a href="#sources">Sources</a></nav>
+<nav aria-label="Settings sections" data-i18n-aria-label="settingsSections"><a href="#interface" data-i18n="interface">Interface</a><a href="#providers" data-i18n="providers">Providers</a><a href="#reading-sites" data-i18n="readingSites">Reading sites</a><a href="#sources" data-i18n="sources">Sources</a></nav>
 <div class="settings-content">
-<h1>Settings</h1>
-<section id="providers" aria-labelledby="providers-heading"><h2 id="providers-heading">Providers</h2><div id="settings-editor"></div>
-<div class="access-settings"><h3>Service access</h3><p id="provider-access" role="status" aria-atomic="true"></p><button id="enable-providers" type="button">Enable Latin providers</button></div></section>
-<section id="reading-sites" aria-labelledby="sites-heading"><h2 id="sites-heading">Reading sites</h2>
-<form id="site"><label for="origin">Site origin</label><div class="row"><input id="origin" type="url" placeholder="https://example.org" required><button>Add site</button></div></form><ul id="sites" class="site-list"></ul><p id="sites-empty" class="muted" hidden>No sites enabled.</p></section>
-<section id="sources" aria-labelledby="sources-heading"><h2 id="sources-heading">Sources</h2><div id="source-credits"></div></section>
+<h1 data-i18n="settings">Settings</h1>
+<section id="interface" aria-labelledby="interface-heading"><h2 id="interface-heading" data-i18n="interface">Interface</h2><label for="interface-language" data-i18n="interfaceLanguage">Interface language</label><select id="interface-language"></select><p id="interface-message" role="status" aria-atomic="true"></p></section>
+<section id="providers" aria-labelledby="providers-heading"><h2 id="providers-heading" data-i18n="providers">Providers</h2><div id="settings-editor"></div>
+<div class="access-settings"><h3 data-i18n="serviceAccess">Service access</h3><p id="provider-access" role="status" aria-atomic="true"></p><button id="enable-providers" type="button" data-i18n="enableLatin">Enable Latin providers</button></div></section>
+<section id="reading-sites" aria-labelledby="sites-heading"><h2 id="sites-heading" data-i18n="readingSites">Reading sites</h2>
+<form id="site"><label for="origin" data-i18n="siteOrigin">Site origin</label><div class="row"><input id="origin" type="url" placeholder="https://example.org" required><button data-i18n="addSite">Add site</button></div></form><ul id="sites" class="site-list"></ul><p id="sites-empty" class="muted" hidden data-i18n="noSites">No sites enabled.</p></section>
+<section id="sources" aria-labelledby="sources-heading"><h2 id="sources-heading" data-i18n="sources">Sources</h2><div id="source-credits"></div></section>
 <p id="feedback" role="alert"></p>
 </div>
 </main>

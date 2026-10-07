@@ -818,5 +818,11 @@
   },
   "grammar_comp": {
     "message": "比较等级"
+  },
+  "actionTitle": {
+    "message": "打开天书"
+  },
+  "missingInformation": {
+    "message": "缺失信息"
   }
 }

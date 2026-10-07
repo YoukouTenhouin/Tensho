@@ -1,3 +1,5 @@
+import { message } from '../i18n/messages.ts';
+import type { UiMessage } from '../i18n/messages.ts';
 export type ProviderRole = 'analysis' | 'dictionary';
 export type ProviderOptionValue = string | boolean;
 export type ProviderOption = { label: string } & (
@@ -30,7 +32,8 @@ export interface LanguageSettings {
 export interface SettingsDraft { lookupLanguage: string; languages: Record<string, LanguageSettings>; }
 export interface Settings extends SettingsDraft { schema: 1; revision: string; }
 export class ConfigurationError extends Error {
-  constructor(message: string) { super(message); this.name = 'ConfigurationError'; }
+  readonly uiMessage: UiMessage;
+  constructor(diagnostic: string, uiMessage: UiMessage = message('invalidSettings')) { super(diagnostic); this.name = 'ConfigurationError'; this.uiMessage = uiMessage; }
 }
 const roles: readonly ProviderRole[] = ['analysis', 'dictionary'];
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -122,10 +125,10 @@ export function lookupRoutes(settings: SettingsDraft, catalog: ProviderCatalog, 
 export function editSettings(previous: Settings, value: unknown, catalog: ProviderCatalog, revision: string): Settings {
   if (!isRecord(value)) throw new ConfigurationError('Invalid settings.');
   const next = readSettings({ ...value, schema: 1, revision });
-  if (!next || !catalog.languages.some(language => language.id === next.lookupLanguage)) throw new ConfigurationError('Choose a supported lookup language.');
+  if (!next || !catalog.languages.some(language => language.id === next.lookupLanguage)) throw new ConfigurationError('Choose a supported lookup language.', message('chooseLookup'));
   const knownLanguages = new Set(catalog.languages.map(language => language.id));
   if (Object.keys(next.languages).some(language => !knownLanguages.has(language)) ||
-    catalog.languages.some(language => !next.languages[language.id])) throw new ConfigurationError('Settings must contain the integrated languages only.');
+    catalog.languages.some(language => !next.languages[language.id])) throw new ConfigurationError('Settings must contain the integrated languages only.', message('integratedLanguages'));
   for (const [language, profile] of Object.entries(next.languages)) {
     // An unrelated edit must not silently replace an externally lost preference.
     if (JSON.stringify(profile) === JSON.stringify(previous.languages[language])) continue;
@@ -134,17 +137,17 @@ export function editSettings(previous: Settings, value: unknown, catalog: Provid
       if (!declared) {
         // A retired provider can be explicitly disabled or removed, never enabled.
         if (!entry.enabled && previous.languages[language]?.[role].some(saved => saved.id === entry.id)) continue;
-        throw new ConfigurationError(`Provider ${entry.id} does not support ${role} for ${language}.`);
+        throw new ConfigurationError(`Provider ${entry.id} does not support ${role} for ${language}.`, message('providerUnsupported', { provider: entry.id, role, language }));
       }
-      if (!validOptions(declared.provider, entry.options)) throw new ConfigurationError(`Choose only declared options for ${declared.provider.name}.`);
+      if (!validOptions(declared.provider, entry.options)) throw new ConfigurationError(`Choose only declared options for ${declared.provider.name}.`, message('declaredOptions', { provider: declared.provider.name }));
     }
     const routes = lookupRoutes(next, catalog, language);
     if (routes.allDisabled) {
       if (profile.explanationLanguage !== previous.languages[language]?.explanationLanguage) {
-        throw new ConfigurationError('With every provider disabled, retain the saved explanation preference.');
+        throw new ConfigurationError('With every provider disabled, retain the saved explanation preference.', message('retainExplanation'));
       }
     } else if (!routes.preferenceAvailable) {
-      throw new ConfigurationError(`Choose an explicitly supported replacement explanation language for ${language} before saving.`);
+      throw new ConfigurationError(`Choose an explicitly supported replacement explanation language for ${language} before saving.`, message('replaceExplanation', { language }));
     }
   }
   const same = previous.lookupLanguage === next.lookupLanguage && JSON.stringify(previous.languages) === JSON.stringify(next.languages);
@@ -174,7 +177,7 @@ export class ConfigurationStore {
   save(draft: unknown, expectedRevision: string): Promise<Settings> {
     const edit = this.#tail.then(async () => {
       await this.#ready;
-      if (this.#current.revision !== expectedRevision) throw new ConfigurationError('Settings changed elsewhere. Reload before saving.');
+      if (this.#current.revision !== expectedRevision) throw new ConfigurationError('Settings changed elsewhere. Reload before saving.', message('configConflict'));
       const next = editSettings(this.#current, draft, this.#catalog, this.#revision());
       if (next !== this.#current) { await this.#storage.write(next); this.#current = next; }
       return structuredClone(this.#current);

@@ -818,5 +818,11 @@
   },
   "grammar_comp": {
     "message": "Comparison"
+  },
+  "actionTitle": {
+    "message": "Open Tensho"
+  },
+  "missingInformation": {
+    "message": "missing information"
   }
 }

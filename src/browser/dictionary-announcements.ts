@@ -1,3 +1,4 @@
+import { currentLocale, t } from './i18n.ts';
 import type { CandidateDictionary } from '../core/dictionary.ts';
 import { dictionaryLabels } from './dictionary-labels.ts';
 import { dictionaryOutcome, failureText } from './result-status.ts';
@@ -13,21 +14,22 @@ export class DictionaryAnnouncements {
   constructor(region: Pick<HTMLElement, 'textContent'>) { this.#region = region; }
 
   update(identity: string, candidates: Analysis['candidates'], dictionaries: Record<number, CandidateDictionary>): void {
+    identity = `${identity}:${currentLocale()}`;
     const messages = new Map<string, string>();
     for (const [index, candidate] of Object.entries(dictionaries)) {
-      const label = `Dictionary for ${candidates[Number(index)]?.lemma ?? `candidate ${Number(index) + 1}`}`;
+      const label = t('dictionaryFor', { lemma: candidates[Number(index)]?.lemma ?? t('candidate', { index: Number(index) + 1 }) });
       const work = candidate.resolution;
-      const resolution = work.status === 'loading' ? 'Loading entries.'
+      const resolution = work.status === 'loading' ? t('loadingEntries').replace('…', '.')
         : work.status !== 'complete' ? failureText(work)
-        : work.value.status === 'alternatives' ? `${work.value.alternatives.length} possible entries available.`
+        : work.value.status === 'alternatives' ? t('entriesAvailable', { count: work.value.alternatives.length })
         : dictionaryOutcome(work.value.status);
-      messages.set(`${index}:resolution`, `${label}: ${resolution}`);
+      messages.set(`${index}:resolution`, t('dictionaryAnnouncement', { label, message: resolution }));
       const labels = work.status === 'complete' ? dictionaryLabels(work.value) : undefined;
       for (const [entryId, article] of Object.entries(candidate.articles)) {
-        const message = article.status === 'loading' ? 'Loading entry.'
-          : article.status === 'complete' ? `Entry from ${article.value.dictionary} is ready.` : article.status === 'not-retained' ? 'Entry too large to retain.' : failureText(article);
-        const headword = labels?.get(entryId)?.announcement ?? 'entry';
-        messages.set(`${index}:article:${entryId}`, `${label}, ${headword}: ${message}`);
+        const message = article.status === 'loading' ? t('loadingEntry').replace('…', '.')
+          : article.status === 'complete' ? t('entryReady', { dictionary: article.value.dictionary }) : article.status === 'not-retained' ? t('entryTooLarge') : failureText(article);
+        const headword = labels?.get(entryId)?.announcement ?? t('entry');
+        messages.set(`${index}:article:${entryId}`, t('articleAnnouncement', { label, headword, message }));
       }
     }
     if (identity !== this.#identity) {
