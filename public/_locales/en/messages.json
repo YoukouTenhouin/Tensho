@@ -1,0 +1,822 @@
+{
+  "brand": {
+    "message": "Tensho"
+  },
+  "extensionName": {
+    "message": "Tensho — Latin reading"
+  },
+  "extensionDescription": {
+    "message": "Latin word analysis with Alpheios-hosted Whitaker and explicit provider access."
+  },
+  "openExtension": {
+    "message": "Open $brand$",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "lookupSelection": {
+    "message": "Look up selection"
+  },
+  "toggleResults": {
+    "message": "Toggle existing results"
+  },
+  "contextLookup": {
+    "message": "Look up selection with $brand$",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "panelTitle": {
+    "message": "$brand$ lookup",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsTitle": {
+    "message": "$brand$ settings",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "closeLookup": {
+    "message": "Close lookup"
+  },
+  "wordOrPassage": {
+    "message": "Word or passage"
+  },
+  "lookup": {
+    "message": "Look up"
+  },
+  "loading": {
+    "message": "Loading…"
+  },
+  "languages": {
+    "message": "Languages"
+  },
+  "lookupLanguage": {
+    "message": "Lookup language"
+  },
+  "explanations": {
+    "message": "Explanations"
+  },
+  "languageSummary": {
+    "message": "$lookup$ · $explanation$",
+    "placeholders": {
+      "lookup": {
+        "content": "$1"
+      },
+      "explanation": {
+        "content": "$2"
+      }
+    }
+  },
+  "languageButton": {
+    "message": "Languages: $lookup$ lookup, $explanation$ explanations",
+    "placeholders": {
+      "lookup": {
+        "content": "$1"
+      },
+      "explanation": {
+        "content": "$2"
+      }
+    }
+  },
+  "unavailableName": {
+    "message": "$name$ · unavailable",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailableOption": {
+    "message": "$name$ (unavailable)",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "explanationsValue": {
+    "message": "Explanations: $language$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "analysisUnavailable": {
+    "message": "$language$ analysis unavailable",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "dictionaryUnavailable": {
+    "message": "Dictionary unavailable in $language$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "meaningsUnavailable": {
+    "message": "Short meanings unavailable in $language$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "enableSite": {
+    "message": "Enable on this site"
+  },
+  "enableSiteLabel": {
+    "message": "Enable automatic lookup on $origin$",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "providerSettings": {
+    "message": "Enable providers in Settings"
+  },
+  "lookupResults": {
+    "message": "Lookup results"
+  },
+  "passage": {
+    "message": "Passage"
+  },
+  "choosePassageWord": {
+    "message": "Choose a passage word"
+  },
+  "passageWord": {
+    "message": "Look up $word$ (word $index$ of $total$)",
+    "placeholders": {
+      "word": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      },
+      "total": {
+        "content": "$3"
+      }
+    }
+  },
+  "chooseWord": {
+    "message": "Choose a word"
+  },
+  "ready": {
+    "message": "Ready to read"
+  },
+  "loadingAnalysis": {
+    "message": "Loading $language$ analysis…",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "noMatch": {
+    "message": "No $language$ match from $provider$.",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      }
+    }
+  },
+  "noAnalysis": {
+    "message": "No $language$ analysis supplied.",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "analysisSource": {
+    "message": "$language$ analysis — $provider$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      }
+    }
+  },
+  "headwordUnavailable": {
+    "message": "Headword unavailable"
+  },
+  "missingFields": {
+    "message": "Unavailable: $fields$.",
+    "placeholders": {
+      "fields": {
+        "content": "$1"
+      }
+    }
+  },
+  "missingHeadword": {
+    "message": "headword"
+  },
+  "missingGrammar": {
+    "message": "grammatical interpretations"
+  },
+  "missingMeanings": {
+    "message": "$language$ short meanings",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "retryLookup": {
+    "message": "Retry $language$ lookup",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "retry": {
+    "message": "Retry lookup"
+  },
+  "originInvalid": {
+    "message": "Enter an ordinary HTTP/HTTPS origin."
+  },
+  "originExact": {
+    "message": "Enter an exact HTTP/HTTPS origin."
+  },
+  "siteDenied": {
+    "message": "Site access denied."
+  },
+  "siteNotGranted": {
+    "message": "Site access was not granted."
+  },
+  "siteEnabled": {
+    "message": "Site enabled."
+  },
+  "enabledSite": {
+    "message": "Enabled $origin$",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "loadingRetained": {
+    "message": "Loading retained result…"
+  },
+  "settingsSections": {
+    "message": "Settings sections"
+  },
+  "providers": {
+    "message": "Providers"
+  },
+  "readingSites": {
+    "message": "Reading sites"
+  },
+  "sources": {
+    "message": "Sources"
+  },
+  "serviceAccess": {
+    "message": "Service access"
+  },
+  "enableLatin": {
+    "message": "Enable Latin providers"
+  },
+  "siteOrigin": {
+    "message": "Site origin"
+  },
+  "addSite": {
+    "message": "Add site"
+  },
+  "noSites": {
+    "message": "No sites enabled."
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "removeOrigin": {
+    "message": "Remove $origin$",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "accessDenied": {
+    "message": "Access denied. "
+  },
+  "accessRevoked": {
+    "message": "Access revoked. "
+  },
+  "providerAccess": {
+    "message": "$decision$Latin analysis: $analysis$ · Dictionary: $dictionary$",
+    "placeholders": {
+      "decision": {
+        "content": "$1"
+      },
+      "analysis": {
+        "content": "$2"
+      },
+      "dictionary": {
+        "content": "$3"
+      }
+    }
+  },
+  "enabled": {
+    "message": "enabled"
+  },
+  "disabled": {
+    "message": "disabled"
+  },
+  "providerEnabled": {
+    "message": "Provider access enabled."
+  },
+  "providerDenied": {
+    "message": "Provider access denied."
+  },
+  "profiles": {
+    "message": "Provider profiles"
+  },
+  "language": {
+    "message": "Language"
+  },
+  "discard": {
+    "message": "Discard changes"
+  },
+  "saveChanges": {
+    "message": "Save changes"
+  },
+  "draftConflict": {
+    "message": "Settings changed elsewhere. Discard changes to reload."
+  },
+  "unsaved": {
+    "message": "Unsaved changes."
+  },
+  "analysisProviders": {
+    "message": "Analysis providers"
+  },
+  "dictionaryProviders": {
+    "message": "Dictionary providers"
+  },
+  "noProviders": {
+    "message": "No providers available."
+  },
+  "moveEarlier": {
+    "message": "Move earlier"
+  },
+  "moveLater": {
+    "message": "Move later"
+  },
+  "moveProvider": {
+    "message": "$direction$: $provider$ for $role$",
+    "placeholders": {
+      "direction": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      },
+      "role": {
+        "content": "$3"
+      }
+    }
+  },
+  "analysisRole": {
+    "message": "analysis"
+  },
+  "dictionaryRole": {
+    "message": "dictionary"
+  },
+  "savingSettings": {
+    "message": "Saving settings…"
+  },
+  "settingsSaved": {
+    "message": "Settings saved."
+  },
+  "saving": {
+    "message": "Saving…"
+  },
+  "saved": {
+    "message": "Saved."
+  },
+  "interface": {
+    "message": "Interface"
+  },
+  "interfaceLanguage": {
+    "message": "Interface language"
+  },
+  "browserDefault": {
+    "message": "Browser default ($language$)",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "interfaceSaved": {
+    "message": "Interface language saved."
+  },
+  "invalidInterfaceLanguage": {
+    "message": "Choose a supported interface language."
+  },
+  "unexpectedError": {
+    "message": "Something went wrong. Try again."
+  },
+  "legacyNotice": {
+    "message": "The previous action could not complete. Select text or enter a word to continue."
+  },
+  "emptySelection": {
+    "message": "Select or enter a word containing letters or numbers. Nothing was sent."
+  },
+  "longSelection": {
+    "message": "Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent."
+  },
+  "manyWords": {
+    "message": "Selection contains more than 256 offered words. Select a shorter passage; nothing was sent."
+  },
+  "longWord": {
+    "message": "A word exceeds 256 Unicode code points. Select a shorter word or passage; nothing was sent."
+  },
+  "passageRetained": {
+    "message": "Passage retained. Choose one word to look up; nothing has been sent."
+  },
+  "settingsRefresh": {
+    "message": "Settings changed. This selection will refresh when viewed."
+  },
+  "retentionCleared": {
+    "message": "Previous result cleared to free space"
+  },
+  "retentionFailed": {
+    "message": "This result could not be retained in session storage. It may be unavailable after reopening."
+  },
+  "retentionBlocked": {
+    "message": "A new lookup could not start because the previous result could not be cleared from session storage. Try again."
+  },
+  "selectionUnavailable": {
+    "message": "Selection is unavailable on this surface. Use an ordinary HTTP/HTTPS page, or enter a word manually."
+  },
+  "selectionAmbiguous": {
+    "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually."
+  },
+  "noReadingTab": {
+    "message": "No regular reading tab is available."
+  },
+  "openFailed": {
+    "message": "The sidebar could not open. Try again."
+  },
+  "reloadSettings": {
+    "message": "Reload settings before saving."
+  },
+  "chooseLanguage": {
+    "message": "Choose a supported language."
+  },
+  "resultChanged": {
+    "message": "The reading result changed. Open the current candidate again."
+  },
+  "readingTabChanged": {
+    "message": "The reading tab changed. Submit the word again for this tab."
+  },
+  "passageChanged": {
+    "message": "The passage changed. Choose a word from the current passage."
+  },
+  "passageSourceChanged": {
+    "message": "The passage source changed. Select the passage again."
+  },
+  "lookupChanged": {
+    "message": "The lookup changed. Select the word again."
+  },
+  "sourceChanged": {
+    "message": "The reading source changed. Select the word again."
+  },
+  "invalidSettings": {
+    "message": "Invalid settings."
+  },
+  "chooseLookup": {
+    "message": "Choose a supported lookup language."
+  },
+  "integratedLanguages": {
+    "message": "Settings must contain the integrated languages only."
+  },
+  "providerUnsupported": {
+    "message": "Provider $provider$ does not support $role$ for $language$.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "role": {
+        "content": "$2"
+      },
+      "language": {
+        "content": "$3"
+      }
+    }
+  },
+  "declaredOptions": {
+    "message": "Choose only declared options for $provider$.",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      }
+    }
+  },
+  "retainExplanation": {
+    "message": "With every provider disabled, retain the saved explanation preference."
+  },
+  "replaceExplanation": {
+    "message": "Choose an explicitly supported replacement explanation language for $language$ before saving.",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "configConflict": {
+    "message": "Settings changed elsewhere. Reload before saving."
+  },
+  "usingProvider": {
+    "message": "Using $provider$. $reason$",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "reason": {
+        "content": "$2"
+      }
+    }
+  },
+  "previousFailed": {
+    "message": "Previous provider failed."
+  },
+  "providerUnavailable": {
+    "message": "Provider unavailable."
+  },
+  "providerDetails": {
+    "message": "Provider details"
+  },
+  "skipped": {
+    "message": " Skipped."
+  },
+  "providerIssue": {
+    "message": "$provider$: $reason$$skipped$",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "reason": {
+        "content": "$2"
+      },
+      "skipped": {
+        "content": "$3"
+      }
+    }
+  },
+  "noEntry": {
+    "message": "No entry found."
+  },
+  "unresolvedEntry": {
+    "message": "Couldn’t identify an entry."
+  },
+  "possibleEntries": {
+    "message": "Possible entries"
+  },
+  "duplicateEntry": {
+    "message": "$label$ · Entry $index$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      }
+    }
+  },
+  "entryAnnouncement": {
+    "message": "$headword$, entry $index$",
+    "placeholders": {
+      "headword": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      }
+    }
+  },
+  "articleAttribution": {
+    "message": "$dictionary$ article with source attribution",
+    "placeholders": {
+      "dictionary": {
+        "content": "$1"
+      }
+    }
+  },
+  "dictionarySource": {
+    "message": "Dictionary source"
+  },
+  "dictionaryReferences": {
+    "message": "Dictionary references"
+  },
+  "reference": {
+    "message": "Reference $index$",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "hideDictionary": {
+    "message": "Hide dictionary"
+  },
+  "dictionary": {
+    "message": "Dictionary"
+  },
+  "loadingEntries": {
+    "message": "Loading entries…"
+  },
+  "retryDictionary": {
+    "message": "Retry dictionary"
+  },
+  "readEntry": {
+    "message": "Read entry"
+  },
+  "loadingEntry": {
+    "message": "Loading entry…"
+  },
+  "entryTooLarge": {
+    "message": "Entry too large to retain."
+  },
+  "readSource": {
+    "message": "Read complete article at source"
+  },
+  "retryEntry": {
+    "message": "Retry entry"
+  },
+  "dictionaryFor": {
+    "message": "Dictionary for $lemma$",
+    "placeholders": {
+      "lemma": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidate": {
+    "message": "candidate $index$",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "entriesAvailable": {
+    "message": "$count$ possible entries available.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "entryReady": {
+    "message": "Entry from $dictionary$ is ready.",
+    "placeholders": {
+      "dictionary": {
+        "content": "$1"
+      }
+    }
+  },
+  "entry": {
+    "message": "entry"
+  },
+  "dictionaryAnnouncement": {
+    "message": "$label$: $message$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "message": {
+        "content": "$2"
+      }
+    }
+  },
+  "articleAnnouncement": {
+    "message": "$label$, $headword$: $message$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "headword": {
+        "content": "$2"
+      },
+      "message": {
+        "content": "$3"
+      }
+    }
+  },
+  "failure_missing_access": {
+    "message": "Provider access needed."
+  },
+  "failure_revoked_access": {
+    "message": "Provider access revoked."
+  },
+  "failure_network": {
+    "message": "Connection failed."
+  },
+  "failure_http": {
+    "message": "Provider unavailable."
+  },
+  "failure_format": {
+    "message": "Invalid provider response."
+  },
+  "failure_size": {
+    "message": "Response too large."
+  },
+  "failure_request_timeout": {
+    "message": "Provider timed out."
+  },
+  "failure_action_deadline": {
+    "message": "Lookup timed out."
+  },
+  "failure_cancelled": {
+    "message": "Lookup cancelled."
+  },
+  "failure_unconfigured": {
+    "message": "No providers enabled."
+  },
+  "failure_unsupported_explanation": {
+    "message": "Explanations unavailable."
+  },
+  "failure_unsupported_input": {
+    "message": "Input not supported."
+  },
+  "failure_identity_mismatch": {
+    "message": "Unexpected dictionary entry."
+  },
+  "failure_interrupted": {
+    "message": "Lookup interrupted."
+  },
+  "grammar_term": {
+    "message": "Form"
+  },
+  "grammar_lang": {
+    "message": "Language"
+  },
+  "grammar_stem": {
+    "message": "Stem"
+  },
+  "grammar_suff": {
+    "message": "Ending"
+  },
+  "grammar_pofs": {
+    "message": "Part of speech"
+  },
+  "grammar_conj": {
+    "message": "Conjugation"
+  },
+  "grammar_decl": {
+    "message": "Declension"
+  },
+  "grammar_var": {
+    "message": "Variant"
+  },
+  "grammar_tense": {
+    "message": "Tense"
+  },
+  "grammar_voice": {
+    "message": "Voice"
+  },
+  "grammar_mood": {
+    "message": "Mood"
+  },
+  "grammar_pers": {
+    "message": "Person"
+  },
+  "grammar_num": {
+    "message": "Number"
+  },
+  "grammar_gend": {
+    "message": "Gender"
+  },
+  "grammar_case": {
+    "message": "Case"
+  },
+  "grammar_comp": {
+    "message": "Comparison"
+  }
+}

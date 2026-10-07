@@ -22,6 +22,9 @@ One possible division of a selected Sanskrit passage into constituent words; sev
 **Lookup language**:
 The language in which a selected word is to be analyzed and looked up, regardless of whether the same spelling occurs in another language.
 
+**Interface language**:
+The language of the extension’s controls, messages, and grammatical field labels, independent of lookup language and explanation language.
+
 **Explanation language**:
 The language used to present definitions and explanations, distinct from the lookup language.
 
