@@ -30,7 +30,7 @@ export interface Analysis {
   providerIssues?: ProviderIssue[];
   candidates: { lemma: string | null; interpretations: string[]; meanings: string[]; stableId: string | null;
     grammar?: Record<string, unknown>[]; lemmaFeatures?: Record<string, unknown>;
-    provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
+    provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number; dictIndex?: number };
     missing?: string[]; missingMessages?: UiMessage[] }[];
 }
 export interface Passage { id: number; original: string; words: OfferedWord[]; selectedIndex?: number; }

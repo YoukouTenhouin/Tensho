@@ -16,7 +16,7 @@ export interface LatinCandidate {
   meanings: string[];
   grammar: RecordValue[];
   lemmaFeatures: RecordValue;
-  provenance: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
+  provenance: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number; dictIndex?: number };
   missing: string[];
 }
 export interface LatinAnalysis {
@@ -74,9 +74,10 @@ export function normalizeWhitaker(raw: unknown): LatinAnalysis {
       // A supplied candidate without fields remains visibly incomplete, not absent.
       if (!entries.length) entries.push({});
       for (const [entryIndex, entry] of entries.entries()) {
-        const dict = entry.dict === undefined ? {} : object(entry.dict, 'lemma features');
-        const headword = entry.dict === undefined || dict.hdwd === undefined ? undefined : object(dict.hdwd, 'headword');
-        if (foreign(entry) || foreign(dict) || foreign(headword)) { result.excludedForeignRecords++; continue; }
+        if (foreign(entry)) { result.excludedForeignRecords++; continue; }
+        const dictionaries = entry.dict === undefined ? [{}] : Array.isArray(entry.dict)
+          ? many(entry.dict, 'lemma features') : [object(entry.dict, 'lemma features')];
+        if (!dictionaries.length) dictionaries.push({});
         const grammar = many(entry.infl, 'grammatical interpretation').filter(interpretation => {
           const term = interpretation.term === undefined ? undefined : object(interpretation.term, 'inflected term');
           if (foreign(interpretation) || foreign(term)) { result.excludedForeignRecords++; return false; }
@@ -87,10 +88,17 @@ export function normalizeWhitaker(raw: unknown): LatinAnalysis {
           const value = text(meaning);
           return value && (language === null || language === 'en' || language === 'eng') ? [value] : [];
         });
-        const lemma = text(headword);
-        result.candidates.push({ lemma, stableId: null, meanings, grammar, lemmaFeatures: dict,
-          provenance: { provider: whitaker.id, bodyReference: text(body.about), annotationIndex, bodyIndex, entryIndex },
-          missing: [...(!lemma ? ['headword'] : []), ...(!grammar.length ? ['grammatical interpretations'] : []), ...(!meanings.length ? ['English short meanings'] : [])] });
+        for (const [dictIndex, dict] of dictionaries.entries()) {
+          const headword = dict.hdwd === undefined ? undefined : object(dict.hdwd, 'headword');
+          if (foreign(dict) || foreign(headword)) { result.excludedForeignRecords++; continue; }
+          const lemma = text(headword);
+          // Grammar and meanings belong to the entry; do not infer a positional
+          // mapping between its dictionary records and short meanings.
+          result.candidates.push({ lemma, stableId: null, meanings, grammar, lemmaFeatures: dict,
+            provenance: { provider: whitaker.id, bodyReference: text(body.about), annotationIndex, bodyIndex, entryIndex,
+              ...(Array.isArray(entry.dict) ? { dictIndex } : {}) },
+            missing: [...(!lemma ? ['headword'] : []), ...(!grammar.length ? ['grammatical interpretations'] : []), ...(!meanings.length ? ['English short meanings'] : [])] });
+        }
       }
     }
   }

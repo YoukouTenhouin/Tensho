@@ -44,6 +44,24 @@ test('original selection is retained while only surrounding space and canonical 
   assert.equal(query, 'mālum'); assert.equal(coordinator.get(1)!.text, original);
 });
 
+test('causā with multiple dictionary records completes lookup and preserves all four candidates', async () => {
+  const coordinator = setup(async input => {
+    assert.equal(new URL(String(input)).searchParams.get('word'), 'causā');
+    return new Response(fixture('causā'));
+  });
+  await coordinator.lookup(identity, 'causā');
+  const state = coordinator.get(1)!;
+  assert.equal(state.status, 'complete');
+  if (state.status !== 'complete') assert.fail('analysis did not complete');
+  assert.equal(state.analysis.outcome, 'usable');
+  assert.deepEqual(state.analysis.candidates.map(candidate => candidate.lemma), [
+    'causa, causae', 'causo, causare, causavi, causatus', 'causor, causari, causatus sum', 'causa',
+  ]);
+  assert.deepEqual(state.analysis.candidates.map(candidate => candidate.interpretations.length), [3, 1, 1, 1]);
+  assert.deepEqual(state.analysis.candidates.map(candidate => candidate.meanings.length), [3, 2, 2, 1]);
+  assert.deepEqual(state.analysis.attribution, [JSON.parse(fixture('causā')).RDF.Annotation.rights.$]);
+});
+
 test('a selected passage word reaches the production analyzer with canonical query normalization and unchanged original spelling', async () => {
   const queries: string[] = [];
   const coordinator = setup(async input => {

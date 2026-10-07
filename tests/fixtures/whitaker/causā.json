@@ -1,0 +1,335 @@
+{
+  "RDF": {
+    "Annotation": {
+      "about": "urn:TuftsMorphologyService:causā:whitakerLat",
+      "creator": {
+        "Agent": {
+          "about": "net.alpheios:tools:wordsxml.v1"
+        }
+      },
+      "created": {
+        "$": "2026-10-07T03:58:39.501929"
+      },
+      "rights": {
+        "$": "Short definitions and morphology from Words by William Whitaker, Copyright 1993-2007."
+      },
+      "hasTarget": {
+        "Description": {
+          "about": "urn:word:causā"
+        }
+      },
+      "title": {},
+      "hasBody": [
+        {
+          "resource": "urn:uuid:idm139936319261416"
+        },
+        {
+          "resource": "urn:uuid:idm139936316572024"
+        },
+        {
+          "resource": "urn:uuid:idm139936312028296"
+        }
+      ],
+      "Body": [
+        {
+          "about": "urn:uuid:idm139936319261416",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "infl": [
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "caus"
+                    },
+                    "suff": {
+                      "$": "a"
+                    }
+                  },
+                  "pofs": {
+                    "order": 5,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "1st"
+                  },
+                  "var": {
+                    "$": "1st"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "gend": {
+                    "$": "feminine"
+                  },
+                  "case": {
+                    "order": 7,
+                    "$": "nominative"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "caus"
+                    },
+                    "suff": {
+                      "$": "a"
+                    }
+                  },
+                  "pofs": {
+                    "order": 5,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "1st"
+                  },
+                  "var": {
+                    "$": "1st"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "gend": {
+                    "$": "feminine"
+                  },
+                  "case": {
+                    "order": 1,
+                    "$": "vocative"
+                  }
+                },
+                {
+                  "term": {
+                    "lang": "lat",
+                    "stem": {
+                      "$": "caus"
+                    },
+                    "suff": {
+                      "$": "a"
+                    }
+                  },
+                  "pofs": {
+                    "order": 5,
+                    "$": "noun"
+                  },
+                  "decl": {
+                    "$": "1st"
+                  },
+                  "var": {
+                    "$": "1st"
+                  },
+                  "num": {
+                    "$": "singular"
+                  },
+                  "gend": {
+                    "$": "feminine"
+                  },
+                  "case": {
+                    "order": 3,
+                    "$": "ablative"
+                  }
+                }
+              ],
+              "dict": {
+                "hdwd": {
+                  "lang": "lat",
+                  "$": "causa, causae"
+                },
+                "pofs": {
+                  "order": 5,
+                  "$": "noun"
+                },
+                "decl": {
+                  "$": "1st"
+                },
+                "gend": {
+                  "$": "feminine"
+                },
+                "freq": {
+                  "order": 6,
+                  "$": "very frequent"
+                },
+                "src": {
+                  "$": "Ox.Lat.Dict."
+                }
+              },
+              "mean": [
+                {
+                  "$": "cause/reason/motive; origin, source, derivation; responsibility/blame; symptom;"
+                },
+                {
+                  "$": "occasion, subject; plea, position; lawsuit, case, trial; proviso/stipulation;"
+                },
+                {
+                  "$": "thing(s); [sine causa => in vain (Vulgate)];"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "about": "urn:uuid:idm139936316572024",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "infl": {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "caus"
+                  },
+                  "suff": {
+                    "$": "a"
+                  }
+                },
+                "pofs": {
+                  "order": 3,
+                  "$": "verb"
+                },
+                "conj": {
+                  "$": "1st"
+                },
+                "var": {
+                  "$": "1st"
+                },
+                "tense": {
+                  "$": "present"
+                },
+                "voice": {
+                  "$": "active"
+                },
+                "mood": {
+                  "$": "imperative"
+                },
+                "pers": {
+                  "$": "2nd"
+                },
+                "num": {
+                  "$": "singular"
+                }
+              },
+              "dict": [
+                {
+                  "hdwd": {
+                    "lang": "lat",
+                    "$": "causo, causare, causavi, causatus"
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "verb"
+                  },
+                  "conj": {
+                    "$": "1st"
+                  },
+                  "kind": {
+                    "$": "transitive"
+                  },
+                  "age": {
+                    "order": 6,
+                    "$": "medieval"
+                  },
+                  "freq": {
+                    "order": 2,
+                    "$": "uncommon"
+                  },
+                  "src": {
+                    "$": "Eccles.Latin"
+                  }
+                },
+                {
+                  "hdwd": {
+                    "lang": "lat",
+                    "$": "causor, causari, causatus sum"
+                  },
+                  "pofs": {
+                    "order": 3,
+                    "$": "verb"
+                  },
+                  "conj": {
+                    "$": "1st"
+                  },
+                  "kind": {
+                    "$": "deponent"
+                  },
+                  "area": {
+                    "$": "government"
+                  },
+                  "freq": {
+                    "order": 4,
+                    "$": "common"
+                  },
+                  "src": {
+                    "$": "Ox.Lat.Dict."
+                  }
+                }
+              ],
+              "mean": [
+                {
+                  "$": "cause;"
+                },
+                {
+                  "$": "allege an excuse/reason, object; excuse oneself; plead a cause, bring action;"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "about": "urn:uuid:idm139936312028296",
+          "type": {
+            "resource": "cnt:ContentAsXML"
+          },
+          "rest": {
+            "entry": {
+              "infl": {
+                "term": {
+                  "lang": "lat",
+                  "stem": {
+                    "$": "causa"
+                  }
+                },
+                "pofs": {
+                  "order": 1,
+                  "$": "preposition"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                }
+              },
+              "dict": {
+                "hdwd": {
+                  "lang": "lat",
+                  "$": "causa"
+                },
+                "pofs": {
+                  "order": 1,
+                  "$": "preposition"
+                },
+                "case": {
+                  "order": 6,
+                  "$": "genitive"
+                },
+                "freq": {
+                  "order": 6,
+                  "$": "very frequent"
+                },
+                "src": {
+                  "$": "Ox.Lat.Dict."
+                }
+              },
+              "mean": {
+                "$": "for sake/purpose of (preceded by GEN.), on account/behalf of, with a view to;"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
