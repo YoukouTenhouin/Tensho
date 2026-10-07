@@ -70,7 +70,7 @@ def exercise_passage(reading, native_key, connect, target, snapshot, url, eviden
     too_long = manual('arma '+'𐌀'*257)
     punctuation = manual('—?!')
     checks['invalid_passages_send_nothing_and_explain_limits'] = '256 offered words' in too_many.get('message', '') and '256 Unicode code points' in too_long.get('message', '') and 'letters or numbers' in punctuation.get('message', '') and len(calls()) == prior
-    checks['lookup_language_remains_visible_on_error'] = panel.evaluate("document.body.textContent.includes('Lookup: Latin')")
+    checks['lookup_language_remains_visible_on_error'] = panel.evaluate("document.querySelector('#active-settings').textContent.startsWith('Latin · ')")
     checks['replacement_selection_clears_passage_controls'] = panel.evaluate("document.querySelector('#passage').hidden")
     evidence['passage'] = {'fixture_text': fixture_text, 'original': original, 'offered_words': expected, 'analysis_calls': calls()[before:], 'native_keyboard': True}
 

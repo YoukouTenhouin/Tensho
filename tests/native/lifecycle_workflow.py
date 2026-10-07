@@ -70,7 +70,7 @@ def run(output):
                     time.sleep(.3); key(display, 'Alt_L', 'Shift_L', 'k')
                     worker = connect('/worker.js')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
                     return worker, panel, page
                 worker, panel, page = launch()
                 snapshot_js = "(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'snapshot',windowId:w.id})})()"
@@ -84,17 +84,25 @@ def run(output):
                     nonlocal panel
                     if not target('/panel.html'): key(display, 'Alt_L', 'Shift_L', 'k')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
+                panel.evaluate("document.querySelector('#open-settings').click()")
+                options = connect('/options.html')
+                wait_for(lambda: options.evaluate("!!document.querySelector('#enable-providers')"))
+                def source():
+                    page.call('Page.bringToFront')
+                    wait_for(lambda: snapshot().get('origin') == origin)
+                source()
                 def prompt(name, instruction):
-                    panel.call('Runtime.evaluate', expression="document.querySelector('#enable-providers').click()", userGesture=True)
+                    options.call('Page.bringToFront')
+                    options.call('Runtime.evaluate', expression="document.querySelector('#enable-providers').click()", userGesture=True)
                     time.sleep(.6)
-                    if panel.evaluate("document.querySelector('#enable-providers').disabled"):
+                    if options.evaluate("document.querySelector('#enable-providers').hidden"):
                         evidence[name + '_native_prompt'] = 'previously approved grant restored without another prompt'
-                        return
+                        source(); return
                     path = output / (name + '.png')
                     subprocess.run(['import', '-display', display, '-window', 'root', str(path)], check=True)
                     print(f'{instruction}: inspect {path}, then enter X Y', flush=True)
-                    x, y = map(int, input().split()); click(display, x, y)
+                    x, y = map(int, input().split()); click(display, x, y); source()
                 def start(text='malum'):
                     previous = snapshot().get('state', {}).get('generation', 0)
                     panel.evaluate("document.querySelector('#word').value=" + json.dumps(text) + ";document.querySelector('#lookup').requestSubmit()")
@@ -114,16 +122,16 @@ def run(output):
                 def release(): worker.evaluate("globalThis.__tenshoLifecycleHold=undefined;globalThis.__tenshoLifecycleRelease?.()")
                 def revoke():
                     panel.evaluate("chrome.permissions.remove({origins:['https://repos1.alpheios.net/*']})")
-                    wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
+                    wait_for(lambda: options.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
 
                 start(); missing = terminal()
                 checks['never_granted_access_blocks_all_transport'] = missing.get('failureKind') == 'missing-access' and calls() == []
                 prompt('deny', 'Deny provider access')
-                wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('denied')"))
+                wait_for(lambda: options.evaluate("document.querySelector('#provider-access').textContent.includes('denied')"))
                 start(); denied = terminal()
                 checks['native_denial_visible_without_transport'] = denied.get('failureKind') == 'missing-access' and calls() == []
                 prompt('grant', 'Allow the two Alpheios provider origins')
-                wait_for(lambda: panel.evaluate("document.querySelector('#enable-providers').disabled"))
+                wait_for(lambda: options.evaluate("document.querySelector('#enable-providers').hidden"))
                 checks['native_grant_does_not_replay_denied_lookup'] = calls() == []
                 hold('analysis'); start(); wait_for(lambda: len(calls()) == 1)
                 assert snapshot()['state']['status'] == 'loading'
@@ -151,7 +159,7 @@ def run(output):
                 choose('#dictionary-retry-0'); blocked = resolution('error')
                 checks['retry_without_access_has_no_transport'] = blocked.get('failureKind') == 'missing-access' and len(calls()) == 2
                 prompt('regrant', 'Allow provider access again')
-                wait_for(lambda: panel.evaluate("document.querySelector('#enable-providers').disabled"))
+                wait_for(lambda: options.evaluate("document.querySelector('#enable-providers').hidden"))
                 checks['regrant_waits_for_explicit_retry'] = len(calls()) == 2
                 choose('#dictionary-retry-0'); resolution('complete')
                 checks['authorized_retry_can_reuse_fresh_index'] = len(calls()) == 2

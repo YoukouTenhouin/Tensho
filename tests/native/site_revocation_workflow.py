@@ -70,7 +70,7 @@ def run(output):
                     time.sleep(.3); key(display, 'Alt_L', 'Shift_L', 'k')
                     worker = connect('/worker.js')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
                     return worker, panel, page
                 worker, panel, page = launch()
                 snapshot_js = "(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'snapshot',windowId:w.id})})()"
@@ -84,7 +84,7 @@ def run(output):
                     nonlocal panel
                     if not target('/panel.html'): key(display, 'Alt_L', 'Shift_L', 'k')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
                 frame_origin = f'http://localhost:{server.server_port}'
                 origins = [origin + '/*', frame_origin + '/*']
                 panel.call('Runtime.evaluate', expression='chrome.permissions.request({origins:' + json.dumps(origins) + '})', userGesture=True)

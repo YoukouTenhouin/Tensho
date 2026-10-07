@@ -58,7 +58,8 @@ def run(output):
                 checks['multiple_articles_preserve_analysis'] = dom['articles'] == 14 and result['analysisPreserved']
                 checks['single_cached_index_and_only_selected_articles'] = len(result['requests']) == 14
                 terminal = result['terminal']
-                checks['unresolved_absence_and_failure_stay_distinct'] = 'does not establish' in terminal['unresolved-mapping'] and 'confirmed that no entry' in terminal['confirmed-absence'] and 'Controlled identity mismatch' in terminal['technical-failure'] and 'Retry dictionary resolution' in terminal['technical-failure']
+                checks['unresolved_absence_and_failure_stay_distinct'] = 'Couldn’t identify an entry.' in terminal['unresolved-mapping'] and 'No entry found.' in terminal['confirmed-absence'] and 'Invalid provider response.' in terminal['technical-failure'] and 'Retry dictionary' in terminal['technical-failure']
+                checks['no_internal_identity_or_disclaimer_copy'] = cdp.evaluate("!document.body.textContent.includes('Stable analysis identity') && !document.body.textContent.includes('response-local') && !document.body.textContent.includes('Unverified correspondence') && !document.body.textContent.includes('may not be exhaustive')")
                 evidence.update(passed=all(checks.values()), terminal_text=terminal, article_count=dom['articles'], safe_link_count=len(dom['urls']))
         except Exception as error:
             evidence.update(passed=False, failure=str(error))
