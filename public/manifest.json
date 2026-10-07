@@ -1,18 +1,48 @@
 {
   "manifest_version": 3,
-  "name": "Tensho — Latin reading",
-  "description": "Latin word analysis with Alpheios-hosted Whitaker and explicit provider access.",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "version": "0.1.0",
   "minimum_chrome_version": "154",
-  "permissions": ["activeTab", "scripting", "storage", "contextMenus", "sidePanel", "webNavigation"],
-  "optional_host_permissions": ["http://*/*", "https://*/*"],
-  "background": {"service_worker": "worker.js"},
-  "action": {"default_title": "Open Tensho"},
-  "options_ui": {"page": "options.html", "open_in_tab": true},
-  "side_panel": {"default_path": "panel.html"},
-  "commands": {
-    "lookup-selection": {"suggested_key": {"default": "Alt+Shift+L"}, "description": "Look up selection"},
-    "focus-results": {"suggested_key": {"default": "Alt+Shift+K"}, "description": "Toggle existing results"}
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "contextMenus",
+    "sidePanel",
+    "webNavigation"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "worker.js"
   },
-  "incognito": "not_allowed"
+  "action": {
+    "default_title": "__MSG_actionTitle__"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "commands": {
+    "lookup-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "__MSG_lookupSelection__"
+    },
+    "focus-results": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      },
+      "description": "__MSG_toggleResults__"
+    }
+  },
+  "incognito": "not_allowed",
+  "default_locale": "en"
 }

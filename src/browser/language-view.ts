@@ -1,3 +1,5 @@
+import { message, t } from './i18n.ts';
+import { errorMessage } from '../i18n/messages.ts';
 import { lookupRoutes } from '../core/configuration.ts';
 import type { ProviderCatalog, Settings } from '../core/configuration.ts';
 import { explanationName, languageName } from './settings-view.ts';
@@ -34,33 +36,34 @@ export class LanguageView {
     });
   }
   update(saved: Settings, catalog: ProviderCatalog): void {
+    this.#message.localize();
     this.#saved = saved; this.#catalog = catalog;
     const routes = lookupRoutes(saved, catalog);
-    element('active-settings').textContent = `${languageName(saved.lookupLanguage, catalog)} · ${explanationName(routes.explanationLanguage)}`;
-    element('language-button').setAttribute('aria-label', `Languages: ${languageName(saved.lookupLanguage, catalog)} lookup, ${explanationName(routes.explanationLanguage)} explanations`);
+    element('active-settings').textContent = t('languageSummary', { lookup: languageName(saved.lookupLanguage, catalog), explanation: explanationName(routes.explanationLanguage) });
+    element('language-button').setAttribute('aria-label', t('languageButton', { lookup: languageName(saved.lookupLanguage, catalog), explanation: explanationName(routes.explanationLanguage) }));
     if (!this.#saving) { this.#fields.disabled = false; this.#render(); }
   }
   #render(): void {
     if (!this.#saved || !this.#catalog) return;
     const routes = lookupRoutes(this.#saved, this.#catalog);
-    choices(this.#lookup, this.#catalog.languages);
+    choices(this.#lookup, this.#catalog.languages.map(language => ({ ...language, name: languageName(language.id, this.#catalog!) })));
     this.#lookup.value = this.#saved.lookupLanguage;
     const explanations = routes.explanationChoices.map(id => ({ id, name: explanationName(id), disabled: false }));
     if (!routes.preferenceAvailable) explanations.unshift({ id: routes.explanationLanguage,
-      name: `${explanationName(routes.explanationLanguage)} · unavailable`, disabled: true });
+      name: t('unavailableName', { name: explanationName(routes.explanationLanguage) }), disabled: true });
     choices(this.#explanation, explanations); this.#explanation.value = routes.explanationLanguage;
     this.#explanation.hidden = explanations.length <= 1;
     element('explanation-label').hidden = this.#explanation.hidden;
     element('explanation-value').hidden = !this.#explanation.hidden;
-    element('explanation-value').textContent = `Explanations: ${explanationName(routes.explanationLanguage)}${routes.preferenceAvailable ? '' : ' · unavailable'}`;
+    element('explanation-value').textContent = t('explanationsValue', { language: routes.preferenceAvailable ? explanationName(routes.explanationLanguage) : t('unavailableName', { name: explanationName(routes.explanationLanguage) }) });
   }
   async #submit(language: string, explanation?: string): Promise<void> {
     if (!this.#saved || this.#saving) return;
-    this.#saving = true; this.#fields.disabled = true; this.#message.update('Saving…');
+    this.#saving = true; this.#fields.disabled = true; this.#message.update(message('saving'));
     try {
       await this.#save(language, explanation, this.#saved.revision);
-      this.#message.update('Saved.');
-    } catch (error) { this.#message.update(error instanceof Error ? error.message : String(error)); }
+      this.#message.update(message('saved'));
+    } catch (error) { this.#message.update(errorMessage(error)); }
     finally { this.#saving = false; this.#fields.disabled = false; this.#render(); }
   }
   dismiss(): boolean {

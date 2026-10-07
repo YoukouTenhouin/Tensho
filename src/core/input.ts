@@ -1,6 +1,8 @@
+import { message } from '../i18n/messages.ts';
+import type { UiMessage } from '../i18n/messages.ts';
 export const inputLimits = { passage: 4096, word: 256, offeredWords: 256 } as const;
 export interface OfferedWord { text: string; start: number; end: number; }
-export type PreparedSelection = { words: OfferedWord[] } | { error: string };
+export type PreparedSelection = { words: OfferedWord[] } | { error: string; uiMessage: UiMessage };
 const connectors = new Set(["'", '’', '‘', 'ʼ', '＇', '-', '‐', '‑']);
 const letterOrNumber = (character: string) => !connectors.has(character) && /[\p{L}\p{N}]/u.test(character);
 
@@ -9,7 +11,7 @@ const letterOrNumber = (character: string) => !connectors.has(character) && /[\p
 export function prepareSelection(original: string): PreparedSelection {
   let points = 0;
   for (const _character of original) if (++points > inputLimits.passage) {
-    return { error: 'Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent.' };
+    return { error: 'Selection exceeds 4,096 Unicode code points. Select less text; nothing was sent.', uiMessage: message('longSelection') };
   }
   const characters = [...original];
   const words: OfferedWord[] = [];
@@ -27,8 +29,8 @@ export function prepareSelection(original: string): PreparedSelection {
     offset += character.length;
   }
   finish();
-  if (!words.length) return { error: 'Select or enter a word containing letters or numbers. Nothing was sent.' };
-  if (words.length > inputLimits.offeredWords) return { error: 'Selection contains more than 256 offered words. Select a shorter passage; nothing was sent.' };
-  if (words.some(word => [...word.text].length > inputLimits.word)) return { error: 'A word exceeds 256 Unicode code points. Select a shorter word or passage; nothing was sent.' };
+  if (!words.length) return { error: 'Select or enter a word containing letters or numbers. Nothing was sent.', uiMessage: message('emptySelection') };
+  if (words.length > inputLimits.offeredWords) return { error: 'Selection contains more than 256 offered words. Select a shorter passage; nothing was sent.', uiMessage: message('manyWords') };
+  if (words.some(word => [...word.text].length > inputLimits.word)) return { error: 'A word exceeds 256 Unicode code points. Select a shorter word or passage; nothing was sent.', uiMessage: message('longWord') };
   return { words };
 }

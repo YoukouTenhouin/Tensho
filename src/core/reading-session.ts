@@ -1,3 +1,5 @@
+import { message, translate } from '../i18n/messages.ts';
+import type { UiMessage } from '../i18n/messages.ts';
 import type { LookupCoordinator, Identity } from './lookup.ts';
 import type { DictionaryCoordinator } from './dictionary.ts';
 import { unretainedArticle } from './dictionary.ts';
@@ -25,7 +27,7 @@ export class ReadingSession {
   #activity = new Map<number, number>();
   #positions = new Map<number, { key: string; x: number; y: number }>();
   #cleared = new Set<number>();
-  #failures = new Map<number, string>();
+  #failures = new Map<number, UiMessage>();
   #suppress = false;
   constructor(dependencies: SessionCoordination) {
     this.#dependencies = dependencies;
@@ -65,7 +67,7 @@ export class ReadingSession {
       if (!current()) return;
       try { await this.#dependencies.storage.remove(tabId); accepted = true; }
       catch {
-        this.#failures.set(tabId, 'A new lookup could not start because the previous result could not be cleared from session storage. Try again.');
+        this.#failures.set(tabId, message('retentionBlocked'));
         if (current()) {
           this.#dependencies.dictionaries.resume(tabId);
           this.#dependencies.lookup.retainAfterRefusal(tabId);
@@ -77,8 +79,9 @@ export class ReadingSession {
   }
   information(tabId: number) {
     const position = this.#positions.get(tabId);
+    const retentionMessage = this.#cleared.has(tabId) ? message('retentionCleared') : this.#failures.get(tabId);
     return { scroll: { x: position?.x ?? 0, y: position?.y ?? 0 },
-      retentionNotice: this.#cleared.has(tabId) ? 'Previous result cleared to free space' : this.#failures.get(tabId) };
+      retentionMessage, retentionNotice: retentionMessage ? translate('en', retentionMessage) : undefined };
   }
   #capture(tabId: number): ReadingRecord | undefined {
     const state = this.#dependencies.lookup.get(tabId);
@@ -119,7 +122,7 @@ export class ReadingSession {
   }
   #failure(tabId: number): void {
     if (this.#failures.has(tabId)) return;
-    this.#failures.set(tabId, 'This result could not be retained in session storage. It may be unavailable after reopening.');
+    this.#failures.set(tabId, message('retentionFailed'));
     this.#dependencies.notify();
   }
   async #save(tabId: number, record: ReadingRecord): Promise<void> {

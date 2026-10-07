@@ -1,3 +1,4 @@
+import { isUiMessage } from '../i18n/messages.ts';
 import type { Analysis, State } from './lookup.ts';
 import type { CandidateDictionary } from './dictionary.ts';
 import { requestFailureKinds } from './requests.ts';
@@ -30,7 +31,8 @@ function analysis(value: unknown): boolean {
     optional(value.attribution, texts) && optional(value.excludedForeignRecords, integer) &&
     optional(value.explanationLanguage, nullableText) && optional(value.explanationNotice, text) && optional(value.providerIssues, issues) &&
     Array.isArray(value.candidates) && value.candidates.every(candidate => object(candidate) && nullableText(candidate.lemma) && nullableText(candidate.stableId) &&
-      texts(candidate.interpretations) && texts(candidate.meanings) && optional(candidate.missing, texts) && optional(candidate.provenance, provenance));
+      texts(candidate.interpretations) && texts(candidate.meanings) && optional(candidate.missing, texts) && optional(candidate.missingMessages, messages => Array.isArray(messages) && messages.every(isUiMessage)) &&
+      optional(candidate.grammar, grammar => Array.isArray(grammar) && grammar.every(object)) && optional(candidate.provenance, provenance));
 }
 function state(value: unknown): value is State {
   if (!object(value) || !integer(value.generation) || !text(value.text) || !object(value.identity)) return false;
@@ -46,7 +48,7 @@ function state(value: unknown): value is State {
     if (value.refreshOnView && passage.selectedIndex === undefined) return false;
   }
   if (value.status === 'complete') return analysis(value.analysis);
-  return value.status === 'loading' || (oneOf(value.status, ['notice', 'error', 'unavailable']) && text(value.message) &&
+  return value.status === 'loading' || (oneOf(value.status, ['notice', 'error', 'unavailable']) && text(value.message) && optional(value.uiMessage, isUiMessage) &&
     optional(value.failureKind, failureKind) && optional(value.providerIssues, issues));
 }
 function resolution(value: unknown): boolean {

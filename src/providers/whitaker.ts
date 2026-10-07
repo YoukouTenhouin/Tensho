@@ -1,3 +1,4 @@
+import { message } from '../i18n/messages.ts';
 import { RequestFailure, RequestExecutor, readBoundedJson, requireProviderAccess } from '../core/requests.ts';
 import type { Analyzer } from '../core/lookup.ts';
 
@@ -146,6 +147,9 @@ export function createWhitakerAnalyzer(dependencies: {
         'Latin analysis access was revoked. Enable Latin providers before retrying.', 'revoked-access');
       return { ...normalized, controlled: false, candidates: normalized.candidates.map(candidate => ({
         ...candidate, interpretations: candidate.grammar.map(describeGrammar),
+        missingMessages: [...(!candidate.lemma ? [message('missingHeadword')] : []),
+          ...(!candidate.grammar.length ? [message('missingGrammar')] : []),
+          ...(!candidate.meanings.length ? [message('missingMeanings', { language: 'en' })] : [])],
       })) };
     }, { signal, deadline, origins: whitaker.origins });
   } };

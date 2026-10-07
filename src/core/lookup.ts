@@ -1,3 +1,5 @@
+import { errorMessage, message } from '../i18n/messages.ts';
+import type { UiMessage } from '../i18n/messages.ts';
 import { RequestFailure, requestLimits, capabilityUnavailable } from './requests.ts';
 import type { ProviderIssue } from './requests.ts';
 import type { ProviderOptionValue } from './configuration.ts';
@@ -29,17 +31,17 @@ export interface Analysis {
   candidates: { lemma: string | null; interpretations: string[]; meanings: string[]; stableId: string | null;
     grammar?: Record<string, unknown>[]; lemmaFeatures?: Record<string, unknown>;
     provenance?: { provider: string; bodyReference: string | null; annotationIndex: number; bodyIndex: number; entryIndex: number };
-    missing?: string[] }[];
+    missing?: string[]; missingMessages?: UiMessage[] }[];
 }
 export interface Passage { id: number; original: string; words: OfferedWord[]; selectedIndex?: number; }
 export type State = { generation: number; identity: Identity; text: string; passage?: Passage } & (
   { status: 'loading' } | { status: 'complete'; analysis: Analysis } |
-  { status: 'notice' | 'error' | 'unavailable'; message: string; refreshOnView?: true; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] }
+  { status: 'notice' | 'error' | 'unavailable'; message: string; uiMessage?: UiMessage; refreshOnView?: true; failureKind?: RequestFailure['kind']; providerIssues?: ProviderIssue[] }
 );
 export interface AnalysisInvocation { explanationMode: 'explanations' | 'structural-only'; options: Record<string, ProviderOptionValue>; }
 export interface Analyzer {
   supportsInput?(text: string, identity: Identity): boolean;
-  // Interpretations contain application-authored English grammar labels, never
+  // Interpretations contain application-authored fallback grammar labels, never
   // provider prose repurposed to bypass explanation-language eligibility.
   analyze(text: string, identity: Identity, signal: AbortSignal, deadline: number, invocation?: AnalysisInvocation): Promise<Analysis>;
 }
@@ -47,7 +49,7 @@ export interface LookupRequest {
   current(): boolean;
   lookup(identity: Identity, input: string): Promise<void>;
   selectWord(identity: Identity, passageId: number, wordIndex: number): Promise<void>;
-  notice(identity: Identity, text: string, message: string): void;
+  notice(identity: Identity, text: string, message: string, uiMessage?: UiMessage): void;
 }
 /** Browser-independent production entry point shared by every lookup action. */
 export class LookupCoordinator {
@@ -108,6 +110,7 @@ export class LookupCoordinator {
       const refresh = !!state.text && (!passage || passage.selectedIndex !== undefined);
       this.#set({ identity, text: state.text, passage, generation: ++this.#generation, status: 'notice',
         ...(refresh ? { refreshOnView: true as const } : {}),
+        uiMessage: message(passage && passage.selectedIndex === undefined ? 'passageRetained' : 'settingsRefresh'),
         message: passage && passage.selectedIndex === undefined
           ? 'Passage retained. Choose one word to look up; nothing has been sent.'
           : 'Settings changed. This selection will refresh when viewed.' });
@@ -179,13 +182,13 @@ export class LookupCoordinator {
         scope.frameId = identity.frameId;
         await this.#lookup(identity, word.text, request, deadline, { ...passage, selectedIndex: wordIndex });
       },
-      notice: (identity, text, message) => {
+      notice: (identity, text, message, uiMessage) => {
         if (identity.tabId !== tabId) throw new Error('Lookup source belongs to another tab.');
         const publish = () => { if (current()) {
           this.#invalidate(tabId);
           this.#pending.get(tabId)?.abort();
           this.#pending.delete(tabId);
-          this.#set({ identity: { ...identity }, text, generation: ++this.#generation, status: 'notice', message });
+          this.#set({ identity: { ...identity }, text, generation: ++this.#generation, status: 'notice', message, ...(uiMessage ? { uiMessage } : {}) });
         } };
         if (this.#prepareLookup) void this.#prepareLookup(identity, current).then(accepted => { if (accepted) publish(); });
         else publish();
@@ -193,8 +196,8 @@ export class LookupCoordinator {
     };
     return request;
   }
-  notice(identity: Identity, text: string, message: string): void {
-    this.begin(identity.tabId).notice(identity, text, message);
+  notice(identity: Identity, text: string, message: string, uiMessage?: UiMessage): void {
+    this.begin(identity.tabId).notice(identity, text, message, uiMessage);
   }
   lookup(identity: Identity, input: string): Promise<void> {
     return this.begin(identity.tabId).lookup(identity, input);
@@ -227,11 +230,11 @@ export class LookupCoordinator {
     if (this.#prepareLookup && (!await this.#prepareLookup(identity, request.current) || !request.current())) return;
     this.#invalidate(identity.tabId);
     const prepared = prepareSelection(input);
-    if ('error' in prepared) return request.notice(identity, input, prepared.error);
+    if ('error' in prepared) return request.notice(identity, input, prepared.error, prepared.uiMessage);
     if (prepared.words.length > 1) {
       const generation = ++this.#generation;
       this.#set({ identity: { ...identity }, text: input, generation, status: 'notice',
-        passage: { id: generation, original: input, words: prepared.words }, message: 'Passage retained. Choose one word to look up; nothing has been sent.' });
+        passage: { id: generation, original: input, words: prepared.words }, uiMessage: message('passageRetained'), message: 'Passage retained. Choose one word to look up; nothing has been sent.' });
       return;
     }
     const text = prepared.words[0]!.text;
@@ -250,7 +253,7 @@ export class LookupCoordinator {
       else this.clear(identity.tabId);
     } catch (error) {
       const failureKind = error instanceof RequestFailure ? error.kind : undefined;
-      if (current()) this.#set({ ...base, status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', failureKind, providerIssues: error instanceof RequestFailure ? error.issues : undefined, message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
+      if (current()) this.#set({ ...base, status: capabilityUnavailable(failureKind) ? 'unavailable' : 'error', failureKind, uiMessage: errorMessage(error), providerIssues: error instanceof RequestFailure ? error.issues : undefined, message: error instanceof Error ? error.message : 'Analysis failed. Try again.' });
     } finally {
       if (this.#pending.get(identity.tabId) === abort) this.#pending.delete(identity.tabId);
     }
