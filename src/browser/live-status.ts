@@ -3,11 +3,14 @@ import type { UiMessage } from '../i18n/messages.ts';
 /** Give browser accessibility events from rendering time to settle before speaking. */
 export class LiveStatus {
   #timer: ReturnType<typeof setTimeout> | undefined;
-  #region: HTMLElement;
+  #region: Pick<HTMLElement, 'textContent'>;
   #message?: string | UiMessage;
-  constructor(region: HTMLElement) { this.#region = region; }
+  constructor(region: Pick<HTMLElement, 'textContent'>) { this.#region = region; }
 
-  localize(): void { if (this.#message !== undefined) this.update(this.#message); }
+  localize(): void {
+    clearTimeout(this.#timer);
+    if (this.#message !== undefined) this.#region.textContent = typeof this.#message === 'string' ? this.#message : uiText(this.#message);
+  }
   reset(): void { clearTimeout(this.#timer); this.#message = undefined; this.#region.textContent = ''; }
   update(value: string | UiMessage): void {
     this.#message = value;

@@ -81,12 +81,14 @@ async function refresh(): Promise<void> {
 interfaceSelect.onchange = () => {
   if (interfaceSaving) return;
   const interfaceLanguage = interfaceSelect.value;
+  const restoreFocus = document.activeElement === interfaceSelect;
   interfaceSaving = true; interfaceSelect.disabled = true; interfaceStatus.update(message('saving'));
   void send({ type: 'save-interface-language', interfaceLanguage }).then(async () => {
     await refresh(); interfaceStatus.update(message('interfaceSaved'));
   }).catch(error => { interfaceStatus.update(errorMessage(error)); }).finally(async () => {
     interfaceSaving = false; interfaceSelect.disabled = false;
     await refresh().catch(report);
+    if (restoreFocus && document.hasFocus() && document.activeElement === document.body) interfaceSelect.focus({ preventScroll: true });
   });
 };
 element('enable-providers').onclick = () => {

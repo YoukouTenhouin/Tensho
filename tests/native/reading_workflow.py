@@ -85,7 +85,7 @@ def run(desktop, restart=False, idle=False, passage=False):
                         raise RuntimeError('Xvfb did not start')
                     display = ':' + os.read(reader, 50).decode().strip()
                     os.close(reader)
-                env = {**os.environ, 'DISPLAY': display}
+                env = {**os.environ, 'DISPLAY': display, 'LANGUAGE': 'en_US.UTF-8'}
                 env.pop('WAYLAND_DISPLAY', None)
                 browser = subprocess.Popen(['microsoft-edge', '--ozone-platform=x11', f'--user-data-dir={root}/profile',
                     '--no-first-run', '--no-default-browser-check', f'--disable-extensions-except={extension}',

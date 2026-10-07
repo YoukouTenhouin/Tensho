@@ -51,3 +51,29 @@ test('interface saves persist independently of lookup configuration and only suc
   assert.equal(await preference.get(), 'auto');
   saved = 'retired-language'; assert.equal(await new InterfacePreference(storage).get(), 'auto');
 });
+
+test('grammar field labels change independently while nested and unknown provider values remain intact', async context => {
+  const { setLocale } = await import('../src/browser/i18n.ts');
+  const { describeGrammar } = await import('../src/browser/grammar-view.ts');
+  context.after(() => setLocale('en'));
+  const grammar = { term: { $: 'mālum', lang: 'lat' }, pofs: 'noun', case: 'nominative', num: 'singular', supplied: { original: 'ἅμα' } };
+  const original = structuredClone(grammar);
+  setLocale('en'); assert.equal(describeGrammar(grammar), 'Form: mālum, Part of speech: noun, Case: nominative, Number: singular, supplied: original: ἅμα');
+  setLocale('zh-Hans'); assert.equal(describeGrammar(grammar), '词形: mālum, 词性: noun, 格: nominative, 数: singular, supplied: original: ἅμα');
+  assert.deepEqual(grammar, original);
+});
+
+test('locale changes translate live status immediately and cancel previously queued text', async context => {
+  const { setLocale } = await import('../src/browser/i18n.ts');
+  const { LiveStatus } = await import('../src/browser/live-status.ts');
+  context.after(() => setLocale('en'));
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  const region = { textContent: '' };
+  const status = new LiveStatus(region);
+  setLocale('en'); status.update(message('saving'));
+  setLocale('zh-Hans'); status.localize();
+  assert.equal(region.textContent, '正在保存…');
+  context.mock.timers.tick(300); assert.equal(region.textContent, '正在保存…');
+  status.update(message('saved')); context.mock.timers.tick(300);
+  assert.equal(region.textContent, '已保存。');
+});

@@ -12,11 +12,13 @@ export const createIntegratedProviders: typeof production = dependencies => {
     const id = declaration.id;
     if (id.startsWith('a-')) registry.analyzers[id] = { analyze: async (text, _identity, signal, deadline) => dependencies.executor.run(async () => {
       (scope.__tenshoRecoveryCalls ??= []).push(`${id}:analysis:${text}`);
+      if (text === 'i18npending') await new Promise(resolve => setTimeout(resolve, 2000));
       if (text === 'sessionpending') await new Promise(resolve => setTimeout(resolve, 500));
       const scenario = scope.__tenshoRecoveryScenario;
       if (scenario === 'analysis-exhausted' || (id === 'a-first' && scenario === 'analysis-fallback')) throw new RequestFailure('network', `${id} controlled network failure`);
       if (scenario === 'analysis-empty') return { provider: id, controlled: true, outcome: 'no-match', candidates: [] };
       return { provider: id, controlled: true, outcome: 'usable', candidates: [{ lemma: 'malum', stableId: 'candidate-one',
+        grammar: [{ pofs: 'noun', case: 'nominative', num: 'singular' }],
         interpretations: ['Part of speech: noun'], meanings: scenario === 'analysis-partial' ? [] : ['Controlled short meaning'] }] } satisfies Analysis;
     }, { signal, deadline }) };
     else registry.dictionaries[id] = {
