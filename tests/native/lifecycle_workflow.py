@@ -49,7 +49,7 @@ def run(output):
                 os.close(writer)
                 if not select.select([reader], [], [], 10)[0]: raise RuntimeError('No isolated display')
                 display = ':' + os.read(reader, 50).decode().strip(); os.close(reader)
-                env = {**os.environ, 'DISPLAY': display}; env.pop('WAYLAND_DISPLAY', None)
+                env = {**os.environ, 'DISPLAY': display, 'LANGUAGE': 'en_US.UTF-8'}; env.pop('WAYLAND_DISPLAY', None)
                 command = ['microsoft-edge', '--ozone-platform=x11', f'--user-data-dir={root}/profile', '--no-first-run', '--no-default-browser-check',
                            f'--disable-extensions-except={extension}', f'--load-extension={extension}', '--remote-debugging-port=0',
                            '--window-size=1300,900', '--window-position=0,0', url]

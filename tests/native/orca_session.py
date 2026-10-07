@@ -11,12 +11,13 @@ from reading_workflow import wait_for
 import gi
 gi.require_version('Gio','2.0')
 from gi.repository import Gio,GLib
+i18n=os.environ.get('TENSHO_ORCA_I18N')=='1'
 out=Path(os.environ['TENSHO_ORCA_OUTPUT']);out.mkdir(parents=True,exist_ok=True)
 bus=Gio.bus_get_sync(Gio.BusType.SESSION,None)
 def status_get(k):return bus.call_sync('org.a11y.Bus','/org/a11y/bus','org.freedesktop.DBus.Properties','Get',GLib.Variant('(ss)',('org.a11y.Status',k)),None,Gio.DBusCallFlags.NONE,2000,None).unpack()[0]
 def status_set(k,v):bus.call_sync('org.a11y.Bus','/org/a11y/bus','org.freedesktop.DBus.Properties','Set',GLib.Variant('(ssv)',('org.a11y.Status',k,GLib.Variant('b',v))),None,Gio.DBusCallFlags.NONE,2000,None)
 initial={k:status_get(k) for k in ['IsEnabled','ScreenReaderEnabled']}
-r={'observed_at_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'mode':'isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run','initial_accessibility':initial,'checks':{},'actions':[]}
+r={'interface_language':'zh-Hans' if i18n else 'en','observed_at_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'mode':'isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run','initial_accessibility':initial,'checks':{},'actions':[]}
 connections=[];browser=orca=server=registry=None
 try:
  if subprocess.run(['pgrep','-x','orca'],stdout=subprocess.DEVNULL).returncode==0:raise RuntimeError('Existing Orca; refusing to replace it')
@@ -138,7 +139,7 @@ GLib.timeout_add_seconds(3,positive_control)
   if app:walk(app)
   (out/'test-browser-atspi.json').write_text(json.dumps(accessible,indent=2))
   r['atspi_nodes']=len(accessible)
-  r['atspi_manual_input_found']=any(n['name']=='Word or passage' for n in accessible)
+  r['atspi_manual_input_found']=any(n['name']==('单词或段落' if i18n else 'Word or passage') for n in accessible)
   if orca.poll() is not None:raise RuntimeError('Orca failed to start; see orca.log')
   # CDP drives the reading controls while Orca observes actual native accessibility events.
   # This is explicitly distinct from the separate keyboard-only acceptance run.
@@ -154,16 +155,16 @@ GLib.timeout_add_seconds(3,positive_control)
   submit('sessionpending');wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1)
   r['dictionary_focus']=panel.evaluate('({focus:document.hasFocus(),scroll:scrollY,status:document.querySelector("#dictionary-status").getBoundingClientRect().toJSON(),height:innerHeight})')
   panel.evaluate("document.querySelector('#dictionary-0').click()")
-  wait_for(lambda:snap().get('dictionaries',{}).get('0',{}).get('resolution',{}).get('status')=='complete');wait_for(lambda:spoken('possible entries'),seconds=8);r['checks']['dictionary_resolution_spoken']=True
+  wait_for(lambda:snap().get('dictionaries',{}).get('0',{}).get('resolution',{}).get('status')=='complete');wait_for(lambda:spoken('可能的词条' if i18n else 'possible entries'),seconds=8);r['checks']['dictionary_resolution_spoken']=True
   for entry in ['n1','n2']:
    panel.evaluate('document.querySelector("#article-0-'+entry+'").click()')
-   wait_for(lambda:snap()['dictionaries']['0'].get('articles',{}).get(entry,{}).get('status')=='complete');wait_for(lambda:spoken('entry '+str(['n1','n2'].index(entry)+1)+': Entry from d-first is ready.'),seconds=8);r['checks']['article_'+entry+'_spoken']=True
+   wait_for(lambda:snap()['dictionaries']['0'].get('articles',{}).get(entry,{}).get('status')=='complete');wait_for(lambda:spoken(('词条 '+str(['n1','n2'].index(entry)+1)+'：d-first的词条已加载。') if i18n else ('entry '+str(['n1','n2'].index(entry)+1)+': Entry from d-first is ready.')),seconds=8);r['checks']['article_'+entry+'_spoken']=True
   r['actions'].append('resolve and read two articles')
   submit('malum puella');wait_for(lambda:snap().get('state',{}).get('passage') is not None)
   panel.evaluate("document.querySelector('#passage-word-1').focus();document.querySelector('#passage-word-1').click()")
   wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1);r['actions'].append('choose passage word')
   worker.evaluate("globalThis.__tenshoRecoveryScenario='analysis-exhausted'");submit('malum')
-  wait_for(lambda:snap().get('state',{}).get('status')=='error');wait_for(lambda:spoken('Connection failed.'),seconds=8);r['checks']['analysis_error_spoken']=True
+  wait_for(lambda:snap().get('state',{}).get('status')=='error');wait_for(lambda:spoken('连接失败。' if i18n else 'Connection failed.'),seconds=8);r['checks']['analysis_error_spoken']=True
   panel.evaluate("document.querySelector('#retry').focus()")
   worker.evaluate("globalThis.__tenshoRecoveryScenario=undefined");panel.evaluate("document.querySelector('#retry').click()")
   wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1);r['actions'].append('failure and explicit retry')
@@ -174,9 +175,9 @@ GLib.timeout_add_seconds(3,positive_control)
   options.evaluate("document.querySelector('#provider-analysis-0').focus()")
   time.sleep(.5)
   options.evaluate("document.querySelector('#provider-analysis-0').click()")
-  wait_for(lambda:spoken('Unsaved changes'),seconds=8);r['checks']['settings_draft_spoken']=True
+  wait_for(lambda:spoken('有未保存的更改' if i18n else 'Unsaved changes'),seconds=8);r['checks']['settings_draft_spoken']=True
   options.evaluate("document.querySelector('#lookup-settings').requestSubmit()")
-  wait_for(lambda:spoken('Settings saved'),seconds=8);r['checks']['settings_saved_spoken']=True
+  wait_for(lambda:spoken('设置已保存' if i18n else 'Settings saved'),seconds=8);r['checks']['settings_saved_spoken']=True
   reading.call('Page.bringToFront')
   panel.evaluate("document.querySelector('#status').textContent='Tensho sidebar polite status positive control'");time.sleep(3)
   panel.evaluate("document.querySelector('#feedback').textContent='Tensho sidebar alert positive control'");time.sleep(3)

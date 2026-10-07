@@ -63,3 +63,22 @@ test('same-headword articles have distinct announcements without internal identi
   context.mock.timers.tick(300);
   assert.equal(region.textContent, 'Dictionary for malum, malum, entry 2: Entry from Lewis & Short is ready.');
 });
+
+test('changing interface language cancels obsolete speech without replaying retained completions', async context => {
+  const { setLocale } = await import('../src/browser/i18n.ts');
+  context.after(() => setLocale('en'));
+  context.mock.timers.enable({ apis: ['setTimeout'] });
+  const region = { textContent: '' };
+  const announcements = new DictionaryAnnouncements(region);
+  const candidates = [{ lemma: 'malum', stableId: null, meanings: [], interpretations: [] }];
+  setLocale('en'); announcements.update('tab:1', candidates, {});
+  const dictionaries: Record<number, CandidateDictionary> = { 0: { expanded: true, resolution: { status: 'loading' }, articles: {} } };
+  announcements.update('tab:1', candidates, dictionaries);
+  setLocale('zh-Hans'); announcements.update('tab:1', candidates, dictionaries);
+  context.mock.timers.tick(300); assert.equal(region.textContent, '');
+  dictionaries[0]!.resolution = { status: 'error', failureKind: 'network', message: 'Private diagnostic' };
+  announcements.update('tab:1', candidates, dictionaries);
+  context.mock.timers.tick(300); assert.equal(region.textContent, 'malum的词典：连接失败。');
+  setLocale('en'); announcements.update('tab:1', candidates, dictionaries);
+  context.mock.timers.tick(300); assert.equal(region.textContent, '');
+});

@@ -24,7 +24,7 @@ from permission_scope import CDP, QuietHandler
 from reading_workflow import wait_for, version
 
 
-def run(output, consistency=False, accessibility=False):
+def run(output, consistency=False, accessibility=False, i18n=False):
     output.mkdir(parents=True, exist_ok=True)
     repo = Path(__file__).resolve().parents[2]
     evidence = {'observed_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -53,10 +53,12 @@ def run(output, consistency=False, accessibility=False):
                 os.close(writer)
                 if not select.select([reader], [], [], 10)[0]: raise RuntimeError('No isolated display')
                 display = ':' + os.read(reader, 50).decode().strip(); os.close(reader)
-                env = {**os.environ, 'DISPLAY': display}; env.pop('WAYLAND_DISPLAY', None)
+                env = {**os.environ, 'DISPLAY': display, 'LANGUAGE': 'en_US.UTF-8'}; env.pop('WAYLAND_DISPLAY', None)
+                if i18n: env['LANGUAGE'] = 'zh_CN.UTF-8'
                 command = ['microsoft-edge', '--ozone-platform=x11', f'--user-data-dir={root}/profile', '--no-first-run', '--no-default-browser-check',
                            f'--disable-extensions-except={extension}', f'--load-extension={extension}', '--remote-debugging-port=0',
                            '--window-size=1300,900', '--window-position=0,0', url]
+                if i18n: command.insert(1, '--lang=zh-CN')
                 port_file = root / 'profile/DevToolsActivePort'
                 port = None
                 def targets():
@@ -101,7 +103,10 @@ def run(output, consistency=False, accessibility=False):
                     for connection in connections: connection.ws.close()
                     connections.clear()
 
-                if accessibility:
+                if i18n:
+                    from i18n_workflow import exercise_i18n
+                    exercise_i18n(evidence, worker, panel, page, connect, target, display, output, close_browser, launch)
+                elif accessibility:
                     from accessibility_workflow import exercise_accessibility
                     exercise_accessibility(evidence, panel, worker, page, snapshot, display, target)
                 elif consistency:
@@ -178,7 +183,7 @@ def run(output, consistency=False, accessibility=False):
                     checks['browser_restart_preserves_local_settings'] = snapshot()['settings'] == before_settings
                     checks['browser_restart_preserves_site_enablement'] = origin in snapshot()['enabledOrigins']
                     checks['browser_restart_sends_no_lookup'] = calls() == []
-                    evidence['passed'] = all(checks.values())
+                evidence['passed'] = all(checks.values())
         except Exception as error:
             evidence['failure'] = str(error); evidence['traceback'] = traceback.format_exc(); evidence['passed'] = False
             evidence['browser_exit'] = browser.poll() if browser else None
@@ -211,6 +216,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--consistency', action='store_true')
     parser.add_argument('--accessibility', action='store_true')
+    parser.add_argument('--i18n', action='store_true')
     args = parser.parse_args()
-    result = run(args.output, args.consistency, args.accessibility); print(json.dumps(result, indent=2, ensure_ascii=False))
+    result = run(args.output, args.consistency, args.accessibility, args.i18n); print(json.dumps(result, indent=2, ensure_ascii=False))
     raise SystemExit(0 if result['passed'] else 1)
