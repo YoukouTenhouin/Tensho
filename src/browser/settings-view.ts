@@ -26,70 +26,85 @@ export class SettingsView {
   #message = node('p');
   #announcement = new LiveStatus(this.#message);
   #fields = node('fieldset');
-  #lookup = node('select');
+  #language = node('select');
   #explanations = node('select');
   #providers = node('div');
-  #apply = node('button', 'Save settings');
+  #editingLanguage = '';
+  #explanationValue = node('p');
+  #explanationLabel = node('label', 'Explanations');
+  #discard = node('button', 'Discard changes');
+  #apply = node('button', 'Save changes');
   constructor(root: HTMLElement, save: (draft: SettingsDraft, revision: string) => Promise<Settings>) {
-    this.#save = save;
+    this.#save = save; this.#fields.disabled = true;
     const form = node('form'); form.id = 'lookup-settings';
-    this.#fields.append(node('legend', 'Edit lookup settings'));
-    this.#lookup.id = 'lookup-language'; this.#explanations.id = 'explanation-language';
-    for (const [labelText, control] of [['Lookup', this.#lookup], ['Explanations', this.#explanations]] as const) {
-      const label = node('label', labelText); label.htmlFor = control.id; this.#fields.append(label, control);
-    }
+    this.#fields.append(node('legend', 'Provider profiles'));
+    this.#language.id = 'profile-language'; this.#explanations.id = 'explanation-language';
+    const languageLabel = node('label', 'Language'); languageLabel.htmlFor = this.#language.id;
+    this.#explanationLabel.htmlFor = this.#explanations.id;
+    const controls = node('div'); controls.className = 'profile-controls';
+    const languageControl = node('div'); languageControl.append(languageLabel, this.#language);
+    const explanationControl = node('div');
+    this.#explanationValue.id = 'explanation-value';
+    explanationControl.append(this.#explanationLabel, this.#explanations, this.#explanationValue);
+    controls.append(languageControl, explanationControl); this.#fields.append(controls);
     this.#fields.append(this.#providers);
     this.#apply.type = 'submit'; this.#apply.id = 'save-settings';
-    const reload = node('button', 'Reload saved settings'); reload.type = 'button'; reload.id = 'reload-settings';
-    reload.onclick = () => { if (this.#saved) { this.#dirty = false; this.#reset(); } };
+    this.#discard.type = 'button'; this.#discard.id = 'reload-settings';
+    this.#discard.onclick = () => { if (this.#saved) { this.#dirty = false; this.#reset(); } };
     this.#message.id = 'settings-message'; this.#message.setAttribute('aria-live', 'polite'); this.#message.setAttribute('aria-atomic', 'true');
-    this.#fields.append(this.#apply, reload); form.append(this.#fields, this.#message); root.append(form);
-    this.#lookup.onchange = () => {
+    const actions = node('div'); actions.className = 'row settings-actions'; actions.append(this.#apply, this.#discard);
+    this.#fields.append(actions); form.append(this.#fields, this.#message); root.append(form);
+    this.#language.onchange = () => {
       if (!this.#draft) return;
-      this.#draft.lookupLanguage = this.#lookup.value; this.#changed(); this.#profile();
+      this.#editingLanguage = this.#language.value; this.#profile();
     };
     this.#explanations.onchange = () => {
       if (!this.#draft) return;
-      this.#draft.languages[this.#draft.lookupLanguage]!.explanationLanguage = this.#explanations.value; this.#changed();
+      this.#draft.languages[this.#editingLanguage]!.explanationLanguage = this.#explanations.value; this.#changed();
     };
     form.onsubmit = event => { event.preventDefault(); void this.#submit(); };
   }
   update(saved: Settings, catalog: ProviderCatalog): void {
-    this.#catalog = catalog; this.#saved = saved;
+    this.#catalog = catalog; this.#saved = saved; this.#fields.disabled = this.#saving;
     if (!this.#draft || (!this.#dirty && this.#baseRevision !== saved.revision)) this.#reset();
     else if (this.#dirty && this.#baseRevision !== saved.revision && !this.#saving) {
-      this.#announcement.update('Settings changed in another panel. Reload saved settings before editing again.');
+      this.#announcement.update('Settings changed elsewhere. Discard changes to reload.');
     }
   }
   #changed(): void {
-    this.#dirty = true; this.#apply.disabled = false;
-    this.#announcement.update('Unsaved changes. Results continue to use the saved settings shown above until you save.');
+    this.#dirty = true; this.#apply.disabled = false; this.#discard.disabled = false;
+    this.#announcement.update('Unsaved changes.');
   }
   #reset(): void {
     if (!this.#saved) return;
     this.#baseRevision = this.#saved.revision; this.#draft = structuredClone(this.#saved);
-    this.#lookup.replaceChildren(...this.#catalog.languages.map(language => option(language.id, language.name)));
-    this.#lookup.value = this.#draft.lookupLanguage;
-    this.#apply.disabled = true; this.#announcement.update('Changes apply when saved and refresh the visible selection.');
+    this.#language.replaceChildren(...this.#catalog.languages.map(language => option(language.id, language.name)));
+    if (!this.#draft.languages[this.#editingLanguage]) this.#editingLanguage = this.#draft.lookupLanguage;
+    this.#language.value = this.#editingLanguage;
+    this.#apply.disabled = true; this.#discard.disabled = true; this.#announcement.update('');
     this.#profile();
   }
   #explanationChoices(): void {
     if (!this.#draft) return;
-    const routes = lookupRoutes(this.#draft, this.#catalog);
+    const routes = lookupRoutes(this.#draft, this.#catalog, this.#editingLanguage);
     const choices = routes.explanationChoices.map(id => option(id, explanationName(id)));
     if (!routes.preferenceAvailable) {
       const unavailable = option(routes.explanationLanguage, `${explanationName(routes.explanationLanguage)} (unavailable)`);
       unavailable.disabled = true; choices.unshift(unavailable);
     }
     this.#explanations.replaceChildren(...choices); this.#explanations.value = routes.explanationLanguage;
+    this.#explanations.hidden = choices.length <= 1;
+    this.#explanationLabel.hidden = this.#explanations.hidden;
+    this.#explanationValue.hidden = !this.#explanations.hidden;
+    this.#explanationValue.textContent = `Explanations: ${explanationName(routes.explanationLanguage)}${routes.preferenceAvailable ? '' : ' · unavailable'}`;
   }
   #profile(): void {
     if (!this.#draft) return;
     this.#explanationChoices(); this.#providers.replaceChildren();
-    const language = this.#draft.lookupLanguage, profile = this.#draft.languages[language]!;
+    const language = this.#editingLanguage, profile = this.#draft.languages[language]!;
     for (const role of ['analysis', 'dictionary'] as const) {
       const section = node('section'); section.append(node('h3', role === 'analysis' ? 'Analysis providers' : 'Dictionary providers'));
-      if (!profile[role].length) section.append(node('p', 'No integrated provider is available for this role and lookup language.'));
+      if (!profile[role].length) section.append(node('p', 'No providers available.'));
       const list = node('ol');
       profile[role].forEach((configured, index) => {
         const declared = providerCapability(this.#catalog, configured.id, language, role);
@@ -99,14 +114,13 @@ export class SettingsView {
         const name = declared?.provider.name ?? `${configured.id} (unavailable)`;
         label.append(enabled, document.createTextNode(` ${name}`)); item.append(label);
         enabled.onchange = () => { configured.enabled = enabled.checked; this.#changed(); this.#explanationChoices(); };
-        for (const [step, title] of [[-1, 'Move earlier'], [1, 'Move later']] as const) {
+        if (profile[role].length > 1) for (const [step, title] of [[-1, 'Move earlier'], [1, 'Move later']] as const) {
           const move = node('button', title); move.type = 'button'; move.disabled = index + step < 0 || index + step >= profile[role].length;
           move.setAttribute('aria-label', `${title}: ${name} for ${role}`);
           move.onclick = () => this.#move(role, index, step);
           item.append(move);
         }
         if (declared) {
-          item.append(node('p', `Input: ${declared.capability.inputNotations.join(', ')}. Explanations: ${declared.capability.explanationLanguages.map(explanationName).join(', ') || 'none'}.`));
           for (const [key, declaration] of Object.entries(declared.provider.options)) {
             const optionLabel = node('label', declaration.label);
             const input = declaration.type === 'boolean' ? node('input') : node('select');
@@ -115,7 +129,6 @@ export class SettingsView {
             input.onchange = () => { configured.options[key] = input instanceof HTMLInputElement ? input.checked : input.value; this.#changed(); };
             optionLabel.append(input); item.append(optionLabel);
           }
-          const credits = node('details'); credits.append(node('summary', 'Provider attribution'), ...declared.provider.attribution.map(text => node('p', text))); item.append(credits);
         }
         list.append(item);
       });
@@ -123,7 +136,7 @@ export class SettingsView {
     }
   }
   #move(role: ProviderRole, index: number, step: number): void {
-    const entries = this.#draft!.languages[this.#draft!.lookupLanguage]![role];
+    const entries = this.#draft!.languages[this.#editingLanguage]![role];
     [entries[index], entries[index + step]] = [entries[index + step]!, entries[index]!];
     this.#changed(); this.#profile();
     this.#providers.querySelector<HTMLInputElement>(`#provider-${role}-${index + step}`)?.focus();
@@ -133,7 +146,7 @@ export class SettingsView {
     this.#saving = true; this.#fields.disabled = true; this.#announcement.update('Saving settings…');
     try {
       this.#saved = await this.#save(structuredClone(this.#draft), this.#baseRevision);
-      this.#dirty = false; this.#reset(); this.#announcement.update('Settings saved. The visible selection uses the new settings.');
+      this.#dirty = false; this.#reset(); this.#announcement.update('Settings saved.');
     } catch (error) { this.#announcement.update(error instanceof Error ? error.message : String(error)); }
     finally { this.#saving = false; this.#fields.disabled = false; }
   }

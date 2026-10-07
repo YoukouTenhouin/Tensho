@@ -174,7 +174,7 @@ export class ConfigurationStore {
   save(draft: unknown, expectedRevision: string): Promise<Settings> {
     const edit = this.#tail.then(async () => {
       await this.#ready;
-      if (this.#current.revision !== expectedRevision) throw new ConfigurationError('Settings changed in another panel. Reload the settings before saving.');
+      if (this.#current.revision !== expectedRevision) throw new ConfigurationError('Settings changed elsewhere. Reload before saving.');
       const next = editSettings(this.#current, draft, this.#catalog, this.#revision());
       if (next !== this.#current) { await this.#storage.write(next); this.#current = next; }
       return structuredClone(this.#current);
