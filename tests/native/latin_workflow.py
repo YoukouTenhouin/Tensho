@@ -79,7 +79,14 @@ def run(output, dictionary=False, passage=False):
                 key(display, 'Alt_L', 'Shift_L', 'k')
                 panel = connect(wait_for(lambda: target('/panel.html')))
                 snapshot = "(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'snapshot',windowId:w.id})})()"
-                wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('has not been granted')"))
+                wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
+                panel.evaluate("document.querySelector('#open-settings').click()")
+                options = connect(wait_for(lambda: target('/options.html')))
+                wait_for(lambda: options.evaluate("document.querySelector('#provider-access')?.textContent.includes('disabled')"))
+                def source():
+                    reading.call('Page.bringToFront')
+                    wait_for(lambda: panel.evaluate(snapshot).get('origin') == f'http://127.0.0.1:{server.server_port}')
+                source()
                 def requests():
                     worker.evaluate('0')
                     return [event['params']['request'] for event in worker.events if event.get('method') == 'Network.requestWillBeSent'
@@ -96,25 +103,26 @@ def run(output, dictionary=False, passage=False):
                 missing = submit()
                 checks['missing_access_visible_without_request'] = missing.get('failureKind') == 'missing-access' and len(requests()) == 0
                 def prompt(name, instruction):
-                    panel.call('Runtime.evaluate', expression="document.querySelector('#enable-providers').click()", userGesture=True)
+                    options.call('Page.bringToFront')
+                    options.call('Runtime.evaluate', expression="document.querySelector('#enable-providers').click()", userGesture=True)
                     time.sleep(.6)
                     path = output/(name+'.png')
                     subprocess.run(['import', '-display', display, '-window', 'root', str(path)], check=True)
                     print(f'{instruction}: inspect {path}, then enter X Y', flush=True)
                     a, b = map(int, input().split()); click(display, a, b)
                 prompt('deny', 'Deny Latin provider access')
-                wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('denied')"))
-                denied = submit()
+                wait_for(lambda: options.evaluate("document.querySelector('#provider-access').textContent.includes('denied')"))
+                source(); denied = submit()
                 checks['denial_visible_without_request'] = denied.get('failureKind') == 'missing-access' and len(requests()) == 0
                 prompt('grant', 'Allow access to the two displayed Alpheios origins')
-                wait_for(lambda: panel.evaluate("document.querySelector('#enable-providers').disabled"))
+                wait_for(lambda: options.evaluate("document.querySelector('#enable-providers').hidden"))
                 checks['grant_does_not_automatically_lookup'] = len(requests()) == 0
                 evidence['granted_origins'] = panel.evaluate('chrome.permissions.getAll().then(p=>p.origins)')
                 checks['exact_default_provider_origins'] = sorted(evidence['granted_origins']) == ['https://morph.alpheios.net/*', 'https://repos1.alpheios.net/*']
-                live = retry(); evidence['live_state'] = live
+                source(); live = retry(); evidence['live_state'] = live
                 checks['explicit_retry_after_grant_completes'] = live['status'] == 'complete'
                 checks['live_latin_importo_analysis'] = live['status'] == 'complete' and live['analysis']['candidates'][0]['lemma'].startswith('importo,')
-                checks['live_attribution_visible'] = panel.evaluate("document.querySelector('#analysis').textContent.includes('William Whitaker')")
+                checks['live_attribution_visible'] = options.evaluate("document.querySelector('#source-credits').textContent.includes('William Whitaker')")
                 checks['english_short_meanings_visible'] = panel.evaluate("document.querySelector('#analysis').textContent.includes('bring in')")
                 observed = requests(); evidence['provider_requests'] = observed
                 checks['one_explicit_latin_request'] = len(observed) == 1 and 'engine=whitakerLat' in observed[0]['url'] and 'lang=lat' in observed[0]['url']
@@ -126,7 +134,7 @@ def run(output, dictionary=False, passage=False):
                     exercise_live_passage(panel, snapshot, requests, evidence)
                 request_count = len(requests())
                 panel.evaluate("chrome.permissions.remove({origins:['https://morph.alpheios.net/*','https://repos1.alpheios.net/*']})")
-                wait_for(lambda: panel.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
+                wait_for(lambda: options.evaluate("document.querySelector('#provider-access').textContent.includes('revoked')"))
                 revoked = submit()
                 checks['revocation_visible_without_new_request'] = revoked.get('failureKind') == 'missing-access' and len(requests()) == request_count
                 retried_revoked = retry()

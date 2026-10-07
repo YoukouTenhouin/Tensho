@@ -22,7 +22,7 @@ def exercise_dictionary(panel, snapshot, requests, evidence):
     assert resolution['status'] == 'complete', resolution
     alternatives = resolution['value']['alternatives']
     checks['live_singleton_requires_choice'] = len(alternatives) == 1 and alternatives[0]['entryId'] == 'n21985' and not candidate()['articles']
-    checks['labels_precede_article_retrieval'] = len(requests()) == 2 and panel.evaluate("document.querySelector('.dictionary').textContent.includes('Index keys: importo') && document.querySelector('.dictionary').textContent.includes('unverified') && document.querySelector('.dictionary').textContent.includes('Lewis & Short')")
+    checks['labels_precede_article_retrieval'] = len(requests()) == 2 and panel.evaluate("document.querySelector('.dictionary').textContent.includes('importo') && document.querySelector('.dictionary').textContent.includes('Possible entries') && document.querySelector('.dictionary').textContent.includes('Lewis & Short')")
     click('#article-0-n21985')
     article = wait_for(lambda: (lambda a: a if a.get('status') in ('complete', 'error') else None)(candidate().get('articles', {}).get('n21985', {})), seconds=35)
     assert article['status'] == 'complete', article

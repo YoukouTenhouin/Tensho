@@ -295,10 +295,15 @@ def run(desktop, restart=False, idle=False, passage=False):
                 same = panel.evaluate(snapshot)['state']
                 checks['same_origin_frame_routes_identity'] = same['identity']['frameId'] != 0 and same['identity']['documentId'] != same['identity']['topDocumentId']
                 # Explicit settings action names the embedded origin before requesting access.
-                panel.evaluate("document.querySelector('details').open=true;document.querySelector('#origin').value=" + json.dumps(frame_origin))
-                panel.call('Runtime.evaluate', expression="document.querySelector('#site').requestSubmit()", userGesture=True)
+                panel.evaluate("document.querySelector('#open-settings').click()")
+                options = connect(wait_for(lambda: target('/options.html')))
+                wait_for(lambda: options.evaluate("!!document.querySelector('#provider-analysis-0')"))
+                options.evaluate("document.querySelector('#origin').value=" + json.dumps(frame_origin))
+                options.call('Runtime.evaluate', expression="document.querySelector('#site').requestSubmit()", userGesture=True)
                 wait_for(lambda: frame_origin in panel.evaluate('chrome.storage.local.get("enabledOrigins").then(s=>s.enabledOrigins)'))
                 wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s[0]?.matches.length===2)'))
+                reading.call('Page.bringToFront')
+                wait_for(lambda: panel.evaluate(snapshot).get('state', {}).get('generation') == same['generation'])
                 time.sleep(.1)
                 frame_double_click('embedded')
                 wait_for(lambda: panel.evaluate(snapshot)['state']['identity']['frameId'] != same['identity']['frameId'])
@@ -311,6 +316,7 @@ def run(desktop, restart=False, idle=False, passage=False):
                 wait_for(lambda: panel.evaluate('chrome.scripting.getRegisteredContentScripts().then(s=>s[0]?.matches.length===1)'))
                 before = panel.evaluate(snapshot)['state']['generation']
                 frame_double_click('embedded'); time.sleep(.15)
+                checks['disabled_current_site_offers_enable_shortcut'] = panel.evaluate("!document.querySelector('#enable-current').hidden")
                 checks['embedded_frame_requires_containing_site_enablement'] = panel.evaluate(snapshot)['state']['generation'] == before
                 evidence['frame_identities'] = {'same_origin': same['identity'], 'separate_origin': embedded['identity']}
                 # Keyboard lookup must keep the selected frame even when opening takes focus.
@@ -372,7 +378,9 @@ def run(desktop, restart=False, idle=False, passage=False):
                 native_key('Alt_L', 'Shift_L', 'k')
                 panel = connect(wait_for(lambda: target('/panel.html')))
                 wait_for(lambda: panel.evaluate("document.hasFocus() && document.activeElement.id==='results'"))
-                native_key('Shift_L', 'Tab');native_key('Shift_L', 'Tab')
+                for _ in range(8):
+                    if panel.evaluate("document.activeElement.id==='word'"): break
+                    native_key('Shift_L', 'Tab')
                 wait_for(lambda: panel.evaluate("document.activeElement.id==='word'"))
                 checks['keyboard_reaches_named_manual_input'] = panel.evaluate("document.activeElement.id==='word' && !!document.querySelector('label[for=word]')")
                 checks['keyboard_focus_is_visible'] = panel.evaluate("document.activeElement.matches(':focus-visible') && getComputedStyle(document.activeElement).outlineStyle!=='none'")

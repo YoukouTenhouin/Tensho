@@ -59,7 +59,7 @@ def exercise_consistency(evidence, panel, worker, page, snapshot, submit, reopen
     checks['worker_restart_does_not_replay_hidden_deferred_work'] = calls() == []
     activate(first); complete('malum')
     checks['deferred_refresh_survives_actual_worker_restart'] = calls() == ['a-first:analysis:malum']
-    checks['current_language_labels_match_result'] = panel().evaluate("document.querySelector('#active-settings').textContent.includes('Lookup: Latin')") and snapshot()['state']['identity']['lookupLanguage'] == 'lat'
+    checks['current_language_labels_match_result'] = panel().evaluate("document.querySelector('#active-settings').textContent.startsWith('Latin · ')") and snapshot()['state']['identity']['lookupLanguage'] == 'lat'
     checks['session_keeps_one_current_result_per_tab'] = all(saved(tab)['value']['state']['identity']['configuration'] == snapshot()['settings']['revision'] for tab in [first, second])
     checks['session_remains_within_budget'] = panel().evaluate("chrome.storage.session.get('readingResults').then(v=>new TextEncoder().encode(JSON.stringify(v)).byteLength<=6*1024*1024)")
     panel().evaluate("document.querySelector('#word').value='malum puella';document.querySelector('#lookup').requestSubmit()")

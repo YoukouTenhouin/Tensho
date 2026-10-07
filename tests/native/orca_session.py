@@ -58,7 +58,7 @@ try:
   for count in [1,2]:
    for kind in ['mousePressed','mouseReleased']:reading.call('Input.dispatchMouseEvent',type=kind,x=rect['x']+20,y=rect['y']+12,button='left',clickCount=count)
   panel=connect(wait_for(lambda:target('/panel.html')))
-  wait_for(lambda:panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+  wait_for(lambda:panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
   data=root/'data';(data/'orca').mkdir(parents=True)
   speech=out/'speech.jsonl';speech.write_text('');(out/'runtime.jsonl').write_text('');(out/'live-events.jsonl').write_text('');(out/'raw-events.jsonl').write_text('')
   (data/'orca/orca-customizations.py').write_text('''import json
@@ -138,7 +138,7 @@ GLib.timeout_add_seconds(3,positive_control)
   if app:walk(app)
   (out/'test-browser-atspi.json').write_text(json.dumps(accessible,indent=2))
   r['atspi_nodes']=len(accessible)
-  r['atspi_manual_input_found']=any(n['name']=='Word or passage to look up' for n in accessible)
+  r['atspi_manual_input_found']=any(n['name']=='Word or passage' for n in accessible)
   if orca.poll() is not None:raise RuntimeError('Orca failed to start; see orca.log')
   # CDP drives the reading controls while Orca observes actual native accessibility events.
   # This is explicitly distinct from the separate keyboard-only acceptance run.
@@ -154,25 +154,30 @@ GLib.timeout_add_seconds(3,positive_control)
   submit('sessionpending');wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1)
   r['dictionary_focus']=panel.evaluate('({focus:document.hasFocus(),scroll:scrollY,status:document.querySelector("#dictionary-status").getBoundingClientRect().toJSON(),height:innerHeight})')
   panel.evaluate("document.querySelector('#dictionary-0').click()")
-  wait_for(lambda:snap().get('dictionaries',{}).get('0',{}).get('resolution',{}).get('status')=='complete');wait_for(lambda:spoken('Correspondence'),seconds=8);r['checks']['dictionary_resolution_spoken']=True
+  wait_for(lambda:snap().get('dictionaries',{}).get('0',{}).get('resolution',{}).get('status')=='complete');wait_for(lambda:spoken('possible entries'),seconds=8);r['checks']['dictionary_resolution_spoken']=True
   for entry in ['n1','n2']:
    panel.evaluate('document.querySelector("#article-0-'+entry+'").click()')
-   wait_for(lambda:snap()['dictionaries']['0'].get('articles',{}).get(entry,{}).get('status')=='complete');wait_for(lambda:spoken('article '+entry+': Full article'),seconds=8);r['checks']['article_'+entry+'_spoken']=True
+   wait_for(lambda:snap()['dictionaries']['0'].get('articles',{}).get(entry,{}).get('status')=='complete');wait_for(lambda:spoken('entry '+str(['n1','n2'].index(entry)+1)+': Entry from d-first is ready.'),seconds=8);r['checks']['article_'+entry+'_spoken']=True
   r['actions'].append('resolve and read two articles')
   submit('malum puella');wait_for(lambda:snap().get('state',{}).get('passage') is not None)
   panel.evaluate("document.querySelector('#passage-word-1').focus();document.querySelector('#passage-word-1').click()")
   wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1);r['actions'].append('choose passage word')
   worker.evaluate("globalThis.__tenshoRecoveryScenario='analysis-exhausted'");submit('malum')
-  wait_for(lambda:snap().get('state',{}).get('status')=='error');wait_for(lambda:spoken('Eligible providers failed'),seconds=8);r['checks']['analysis_error_spoken']=True
+  wait_for(lambda:snap().get('state',{}).get('status')=='error');wait_for(lambda:spoken('Connection failed.'),seconds=8);r['checks']['analysis_error_spoken']=True
   panel.evaluate("document.querySelector('#retry').focus()")
   worker.evaluate("globalThis.__tenshoRecoveryScenario=undefined");panel.evaluate("document.querySelector('#retry').click()")
   wait_for(lambda:snap().get('state',{}).get('status')=='complete');time.sleep(1);r['actions'].append('failure and explicit retry')
-  panel.evaluate("document.querySelector('#settings').open=true;document.querySelector('#provider-analysis-0').focus()")
+  panel.evaluate("document.querySelector('#open-settings').click()")
+  options=connect(wait_for(lambda:target('/options.html')))
+  wait_for(lambda:options.evaluate("!!document.querySelector('#provider-analysis-0')"))
+  options.call('Page.bringToFront')
+  options.evaluate("document.querySelector('#provider-analysis-0').focus()")
   time.sleep(.5)
-  panel.evaluate("document.querySelector('#provider-analysis-0').click()")
+  options.evaluate("document.querySelector('#provider-analysis-0').click()")
   wait_for(lambda:spoken('Unsaved changes'),seconds=8);r['checks']['settings_draft_spoken']=True
-  panel.evaluate("document.querySelector('#lookup-settings').requestSubmit()")
+  options.evaluate("document.querySelector('#lookup-settings').requestSubmit()")
   wait_for(lambda:spoken('Settings saved'),seconds=8);r['checks']['settings_saved_spoken']=True
+  reading.call('Page.bringToFront')
   panel.evaluate("document.querySelector('#status').textContent='Tensho sidebar polite status positive control'");time.sleep(3)
   panel.evaluate("document.querySelector('#feedback').textContent='Tensho sidebar alert positive control'");time.sleep(3)
   reading.evaluate("document.body.insertAdjacentHTML('beforeend','<p id=control-status role=status aria-live=polite></p>')")

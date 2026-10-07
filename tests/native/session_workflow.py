@@ -4,6 +4,7 @@ Provider payloads are controlled. Session storage, worker lifecycle, tab identit
 sidebar rendering, scroll and resource policy are production code.
 """
 import argparse
+import base64
 import functools
 import http.server
 import json
@@ -73,7 +74,7 @@ def run(output, consistency=False, accessibility=False):
                     time.sleep(.3); key(display, 'Alt_L', 'Shift_L', 'k')
                     worker = connect('/worker.js')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
                     return worker, panel, page
                 worker, panel, page = launch()
                 snapshot_js = "(async()=>{const w=await chrome.windows.getCurrent();return chrome.runtime.sendMessage({type:'snapshot',windowId:w.id})})()"
@@ -92,7 +93,7 @@ def run(output, consistency=False, accessibility=False):
                     nonlocal panel
                     if not target('/panel.html'): key(display, 'Alt_L', 'Shift_L', 'k')
                     panel = connect('/panel.html')
-                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.startsWith('Lookup:')"))
+                    wait_for(lambda: panel.evaluate("document.querySelector('#active-settings')?.textContent.includes(' · ')"))
                 def close_browser():
                     try: page.call('Browser.close')
                     except Exception: pass
@@ -113,6 +114,7 @@ def run(output, consistency=False, accessibility=False):
                     choose('#dictionary-0'); wait_for(lambda: candidate().get('resolution', {}).get('status') == 'complete')
                     choose('#article-0-n1'); wait_for(lambda: candidate().get('articles', {}).get('n1', {}).get('status') == 'complete')
                     wait_for(lambda: panel.evaluate("Array.from(document.querySelectorAll('.dictionary-article p')).some(p=>p.textContent.startsWith('100. Complete'))"))
+                    (output/'expanded-reading.png').write_bytes(base64.b64decode(panel.call('Page.captureScreenshot')['data']))
                     scroll_panel(900)
                     before_calls = calls(); first_dictionary = candidate()
                     checks['source_page_position_unchanged'] = page.evaluate('window.scrollY') == 800
