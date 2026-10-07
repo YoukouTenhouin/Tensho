@@ -15,22 +15,30 @@ npm run check
 
 In Microsoft Edge 154 or newer, open `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select this repository's `dist` directory. To update, rerun `npm run check` and click **Reload** for Tensho on that page. Reload reading pages so their content scripts use the new build.
 
-The UI starts with Latin lookup and English explanations. Reading-site access and Latin provider access are separate. Use **Enable Latin providers** to request the two default Alpheios origins; granting access does not send a lookup. Completed reading state, expansion, selection context, and panel scroll survive sidebar closure and worker restart in browser-session storage. Reload, a different document, or browser restart clears reading results; settings and site enablement remain local.
+The UI starts with Latin lookup and English explanations. Reading-site access and Latin provider access are separate. Open **Settings** from the sidebar header and use **Enable Latin providers** under **Service access** to request the two default Alpheios origins; granting access does not send a lookup. Completed reading state, expansion, selection context, and panel scroll survive sidebar closure and worker restart in browser-session storage. Reload, a different document, or browser restart clears reading results; settings and site enablement remain local.
 
 ## Read and look up words
 
-- Enable Latin providers, then select a word or enter it manually. Results preserve supplied candidate boundaries, grammar, English short meanings, and attribution. Missing access, no Latin match, missing information, and technical failure remain distinct. A failed lookup offers **Retry Latin analysis**; there are no automatic retries.
+- Enable Latin providers, then select a word or enter it manually. Results preserve supplied candidate boundaries, grammar and English short meanings. Source names remain beside results; provider credits are in Settings → Sources. Missing access, no Latin match, missing information, and technical failure remain distinct. A failed lookup offers **Retry Latin lookup**; there are no automatic retries.
 - Select a passage with the context menu or **Alt+Shift+L**, or enter it manually. The original selection and word buttons stay visible while you study a chosen word. Opening a passage sends no analysis; each word choice sends only that word. Limits are 4,096 Unicode code points per selection, 256 per offered word, and 256 offered words. Oversized input is rejected without truncation. Internal apostrophes, hyphens, diacritics, and enclitics remain intact. In the manual field, Enter submits and Shift+Enter inserts a newline.
-- Open **dictionary alternatives** beneath a candidate to resolve possible Lewis & Short entries. Labels show the actual index keys and entry identifiers; correspondence remains unverified, including a singleton. Choose **Read full article** to retrieve an entry. Multiple articles can remain visible, with complete readable text, attribution, and safe source links. Dictionary failures offer local retry without rerunning analysis. An unresolved mapping does not establish that the dictionary has no entry.
+- Open **Dictionary** beneath a candidate to resolve **Possible entries** from Lewis & Short. Labels show headwords and dictionary names; repeated labels have entry numbers. Choose **Read entry** to retrieve an entry. Multiple articles can remain visible, with complete readable text, attribution, and safe source links. Dictionary failures offer local retry without rerunning analysis. An unresolved mapping does not establish that the dictionary has no entry.
 - Press **Alt+Shift+L** to look up accessible selected text. Opening the sidebar focuses results; if it is already open, use the toggle below to move focus into it. Temporary native page access does not enable automatic lookup.
 - Press **Alt+Shift+K** to toggle existing results without another lookup. When closed, one press opens and focuses them; when already open, press twice to close and reopen with focus. Dismiss Edge’s floating text-selection menu with Escape if it intercepts a shortcut. Check `edge://extensions/shortcuts` if another extension or desktop binding occupies a shortcut. Edge rejected the originally tried Alt+Shift+R binding in the test profile.
 - Use **Look up selection with Tensho** in the selection context menu, including explicitly selected editable text, or enter a word in the panel.
-- In **Reading-site access**, enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
-- To enable an embedded reading origin, enter it explicitly in the site-access form. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.
+- Use **Enable on this site** in the sidebar to enable the current exact origin. Only then does double-click initiate automatic lookup. Dragging selects text without lookup, and automatic lookup excludes editable fields.
+- To enable an embedded reading origin, open **Settings → Reading sites** and enter it in **Site origin**. Both the containing page and the frame origin must be enabled. Native access remains separately required for each origin.
 - Retained results share a 6 MiB serialized storage budget. The least recently viewed inactive results are cleared first; revisiting one shows **Previous result cleared to free space** without a request. An article that cannot fit leaves existing content intact and offers its source link. If Edge does not restore sidebar visibility after switching tabs, reopen it explicitly.
 - **Close lookup** or Escape inside the panel closes the native sidebar and returns focus to the source. Clicking the page leaves results open. Opening on double-click may transfer focus into the sidebar under the accepted native-focus policy.
 
 Sites are identified by scheme, hostname, and effective port. Disabling an origin removes its local enablement and native grant. Ordinary HTTP/HTTPS documents in regular windows are the supported reading surfaces. Inaccessible selections offer manual input. Private browsing, browser-internal content, local files, PDF/EPUB/OCR, and opaque or sandbox-restricted frames are outside the delivery scope.
+
+## Settings
+
+The sidebar’s **Latin · English** button opens the language controls. Lookup language and explanation language are independent; changing either saves immediately and refreshes the current selection. These choices are shared across tabs and retained across browser restarts. A single available explanation language appears as text rather than a dropdown.
+
+The header’s **Settings** button opens a separate tab, also available through the browser’s extension options. **Providers** edits each language’s analysis and dictionary providers, their order and declared options. Choosing a profile to edit does not change the sidebar’s lookup language. Use **Save changes** to apply a draft or **Discard changes** to restore saved settings. Concurrent changes require discarding and reloading the draft before another save.
+
+**Service access** grants the default Latin backend origins. **Reading sites** manages enabled origins, including embedded sites; **Remove** revokes their grants. **Sources** contains provider credits. Returning from Settings restores the reading tab’s retained results and position. Escape dismisses the language controls first, then closes the sidebar.
 
 ## Validation
 
@@ -48,6 +56,7 @@ python3 tests/native/latin_workflow.py --output /tmp/tensho-latin
 python3 tests/native/latin_workflow.py --passage --output /tmp/tensho-passage
 python3 tests/native/latin_workflow.py --dictionary --output /tmp/tensho-dictionary
 python3 tests/native/dictionary_render.py --output /tmp/tensho-dictionary-render
+python3 tests/native/settings_workflow.py --output /tmp/tensho-settings
 node scripts/build.mjs --recovery
 python3 tests/native/session_workflow.py --output /tmp/tensho-session
 python3 tests/native/session_workflow.py --accessibility --output /tmp/tensho-accessibility
