@@ -1,0 +1,949 @@
+{
+  "i18n": {
+    "observed_at_utc": "2026-10-07T03:46:41Z",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "mode": "isolated Xvfb / X11",
+    "controlled_providers": true,
+    "production_session_coordination_and_ui": true,
+    "checks": {
+      "fresh_browser_default_is_simplified_chinese": true,
+      "chinese_ui_keeps_latin_lookup_and_english_explanations": true,
+      "chinese_brand_titles_and_browser_metadata": true,
+      "fresh_interface_has_no_provider_requests": true,
+      "settings_interface_selector_has_autonyms_and_browser_default": true,
+      "grammar_labels_translate_without_changing_values": true,
+      "provider_short_meaning_is_unchanged": true,
+      "interface_change_preserves_reading_identity_results_and_articles": true,
+      "interface_change_preserves_panel_and_source_scroll": true,
+      "interface_change_preserves_unsaved_provider_draft_and_site_input": true,
+      "dirty_draft_message_relocalizes": true,
+      "english_override_translates_grammar_but_not_articles": true,
+      "locale_change_does_not_reannounce_completed_dictionary_actions": true,
+      "native_keyboard_changes_interface_language_and_retains_focus": true,
+      "chinese_accessibility_names_reach_browser_tree": true,
+      "chinese_dictionary_controls_and_source_text_coexist": true,
+      "action_tooltip_follows_explicit_interface_preference": true,
+      "chinese_reading_no_horizontal_scroll_280_light_16": true,
+      "chinese_reading_no_horizontal_scroll_480_dark_16": true,
+      "chinese_reading_no_horizontal_scroll_280_light_32": true,
+      "chinese_settings_no_horizontal_scroll_360_light_16": true,
+      "chinese_settings_no_horizontal_scroll_1000_dark_16": true,
+      "chinese_settings_no_horizontal_scroll_320_light_32": true,
+      "interface_change_during_request_keeps_generation_identity_and_single_attempt": true,
+      "pending_request_completes_normally_after_interface_change": true,
+      "failed_interface_save_retains_preference_reading_and_selector": true,
+      "retained_validation_notice_relocalizes_without_lookup": true,
+      "passage_locale_change_preserves_words_focus_and_state": true,
+      "cached_passage_accessibility_labels_relocalize": true,
+      "worker_restart_retains_chinese_preference_and_same_reading_without_request": true,
+      "browser_default_can_be_restored_without_configuration_edit": true,
+      "browser_restart_keeps_explicit_interface_preference_and_clears_only_reading_session": true
+    },
+    "fixture_permission": "test-only exact-origin manifest pregrant for content-script privacy and site-setting persistence",
+    "browser_ui_language": "zh-CN",
+    "i18n_scope": "Actual Edge with Chinese browser UI; production locale storage, routing, retained state, UI and accessibility tree; controlled linguistic payloads; native keyboard language selection; no live provider requests.",
+    "passed": true
+  },
+  "settings": {
+    "observed_at_utc": "2026-10-07T03:42:39Z",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "mode": "isolated Xvfb / X11",
+    "controlled_analysis": true,
+    "production_configuration_and_routing": true,
+    "checks": {
+      "fresh_latin_english": true,
+      "sidebar_contains_only_daily_controls": true,
+      "single_explanation_choice_is_plain_text": true,
+      "important_uses_latin_identity": true,
+      "escape_dismisses_languages_before_sidebar": true,
+      "reading_no_horizontal_scroll_280_light_16": true,
+      "reading_no_horizontal_scroll_480_dark_16": true,
+      "reading_no_horizontal_scroll_280_light_32": true,
+      "quick_language_refreshes_visible_selection": true,
+      "unconfigured_sanskrit_sends_no_call": true,
+      "unavailable_preference_is_not_substituted": true,
+      "switch_back_reruns_same_selection": true,
+      "settings_no_horizontal_scroll_360_light_16": true,
+      "settings_no_horizontal_scroll_1000_dark_16": true,
+      "settings_no_horizontal_scroll_320_light_32": true,
+      "settings_actual_browser_zoom_200_percent": true,
+      "settings_actual_zoom_has_no_horizontal_scroll": true,
+      "sidebar_opens_a_separate_options_tab": true,
+      "settings_navigation_keeps_global_actions_available": true,
+      "settings_snapshot_has_no_reading_tab_dependency": true,
+      "settings_preserves_manual_blank_tab_reading": true,
+      "sidebar_reuses_existing_settings_tab": true,
+      "profile_navigation_does_not_change_lookup_language": true,
+      "singleton_provider_order_controls_hidden": true,
+      "provider_draft_is_not_applied": true,
+      "discard_restores_saved_provider_settings": true,
+      "settings_tab_save_retains_global_language_and_preference": true,
+      "all_disabled_makes_no_call": true,
+      "disabled_language_preferences_remain_visible": true,
+      "analysis_only_refresh_preserves_dictionary_disabled": true,
+      "dictionary_capability_unavailable_visible": true,
+      "stale_options_draft_cannot_overwrite_quick_preferences": true,
+      "discard_reloads_latest_configuration": true,
+      "lookup_language_persists_across_tabs": true,
+      "empty_state_language_visible": true,
+      "browser_restart_restores_exact_settings": true,
+      "browser_restart_does_not_lookup": true,
+      "restart_retains_visible_sanskrit_preference": true
+    },
+    "initial_settings": {
+      "schema": 1,
+      "revision": "241906ae-d8e1-4c11-a750-f3a4cbcfd3ee",
+      "lookupLanguage": "lat",
+      "languages": {
+        "lat": {
+          "explanationLanguage": "en",
+          "analysis": [
+            {
+              "id": "alpheios-whitakerLat",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "dictionary": [
+            {
+              "id": "alpheios-ls",
+              "enabled": true,
+              "options": {}
+            }
+          ]
+        },
+        "san": {
+          "explanationLanguage": "en",
+          "analysis": [],
+          "dictionary": []
+        }
+      }
+    },
+    "settings_before_restart": {
+      "schema": 1,
+      "revision": "a1ff05ce-ae0e-42ae-89c4-12336f273ced",
+      "lookupLanguage": "san",
+      "languages": {
+        "lat": {
+          "explanationLanguage": "en",
+          "analysis": [
+            {
+              "id": "alpheios-whitakerLat",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "dictionary": [
+            {
+              "id": "alpheios-ls",
+              "enabled": false,
+              "options": {}
+            }
+          ]
+        },
+        "san": {
+          "explanationLanguage": "en",
+          "analysis": [],
+          "dictionary": []
+        }
+      }
+    },
+    "settings_after_restart": {
+      "schema": 1,
+      "revision": "a1ff05ce-ae0e-42ae-89c4-12336f273ced",
+      "lookupLanguage": "san",
+      "languages": {
+        "lat": {
+          "explanationLanguage": "en",
+          "analysis": [
+            {
+              "id": "alpheios-whitakerLat",
+              "enabled": true,
+              "options": {}
+            }
+          ],
+          "dictionary": [
+            {
+              "id": "alpheios-ls",
+              "enabled": false,
+              "options": {}
+            }
+          ]
+        },
+        "san": {
+          "explanationLanguage": "en",
+          "analysis": [],
+          "dictionary": []
+        }
+      }
+    },
+    "passed": true
+  },
+  "session": {
+    "observed_at_utc": "2026-10-07T03:42:39Z",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "mode": "isolated Xvfb / X11",
+    "controlled_providers": true,
+    "production_session_coordination_and_ui": true,
+    "checks": {
+      "source_page_position_unchanged": true,
+      "session_contains_complete_reading_only": true,
+      "local_storage_has_no_selected_text": true,
+      "content_script_cannot_read_session_collection": true,
+      "native_close_reopen_restores_content_scroll_without_requests": true,
+      "close_reopen_preserves_source_page_position": true,
+      "collapsed_state_survives_native_reopen": true,
+      "new_tab_never_shows_first_result": true,
+      "switch_back_restores_first_result": true,
+      "worker_restart_restores_completed_state_without_requests": true,
+      "worker_restart_restores_panel_position": true,
+      "same_document_navigation_retains_result": true,
+      "oversized_article_preserves_completed_article": true,
+      "oversized_article_offers_validated_source": true,
+      "actual_serialized_session_within_six_mib": true,
+      "oversized_article_preserves_other_tab": true,
+      "reload_clears_reading_state": true,
+      "different_document_clears_reading_state": true,
+      "pending_completion_does_not_reopen_sidebar": true,
+      "reopen_uses_completion_retained_while_closed": true,
+      "browser_restart_clears_session_reading": true,
+      "browser_restart_preserves_local_settings": true,
+      "browser_restart_preserves_site_enablement": true,
+      "browser_restart_sends_no_lookup": true
+    },
+    "fixture_permission": "test-only exact-origin manifest pregrant for content-script privacy and site-setting persistence",
+    "passed": true
+  },
+  "dictionary": {
+    "observed_at_utc": "2026-10-07T03:43:54Z",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "mode": "headless Edge; controlled responses through production modules",
+    "live_provider_requests": false,
+    "checks": {
+      "active_content_positive_control": true,
+      "provider_content_never_executes": true,
+      "complete_retained_text_survives_production_reading_path": true,
+      "browser_displays_every_extracted_paragraph": true,
+      "hostile_prose_and_credits_retained": true,
+      "no_provider_elements_or_active_attributes": true,
+      "links_revalidated_at_presentation": true,
+      "multiple_articles_preserve_analysis": true,
+      "single_cached_index_and_only_selected_articles": true,
+      "unresolved_absence_and_failure_stay_distinct": true,
+      "no_internal_identity_or_disclaimer_copy": true
+    },
+    "passed": true,
+    "terminal_text": {
+      "unresolved-mapping": "Hide dictionaryCouldn’t identify an entry.",
+      "confirmed-absence": "Hide dictionaryNo entry found.",
+      "technical-failure": "Hide dictionaryInvalid provider response.Retry dictionary"
+    },
+    "article_count": 14,
+    "safe_link_count": 15
+  },
+  "orca-chinese": {
+    "interface_language": "zh-Hans",
+    "observed_at_utc": "2026-10-07T03:45:51Z",
+    "mode": "isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run",
+    "initial_accessibility": {
+      "IsEnabled": false,
+      "ScreenReaderEnabled": false
+    },
+    "checks": {
+      "dictionary_resolution_spoken": true,
+      "article_n1_spoken": true,
+      "article_n2_spoken": true,
+      "analysis_error_spoken": true,
+      "settings_draft_spoken": true,
+      "settings_saved_spoken": true,
+      "orca_remains_running": true,
+      "test_browser_speech_observed": true
+    },
+    "actions": [
+      "manual sessionpending",
+      "resolve and read two articles",
+      "manual malum puella",
+      "choose passage word",
+      "manual malum",
+      "failure and explicit retry"
+    ],
+    "explicit_accessibility_bus": true,
+    "orca_exit_after_start": null,
+    "atspi_test_app_found": true,
+    "atspi_nodes": 323,
+    "atspi_manual_input_found": true,
+    "dictionary_focus": {
+      "focus": true,
+      "scroll": 0,
+      "status": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "height": 771
+    },
+    "speech_utterances": 52,
+    "orca_exit_after_workflow": null,
+    "scope": "Controlled reading and settings sequence driven through CDP, with actual Orca speech API output and native AT-SPI events; not keyboard-only, physical audibility, or shared KDE acceptance",
+    "passed": true,
+    "restored_accessibility": {
+      "IsEnabled": false,
+      "ScreenReaderEnabled": false
+    }
+  },
+  "orca-english": {
+    "interface_language": "en",
+    "observed_at_utc": "2026-10-07T03:47:21Z",
+    "mode": "isolated Xvfb X11 and private accessibility/session bus on openSUSE; not a shared KDE run",
+    "initial_accessibility": {
+      "IsEnabled": false,
+      "ScreenReaderEnabled": false
+    },
+    "checks": {
+      "dictionary_resolution_spoken": true,
+      "article_n1_spoken": true,
+      "article_n2_spoken": true,
+      "analysis_error_spoken": true,
+      "settings_draft_spoken": true,
+      "settings_saved_spoken": true,
+      "orca_remains_running": true,
+      "test_browser_speech_observed": true
+    },
+    "actions": [
+      "manual sessionpending",
+      "resolve and read two articles",
+      "manual malum puella",
+      "choose passage word",
+      "manual malum",
+      "failure and explicit retry"
+    ],
+    "explicit_accessibility_bus": true,
+    "orca_exit_after_start": null,
+    "atspi_test_app_found": true,
+    "atspi_nodes": 324,
+    "atspi_manual_input_found": true,
+    "dictionary_focus": {
+      "focus": true,
+      "scroll": 0,
+      "status": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "height": 771
+    },
+    "speech_utterances": 52,
+    "orca_exit_after_workflow": null,
+    "scope": "Controlled reading and settings sequence driven through CDP, with actual Orca speech API output and native AT-SPI events; not keyboard-only, physical audibility, or shared KDE acceptance",
+    "passed": true,
+    "restored_accessibility": {
+      "IsEnabled": false,
+      "ScreenReaderEnabled": false
+    }
+  },
+  "reading": {
+    "observed_at_utc": "2026-10-07T03:43:52Z",
+    "browser": "Microsoft Edge 154.0.4258.37",
+    "mode": "isolated Xvfb / X11",
+    "controlled_analysis": true,
+    "fixture_permission": "test-only exact-origin manifest pregrant; optional prompting tested separately",
+    "checks": {
+      "both_shortcuts_registered": true,
+      "double_click_result": true,
+      "double_click_native_focus_allowed": true,
+      "double_click_preserves_scroll": true,
+      "already_open_panel_lookup_preserves_page_focus": true,
+      "native_toggle_restores_focus_without_lookup": true,
+      "drag_does_not_lookup": true,
+      "editable_double_click_does_not_lookup": true,
+      "page_click_keeps_panel_open": true,
+      "manual_lookup_through_production_interface": true,
+      "loading_status_can_be_announced": true,
+      "close_restores_page_focus": true,
+      "closed_panel_stays_closed_after_completion": true,
+      "embedded_origin_requires_explicit_enablement": true,
+      "same_origin_frame_routes_identity": true,
+      "separately_enabled_frame_routes_identity": true,
+      "opaque_sandbox_frame_does_not_lookup": true,
+      "disabled_current_site_offers_enable_shortcut": true,
+      "embedded_frame_requires_containing_site_enablement": true,
+      "keyboard_open_preserves_selected_frame": true,
+      "navigated_frame_not_confused_with_original_url_sibling": true,
+      "removed_frame_cannot_publish_result": true,
+      "ungranted_keyboard_offers_manual_recovery": true,
+      "opaque_keyboard_offers_manual_recovery": true,
+      "keyboard_reaches_named_manual_input": true,
+      "keyboard_focus_is_visible": true,
+      "native_keyboard_manual_submission": true,
+      "keyboard_can_leave_panel": true,
+      "panel_was_scrolled_before_lookup": true,
+      "new_lookup_resets_scroll_while_loading": true,
+      "rapid_lookup_keeps_latest_result": true,
+      "navigation_rejects_pending_browser_result": true,
+      "restricted_surface_explains_manual_recovery": true,
+      "restricted_surface_manual_lookup_works": true,
+      "focus_return_source_lookup": true,
+      "removed_source_falls_back_without_scroll": true,
+      "native_escape_returns_focus_without_scroll": true,
+      "passage_original_and_spelling_retained": true,
+      "passage_opens_with_zero_analysis_calls": true,
+      "passage_button_has_native_focus_and_meaningful_name": true,
+      "passage_controls_remain_during_loading": true,
+      "native_choice_issues_only_chosen_word": true,
+      "native_choice_retains_keyboard_focus": true,
+      "rapid_native_choices_keep_latest_word_and_passage": true,
+      "failure_preserves_original_passage_and_controls": true,
+      "native_retry_preserves_passage_and_retries_one_word": true,
+      "stale_passage_message_does_not_cancel_newer_lookup": true,
+      "invalid_passages_send_nothing_and_explain_limits": true,
+      "lookup_language_remains_visible_on_error": true,
+      "replacement_selection_clears_passage_controls": true
+    },
+    "commands": [
+      {
+        "description": "",
+        "name": "_execute_action",
+        "shortcut": ""
+      },
+      {
+        "description": "Toggle existing results",
+        "name": "focus-results",
+        "shortcut": "Alt+Shift+K"
+      },
+      {
+        "description": "Look up selection",
+        "name": "lookup-selection",
+        "shortcut": "Alt+Shift+L"
+      }
+    ],
+    "before": {
+      "focus": true,
+      "scroll": 0
+    },
+    "after_double_click": {
+      "focus": false,
+      "active": "word",
+      "scroll": 0
+    },
+    "panel_after_double_click": {
+      "focus": true,
+      "active": "",
+      "target": "puella"
+    },
+    "native_contexts": [
+      {
+        "contextId": "ad5aabf0-a3db-448b-8bb2-e647d27aa73f",
+        "contextType": "BACKGROUND",
+        "frameId": -1,
+        "incognito": false,
+        "tabId": -1,
+        "windowId": -1
+      },
+      {
+        "contextId": "5d8f171d-c79a-4989-95d2-4a6b9e8d6666",
+        "contextType": "SIDE_PANEL",
+        "documentId": "10F5450F441E2754B8C1C8C7FB9F9A8A",
+        "documentOrigin": "chrome-extension://gkicjkchmjfibpgofolemdnffpdbhgch",
+        "documentUrl": "chrome-extension://gkicjkchmjfibpgofolemdnffpdbhgch/panel.html",
+        "frameId": 0,
+        "incognito": false,
+        "tabId": -1,
+        "windowId": -1
+      }
+    ],
+    "native_pointer_trace": [
+      {
+        "selector": "#second",
+        "box": {
+          "x": 38,
+          "y": 222.15625,
+          "innerHeight": 816,
+          "outerHeight": 900,
+          "scale": 1,
+          "screenX": 10,
+          "screenY": 10
+        },
+        "geometry": null,
+        "received": null
+      },
+      {
+        "selector": "#second",
+        "box": {
+          "x": 38,
+          "y": 222.15625,
+          "innerHeight": 816,
+          "outerHeight": 900,
+          "scale": 1,
+          "screenX": 10,
+          "screenY": 10
+        },
+        "geometry": null,
+        "received": {
+          "testPointer": "top",
+          "x": 58,
+          "y": 234
+        }
+      },
+      {
+        "selector": "#word",
+        "box": {
+          "x": 38,
+          "y": 394.15625,
+          "innerHeight": 816,
+          "outerHeight": 900,
+          "scale": 1,
+          "screenX": 10,
+          "screenY": 10
+        },
+        "geometry": null,
+        "received": {
+          "testPointer": "top",
+          "x": 58,
+          "y": 406
+        }
+      }
+    ],
+    "native_toggle_attempts": [
+      {
+        "closed_and_restored_focus": true,
+        "reopened_with_focus": true,
+        "same_generation": true,
+        "same_text": true
+      },
+      {
+        "closed_and_restored_focus": true,
+        "reopened_with_focus": true,
+        "same_generation": true,
+        "same_text": true
+      }
+    ],
+    "loading_announcements": [
+      {
+        "live": "polite",
+        "atomic": "true",
+        "blocked": false
+      }
+    ],
+    "frame_identities": {
+      "same_origin": {
+        "tabId": 1208359119,
+        "frameId": 12,
+        "documentId": "C902914F3D26BA97C56C5F02738A559E",
+        "topDocumentId": "92445DE08EF848DBFB269BB0D73547BF",
+        "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en"
+      },
+      "separate_origin": {
+        "tabId": 1208359119,
+        "frameId": 13,
+        "documentId": "B81767BB85151885BC40312AFAEF28F9",
+        "topDocumentId": "92445DE08EF848DBFB269BB0D73547BF",
+        "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en"
+      }
+    },
+    "keyboard_frame": {
+      "identity": {
+        "tabId": 1208359119,
+        "frameId": 13,
+        "documentId": "B81767BB85151885BC40312AFAEF28F9",
+        "topDocumentId": "92445DE08EF848DBFB269BB0D73547BF",
+        "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en"
+      },
+      "text": "servus",
+      "generation": 8,
+      "status": "complete",
+      "analysis": {
+        "provider": "Controlled development response",
+        "controlled": true,
+        "candidates": [
+          {
+            "lemma": "servus",
+            "stableId": null,
+            "interpretations": [
+              "No linguistic analysis: this is an interaction fixture."
+            ],
+            "meanings": []
+          }
+        ]
+      }
+    },
+    "ungranted_keyboard": {
+      "identity": {
+        "tabId": 1208359119,
+        "frameId": 0,
+        "documentId": "manual",
+        "topDocumentId": "92445DE08EF848DBFB269BB0D73547BF",
+        "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en"
+      },
+      "text": "",
+      "generation": 11,
+      "status": "notice",
+      "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually.",
+      "uiMessage": {
+        "id": "selectionAmbiguous"
+      }
+    },
+    "opaque_keyboard": {
+      "identity": {
+        "tabId": 1208359119,
+        "frameId": 0,
+        "documentId": "manual",
+        "topDocumentId": "92445DE08EF848DBFB269BB0D73547BF",
+        "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en"
+      },
+      "text": "",
+      "generation": 12,
+      "status": "notice",
+      "message": "Selection is unavailable or ambiguous. Use its context menu or enter a word manually.",
+      "uiMessage": {
+        "id": "selectionAmbiguous"
+      }
+    },
+    "keyboard_traversal": [
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": true,
+        "element": "TEXTAREA"
+      },
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": true,
+        "element": "BUTTON"
+      },
+      {
+        "focused": false,
+        "element": "BODY"
+      },
+      {
+        "focused": false,
+        "element": "BODY"
+      },
+      {
+        "focused": false,
+        "element": "BODY"
+      },
+      {
+        "focused": false,
+        "element": "BODY"
+      },
+      {
+        "focused": false,
+        "element": "BODY"
+      }
+    ],
+    "focus_return_selection": {
+      "text": "puella",
+      "focus": true,
+      "active": "word"
+    },
+    "focus_return_lookup": {
+      "scroll": {
+        "x": 0,
+        "y": 0
+      },
+      "interfaceLanguage": "auto",
+      "interfaceLocale": "en",
+      "settings": {
+        "schema": 1,
+        "revision": "6948f58e-6915-4de6-8f68-4bca0420350c",
+        "lookupLanguage": "lat",
+        "languages": {
+          "lat": {
+            "explanationLanguage": "en",
+            "analysis": [
+              {
+                "id": "alpheios-whitakerLat",
+                "enabled": true,
+                "options": {}
+              }
+            ],
+            "dictionary": [
+              {
+                "id": "alpheios-ls",
+                "enabled": true,
+                "options": {}
+              }
+            ]
+          },
+          "san": {
+            "explanationLanguage": "en",
+            "analysis": [],
+            "dictionary": []
+          }
+        }
+      },
+      "catalog": {
+        "languages": [
+          {
+            "id": "lat",
+            "name": "Latin",
+            "defaultExplanation": "en"
+          },
+          {
+            "id": "san",
+            "name": "Sanskrit",
+            "defaultExplanation": "en"
+          }
+        ],
+        "providers": [
+          {
+            "id": "alpheios-whitakerLat",
+            "name": "Whitaker via Alpheios",
+            "defaultEnabled": true,
+            "capabilities": [
+              {
+                "lookupLanguage": "lat",
+                "role": "analysis",
+                "explanationLanguages": [
+                  "en"
+                ],
+                "inputNotations": [
+                  "Unicode Latin word"
+                ],
+                "structuralAnalysis": true
+              }
+            ],
+            "attribution": [
+              "Words by William Whitaker, Copyright 1993–2007; hosted by Alpheios."
+            ],
+            "origins": [],
+            "options": {}
+          },
+          {
+            "id": "alpheios-ls",
+            "name": "Lewis & Short",
+            "defaultEnabled": true,
+            "capabilities": [
+              {
+                "lookupLanguage": "lat",
+                "role": "dictionary",
+                "explanationLanguages": [
+                  "en"
+                ],
+                "inputNotations": [
+                  "Latin candidate headword"
+                ]
+              }
+            ],
+            "attribution": [
+              "A Latin Dictionary — Charlton T. Lewis and Charles Short, Oxford, Clarendon Press, 1879; hosted by Alpheios."
+            ],
+            "origins": [
+              "https://repos1.alpheios.net/*"
+            ],
+            "options": {}
+          }
+        ]
+      },
+      "routes": {
+        "lookupLanguage": "lat",
+        "explanationLanguage": "en",
+        "explanationChoices": [
+          "en"
+        ],
+        "preferenceAvailable": true,
+        "allDisabled": false,
+        "analysisMode": "explanations",
+        "analysis": [
+          {
+            "declaration": {
+              "id": "alpheios-whitakerLat",
+              "name": "Whitaker via Alpheios",
+              "defaultEnabled": true,
+              "capabilities": [
+                {
+                  "lookupLanguage": "lat",
+                  "role": "analysis",
+                  "explanationLanguages": [
+                    "en"
+                  ],
+                  "inputNotations": [
+                    "Unicode Latin word"
+                  ],
+                  "structuralAnalysis": true
+                }
+              ],
+              "attribution": [
+                "Words by William Whitaker, Copyright 1993–2007; hosted by Alpheios."
+              ],
+              "origins": [],
+              "options": {}
+            },
+            "capability": {
+              "lookupLanguage": "lat",
+              "role": "analysis",
+              "explanationLanguages": [
+                "en"
+              ],
+              "inputNotations": [
+                "Unicode Latin word"
+              ],
+              "structuralAnalysis": true
+            },
+            "configuration": {
+              "id": "alpheios-whitakerLat",
+              "enabled": true,
+              "options": {}
+            }
+          }
+        ],
+        "dictionary": [
+          {
+            "declaration": {
+              "id": "alpheios-ls",
+              "name": "Lewis & Short",
+              "defaultEnabled": true,
+              "capabilities": [
+                {
+                  "lookupLanguage": "lat",
+                  "role": "dictionary",
+                  "explanationLanguages": [
+                    "en"
+                  ],
+                  "inputNotations": [
+                    "Latin candidate headword"
+                  ]
+                }
+              ],
+              "attribution": [
+                "A Latin Dictionary — Charlton T. Lewis and Charles Short, Oxford, Clarendon Press, 1879; hosted by Alpheios."
+              ],
+              "origins": [
+                "https://repos1.alpheios.net/*"
+              ],
+              "options": {}
+            },
+            "capability": {
+              "lookupLanguage": "lat",
+              "role": "dictionary",
+              "explanationLanguages": [
+                "en"
+              ],
+              "inputNotations": [
+                "Latin candidate headword"
+              ]
+            },
+            "configuration": {
+              "id": "alpheios-ls",
+              "enabled": true,
+              "options": {}
+            }
+          }
+        ]
+      },
+      "providerAccess": [
+        false,
+        false
+      ],
+      "providerGrants": {
+        "alpheios-whitakerLat": true,
+        "alpheios-ls": false
+      },
+      "providerAccessDecision": "never",
+      "enabledOrigins": [
+        "http://127.0.0.1:46273",
+        "http://127.0.0.1:37049"
+      ],
+      "readingAccess": true,
+      "tabId": 1208359119,
+      "state": {
+        "identity": {
+          "tabId": 1208359119,
+          "frameId": 0,
+          "documentId": "6EFC71DDF8F5538FAD43E3D2F54E22E6",
+          "topDocumentId": "6EFC71DDF8F5538FAD43E3D2F54E22E6",
+          "configuration": "6948f58e-6915-4de6-8f68-4bca0420350c",
+          "lookupLanguage": "lat",
+          "explanationLanguage": "en"
+        },
+        "text": "puella",
+        "generation": 18,
+        "status": "complete",
+        "analysis": {
+          "provider": "Controlled development response",
+          "controlled": true,
+          "candidates": [
+            {
+              "lemma": "puella",
+              "stableId": null,
+              "interpretations": [
+                "No linguistic analysis: this is an interaction fixture."
+              ],
+              "meanings": []
+            }
+          ]
+        }
+      },
+      "dictionaries": {},
+      "origin": "http://127.0.0.1:46273",
+      "focusRequest": 14
+    },
+    "passage": {
+      "fixture_text": "  “Arma,”\nvirumque; mālum mālum l’amour ab-cd 𐌀𐌁 controlled-failure.  ",
+      "original": "“Arma,” virumque; mālum mālum l’amour ab-cd 𐌀𐌁 controlled-failure.",
+      "offered_words": [
+        "Arma",
+        "virumque",
+        "mālum",
+        "mālum",
+        "l’amour",
+        "ab-cd",
+        "𐌀𐌁",
+        "controlled-failure"
+      ],
+      "analysis_calls": [
+        "Arma",
+        "virumque",
+        "mālum",
+        "controlled-failure",
+        "controlled-failure",
+        "cano"
+      ],
+      "native_keyboard": true
+    },
+    "passed": true
+  },
+  "behavioral": {
+    "command": "node --experimental-strip-types --test --test-isolation=none tests/*.test.ts",
+    "passed": true,
+    "tests": 144,
+    "npm_run_check_passed": true
+  }
+}
