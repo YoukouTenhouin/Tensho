@@ -22,6 +22,16 @@ Apply this workflow to each feature implementation ticket. Documentation-only up
 4. Verify that the final tips of the dev and reflow branches have identical Git trees: `git rev-parse <ticket>-dev^{tree} <ticket>-reflow^{tree}` must print the same tree ID twice.
 5. Push the reflow branch and create a pull request from `<ticket>-reflow` to `master`.
 
+## Bug fix workflow
+
+Apply this workflow to each bug fix ticket.
+
+1. Before starting the fix, create a ticket-specific branch from `master` named `<ticket>-fix`.
+2. Implement the fix on the fix branch, committing frequently in small, incremental steps.
+3. Once the fix is complete and the required tests pass, decide whether the fix branch is suitable for a direct pull request. Use it directly if the change is small (such as a one-line fix) or its commits already form a clean, logical history.
+4. Otherwise, create `<ticket>-reflow` from the fix branch. Preserve the fix branch while reorganizing the reflow branch's commits into a clean, logical history of small increments, as in the feature implementation workflow. Include only changes relevant to the issue; omit unnecessary changes and attempts that modified the wrong places. The reflow branch may therefore have a different Git tree from the fix branch. Run the required tests again on the reflow branch.
+5. Push the selected fix or reflow branch and create a pull request against `master`.
+
 ## Desktop testing
 
 The user reserves `HDMI-A-1` for test windows throughout the implementation goal. Place shared-desktop test windows on that monitor and verify their placement before sending native input. Use isolated displays when a shared-desktop test is unnecessary, keeping the other monitors available for the user's work.
