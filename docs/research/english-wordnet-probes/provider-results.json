@@ -1,0 +1,384 @@
+{
+  "researchDate": "2026-10-07",
+  "source": "https://wordnetcode.princeton.edu/3.0/WordNet-3.0.tar.gz",
+  "archive": {
+    "bytes": 11537239,
+    "sha256": "640db279c949a88f61f851dd54ebbb22d003f8b90b85267042ef85a3781d3a52"
+  },
+  "files": {
+    "LICENSE": {
+      "bytes": 1625,
+      "sha256": "7731175a77952e259390b496fab905e57118b8d19ad3a8383c67eee724ff443f"
+    },
+    "dict/noun.exc": {
+      "bytes": 38301,
+      "sha256": "2b5d675c380b39ecf595af9fa9d4e7feb1d58c643b0bff08c40ed5bfe41fab7a"
+    },
+    "dict/verb.exc": {
+      "bytes": 38033,
+      "sha256": "dbbcf9a601b2d77e934e413b91d90e88ec7f933a8b77cfc00602a923b891b42c"
+    },
+    "dict/adj.exc": {
+      "bytes": 23019,
+      "sha256": "8824cc24bbedd797b9702316b27f07cd4c2b76b629539f0a1276f03926758016"
+    },
+    "dict/adv.exc": {
+      "bytes": 85,
+      "sha256": "e7291461b629abfe63301bbe1998cee09fd575ed7107abd7ea9763adb05bf0a8"
+    },
+    "dict/index.noun": {
+      "bytes": 4786655,
+      "sha256": "a490d99d93d017bf4822fe2f0ffa51fd73911ce271dc7535fade21f8814b5a04"
+    },
+    "dict/index.verb": {
+      "bytes": 523980,
+      "sha256": "c7c79b558d787f1e31c6f8b3eeadb8fcbb26a64545ecc1241e21d9b61f95ee8e"
+    },
+    "dict/index.adj": {
+      "bytes": 824127,
+      "sha256": "42f58dda2c7cff66eb8fa55ba62e0a873a9b3f43c878e8201108f5dab6dcff28"
+    },
+    "dict/index.adv": {
+      "bytes": 162816,
+      "sha256": "6f5465ed5758fe9c8a2f7ec17b1300f3aa875756c70ff7cba162f7e71bcf88ea"
+    }
+  },
+  "asset": {
+    "jsonBytes": 2347086,
+    "gzipBytes": 698907,
+    "indexCounts": {
+      "noun": 117798,
+      "verb": 11529,
+      "adj": 21479,
+      "adv": 4481
+    }
+  },
+  "results": {
+    "saw": [
+      {
+        "lemma": "saw",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "saw",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "see",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "went": [
+      {
+        "lemma": "go",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "children": [
+      {
+        "lemma": "child",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      }
+    ],
+    "mice": [
+      {
+        "lemma": "mouse",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      }
+    ],
+    "better": [
+      {
+        "lemma": "better",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "better",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "better",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "good",
+        "partOfSpeech": "adj",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "well",
+        "partOfSpeech": "adj",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "better",
+        "partOfSpeech": "adv",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "well",
+        "partOfSpeech": "adv",
+        "evidence": "exception"
+      }
+    ],
+    "best": [
+      {
+        "lemma": "best",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "best",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "best",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "good",
+        "partOfSpeech": "adj",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "best",
+        "partOfSpeech": "adv",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "well",
+        "partOfSpeech": "adv",
+        "evidence": "exception"
+      }
+    ],
+    "leaves": [
+      {
+        "lemma": "leaf",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "leave",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "leave",
+        "partOfSpeech": "verb",
+        "evidence": "suffix"
+      }
+    ],
+    "axes": [
+      {
+        "lemma": "ax",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "axis",
+        "partOfSpeech": "noun",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "axe",
+        "partOfSpeech": "noun",
+        "evidence": "suffix"
+      },
+      {
+        "lemma": "axe",
+        "partOfSpeech": "verb",
+        "evidence": "suffix"
+      },
+      {
+        "lemma": "ax",
+        "partOfSpeech": "verb",
+        "evidence": "suffix"
+      }
+    ],
+    "running": [
+      {
+        "lemma": "running",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "run",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      },
+      {
+        "lemma": "running",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      }
+    ],
+    "reading": [
+      {
+        "lemma": "reading",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "read",
+        "partOfSpeech": "verb",
+        "evidence": "suffix"
+      }
+    ],
+    "read": [
+      {
+        "lemma": "read",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "read",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      }
+    ],
+    "am": [
+      {
+        "lemma": "am",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "be",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "is": [
+      {
+        "lemma": "i",
+        "partOfSpeech": "noun",
+        "evidence": "suffix"
+      },
+      {
+        "lemma": "be",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "are": [
+      {
+        "lemma": "are",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "be",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "was": [
+      {
+        "lemma": "wa",
+        "partOfSpeech": "noun",
+        "evidence": "suffix"
+      },
+      {
+        "lemma": "be",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "were": [
+      {
+        "lemma": "be",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "had": [
+      {
+        "lemma": "have",
+        "partOfSpeech": "verb",
+        "evidence": "exception"
+      }
+    ],
+    "don't": [],
+    "he's": [],
+    "the": [],
+    "I": [
+      {
+        "lemma": "i",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "i",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      }
+    ],
+    "a": [
+      {
+        "lemma": "a",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      }
+    ],
+    "color": [
+      {
+        "lemma": "color",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "color",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "color",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      }
+    ],
+    "colour": [
+      {
+        "lemma": "colour",
+        "partOfSpeech": "noun",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "colour",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      },
+      {
+        "lemma": "colour",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      }
+    ],
+    "look up": [
+      {
+        "lemma": "look_up",
+        "partOfSpeech": "verb",
+        "evidence": "exact"
+      }
+    ],
+    "state-of-the-art": [
+      {
+        "lemma": "state-of-the-art",
+        "partOfSpeech": "adj",
+        "evidence": "exact"
+      }
+    ],
+    "foobarxyz": []
+  },
+  "limits": "Lowercasing and suffix detachment intentionally expose ambiguity and false positives; this is a bounded lexical proposal experiment, not contextual analysis. No full dictionary definitions are packaged."
+}
