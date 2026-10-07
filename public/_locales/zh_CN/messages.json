@@ -1,0 +1,822 @@
+{
+  "brand": {
+    "message": "天书"
+  },
+  "extensionName": {
+    "message": "天书 — 拉丁语阅读"
+  },
+  "extensionDescription": {
+    "message": "通过 Alpheios 托管的 Whitaker 分析拉丁语词形，须明确授权服务访问。"
+  },
+  "openExtension": {
+    "message": "打开$brand$",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "lookupSelection": {
+    "message": "查询所选文本"
+  },
+  "toggleResults": {
+    "message": "显示或关闭现有结果"
+  },
+  "contextLookup": {
+    "message": "使用$brand$查询所选文本",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "panelTitle": {
+    "message": "$brand$查词",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "optionsTitle": {
+    "message": "$brand$设置",
+    "placeholders": {
+      "brand": {
+        "content": "$1"
+      }
+    }
+  },
+  "settings": {
+    "message": "设置"
+  },
+  "closeLookup": {
+    "message": "关闭查词"
+  },
+  "wordOrPassage": {
+    "message": "单词或段落"
+  },
+  "lookup": {
+    "message": "查词"
+  },
+  "loading": {
+    "message": "正在加载…"
+  },
+  "languages": {
+    "message": "语言"
+  },
+  "lookupLanguage": {
+    "message": "查词语言"
+  },
+  "explanations": {
+    "message": "释义语言"
+  },
+  "languageSummary": {
+    "message": "$lookup$ · $explanation$",
+    "placeholders": {
+      "lookup": {
+        "content": "$1"
+      },
+      "explanation": {
+        "content": "$2"
+      }
+    }
+  },
+  "languageButton": {
+    "message": "语言：查词语言为$lookup$，释义语言为$explanation$",
+    "placeholders": {
+      "lookup": {
+        "content": "$1"
+      },
+      "explanation": {
+        "content": "$2"
+      }
+    }
+  },
+  "unavailableName": {
+    "message": "$name$ · 不可用",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "unavailableOption": {
+    "message": "$name$（不可用）",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "explanationsValue": {
+    "message": "释义语言：$language$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "analysisUnavailable": {
+    "message": "$language$分析不可用",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "dictionaryUnavailable": {
+    "message": "没有$language$词典释义",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "meaningsUnavailable": {
+    "message": "没有$language$简短释义",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "enableSite": {
+    "message": "在此网站启用"
+  },
+  "enableSiteLabel": {
+    "message": "在 $origin$ 启用自动查词",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "providerSettings": {
+    "message": "在设置中启用服务"
+  },
+  "lookupResults": {
+    "message": "查词结果"
+  },
+  "passage": {
+    "message": "段落"
+  },
+  "choosePassageWord": {
+    "message": "选择段落中的单词"
+  },
+  "passageWord": {
+    "message": "查询 $word$（第 $index$ 个词，共 $total$ 个）",
+    "placeholders": {
+      "word": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      },
+      "total": {
+        "content": "$3"
+      }
+    }
+  },
+  "chooseWord": {
+    "message": "请选择单词"
+  },
+  "ready": {
+    "message": "准备阅读"
+  },
+  "loadingAnalysis": {
+    "message": "正在加载$language$分析…",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "noMatch": {
+    "message": "$provider$ 未找到$language$匹配项。",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      }
+    }
+  },
+  "noAnalysis": {
+    "message": "未提供$language$分析。",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "analysisSource": {
+    "message": "$language$分析 — $provider$",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      }
+    }
+  },
+  "headwordUnavailable": {
+    "message": "词头不可用"
+  },
+  "missingFields": {
+    "message": "缺少：$fields$。",
+    "placeholders": {
+      "fields": {
+        "content": "$1"
+      }
+    }
+  },
+  "missingHeadword": {
+    "message": "词头"
+  },
+  "missingGrammar": {
+    "message": "语法分析"
+  },
+  "missingMeanings": {
+    "message": "$language$简短释义",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "retryLookup": {
+    "message": "重试$language$查词",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "retry": {
+    "message": "重试查词"
+  },
+  "originInvalid": {
+    "message": "请输入普通 HTTP/HTTPS 网站源地址。"
+  },
+  "originExact": {
+    "message": "请输入准确的 HTTP/HTTPS 网站源地址。"
+  },
+  "siteDenied": {
+    "message": "网站访问被拒绝。"
+  },
+  "siteNotGranted": {
+    "message": "尚未获得网站访问授权。"
+  },
+  "siteEnabled": {
+    "message": "已启用网站。"
+  },
+  "enabledSite": {
+    "message": "已启用 $origin$",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "loadingRetained": {
+    "message": "正在加载保留的结果…"
+  },
+  "settingsSections": {
+    "message": "设置分区"
+  },
+  "providers": {
+    "message": "服务"
+  },
+  "readingSites": {
+    "message": "阅读网站"
+  },
+  "sources": {
+    "message": "来源"
+  },
+  "serviceAccess": {
+    "message": "服务访问"
+  },
+  "enableLatin": {
+    "message": "启用拉丁语服务"
+  },
+  "siteOrigin": {
+    "message": "网站源地址"
+  },
+  "addSite": {
+    "message": "添加网站"
+  },
+  "noSites": {
+    "message": "尚未启用网站。"
+  },
+  "remove": {
+    "message": "移除"
+  },
+  "removeOrigin": {
+    "message": "移除 $origin$",
+    "placeholders": {
+      "origin": {
+        "content": "$1"
+      }
+    }
+  },
+  "accessDenied": {
+    "message": "访问被拒绝。"
+  },
+  "accessRevoked": {
+    "message": "访问已被撤销。"
+  },
+  "providerAccess": {
+    "message": "$decision$拉丁语分析：$analysis$ · 词典：$dictionary$",
+    "placeholders": {
+      "decision": {
+        "content": "$1"
+      },
+      "analysis": {
+        "content": "$2"
+      },
+      "dictionary": {
+        "content": "$3"
+      }
+    }
+  },
+  "enabled": {
+    "message": "已启用"
+  },
+  "disabled": {
+    "message": "已禁用"
+  },
+  "providerEnabled": {
+    "message": "已授权服务访问。"
+  },
+  "providerDenied": {
+    "message": "服务访问被拒绝。"
+  },
+  "profiles": {
+    "message": "服务配置"
+  },
+  "language": {
+    "message": "语言"
+  },
+  "discard": {
+    "message": "放弃更改"
+  },
+  "saveChanges": {
+    "message": "保存更改"
+  },
+  "draftConflict": {
+    "message": "设置已在其他位置更改。请放弃更改以重新加载。"
+  },
+  "unsaved": {
+    "message": "有未保存的更改。"
+  },
+  "analysisProviders": {
+    "message": "分析服务"
+  },
+  "dictionaryProviders": {
+    "message": "词典服务"
+  },
+  "noProviders": {
+    "message": "没有可用的服务。"
+  },
+  "moveEarlier": {
+    "message": "前移"
+  },
+  "moveLater": {
+    "message": "后移"
+  },
+  "moveProvider": {
+    "message": "$direction$：$role$的 $provider$",
+    "placeholders": {
+      "direction": {
+        "content": "$1"
+      },
+      "provider": {
+        "content": "$2"
+      },
+      "role": {
+        "content": "$3"
+      }
+    }
+  },
+  "analysisRole": {
+    "message": "分析"
+  },
+  "dictionaryRole": {
+    "message": "词典"
+  },
+  "savingSettings": {
+    "message": "正在保存设置…"
+  },
+  "settingsSaved": {
+    "message": "设置已保存。"
+  },
+  "saving": {
+    "message": "正在保存…"
+  },
+  "saved": {
+    "message": "已保存。"
+  },
+  "interface": {
+    "message": "界面"
+  },
+  "interfaceLanguage": {
+    "message": "界面语言"
+  },
+  "browserDefault": {
+    "message": "跟随浏览器（$language$）",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "interfaceSaved": {
+    "message": "界面语言已保存。"
+  },
+  "invalidInterfaceLanguage": {
+    "message": "请选择支持的界面语言。"
+  },
+  "unexpectedError": {
+    "message": "操作失败，请重试。"
+  },
+  "legacyNotice": {
+    "message": "上次操作未能完成。请选择文本或输入单词以继续。"
+  },
+  "emptySelection": {
+    "message": "请选择或输入包含字母或数字的单词。未发送任何文本。"
+  },
+  "longSelection": {
+    "message": "所选文本超过 4,096 个 Unicode 码点。请减少文本；未发送任何文本。"
+  },
+  "manyWords": {
+    "message": "所选文本包含超过 256 个单词。请选择较短的段落；未发送任何文本。"
+  },
+  "longWord": {
+    "message": "某个单词超过 256 个 Unicode 码点。请选择较短的单词或段落；未发送任何文本。"
+  },
+  "passageRetained": {
+    "message": "已保留段落。请选择一个单词进行查询；尚未发送任何文本。"
+  },
+  "settingsRefresh": {
+    "message": "设置已更改。查看时将刷新此选择的结果。"
+  },
+  "retentionCleared": {
+    "message": "上次结果已清除以释放空间"
+  },
+  "retentionFailed": {
+    "message": "无法在会话存储中保留此结果。重新打开后可能无法查看。"
+  },
+  "retentionBlocked": {
+    "message": "无法从会话存储中清除上次结果，因而未能开始新的查询。请重试。"
+  },
+  "selectionUnavailable": {
+    "message": "无法在此页面获取所选文本。请使用普通 HTTP/HTTPS 网页，或手动输入单词。"
+  },
+  "selectionAmbiguous": {
+    "message": "无法获取所选文本，或选择不明确。请使用文本的右键菜单，或手动输入单词。"
+  },
+  "noReadingTab": {
+    "message": "没有可用的普通阅读标签页。"
+  },
+  "openFailed": {
+    "message": "无法打开侧栏，请重试。"
+  },
+  "reloadSettings": {
+    "message": "保存前请重新加载设置。"
+  },
+  "chooseLanguage": {
+    "message": "请选择支持的语言。"
+  },
+  "resultChanged": {
+    "message": "阅读结果已更改。请重新打开当前候选词。"
+  },
+  "readingTabChanged": {
+    "message": "阅读标签页已更改。请在此标签页重新提交单词。"
+  },
+  "passageChanged": {
+    "message": "段落已更改。请从当前段落中选择单词。"
+  },
+  "passageSourceChanged": {
+    "message": "段落来源已更改。请重新选择段落。"
+  },
+  "lookupChanged": {
+    "message": "查询已更改。请重新选择单词。"
+  },
+  "sourceChanged": {
+    "message": "阅读来源已更改。请重新选择单词。"
+  },
+  "invalidSettings": {
+    "message": "设置无效。"
+  },
+  "chooseLookup": {
+    "message": "请选择支持的查词语言。"
+  },
+  "integratedLanguages": {
+    "message": "设置必须且只能包含已集成的语言。"
+  },
+  "providerUnsupported": {
+    "message": "服务 $provider$ 不支持$language$的$role$。",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "role": {
+        "content": "$2"
+      },
+      "language": {
+        "content": "$3"
+      }
+    }
+  },
+  "declaredOptions": {
+    "message": "请仅选择 $provider$ 声明的选项。",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      }
+    }
+  },
+  "retainExplanation": {
+    "message": "所有服务均已禁用时，请保留已保存的释义语言偏好。"
+  },
+  "replaceExplanation": {
+    "message": "保存前，请为$language$明确选择支持的替代释义语言。",
+    "placeholders": {
+      "language": {
+        "content": "$1"
+      }
+    }
+  },
+  "configConflict": {
+    "message": "设置已在其他位置更改。保存前请重新加载。"
+  },
+  "usingProvider": {
+    "message": "正在使用 $provider$。$reason$",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "reason": {
+        "content": "$2"
+      }
+    }
+  },
+  "previousFailed": {
+    "message": "先前的服务失败。"
+  },
+  "providerUnavailable": {
+    "message": "服务不可用。"
+  },
+  "providerDetails": {
+    "message": "服务详情"
+  },
+  "skipped": {
+    "message": " 已跳过。"
+  },
+  "providerIssue": {
+    "message": "$provider$：$reason$$skipped$",
+    "placeholders": {
+      "provider": {
+        "content": "$1"
+      },
+      "reason": {
+        "content": "$2"
+      },
+      "skipped": {
+        "content": "$3"
+      }
+    }
+  },
+  "noEntry": {
+    "message": "未找到词条。"
+  },
+  "unresolvedEntry": {
+    "message": "无法确定对应词条。"
+  },
+  "possibleEntries": {
+    "message": "可能的词条"
+  },
+  "duplicateEntry": {
+    "message": "$label$ · 词条 $index$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      }
+    }
+  },
+  "entryAnnouncement": {
+    "message": "$headword$，词条 $index$",
+    "placeholders": {
+      "headword": {
+        "content": "$1"
+      },
+      "index": {
+        "content": "$2"
+      }
+    }
+  },
+  "articleAttribution": {
+    "message": "$dictionary$词条及来源署名",
+    "placeholders": {
+      "dictionary": {
+        "content": "$1"
+      }
+    }
+  },
+  "dictionarySource": {
+    "message": "词典来源"
+  },
+  "dictionaryReferences": {
+    "message": "词典参考链接"
+  },
+  "reference": {
+    "message": "参考链接 $index$",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "hideDictionary": {
+    "message": "收起词典"
+  },
+  "dictionary": {
+    "message": "词典"
+  },
+  "loadingEntries": {
+    "message": "正在加载词条…"
+  },
+  "retryDictionary": {
+    "message": "重试词典查询"
+  },
+  "readEntry": {
+    "message": "阅读词条"
+  },
+  "loadingEntry": {
+    "message": "正在加载词条…"
+  },
+  "entryTooLarge": {
+    "message": "词条过大，无法保留。"
+  },
+  "readSource": {
+    "message": "在来源网站阅读完整词条"
+  },
+  "retryEntry": {
+    "message": "重试加载词条"
+  },
+  "dictionaryFor": {
+    "message": "$lemma$的词典",
+    "placeholders": {
+      "lemma": {
+        "content": "$1"
+      }
+    }
+  },
+  "candidate": {
+    "message": "候选词 $index$",
+    "placeholders": {
+      "index": {
+        "content": "$1"
+      }
+    }
+  },
+  "entriesAvailable": {
+    "message": "有 $count$ 个可能的词条。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "entryReady": {
+    "message": "$dictionary$的词条已加载。",
+    "placeholders": {
+      "dictionary": {
+        "content": "$1"
+      }
+    }
+  },
+  "entry": {
+    "message": "词条"
+  },
+  "dictionaryAnnouncement": {
+    "message": "$label$：$message$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "message": {
+        "content": "$2"
+      }
+    }
+  },
+  "articleAnnouncement": {
+    "message": "$label$，$headword$：$message$",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      },
+      "headword": {
+        "content": "$2"
+      },
+      "message": {
+        "content": "$3"
+      }
+    }
+  },
+  "failure_missing_access": {
+    "message": "需要授权服务访问。"
+  },
+  "failure_revoked_access": {
+    "message": "服务访问已被撤销。"
+  },
+  "failure_network": {
+    "message": "连接失败。"
+  },
+  "failure_http": {
+    "message": "服务不可用。"
+  },
+  "failure_format": {
+    "message": "服务响应无效。"
+  },
+  "failure_size": {
+    "message": "响应过大。"
+  },
+  "failure_request_timeout": {
+    "message": "服务请求超时。"
+  },
+  "failure_action_deadline": {
+    "message": "查询超时。"
+  },
+  "failure_cancelled": {
+    "message": "查询已取消。"
+  },
+  "failure_unconfigured": {
+    "message": "未启用任何服务。"
+  },
+  "failure_unsupported_explanation": {
+    "message": "释义不可用。"
+  },
+  "failure_unsupported_input": {
+    "message": "不支持此输入。"
+  },
+  "failure_identity_mismatch": {
+    "message": "词条标识不符。"
+  },
+  "failure_interrupted": {
+    "message": "查询已中断。"
+  },
+  "grammar_term": {
+    "message": "词形"
+  },
+  "grammar_lang": {
+    "message": "语言"
+  },
+  "grammar_stem": {
+    "message": "词干"
+  },
+  "grammar_suff": {
+    "message": "词尾"
+  },
+  "grammar_pofs": {
+    "message": "词性"
+  },
+  "grammar_conj": {
+    "message": "变位"
+  },
+  "grammar_decl": {
+    "message": "变格"
+  },
+  "grammar_var": {
+    "message": "变体"
+  },
+  "grammar_tense": {
+    "message": "时态"
+  },
+  "grammar_voice": {
+    "message": "语态"
+  },
+  "grammar_mood": {
+    "message": "语气"
+  },
+  "grammar_pers": {
+    "message": "人称"
+  },
+  "grammar_num": {
+    "message": "数"
+  },
+  "grammar_gend": {
+    "message": "性"
+  },
+  "grammar_case": {
+    "message": "格"
+  },
+  "grammar_comp": {
+    "message": "比较等级"
+  }
+}
