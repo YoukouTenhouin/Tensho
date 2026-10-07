@@ -1,6 +1,6 @@
 # Reading interface and separate settings acceptance
 
-Issue: [#38](https://github.com/YoukouTenhouin/Tensho/issues/38). Validated on 2026-10-07 with Microsoft Edge 154.0.4258.37, Node 24.18.1 and isolated Xvfb/headless displays. [Machine-readable checks](38-interface.json) record 234 passing browser checks. `npm run check`, Python compilation of the native runners and `git diff --check` pass.
+Issue: [#38](https://github.com/YoukouTenhouin/Tensho/issues/38). Validated on 2026-10-07 with Microsoft Edge 154.0.4258.37, Node 24.18.1 and isolated Xvfb/headless displays. [Machine-readable checks](38-interface.json) record 236 passing browser checks. `npm run check`, Python compilation of the native runners and `git diff --check` pass.
 
 The sidebar now contains lookup input, compact shared language controls and reading results. Providers, service access, site management and source credits have their own settings tab. The result surface uses headwords, grammar, meanings and learner-selected dictionary entries, with concise outcomes and source links. Instruction paragraphs, repeated uncertainty disclaimers and internal provenance identifiers have been removed. Complete provider-authored articles remain intact.
 
@@ -8,7 +8,7 @@ The sidebar now contains lookup input, compact shared language controls and read
 
 | Runner | Passed checks | Coverage |
 | --- | ---: | --- |
-| Settings | 36 | Separate options tab, fragment navigation, profile isolation, save/discard, concurrent edits, immediate preferences, cross-tab and restart persistence, Escape, themes, responsive layout and zoom |
+| Settings | 38 | Separate options tab, fragment navigation, profile isolation, save/discard, concurrent edits, immediate preferences, cross-tab and restart persistence, Escape, themes, responsive layout and zoom |
 | Dictionary rendering | 11 | Complete retained text, inert provider content, safe links, explicit alternatives and distinct terminal outcomes |
 | Reading and passage | 50 | Native selection, exact-origin frame enablement through Settings, manual keyboard input, passage choices, retry and source-focus restoration |
 | Provider recovery | 24 | Concise failure states, technical fallback, retained partial results, local retry and real 30-second action deadline |
@@ -25,6 +25,7 @@ All desktop input used disposable browser profiles on isolated displays. Orca ra
 
 ## Regression details
 
+- The sidebar creates a settings tab when none exists and reuses an existing one. This preserves manual reading results even on `about:blank`, which Edge can otherwise replace when opening options.
 - Settings messages recognize the options document with section fragments. Reading actions remain restricted to the panel document; global settings actions use revision checks independently of the active tab.
 - The current-site action checks both saved enablement and the native grant, so externally revoked access can be enabled again.
 - Dictionary entry numbering is shared by headings and announcements. The added behavioral regression test verifies that same-headword entries produce distinct speech and that collapsing cached content does not reannounce completion.

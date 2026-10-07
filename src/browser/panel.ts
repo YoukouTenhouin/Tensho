@@ -139,9 +139,15 @@ word.addEventListener('keydown', event => {
     event.preventDefault(); element<HTMLFormElement>('lookup').requestSubmit();
   }
 });
-function openSettings(): void { flushScroll(); void chrome.runtime.openOptionsPage().catch(report); }
-element('open-settings').onclick = openSettings;
-element('provider-settings').onclick = openSettings;
+async function openSettings(): Promise<void> {
+  flushScroll();
+  const contexts = await chrome.runtime.getContexts({ contextTypes: ['TAB'] });
+  const existing = contexts.some(context => context.documentUrl?.split(/[?#]/)[0] === chrome.runtime.getURL('options.html'));
+  // Edge can reuse an about:blank tab in openOptionsPage, clearing its manual result.
+  if (existing) await chrome.runtime.openOptionsPage();
+  else await chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
+}
+for (const id of ['open-settings', 'provider-settings']) element(id).onclick = () => { void openSettings().catch(report); };
 element('enable-current').onclick = () => { if (origin) enable(origin); };
 function flushScroll(): void {
   if (scrollTimer !== undefined) clearTimeout(scrollTimer);

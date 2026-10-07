@@ -42,7 +42,7 @@ def run(output):
                 env = {**os.environ, 'DISPLAY': display}; env.pop('WAYLAND_DISPLAY', None)
                 command = ['microsoft-edge', '--ozone-platform=x11', f'--user-data-dir={root}/profile', '--no-first-run', '--no-default-browser-check',
                            f'--disable-extensions-except={repo}/dist-controlled', f'--load-extension={repo}/dist-controlled', '--remote-debugging-port=0',
-                           '--window-size=1300,900', '--window-position=0,0', 'data:text/html,<title>Tensho reading</title><p>important</p>']
+                           '--window-size=1300,900', '--window-position=0,0', 'about:blank']
                 port_file = root / 'profile/DevToolsActivePort'
 
                 def launch():
@@ -116,6 +116,7 @@ def run(output):
                 checks['unavailable_preference_is_not_substituted'] = panel.evaluate("document.querySelector('#explanation-value').textContent==='Explanations: English · unavailable'")
                 quick_language('lat'); settled('complete')
                 checks['switch_back_reruns_same_selection'] = calls() == ['important', 'important']
+                before_settings = state()
                 panel.evaluate("document.querySelector('#open-settings').click()")
                 options = connect('/options.html')
                 wait_for(lambda: options.evaluate("!!document.querySelector('#provider-analysis-0')"))
@@ -145,9 +146,14 @@ def run(output):
                     wait_for(lambda: config()['settings']['revision'] != before)
                     wait_for(lambda: options.evaluate("document.querySelector('#settings-message').textContent==='Settings saved.'"))
                     return config()['settings']
-                checks['manifest_opens_a_separate_options_tab'] = options_tab != source_tab and options.evaluate("chrome.runtime.getManifest().options_ui.open_in_tab")
+                checks['sidebar_opens_a_separate_options_tab'] = options_tab != source_tab and options.evaluate("chrome.runtime.getManifest().options_ui.open_in_tab")
                 checks['settings_navigation_keeps_global_actions_available'] = options.evaluate("location.hash==='#reading-sites'") and 'settings' in config()
                 checks['settings_snapshot_has_no_reading_tab_dependency'] = config()['settings'] == snapshot()['settings']
+                return_to_source(); settled('complete')
+                checks['settings_preserves_manual_blank_tab_reading'] = state()==before_settings and calls()==['important','important']
+                panel.evaluate("document.querySelector('#open-settings').click()")
+                wait_for(lambda: snapshot()['tabId']==options_tab)
+                checks['sidebar_reuses_existing_settings_tab'] = options.evaluate("chrome.runtime.getContexts({contextTypes:['TAB']}).then(c=>c.filter(x=>x.documentUrl?.split(/[?#]/)[0]===chrome.runtime.getURL('options.html')).length===1)")
                 profile('san')
                 checks['profile_navigation_does_not_change_lookup_language'] = config()['settings']['lookupLanguage'] == 'lat' and options.evaluate("document.querySelectorAll('#settings-editor input[type=checkbox]').length===0 && document.querySelector('#save-settings').disabled")
                 profile('lat')
