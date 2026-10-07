@@ -64,3 +64,24 @@ test('array annotations and entries retain boundaries; malformed shapes are tech
     assert.throws(() => normalizeWhitaker(malformed), error => error instanceof RequestFailure && error.kind === 'format');
   }
 });
+
+test('multiple dictionary records within an entry retain each candidate and the shared analysis', () => {
+  const raw = fixture('important');
+  const entry = raw.RDF.Annotation.Body.rest.entry;
+  const dictionaries = [
+    { hdwd: { lang: 'lat', $: 'causo, causare, causavi, causatus' }, kind: { $: 'transitive' } },
+    { hdwd: { lang: 'lat', $: 'causor, causari, causatus sum' }, kind: { $: 'deponent' } },
+  ];
+  entry.dict = dictionaries;
+  entry.mean = [{ $: 'cause;' }, { $: 'allege an excuse/reason, object; excuse oneself; plead a cause, bring action;' }];
+  const result = normalizeWhitaker(raw);
+  assert.equal(result.outcome, 'usable');
+  assert.deepEqual(result.candidates.map(candidate => candidate.lemma), dictionaries.map(dict => dict.hdwd.$));
+  result.candidates.forEach((candidate, index) => {
+    assert.deepEqual(candidate.lemmaFeatures, dictionaries[index]);
+    assert.deepEqual(candidate.grammar, [entry.infl]);
+    assert.deepEqual(candidate.meanings, entry.mean.map((meaning: { $: string }) => meaning.$));
+    assert.equal(candidate.provenance.dictIndex, index);
+    assert.equal(candidate.stableId, null);
+  });
+});

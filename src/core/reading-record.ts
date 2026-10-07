@@ -23,7 +23,7 @@ function issues(value: unknown): boolean {
 }
 function provenance(value: unknown): boolean {
   return object(value) && text(value.provider) && nullableText(value.bodyReference) &&
-    integer(value.annotationIndex) && integer(value.bodyIndex) && integer(value.entryIndex);
+    integer(value.annotationIndex) && integer(value.bodyIndex) && integer(value.entryIndex) && optional(value.dictIndex, integer);
 }
 function analysis(value: unknown): boolean {
   return object(value) && text(value.provider) && typeof value.controlled === 'boolean' &&
