@@ -1,6 +1,6 @@
 {
   "settings": {
-    "observed_at_utc": "2026-10-07T02:50:15Z",
+    "observed_at_utc": "2026-10-07T02:57:01Z",
     "browser": "Microsoft Edge 154.0.4258.37",
     "mode": "isolated Xvfb / X11",
     "checks": {
@@ -21,9 +21,11 @@
       "settings_no_horizontal_scroll_320_light_32": true,
       "settings_actual_browser_zoom_200_percent": true,
       "settings_actual_zoom_has_no_horizontal_scroll": true,
-      "manifest_opens_a_separate_options_tab": true,
+      "sidebar_opens_a_separate_options_tab": true,
       "settings_navigation_keeps_global_actions_available": true,
       "settings_snapshot_has_no_reading_tab_dependency": true,
+      "settings_preserves_manual_blank_tab_reading": true,
+      "sidebar_reuses_existing_settings_tab": true,
       "profile_navigation_does_not_change_lookup_language": true,
       "singleton_provider_order_controls_hidden": true,
       "provider_draft_is_not_applied": true,
@@ -312,5 +314,5 @@
     },
     "passed": true
   },
-  "total_checks": 234
+  "total_checks": 236
 }
