@@ -8,7 +8,7 @@ const outdir = lifecycle ? 'dist-lifecycle' : recovery ? 'dist-recovery' : contr
 await rm(outdir, { recursive: true, force: true });
 await mkdir(outdir);
 await cp('public', outdir, { recursive: true });
-await build({ entryPoints: ['src/browser/worker.ts', 'src/browser/page.ts', 'src/browser/panel.ts'],
+await build({ entryPoints: ['src/browser/worker.ts', 'src/browser/page.ts', 'src/browser/panel.ts', 'src/browser/options.ts'],
   outdir, bundle: true, format: 'iife', target: 'chrome154', sourcemap: true,
   plugins: controlled || recovery || lifecycle ? [{ name: 'controlled-reading-fixture', setup(build) {
     build.onResolve({ filter: /providers\/catalog\.ts$/ }, args => {

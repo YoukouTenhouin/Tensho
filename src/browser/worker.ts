@@ -247,6 +247,66 @@ async function activeTab(windowId: number): Promise<chrome.tabs.Tab> {
   if (!tab?.id || tab.incognito) throw new Error('No regular reading tab is available.');
   return tab;
 }
+const globalActions = new Set(['settings-snapshot', 'save-settings', 'save-preferences', 'provider-access-result', 'save-origin']);
+async function settingsSnapshot() {
+  const settings = await configuration.get();
+  const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
+  const providerGrants = Object.fromEntries(await Promise.all(providerCatalog.providers.map(async provider =>
+    [provider.id, await chrome.permissions.contains({ origins: [...provider.origins] })] as const)));
+  const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
+  return { settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), providerAccess, providerGrants,
+    providerAccessDecision: latinAccessDecision ?? 'never', enabledOrigins: await enabledOrigins() };
+}
+async function globalAction(message: Record<string, unknown>): Promise<unknown> {
+  await reading!.settled();
+  if (message.type === 'settings-snapshot') return settingsSnapshot();
+  if (message.type === 'save-settings' || message.type === 'save-preferences') {
+    if (typeof message.expectedRevision !== 'string') throw new Error('Reload settings before saving.');
+    const windows = new Set(panelWindows.values());
+    const visible = await chrome.tabs.query({ active: true });
+    const previous = await configuration.get();
+    let draft = message.settings;
+    if (message.type === 'save-preferences') {
+      if (typeof message.lookupLanguage !== 'string' || !previous.languages[message.lookupLanguage] ||
+          (message.explanationLanguage !== undefined && typeof message.explanationLanguage !== 'string')) {
+        throw new Error('Choose a supported language.');
+      }
+      const preferences = structuredClone(previous);
+      preferences.lookupLanguage = message.lookupLanguage;
+      if (typeof message.explanationLanguage === 'string') {
+        preferences.languages[message.lookupLanguage]!.explanationLanguage = message.explanationLanguage;
+      }
+      draft = preferences;
+    }
+    const saved = await configuration.save(draft, message.expectedRevision);
+    if (saved.revision !== previous.revision) {
+      coordinator.reconfigure(configurationIdentity(saved), visible.filter(item => windows.has(item.windowId) && item.id !== undefined).map(item => item.id!));
+      notify();
+    }
+    return { ok: true, settings: saved };
+  }
+  if (message.type === 'provider-access-result') {
+    const granted = await chrome.permissions.contains({ origins: [...latinProviderOrigins] });
+    await chrome.storage.local.set({ latinAccessDecision: granted ? 'granted' : 'denied' });
+    notify();
+    return { ok: true };
+  }
+  if (message.type === 'save-origin' && typeof message.origin === 'string') {
+    const origin = readingOrigin(message.origin);
+    if (!origin || origin !== message.origin) throw new Error('Enter an exact HTTP/HTTPS origin.');
+    const origins = await enabledOrigins();
+    if (message.enabled === true) {
+      if (!await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) throw new Error('Site access was not granted.');
+      await chrome.storage.local.set({ enabledOrigins: [...new Set([...origins, origin])] });
+    } else {
+      await chrome.storage.local.set({ enabledOrigins: origins.filter(item => item !== origin) });
+      await chrome.permissions.remove({ origins: [permissionPattern(origin)] });
+    }
+    notify();
+    return { ok: true };
+  }
+  throw new Error('Unknown settings action.');
+}
 async function panelAction(message: Record<string, unknown>, request?: LookupRequest, startWord?: () => LookupRequest | undefined): Promise<unknown> {
   if (typeof message.windowId !== 'number') throw new Error('Missing reading window');
   await reading!.settled();
@@ -260,29 +320,16 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
   const tab = await activeTab(message.windowId), tabId = tab.id!;
   if (message.type === 'snapshot') {
     const top = await chrome.webNavigation.getFrame({ tabId, frameId: 0 }).catch(() => null);
-    const providerAccess = await Promise.all(latinProviderOrigins.map(origin => chrome.permissions.contains({ origins: [origin] })));
-    const { latinAccessDecision } = await chrome.storage.local.get('latinAccessDecision');
-    const settings = await configuration.get();
+    const global = await settingsSnapshot();
+    const settings = global.settings;
     if (coordinator.get(tabId)?.identity.configuration === settings.revision) void coordinator.view(tabId);
     const state = coordinator.get(tabId);
     const current = state?.identity.configuration === settings.revision;
     reading!.view(tabId);
-    return { ...reading!.information(tabId), settings, catalog: providerCatalog, routes: lookupRoutes(settings, providerCatalog), tabId, state: current ? state : undefined, dictionaries: current ? dictionaries.get(tabId) : {}, providerAccess,
-      providerAccessDecision: latinAccessDecision ?? 'never', origin: top ? readingOrigin(top.url) : undefined,
-      enabledOrigins: await enabledOrigins(), focusRequest: focusRequests.get(tabId) ?? 0 };
-  }
-  if (message.type === 'save-settings') {
-    if (message.tabId !== tabId || typeof message.expectedRevision !== 'string') throw new Error('The reading tab changed. Reload settings before saving.');
-    const windows = new Set(panelWindows.values());
-    windows.add(message.windowId);
-    const visible = await chrome.tabs.query({ active: true });
-    const previous = await configuration.get();
-    const saved = await configuration.save(message.settings, message.expectedRevision);
-    if (saved.revision !== previous.revision) {
-      coordinator.reconfigure(configurationIdentity(saved), visible.filter(item => windows.has(item.windowId) && item.id !== undefined).map(item => item.id!));
-      notify();
-    }
-    return { ok: true, settings: saved };
+    const origin = top ? readingOrigin(top.url) : undefined;
+    const readingAccess = !!origin && global.enabledOrigins.includes(origin) && await chrome.permissions.contains({ origins: [permissionPattern(origin)] });
+    return { ...reading!.information(tabId), ...global, readingAccess, tabId, state: current ? state : undefined, dictionaries: current ? dictionaries.get(tabId) : {}, origin,
+      focusRequest: focusRequests.get(tabId) ?? 0 };
   }
   if (message.type === 'dictionary-resolve' || message.type === 'dictionary-retrieve' || message.type === 'dictionary-collapse') {
     if (message.tabId !== tabId || typeof message.generation !== 'number' || typeof message.candidateIndex !== 'number') {
@@ -308,11 +355,6 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
     if (!wordRequest) return { ok: true };
     void wordRequest.selectWord(identity, previous.passage.id, message.wordIndex);
   }
-  if (message.type === 'provider-access-result') {
-    const granted = await chrome.permissions.contains({ origins: [...latinProviderOrigins] });
-    await chrome.storage.local.set({ latinAccessDecision: granted ? 'granted' : 'denied' });
-    notify();
-  }
   if (message.type === 'retry') {
     const previous = coordinator.get(tabId);
     if (message.tabId !== tabId || !previous || previous.status !== 'error' || previous.generation !== message.generation) {
@@ -324,18 +366,6 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
       void coordinator.begin(tabId, identity.frameId).selectWord(identity, previous.passage.id, previous.passage.selectedIndex);
     } else void coordinator.lookup(identity, previous.text);
   }
-  if (message.type === 'save-origin' && typeof message.origin === 'string') {
-    const origin = readingOrigin(message.origin);
-    if (!origin || origin !== message.origin) throw new Error('Enter an exact HTTP/HTTPS origin.');
-    const origins = await enabledOrigins();
-    if (message.enabled === true) {
-      if (!await chrome.permissions.contains({ origins: [permissionPattern(origin)] })) throw new Error('Site access was not granted.');
-      await chrome.storage.local.set({ enabledOrigins: [...new Set([...origins, origin])] });
-    } else {
-      await chrome.storage.local.set({ enabledOrigins: origins.filter(item => item !== origin) });
-      await chrome.permissions.remove({ origins: [permissionPattern(origin)] });
-    }
-  }
   if (message.type === 'close') {
     await close(tabId, message.windowId);
   }
@@ -343,7 +373,13 @@ async function panelAction(message: Record<string, unknown>, request?: LookupReq
 }
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (!message || typeof message !== 'object') return;
-  if (sender.url === chrome.runtime.getURL('panel.html')) {
+  const senderPage = sender.url?.split(/[?#]/)[0];
+  const panelSender = senderPage === chrome.runtime.getURL('panel.html');
+  const optionsSender = senderPage === chrome.runtime.getURL('options.html');
+  if ((panelSender || optionsSender) && globalActions.has(message.type)) {
+    void globalAction(message).then(reply, error => reply({ error: String(error) })); return true;
+  }
+  if (panelSender) {
     const request = message.type === 'manual-lookup' && Number.isInteger(message.tabId) && message.tabId >= 0
       ? coordinator.begin(message.tabId, 0) : undefined;
     const startWord = message.type === 'passage-word' && Number.isInteger(message.tabId) && Number.isInteger(message.passageId) && Number.isInteger(message.wordIndex)

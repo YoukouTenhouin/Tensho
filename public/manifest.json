@@ -8,6 +8,7 @@
   "optional_host_permissions": ["http://*/*", "https://*/*"],
   "background": {"service_worker": "worker.js"},
   "action": {"default_title": "Open Tensho"},
+  "options_ui": {"page": "options.html", "open_in_tab": true},
   "side_panel": {"default_path": "panel.html"},
   "commands": {
     "lookup-selection": {"suggested_key": {"default": "Alt+Shift+L"}, "description": "Look up selection"},
