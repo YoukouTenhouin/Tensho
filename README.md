@@ -15,7 +15,7 @@ npm run check
 
 In Microsoft Edge 154 or newer, open `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select this repository's `dist` directory. To update, rerun `npm run check` and click **Reload** for Tensho on that page. Reload reading pages so their content scripts use the new build.
 
-The UI starts with Latin lookup and English explanations. Reading-site access and Latin provider access are separate. Open **Settings** from the sidebar header and use **Enable Latin providers** under **Service access** to request the two default Alpheios origins; granting access does not send a lookup. Completed reading state, expansion, selection context, and panel scroll survive sidebar closure and worker restart in browser-session storage. Reload, a different document, or browser restart clears reading results; settings and site enablement remain local.
+The interface follows the browser UI language, with English fallback and Simplified Chinese support (天书). Lookup starts with Latin and English explanations independently of the interface language. Reading-site access and Latin provider access are separate. Open **Settings** from the sidebar header and use **Enable Latin providers** under **Service access** to request the two default Alpheios origins; granting access does not send a lookup. Completed reading state, expansion, selection context, and panel scroll survive sidebar closure and worker restart in browser-session storage. Reload, a different document, or browser restart clears reading results; settings and site enablement remain local.
 
 ## Read and look up words
 
@@ -33,6 +33,8 @@ The UI starts with Latin lookup and English explanations. Reading-site access an
 Sites are identified by scheme, hostname, and effective port. Disabling an origin removes its local enablement and native grant. Ordinary HTTP/HTTPS documents in regular windows are the supported reading surfaces. Inaccessible selections offer manual input. Private browsing, browser-internal content, local files, PDF/EPUB/OCR, and opaque or sandbox-restricted frames are outside the delivery scope.
 
 ## Settings
+
+**Settings → Interface → Interface language** offers **Browser default**, **English**, and **简体中文**. It saves immediately across open extension pages and browser restarts. Changing interface language preserves lookup/explanation preferences, provider drafts, pending requests, results, expanded articles and reading position. Grammar field labels follow the interface language; supplied grammatical values, meanings and articles retain their original text. [Translation guide](docs/i18n.md) describes locale matching and adding translations.
 
 The sidebar’s **Latin · English** button opens the language controls. Lookup language and explanation language are independent; changing either saves immediately and refreshes the current selection. These choices are shared across tabs and retained across browser restarts. A single available explanation language appears as text rather than a dropdown.
 
